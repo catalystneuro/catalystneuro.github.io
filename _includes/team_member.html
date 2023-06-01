@@ -5,7 +5,21 @@
     <div>
         <b class="team-member-name">{{ member.name }}</b><br>
         <b class="team-member-role">{{ member.role }}</b>
-        <p>{{ member.bio }}</p>
+        <p class="bio-container">{{ member.bio }}</p>
+        {% if member.github %}
+            <span>Github: <a href="{{ member.github }}" class="team-member-link">{{ member.github }}</a></span><br>
+        {% endif %}
+        {% if member.website %}
+            <span>Personal Website: <a href="{{ member.website }}" class="team-member-link">{{ member.website }}</a></span><br>
+        {% endif %}
+        {% if member.publications %}
+            <span>Publications: <a href="{{ member.publications }}" class="team-member-link">{{ member.publications }}</a></span><br>
+        {% endif %}
+        {% if member.link2 %}
+            <span>{{member.other}}: <a href="{{ member.link2 }}" class="team-member-link">{{ member.link2 }}</a></span><br>
+        {% endif %}
+        {% if member.linkedin %}
+            <span>LinkedIn: <a href="{{ member.linkedin }}" class="team-member-link">{{ member.linkedin }}</a></span><br>
+        {% endif %}
     </div>
 </div>
-

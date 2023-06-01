@@ -5,7 +5,7 @@ permalink: /projects/
 collection: projects
 header:
   overlay_color: "#5e616c"
-  overlay_image: /assets/images/neuro-software-1024x237.jpg
+  overlay_image: /assets/images/neuro-software.jpg
 feature_row:
   - title: "NeuroConv"
     excerpt: NeuroConv provides automated conversions from proprietary formats

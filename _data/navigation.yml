@@ -1,12 +1,48 @@
 # main links
 main:
-   - title: "Team"
-     url: /team/
-   - title: "Projects"
-     url: /projects/
-   - title: "Services"
-     url: /services/
-   - title: "Blog"
-     url: /blog/
-   - title: "Contact"
-     url: /contact/
+  - title: "Team"
+    url: /team/
+  - title: "Mission"
+    url: /mission/
+  - title: "Projects"
+    url: /projects/
+  - title: "Services"
+    url: /services/
+    children:
+      - title: "NWB Conversion Pipelines"
+        url: /services/nwb-conversion/
+      - title: "Spike Sorting Pipelines"
+        url: /services/spike-sorting/
+      - title: "Data Infrastructure on Grant Applications"
+        url: /services/grant-data/
+  - title: "Software"
+    url: /software/
+  - title: "Blog"
+    url: /blog/
+  - title: "Contact"
+    url: /contact/
+
+docs:
+   - title: Mission
+     children:
+      - title: "The Problem"
+        url: /docs/problem/
+      - title: "Our Solution"
+   - title: Services
+     children:
+      - title: "NWB Conversion Pipelines"
+        url: /docs/conversion/
+      - title: "Spike Sorting Pipelines"
+        url: /docs/sorting/
+      - title: "Data Infrastructure on Grant Applications"
+        url: /docs/applications/
+   - title: Software
+     children:
+      - title: "Neuroconv"
+        url: /docs/neuroconv/
+      - title: "NWB Inspector"
+        url: /docs/inspector/
+      - title: "NWB Guide"
+        url: /docs/guide/
+      - title: "Spike Interface"
+        url: /docs/spike/

@@ -9,7 +9,9 @@ header:
 ---
 
 <html>
-{% for member in site.team %}
+{% assign sorted_members = site.team | sort: 'order' %}
+
+{% for member in sorted_members %}
     {% include team_member.html member=member %}
 {% endfor %}
 </html>
