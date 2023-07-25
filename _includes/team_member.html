@@ -1,25 +1,87 @@
-<div class="team-member" style="display: flex;">
-    <div class="image-container">
-        <img src="{{ member.image }}" alt="{{ member.name }}" class="team-member-image">
-    </div>
-    <div>
-        <b class="team-member-name">{{ member.name }}</b><br>
-        <b class="team-member-role">{{ member.role }}</b>
-        <p class="bio-container">{{ member.bio }}</p>
-        {% if member.github %}
-            <span>Github: <a href="{{ member.github }}" class="team-member-link">{{ member.github }}</a></span><br>
-        {% endif %}
-        {% if member.website %}
-            <span>Personal Website: <a href="{{ member.website }}" class="team-member-link">{{ member.website }}</a></span><br>
-        {% endif %}
-        {% if member.publications %}
-            <span>Publications: <a href="{{ member.publications }}" class="team-member-link">{{ member.publications }}</a></span><br>
-        {% endif %}
-        {% if member.link2 %}
-            <span>{{member.other}}: <a href="{{ member.link2 }}" class="team-member-link">{{ member.link2 }}</a></span><br>
-        {% endif %}
-        {% if member.linkedin %}
-            <span>LinkedIn: <a href="{{ member.linkedin }}" class="team-member-link">{{ member.linkedin }}</a></span><br>
-        {% endif %}
+<style>
+    .border {
+      border-bottom: 2px solid #47e4e2;
+      margin-top: 5px;
+    }
+  
+    .team-members-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  
+    .team-member {
+     display: flex;
+     align-items: flex-start;
+     margin-right: 20px;
+     padding-bottom: 10px;
+    }
+
+    .image-container {
+     margin-right: 10px;
+     display: block;
+    }
+
+    .image-container img {
+     margin-top: 10px;
+    }
+
+    .team-member-info {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+     flex-grow: 1;
+    }
+  
+    .bio-container {
+      max-width: 90%;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  
+    .team-member-name {
+      margin: 0;
+      margin-bottom: 0px;
+    }
+  
+    .team-member-role {
+      margin: 0;
+      margin-top: -25px;
+    }
+    @media (max-width: 768px) {
+    .team-member {
+      flex-direction: column;
+    }
+
+    .image-container {
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
+  }
+  </style>
+<div class="team-members-container">
+    <div class="team-member" style="display: flex;">
+        <div class="image-container">
+            <img src="{{ member.image }}" alt="{{ member.name }}" class="team-member-image">
+        </div>
+        <div class="team-member-info">
+            <b class="team-member-name">{{ member.name }}</b><br>
+            <b class="team-member-role">{{ member.role }}</b>
+            <div class="bio-container">
+                <p>{{ member.bio }}</p>
+            <div class="social-icons">
+                {% if member.github %}<!-- member github --><a href="{{ member.github }}"><i class="fab fa-fw fa-github fa-lg" style="color: #000000"></i></a>{% endif %}
+                {% if member.website %}<!-- member website --><a href="{{ member.website }}"><i class="fas fa-fw fa-link fa-lg" style="color: #000000"></i></a>{% endif %}
+                {% if member.contact %}<!-- member email --><a href="mailto:{{ member.contact }}"><meta itemprop="email" content="{{ member.contact }}" /><i class="fas fa-fw fa-envelope-square fa-lg" style="color: #000000" aria-hidden="true"></i></a>{% endif %}
+                {% if member.linkedin %}<!-- member linkedin --><a href="https://www.linkedin.com/in/{{ member.linkedin }}"><i class="fab fa-fw fa-linkedin fa-lg" style="color: #000000"></i></a>{% endif %}
+                {% if member.publications %}<!-- member publications --><a href="{{ member.publications }}"><i class="fas fa-address-book fa-lg" style="color: #000000" aria-hidden="true"></i></a>{% endif %}
+                {% if member.blog %}<!-- member blog --><a href="{{ member.blog }}"><i class="fas fa-blog fa-lg" style="color: #000000;"></i></a>{% endif %}
+                {% if member.link2 %}<!-- member other --><a href="{{ member.link2 }}" class="team-member-link">{{ member.other }}</a>{% endif %}
+            </div>
+        </div>
+        </div>
+    
     </div>
 </div>
+<div class="border"></div>

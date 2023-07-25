@@ -4,11 +4,8 @@ main:
     url: /team/
   - title: "Mission"
     url: /mission/
-  - title: "Projects"
-    url: /projects/
   - title: "Services"
-    url: /services/
-    children:
+    sublinks:
       - title: "NWB Conversion Pipelines"
         url: /services/nwb-conversion/
       - title: "Spike Sorting Pipelines"
@@ -17,8 +14,8 @@ main:
         url: /services/grant-data/
   - title: "Software"
     url: /software/
-  - title: "Blog"
-    url: /blog/
+  - title: "Portfolio"
+    url: /portfolio/
   - title: "Contact"
     url: /contact/
 

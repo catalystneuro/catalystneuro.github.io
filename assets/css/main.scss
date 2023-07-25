@@ -2,6 +2,13 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 search: false
 ---
+// Color Variables
+$primary-color: #0468af; // Darker Blue
+$primary-color-dark: #09568e; // Darker shade of blue
+$primary-color-light: #2190c7; // Lighter shade of sky blue
+$secondary-color: #ffffff; // White
+$background-color: #ffffff; // Pale blue background
+$text-color: #333333; // Dark gray text color
 
 @charset "utf-8";
 
@@ -26,27 +33,438 @@ search: false
 .team-member-image {
     width: 100%;
     object-fit: cover;
-    border-radius: 50%; /* This makes the image circular. */
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 .team-member {
-    height: 175
+    height: auto;
+    display: flex;
+    align-items: flex-start;
 }
 
-.bio-container {
-    flex-grow: 1;
-    margin-left: 10px;
+.team-member-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .team-member-name {
-    font-size: 36px; /* Adjust to the desired size */
-    margin-bottom: 0; /* This eliminates extra space below the name */
+    font-size: 36px;
+    font-family: "Noto sans", sans-serif;
+    margin-bottom: 0;
 }
 
 .team-member-role {
-    font-size: 24px; /* Adjust to the desired size */
+    font-size: 24px;
+    font-family: "Noto sans", sans-serif;
+}
+
+.team-member-bio {
+    max-width: 100%;
+    font-family: "Noto sans", sans-serif;
 }
 
 .team-member-link {
     line-height: 0;
 }
+
+.px-1{
+    padding-left: 1px;
+    padding-right: 1px;
+}
+
+.feature-row-image {
+    max-width: 20%;
+    margin: 0 auto;
+  }
+  
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(28%, 1fr));
+    grid-gap: 0px;
+  }
+  
+  @media (max-width: 600px) {
+    .image-grid {
+      grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    }
+  }
+  
+  .image-grid-item {
+    position: relative;
+    padding-bottom: calc(100% / 3 * 2);
+  }
+  
+  .image-grid-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .image-grid-item:hover .image-overlay {
+    opacity: 1;
+  }
+  
+  .image-overlay-content {
+    text-align: center;
+    position: relative;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .image-overlay-content p {
+    margin-bottom: 10px;
+  }
+  
+  .image-overlay-content a {
+    color: #fff;
+  }
+
+  //Custom catalystneuro button
+  .custom-button-port {
+    background-color: #47e4e2;
+    color: #fff;
+  }
+  
+  .custom-button-port:hover {
+    background-color: #0c067e;
+    color: #ffffff;
+  }
+  .btn--primary.rounded-button {
+    background-color: #47e4e2;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+  }
+  .rounded-button {
+    border-radius: 50px;
+    background-color: #47e4e2;
+  }
+  .rounded-button:hover {
+    background-color: #0c067e;
+    color: #ffffff;
+  }
+
+  //Centered feature row
+  .centered-feature-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .centered-feature-row .feature-image {
+    flex: 0 0 40%;
+    padding-right: 20px;
+  }
+
+  .centered-feature-row .feature-text {
+    flex: 1;
+    text-align: center;
+  }
+
+  .centered-feature-row .underlined-title {
+    position: relative;
+  }
+
+  .centered-feature-row .underlined-title::after {
+    content: '';
+    position: absolute;
+    bottom: -11px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #47e4e2;
+    z-index: -1;
+  }
+  .centered-feature-row .underlined-title span {
+    position: relative;
+    display: inline-block;
+    margin-bottom: -12px;
+  }
+  .centered-feature-row .underlined-title .second-word::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #47e4e2;
+    z-index: -1;
+  }
+
+  .centered-feature-row .underlined-title .first-word::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 9px;
+    background-color: #47e4e2;
+    z-index: -1;
+  }
+
+  .centered-feature-row .first-word {
+    color: #000;
+  }
+
+  .centered-feature-row .excerpt {
+    margin: 20px 0;
+  }
+
+  .centered-feature-row .rounded-button {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .excerpt-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 2px;
+    background-color: #47e4e2;
+    margin-bottom: 10px;
+    margin-left: auto; 
+  margin-right: auto;
+  }
+
+  //Normal underlined title
+  .underlined-title {
+    font-family: Verdana, sans-serif;
+    margin-bottom: 10px;
+    position: relative;
+    font-weight: normal;
+    font-size: xx-large;
+  }
+  
+  .underlined-title::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Adjust the overall thickness of the underline here */
+    background-color: #47e4e2; /* Adjust the color of the underline here */
+    z-index: -1; /* Push the underline below the text */
+  }
+  
+  .underlined-title b {
+    position: relative;
+    font-weight: bold;
+    z-index: 1;
+  }
+  
+  .underlined-title span {
+    position: relative;
+    display: inline-block;
+    margin-bottom: -12px; /* Adjust the gap between the text and underline here */
+  }
+  
+  .underlined-title .first-word::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; /* Adjust the position of the underline here */
+    left: 0;
+    width: 100%;
+    height: 9px; /* Adjust the thickness of the first underline here */
+    background-color: #47e4e2; /* Adjust the color of the first underline here */
+    z-index: -1;
+  }
+  
+  .underlined-title .second-word::after {
+    content: '';
+    position: absolute;
+    bottom: -16px; /* Adjust the position of the underline here */
+    left: 0;
+    width: 100%;
+    height: 3px; /* Adjust the thickness of the second underline here */
+    background-color: #47e4e2; /* Adjust the color of the second underline here */
+    z-index: -1;
+  }
+
+  //Blue underlined title
+  .underlined-title-blue {
+    font-family: Verdana, sans-serif;
+    margin-bottom: 10px;
+    position: relative;
+    font-weight: normal;
+    font-size: xx-large;
+  }
+  
+  .underlined-title-blue::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #050a6a;
+    z-index: -1;
+  }
+  
+  .underlined-title-blue b {
+    position: relative;
+    font-weight: bold;
+    z-index: 1;
+  }
+  
+  .underlined-title-blue span {
+    position: relative;
+    display: inline-block;
+    margin-bottom: -12px;
+  }
+  
+  .underlined-title-blue .first-word::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background-color: #0c067e;
+    z-index: -1;
+  }
+  
+  .underlined-title-blue .second-word::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #0c067e;
+    z-index: -1;
+  }
+
+  //Custom catalystneuro button for blue background
+  .btn--primary.rounded-button-2 {
+    background-color: #0c067e;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+  }
+  .rounded-button-2 {
+    border-radius: 50px;
+    background-color: #0c067e;
+  }
+  .rounded-button-2:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+//Feature row with bright blue background
+  .feature-row-blue {
+    display: flex;
+    background-color: #47e4e2;
+    color: white;
+    margin-left: -120px;
+    margin-right: -120px;
+  }
+  .feature-row-blue .feature-image-blue {
+    flex: 1;
+    text-align: right;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    margin-right: 110px;
+    margin-left: 4px;
+  }
+  
+  .feature-row-blue .feature-image-blue .image-viewport-blue {
+    max-width: 100%;
+    height: auto;
+  }
+  .feature-row-blue .feature-image-blue .image-viewport-blue img {
+    border: 1px solid #000000;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .feature-row-blue .feature-image-blue .image-viewport-blue .image-list-blue {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .feature-row-blue .feature-image-blue .image-viewport-blue .image-list-blue li {
+    display: block;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .feature-row-blue .feature-image-blue .image-viewport-blue .image-list-blue li img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 5px solid #000000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .feature-row-blue .feature-text-blue {
+    flex: 1;
+    text-align: left;
+    z-index: 2;
+    margin-left: 110px;
+    margin-right: 4px;
+  }
+  
+  .image-list {
+    list-style: none;
+    margin-left: 12.5%;
+    margin: 0;
+    padding: 0;
+    width: 200%;
+    animation: scrollImages 6s infinite;
+    position: absolute;
+    top: 11.5%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .image-list li {
+    float: left;
+    width: 50%;
+  }
+  
+  .image-list li img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  @keyframes scrollImages {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }

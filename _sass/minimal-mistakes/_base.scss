@@ -337,3 +337,8 @@ input[type="submit"],
   -webkit-transition: $global-transition;
   transition: $global-transition;
 }
+
+.site-footer .footer-heading {
+  color: #47e4e2;
+  font-family: $sans-serif-narrow;
+}

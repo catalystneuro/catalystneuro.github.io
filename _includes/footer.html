@@ -1,38 +1,98 @@
-<div class="page__footer-follow">
-  {% if site.footer.image %}
-    <img src="/assets/images/bottom.gif" alt="Footer Image">
-  {% endif %}
-  <ul class="social-icons">
-    {% if site.data.ui-text[site.locale].follow_label %}
-      <li><strong>{{ site.data.ui-text[site.locale].follow_label }}</strong></li>
-    {% endif %}
-    
-    {% if site.footer.links %}
-      {% for link in site.footer.links %}
-        {% if link.label and link.url %}
-          <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-    {% unless site.atom_feed.hide %}
-      <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].feed_label | default: "Feed" }}</a></li>
-    {% endunless %}
-  </ul>
-</div>
-  <div class="footer__links">
-    <ul class="footer__menu">
-      <li><a href="/team">Team</a></li>
-      <li><a href="/mission">Misison</a></li>
-      <li><a href="/software">Software</a></li>
-      <li><a href="/services">Services</a></li>
-      <li><a href="/projects">Projects</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
+<style>
+  .site-footer {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  .site-footer ul.custom-list {
+  list-style-type: none;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  }
+  .footer-columns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-left: 0px;
+  }
+
+  .footer-column {
+    flex: 1;
+    padding: 10px;
+  }
+
+  .footer-column a:hover {
+    text-decoration: underline;
+    display: inline-block;
+  }
+  
+  .footer-column a:hover svg path {
+  fill: white;
+  }
+
+  .footer-column a:hover svg path:not(.github-logo) {
+  fill: currentColor;
+  }
+
+  .page__footer-copyright {
+    text-align: left;
+  }
+  .footer-logo{
+    width: 150%;
+  }
+</style>
+
+
+<footer class="site-footer">
+  <div class="footer-columns">
+    <div class="footer-column">
+      <div class="footer-left">
+        <div class="footer-logo">
+          <img src="/assets/images/logo-border.png" alt="CatalystNeuro Logo">
+        </div>
+        <h2 class="footer-heading">ADDRESS</h2>
+        <span>Catalyst Neuro</span><br>
+        <span>844 Rose Drive</span><br>
+        <span>Benicia, CA 94510</span><br>
+      </div>
+      <div class="page__footer-follow">
+        <ul class="social-icons">
+          <a href="{{ https://github.com/catalystneuro }}" target="_blank" rel="noreferrer" class="px-1" aria-label="Github">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#47e4e2" viewBox="0 0 1792 1792">
+                <path d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"></path>
+            </svg>
+          </a>
+          {% if site.footer.links %}
+            {% for link in site.footer.links %}
+              {% if link.label and link.url %}
+                <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          
+        </ul>
+      </div>
+      </div>
+    <div class="footer-column">
+      <ul class="footer__menu custom-list">
+        <h2 class="footer-heading">SITEMAP</h2>
+          <li><a href="/">Home</a></li>
+          <li><a href="/team">Team</a></li>
+          <li><a href="/mission">Mission</a></li>
+          <li><a href="/software">Software</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    </div>
+
+  <div class="page__footer-copyright">
+    &copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}.
+    {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
   </div>
-  <div class="footer__address">
-    <span>Catalyst Neuro</span><br>
-    <span>844 Rose Drive</span><br>
-    <span>Benicia, CA 94510</span><br>
 </div>
-<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+</footer>

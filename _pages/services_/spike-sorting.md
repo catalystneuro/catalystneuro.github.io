@@ -9,8 +9,8 @@ feature_row:
   - excerpt: >
       We can build a custom spike sorting pipeline using SpikeInterface, taking into account your specific task, recording technology, and scientific questions. This pipeline will be open source and we will work with your team to train them how to use the pipeline and make modifications.
     url: "https://calendly.com/d/djx-rc5-95r/ben-and-alessio?month=2023-05"
-    btn_class: "btn--primary"
+    btn_class: "btn--primary rounded-button"
     btn_label: "Schedule a Spike Sorting Consultation"
-    image_path:
+    image_path: /assets/images/spike-sort.jpeg
 ---
 {% include feature_row type="left" %}

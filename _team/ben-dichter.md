@@ -7,8 +7,8 @@ image: /assets/images/team/ben_pic.png
 github: https://github.com/bendichter
 publications: https://orcid.org/0000-0001-5725-6910
 website: https://bendichter.com
-link2: ben.dichter@catalystneuro.com
-other: Contact
+contact: ben.dichter@catalystneuro.com
 order: 1
+visible: true
 ---
 
