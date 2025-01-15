@@ -8,11 +8,19 @@
     <meta name="description" content="CatalystNeuro - Advancing neuroscience through innovative data solutions and open-source software development" />
     <meta name="author" content="CatalystNeuro Team" />
     <meta property="og:image" content="/og-image.png" />
+    <script>
+      (function() {
+        const redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   </head>
 
   <body>
     <div id="root"></div>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
