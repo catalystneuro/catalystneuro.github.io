@@ -1,0 +1,114 @@
+{
+  "members": [
+    {
+      "name": "Ben Dichter, PhD",
+      "isActive": true,
+      "role": "Founder",
+      "description": "Ben Dichter is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He is now a data scientist consultant for neuroscience labs, focusing on building systems for sharing of data and analyses.",
+      "image": "/images/team/benjamin_dichter.png",
+      "github": "https://github.com/bendichter",
+      "personalPage": "http://bendichter.com",
+      "twitter": "https://twitter.com/bendichter",
+      "bluesky": "https://bsky.app/profile/bendichter.com"
+    },
+    {
+      "name": "Luiz Tauffer",
+      "isActive": true,
+      "role": "Lead Neurodata Scientist",
+      "description": "Luiz has a BSc in Electrical Engineering, MSc in Biomedical Engineering and am currently at the late stages of his PhD in Computational Neuroscience. His research work has been focused on mathematical modelling of biological systems and behaviour, i.e. machine learning and data science applied to the life sciences. He is currently expanding my work to cover for more general machine learning / data science consultancy and software development.",
+      "image": "/images/team/luiz-tauffer.jpg",
+      "github": "https://github.com/luiztauffer",
+      "personalPage": "https://luiztauffer.github.io/guacamole-data-science/"
+    },
+    {
+      "name": "Alessio Buccino, PhD",
+      "isActive": true,
+      "role": "Lead Neurodata Scientist",
+      "description": "Alessio Buccino has a BSc and MSc in biomedical engineering and an MSc in computer science. During his PhD at the University of Oslo, he explored the use of advanced modeling techniques and engineering solution to improve the state-of-the-art methods in extracellular electrophysiology for high-density neural probes, from spike sorting to selective electrical stimulation. Alessio is the lead architect of the SpikeInterface platform. He is currently an Electrophysiology Pipeline Development Engineer at the Allen Institute for Neural Dynamics, where he builds standardized and efficient pipelines for the analysis of large-scale electrophysiology data.",
+      "image": "/images/team/alessio_buccino.jpg",
+      "github": "https://github.com/alejoe91"
+    },
+    {
+      "name": "Heberto Mayorquin, PhD",
+      "isActive": true,
+      "role": "Neurodata Scientist",
+      "description": "Ramón Heberto Martinez Mayorquin has a BSC in Physics and an MSc in Complexity Science and a Ph.D. in Computational Neuroscience. During his Ph.D., he studied in the theoretical and computational study of associative neural networks (e.g. Hopfield Network). During his studies, he has developed an interest in software practices that assure efficient, reproducible, and robust scientific simulations. This, together with his love for statistics and data wrangling has led him to move forward with a career in data science where he can combine and further develop those interests.",
+      "image": "/images/team/heberto_mayorquin.jpg",
+      "github": "https://github.com/h-mayorquin"
+    },
+    {
+      "name": "Paul Adkisson",
+      "isActive": true,
+      "role": "Neurodata Programmer",
+      "description": "Paul Adkisson received his B.S. in Neuroscience from the University of California Los Angeles and his M.S.E. in Biomedical Engineering from Johns Hopkins.  In his Master's research, he investigated the effects of different types of electrical stimulation on networks of neurons using computational models.  Now, he works on the SpikeInterface platform to develop modular spike sorting pipelines available to all.  In his free time he enjoys rock climbing and backpacking.",
+      "image": "/images/team/paul_adkisson.jpg",
+      "github": "https://github.com/pauladkisson"
+    },
+    {
+      "name": "Anna (Szonja) Weigl",
+      "isActive": true,
+      "role": "Neurodata Programmer",
+      "description": "Szonja comes from the interdisciplinary field between computer science and neuroscience. She holds a BSc and MSc in Info-bionics Engineering, and has experience in software development. She is keen to learn about and to build reliable, scalable, and maintainable data analysis tools and pipelines. Besides working at CatalystNeuro, she is also working at the Lyon Neuroscience Research Center (CRNL) as an Engineer in a research group interested in learning and memory in the field of Cognitive Neuroscience.",
+      "image": "/images/team/szonja_weigl.jpg",
+      "github": "https://github.com/weiglszonja"
+    },
+    {
+      "name": "Alessandra Trapani, Ph.D.",
+      "isActive": true,
+      "role": "Research Software Engineer",
+      "description": "Dr. Alessandra Trapani received her Ph.D. from Politecnico di Milano, in the NearLAB. Her thesis project aimed at modeling cerebellar motor functions in a large-scale spiking neural network (CerebNEST project).",
+      "image": "/images/team/alessandra_trapani.jpg",
+      "github": "https://github.com/alessandratrapani"
+    },
+    {
+      "name": "Eivind Hennestad",
+      "isActive": true,
+      "role": "Research Software Engineer",
+      "description": "Eivind Hennestad received an MSc from the Univeristy of Oslo, where he studied the vestibular system and gained expertise in diverse neurophysiology data modalities. He is a talented MATLAB developer, and the lead developer for the MatNWB library.",
+      "image": "/images/team/eivind_hennestad.png",
+      "github": "https://github.com/ehennestad"
+    },
+    {
+      "name": "Cody Baker, Ph.D.",
+      "isActive": false,
+      "role": "Former Neurodata Scientist",
+      "description": "Cody Baker was the lead developer of NeuroConv and NWB Inspector. He led several lab engagements, building custom conversion pipelines for leading labs using state-of-the-art data acquisition equipment.",
+      "github": "https://github.com/CodyCBakerPhD"
+    },
+    {
+      "name": "Julia Sprenger, Ph.D.",
+      "isActive": false,
+      "role": "Former Research Software Engineer",
+      "description": "Julia Sprenger specialized in building efficient, universal API support for diverse electrophysiology data formats using python-neo.",
+      "github": "https://github.com/juliasprenger"
+    },
+    {
+      "name": "Vincent Provosto",
+      "isActive": false,
+      "role": "Former Research Software Engineer",
+      "description": "Vincent Provosto contributed to CatalystNeuro's software development and data conversion projects.",
+      "github": "https://github.com/vprovosto"
+    },
+    {
+      "name": "Garrett Flynn",
+      "isActive": false,
+      "role": "Former Software Engineer",
+      "description": "Garrett Flynn was the lead developer of the NWB GUIDE project at CatalystNeuro.",
+      "github": "https://github.com/garrettmflynn"
+    },
+    {
+      "name": "Felix Pei",
+      "isActive": false,
+      "role": "Former Research Software Engineer",
+      "description": "Felix Pei contributed to CatalystNeuro's data standardization and conversion tools.",
+      "github": "https://github.com/fpei-ibm"
+    },
+    {
+      "name": "Saksham Sharda",
+      "isActive": false,
+      "role": "Former Research Software Engineer",
+      "description": "Saksham Sharda led several lab engagements to build custom NWB conversion pipelines.",
+      "github": "https://github.com/Saksham20"
+    }
+  ]
+}
