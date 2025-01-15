@@ -2,6 +2,7 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } fro
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
 import { Menu, Github, ChevronDown } from "lucide-react";
+import { getImageUrl } from "@/utils/imageImports";
 
 export const Navigation = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const Navigation = () => {
           {/* Mobile View */}
           <div className="flex justify-between items-center w-full md:hidden">
             <img 
-              src="/lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png"
+              src={getImageUrl("lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png")}
               alt="CatalystNeuro"
               className="h-8 cursor-pointer"
               onClick={() => navigate("/")}
@@ -60,7 +61,7 @@ export const Navigation = () => {
           {/* Desktop View */}
           <div className="hidden md:flex items-center justify-between flex-1">
             <img 
-              src="/lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png"
+              src={getImageUrl("lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png")}
               alt="CatalystNeuro"
               className="h-10 cursor-pointer"
               onClick={() => navigate("/")}
