@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigation } from "./components/Navigation";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
@@ -22,21 +22,18 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename={window.location.pathname}>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/nwb-conversions" element={<NWBConversions />} />
-          <Route path="/software" element={<Software />} />
-          <Route path="/openings" element={<Openings />} />
-          <Route path="/openings/:id" element={<JobPosition />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/funded-projects" element={<FundedProjects />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <Navigation />
+      {window.location.pathname === "/" && <Index />}
+      {window.location.pathname === "/team" && <Team />}
+      {window.location.pathname === "/blog" && <Blog />}
+      {window.location.pathname.startsWith("/blog/") && <BlogPost />}
+      {window.location.pathname === "/nwb-conversions" && <NWBConversions />}
+      {window.location.pathname === "/software" && <Software />}
+      {window.location.pathname === "/openings" && <Openings />}
+      {window.location.pathname.startsWith("/openings/") && <JobPosition />}
+      {window.location.pathname === "/about" && <About />}
+      {window.location.pathname === "/funded-projects" && <FundedProjects />}
+      <Footer />
     </TooltipProvider>
   </QueryClientProvider>
 );

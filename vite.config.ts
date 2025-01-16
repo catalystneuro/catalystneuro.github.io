@@ -38,17 +38,9 @@ export default defineConfig(({ mode }) => ({
   build: {
     assetsDir: 'assets',
     copyPublicDir: true,
+    outDir: 'dist',
     rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html'),
-        about: path.resolve(__dirname, 'about/index.html'),
-        team: path.resolve(__dirname, 'team/index.html'),
-        blog: path.resolve(__dirname, 'blog/index.html'),
-        software: path.resolve(__dirname, 'software/index.html'),
-        openings: path.resolve(__dirname, 'openings/index.html'),
-        'funded-projects': path.resolve(__dirname, 'funded-projects/index.html'),
-        'nwb-conversions': path.resolve(__dirname, 'nwb-conversions/index.html'),
-      }
+      input: 'index.html'
     }
   },
 }));

@@ -6,18 +6,18 @@ import logo from "../../public/lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d8
 export const Navigation = () => {
 
   const menuItems = [
-    { label: "About", path: "/about/" },
-    { label: "Team", path: "/team/" },
-    { label: "Software", path: "/software/" },
+    { label: "About", path: "/about" },
+    { label: "Team", path: "/team" },
+    { label: "Software", path: "/software" },
     {
       label: "Portfolio",
       items: [
-        { label: "NWB Conversions", path: "/nwb-conversions/" },
-        { label: "Funded Projects", path: "/funded-projects/" },
+        { label: "NWB Conversions", path: "/nwb-conversions" },
+        { label: "Funded Projects", path: "/funded-projects" },
       ],
     },
-    { label: "Blog", path: "/blog/" },
-    { label: "Openings", path: "/openings/" },
+    { label: "Blog", path: "/blog" },
+    { label: "Openings", path: "/openings" },
   ];
 
   return (
@@ -26,12 +26,13 @@ export const Navigation = () => {
         <div className="h-16 flex items-center">
           {/* Mobile View */}
           <div className="flex justify-between items-center w-full md:hidden">
-            <img 
-              src={logo}
-              alt="CatalystNeuro"
-              className="h-8 cursor-pointer"
-              onClick={() => window.location.href = "/"}
-            />
+            <a href="/">
+              <img 
+                src={logo}
+                alt="CatalystNeuro"
+                className="h-8"
+              />
+            </a>
             <Menubar className="border-none">
               <MenubarMenu>
                 <MenubarTrigger className="font-bold">
@@ -62,12 +63,13 @@ export const Navigation = () => {
 
           {/* Desktop View */}
           <div className="hidden md:flex items-center justify-between flex-1">
-            <img 
-              src={logo}
-              alt="CatalystNeuro"
-              className="h-10 cursor-pointer"
-              onClick={() => window.location.href = "/"}
-            />
+            <a href="/">
+              <img 
+                src={logo}
+                alt="CatalystNeuro"
+                className="h-10"
+              />
+            </a>
             <div className="flex items-center space-x-6">
               {menuItems.map((item) => (
                 item.items ? (
@@ -78,23 +80,25 @@ export const Navigation = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       {item.items.map((subItem) => (
-                        <DropdownMenuItem 
-                          key={subItem.path}
-                          onClick={() => window.location.href = subItem.path}
-                        >
-                          {subItem.label}
+                        <DropdownMenuItem key={subItem.path}>
+                          <a 
+                            href={subItem.path}
+                            className="block w-full"
+                          >
+                            {subItem.label}
+                          </a>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <button 
+                  <a 
                     key={item.path}
+                    href={item.path}
                     className="hover:text-primary transition-colors"
-                    onClick={() => window.location.href = item.path}
                   >
                     {item.label}
-                  </button>
+                  </a>
                 )
               ))}
               <a
