@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { blogPosts } from "@/utils/blogLoader";
-import { Link } from "react-router-dom";
 
 export const LatestPosts = () => {
   const latestPosts = blogPosts.slice(0, 3);
@@ -11,7 +10,7 @@ export const LatestPosts = () => {
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground">Latest News & Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {latestPosts.map((post) => (
-            <Link to={`/blog/${post.slug}`} key={post.slug} className="block">
+            <a href={`/blog/${post.slug}`} key={post.slug} className="block">
               <Card className="h-full hover:shadow-lg transition-shadow">
                 <img
                   src={post.image}
@@ -36,7 +35,7 @@ export const LatestPosts = () => {
                   <span className="text-sm text-muted-foreground">{post.date}</span>
                 </CardContent>
               </Card>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

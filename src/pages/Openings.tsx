@@ -2,7 +2,6 @@ import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { loadOpenings } from "@/utils/contentLoader";
 
 const Openings = () => {
@@ -39,12 +38,12 @@ const Openings = () => {
                 <p className="text-muted-foreground">{position.description}</p>
               </CardContent>
               <CardFooter>
-                <Link to={`/openings/${position.id}`}>
+                <a href={`/openings/${position.id}`} className="w-full">
                   <Button className="w-full group">
                     View Position
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                </Link>
+                </a>
               </CardFooter>
             </Card>
             ))}

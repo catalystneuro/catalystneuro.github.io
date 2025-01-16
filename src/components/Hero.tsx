@@ -1,9 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
-  const navigate = useNavigate();
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-primary/10 to-transparent py-20 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -16,13 +14,17 @@ export const Hero = () => {
             We help research labs standardize, share, and publish their neurophysiology data through custom software solutions and expert consulting.
           </p>
           <div className="mt-10 flex gap-x-6">
-            <Button size="lg" className="group">
-              Get Started
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline" size="lg" onClick={() => navigate("/about")}>
-              Learn More
-            </Button>
+            <a href="/software">
+              <Button size="lg" className="group">
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </a>
+            <a href="/about">
+              <Button variant="outline" size="lg">
+                Learn More
+              </Button>
+            </a>
           </div>
         </div>
       </div>

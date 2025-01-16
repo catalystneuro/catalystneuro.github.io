@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -8,7 +7,7 @@ import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
 
 export const BlogPost = () => {
-  const { slug } = useParams();
+  const slug = window.location.pathname.split('/blog/')[1];
   const post = blogPosts.find(p => p.slug === slug);
   
   if (!post) {

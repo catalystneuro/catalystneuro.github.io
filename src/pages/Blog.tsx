@@ -2,7 +2,6 @@ import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { BookOpen } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/utils/blogLoader";
@@ -49,7 +48,7 @@ const Blog = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentPosts.map((post) => (
-            <Link to={`/blog/${post.slug}`} key={post.slug}>
+            <a href={`/blog/${post.slug}`} key={post.slug}>
               <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                 <img
                   src={post.image}
@@ -83,7 +82,7 @@ const Blog = () => {
                   </span>
                 </CardContent>
               </Card>
-            </Link>
+            </a>
           ))}
         </div>
 

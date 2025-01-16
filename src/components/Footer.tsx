@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -10,19 +8,19 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-gray-900">Company</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-sm text-gray-600 hover:text-gray-900">About</Link></li>
-              <li><Link to="/team" className="text-sm text-gray-600 hover:text-gray-900">Team</Link></li>
-              <li><Link to="/openings" className="text-sm text-gray-600 hover:text-gray-900">Careers</Link></li>
-              <li><Link to="/services" className="text-sm text-gray-600 hover:text-gray-900">Services</Link></li>
+              <li><a href="/about" className="text-sm text-gray-600 hover:text-gray-900">About</a></li>
+              <li><a href="/team" className="text-sm text-gray-600 hover:text-gray-900">Team</a></li>
+              <li><a href="/openings" className="text-sm text-gray-600 hover:text-gray-900">Careers</a></li>
+              <li><a href="/services" className="text-sm text-gray-600 hover:text-gray-900">Services</a></li>
             </ul>
           </div>
           
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-gray-900">Resources</h3>
             <ul className="space-y-2">
-              <li><Link to="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</Link></li>
-              <li><Link to="/portfolio" className="text-sm text-gray-600 hover:text-gray-900">Portfolio</Link></li>
-              <li><Link to="/software" className="text-sm text-gray-600 hover:text-gray-900">Software</Link></li>
+              <li><a href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</a></li>
+              <li><a href="/portfolio" className="text-sm text-gray-600 hover:text-gray-900">Portfolio</a></li>
+              <li><a href="/software" className="text-sm text-gray-600 hover:text-gray-900">Software</a></li>
             </ul>
           </div>
 
