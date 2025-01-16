@@ -1,13 +1,18 @@
-import { getImageUrl } from "@/utils/imageImports";
+import nihLogo from "../../images/sponsors/nih_logo.png";
+import allenLogo from "../../images/sponsors/allen_institute_logo.jpeg";
+import kavliLogo from "../../images/sponsors/kavli_foundation_logo.png";
+import mjffLogo from "../../images/sponsors/MJFF_logo.jpg";
+import simonsLogo from "../../images/sponsors/simons_foundation_logo.avif";
+import mitLogo from "../../images/sponsors/MIT_logo.png";
 
 export const BrandBanner = () => {
   const brands = [
-    { name: "NIH", logo: getImageUrl("images/sponsors/nih_logo.png") },
-    { name: "Allen Institute", logo: getImageUrl("images/sponsors/allen_institute_logo.jpeg") },
-    { name: "Kavli Foundation", logo: getImageUrl("images/sponsors/kavli_foundation_logo.png") },
-    { name: "Michael J. Fox Foundation", logo: getImageUrl("images/sponsors/MJFF_logo.jpg") },
-    { name: "Simons Foundation", logo: getImageUrl("images/sponsors/simons_foundation_logo.avif") },
-    { name: "MIT", logo: getImageUrl("images/sponsors/MIT_logo.png") },
+    { name: "NIH", logo: nihLogo },
+    { name: "Allen Institute", logo: allenLogo },
+    { name: "Kavli Foundation", logo: kavliLogo },
+    { name: "Michael J. Fox Foundation", logo: mjffLogo },
+    { name: "Simons Foundation", logo: simonsLogo },
+    { name: "MIT", logo: mitLogo },
   ];
 
   return (

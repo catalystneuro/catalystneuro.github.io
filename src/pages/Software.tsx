@@ -19,7 +19,7 @@ const Software = () => {
           {softwareList.map((software) => (
             <Card key={software.name} className="flex flex-col">
               <img
-                src={software.image}
+                src={new URL(`../../${software.image}`, import.meta.url).href}
                 alt={software.name}
                 className="w-full h-48 object-contain rounded-t-lg bg-white p-4"
               />

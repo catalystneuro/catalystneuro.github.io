@@ -1,6 +1,5 @@
 import { Navigation } from "@/components/Navigation";
 import { Github, Link as LinkIcon, Twitter, X } from "lucide-react";
-import { getImageUrl } from "@/utils/imageImports";
 
 // Custom Bluesky icon component to match Lucide style
 const BlueSkyIcon = ({ size = 20, className = "" }) => (
@@ -34,7 +33,7 @@ const Team = () => {
             >
               <div className="mb-4">
                 <img 
-                  src={getImageUrl(member.image)} 
+                  src={new URL(`../../${member.image}`, import.meta.url).href}
                   alt={member.name}
                   className="w-40 h-40 rounded-full mx-auto object-cover"
                 />
