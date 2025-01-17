@@ -66,7 +66,10 @@ export const Contact = () => {
             <form 
               onSubmit={handleSubmit} 
               className="flex gap-4"
+              data-netlify="true"
+              name="newsletter"
             >
+              <input type="hidden" name="form-name" value="newsletter" />
               <Input
                 type="email"
                 placeholder="Enter your email"
