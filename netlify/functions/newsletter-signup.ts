@@ -19,23 +19,7 @@ const handler: Handler = async (event) => {
       };
     }
 
-    // Store the email in Netlify Forms
-    const response = await fetch('https://api.netlify.com/api/v1/forms/newsletter/submissions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.NETLIFY_ACCESS_TOKEN}`,
-      },
-      body: JSON.stringify({
-        email,
-        'form-name': 'newsletter',
-        data: { email },
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to store email');
-    }
+    // Return success - Netlify will handle the form submission automatically
     return {
       statusCode: 200,
       body: JSON.stringify({

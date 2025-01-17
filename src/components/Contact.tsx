@@ -16,10 +16,13 @@ export const Contact = () => {
     setError(null);
 
     try {
-      const response = await fetch('/.netlify/functions/newsletter-signup', {
+      const formData = new FormData();
+      formData.append('form-name', 'newsletter');
+      formData.append('email', email);
+
+      const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -72,6 +75,7 @@ export const Contact = () => {
               <input type="hidden" name="form-name" value="newsletter" />
               <Input
                 type="email"
+                name="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
