@@ -11,3 +11,6 @@
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
+
+[build.environment]
+  NETLIFY_ACCESS_TOKEN = "nfp_rpNQC9Tf9Vr8kBP3L3ZDGZfvRkSZdUCD13a4"
