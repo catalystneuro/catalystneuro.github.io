@@ -16,17 +16,33 @@ export const Contact = () => {
     setError(null);
 
     try {
-      const formData = new FormData();
-      formData.append('form-name', 'newsletter');
-      formData.append('email', email);
+      if (import.meta.env.DEV) {
+        // In development, use the serverless function
+        const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
 
-      const response = await fetch('/', {
-        method: 'POST',
-        body: formData,
-      });
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Failed to subscribe');
+        }
+      } else {
+        // In production, submit directly to Netlify Forms
+        const formData = new FormData();
+        formData.append('form-name', 'newsletter');
+        formData.append('email', email);
 
-      if (!response.ok) {
-        throw new Error('Failed to subscribe');
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData as any).toString(),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to subscribe');
+        }
       }
 
       setSubscribed(true);

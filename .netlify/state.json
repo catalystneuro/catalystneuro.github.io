@@ -1,0 +1,19 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Belize City",
+			"country": {
+				"code": "BZ",
+				"name": "Belize"
+			},
+			"subdivision": {
+				"code": "BZ",
+				"name": "Belize District"
+			},
+			"timezone": "America/Belize",
+			"latitude": 17.5018,
+			"longitude": -88.1956
+		},
+		"timestamp": 1737147412646
+	}
+}
