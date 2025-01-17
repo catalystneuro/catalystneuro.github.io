@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -16,8 +15,7 @@ export const BlogPost = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <div className="min-h-screen bg-background pt-16">
       <div className="container mx-auto px-4 py-8">
         <article className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>

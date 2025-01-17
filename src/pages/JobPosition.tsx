@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { loadOpenings } from "@/utils/contentLoader";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 
 const JobPosition = () => {
-  const { id } = useParams();
+  const id = window.location.pathname.split('/openings/')[1];
   const positions = loadOpenings();
   const position = positions.find(p => p.id === id);
 

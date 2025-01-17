@@ -21,14 +21,15 @@ function processContent(content: string): string {
     if (folder) {
       // If a folder is specified, use all images from that folder
       try {
-        const files = import.meta.glob('/images/**/*.(jpg|jpeg|png|gif|mp4|webm)', { 
+        // Use relative paths for images
+        const files = import.meta.glob('../../images/**/*.(jpg|jpeg|png|gif|mp4|webm|avif)', { 
           as: 'url',
           eager: true 
         });
-        images = Object.keys(files)
-          .filter(path => path.startsWith(`/images/${folder}/`))
-          .sort()
-          .map(path => path);
+        images = Object.entries(files)
+          .filter(([path]) => path.includes(`/${folder}/`))
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([path]) => path.replace('../../', '/'));
       } catch (error) {
         console.error('Error loading images from folder:', error);
       }
