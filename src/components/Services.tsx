@@ -36,10 +36,12 @@ const ServiceCard = ({
           ))}
         </ul>
       )}
+      {/* Consultation buttons temporarily disabled
       <Button className="w-full group" onClick={() => window.open(buttonLink)}>
         {buttonText}
         <Icon className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
       </Button>
+      */}
     </CardContent>
   </Card>
 );
