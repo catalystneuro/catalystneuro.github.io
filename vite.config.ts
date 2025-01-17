@@ -6,7 +6,7 @@ import mdx from "@mdx-js/rollup";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/',
+  base: '',
   server: {
     host: "::",
     port: 8080,
@@ -40,7 +40,10 @@ export default defineConfig(({ mode }) => ({
     copyPublicDir: true,
     outDir: 'dist',
     rollupOptions: {
-      input: 'index.html'
+      input: 'index.html',
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]'
+      }
     }
   },
 }));

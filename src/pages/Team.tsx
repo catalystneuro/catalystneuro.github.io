@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { Github, Link as LinkIcon, Twitter, X } from "lucide-react";
 
 // Custom Bluesky icon component to match Lucide style
@@ -20,8 +19,7 @@ const previousTeamMembers = teamData.members.filter(member => !member.isActive);
 
 const Team = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gradient-start to-gradient-end">
-      <Navigation />
+    <div className="bg-gradient-to-b from-gradient-start to-gradient-end">
       <div className="container mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-center mb-12">Our Team</h1>
         
@@ -33,7 +31,7 @@ const Team = () => {
             >
               <div className="mb-4">
                 <img 
-                  src={new URL(`../../${member.image}`, import.meta.url).href}
+                  src={`/assets/${member.image.split('/').pop()}`}
                   alt={member.name}
                   className="w-40 h-40 rounded-full mx-auto object-cover"
                 />

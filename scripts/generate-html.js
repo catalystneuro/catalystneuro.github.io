@@ -16,9 +16,16 @@ const routes = [
   'nwb-conversions'
 ];
 
-// Read the built template
+// Read the template
 const distDir = path.join(rootDir, 'dist');
 const template = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8');
+
+// Fix asset paths to be absolute
+const fixedTemplate = template
+  .replace(/src="\.\//g, 'src="/')
+  .replace(/href="\.\//g, 'href="/')
+  .replace(/src="\.\.\//g, 'src="/')
+  .replace(/href="\.\.\//g, 'href="/');
 
 // Create directories and HTML files for each route
 routes.forEach(route => {
@@ -26,5 +33,8 @@ routes.forEach(route => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-  fs.writeFileSync(path.join(dir, 'index.html'), template);
+  fs.writeFileSync(path.join(dir, 'index.html'), fixedTemplate);
 });
+
+// Update the root index.html as well
+fs.writeFileSync(path.join(distDir, 'index.html'), fixedTemplate);
