@@ -6,7 +6,7 @@ import mdx from "@mdx-js/rollup";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '',
+  base: '/',
   server: {
     host: "::",
     port: 8080,
@@ -42,7 +42,14 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       input: 'index.html',
       output: {
-        assetFileNames: 'assets/[name]-[hash][extname]'
+        assetFileNames: (assetInfo) => {
+          // Keep image names and paths as they are
+          if (assetInfo.name && /\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
+            return assetInfo.name;
+          }
+          // For other assets, use hashed names
+          return 'assets/[name]-[hash][extname]';
+        }
       }
     }
   },

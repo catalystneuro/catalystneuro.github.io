@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Brain, Users, Globe, Database } from "lucide-react";
 import { loadAbout } from "@/utils/contentLoader";
@@ -14,8 +13,7 @@ const About = () => {
   const { sections } = loadAbout();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end">
-      <Navigation />
+    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center">About CatalystNeuro</h1>
 

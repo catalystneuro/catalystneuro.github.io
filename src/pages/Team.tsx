@@ -31,7 +31,7 @@ const Team = () => {
             >
               <div className="mb-4">
                 <img 
-                  src={`/assets/${member.image.split('/').pop()}`}
+                  src={member.image}
                   alt={member.name}
                   className="w-40 h-40 rounded-full mx-auto object-cover"
                 />

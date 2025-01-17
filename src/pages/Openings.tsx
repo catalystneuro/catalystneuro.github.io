@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -8,8 +7,7 @@ const Openings = () => {
   const positions = loadOpenings();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end">
-      <Navigation />
+    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center">Open Positions</h1>
         <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
