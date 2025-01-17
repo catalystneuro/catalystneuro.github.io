@@ -19,14 +19,23 @@ const handler: Handler = async (event) => {
       };
     }
 
-    // Here you would integrate with your newsletter service
-    // For example, with Mailchimp:
-    // const response = await mailchimp.lists.addListMember(LIST_ID, {
-    //   email_address: email,
-    //   status: 'subscribed',
-    // });
+    // Store the email in Netlify Forms
+    const response = await fetch('https://api.netlify.com/api/v1/forms/newsletter/submissions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.NETLIFY_ACCESS_TOKEN}`,
+      },
+      body: JSON.stringify({
+        email,
+        'form-name': 'newsletter',
+        data: { email },
+      }),
+    });
 
-    // For now, we'll just return a success response
+    if (!response.ok) {
+      throw new Error('Failed to store email');
+    }
     return {
       statusCode: 200,
       body: JSON.stringify({

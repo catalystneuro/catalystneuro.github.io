@@ -16,14 +16,10 @@ export const Contact = () => {
     setError(null);
 
     try {
-      const formData = new FormData();
-      formData.append('form-name', 'newsletter');
-      formData.append('email', email);
-
-      const response = await fetch('/', {
+      const response = await fetch('/.netlify/functions/newsletter-signup', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
       });
 
       if (!response.ok) {
@@ -70,15 +66,7 @@ export const Contact = () => {
             <form 
               onSubmit={handleSubmit} 
               className="flex gap-4"
-              name="newsletter"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
             >
-              <input type="hidden" name="form-name" value="newsletter" />
-              <div hidden>
-                <input name="bot-field" />
-              </div>
               <Input
                 type="email"
                 placeholder="Enter your email"
