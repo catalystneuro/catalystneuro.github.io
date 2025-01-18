@@ -11,38 +11,27 @@ export const Contact = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    // In production, let the form submit normally to Netlify
+    if (!import.meta.env.DEV) {
+      setLoading(true);
+      return;
+    }
+
+    // In development, handle the submission with the local function
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      if (import.meta.env.DEV) {
-        // In development, use the serverless function
-        const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
+      const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message || 'Failed to subscribe');
-        }
-      } else {
-        // In production, submit directly to Netlify Forms
-        const formData = new FormData();
-        formData.append('form-name', 'newsletter');
-        formData.append('email', email);
-
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as any).toString(),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to subscribe');
-        }
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to subscribe');
       }
 
       setSubscribed(true);
@@ -87,7 +76,11 @@ export const Contact = () => {
               className="flex gap-4"
               data-netlify="true"
               name="newsletter"
+              method="POST"
+              action="/success"
+              netlify-honeypot="bot-field"
             >
+              <input type="hidden" name="bot-field" />
               <input type="hidden" name="form-name" value="newsletter" />
               <Input
                 type="email"

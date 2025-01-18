@@ -14,6 +14,7 @@ import Openings from "./pages/Openings";
 import JobPosition from "./pages/JobPosition";
 import About from "./pages/About";
 import FundedProjects from "./pages/FundedProjects";
+import Success from "./pages/Success";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,8 @@ const App = () => {
       '/software': <Software />,
       '/openings': <Openings />,
       '/about': <About />,
-      '/funded-projects': <FundedProjects />
+      '/funded-projects': <FundedProjects />,
+      '/success': <Success />
     };
 
     // Handle dynamic routes
