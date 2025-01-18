@@ -5,4 +5,5 @@ description: "Developed comprehensive NWB conversion tools for the Pinto lab's t
 tags: ["behavioral tracking", "calcium imaging", "neural computation", "spatial navigation"]
 github: "https://github.com/catalystneuro/pinto-lab-to-nwb"
 date: "2023-03"
+funded_project: "SCGB NWB Adoption"
 ---

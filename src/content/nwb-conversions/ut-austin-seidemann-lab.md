@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Seidemann lab's neuroscienc
 tags: ["visual processing", "electrophysiology", "behavioral tracking", "neural computation"]
 github: "https://github.com/catalystneuro/seidemann-lab-to-nwb"
 date: "2022-05"
+funded_project: ""
 ---

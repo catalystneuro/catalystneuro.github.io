@@ -6,4 +6,5 @@ tags: ["calcium imaging", "behavioral tracking", "visual processing"]
 github: "https://github.com/catalystneuro/visual-coding-to-nwb-v2"
 dandi: "https://dandiarchive.org/dandiset/000039"
 date: "2023-10"
+funded_project: ""
 ---

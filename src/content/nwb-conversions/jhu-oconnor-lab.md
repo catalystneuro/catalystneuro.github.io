@@ -8,4 +8,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000226"
     name: "000226"
 date: "2021-11"
+funded_project: ""
 ---

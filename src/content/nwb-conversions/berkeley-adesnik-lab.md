@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Adesnik lab's MouseV1 proje
 tags: ["visual processing", "calcium imaging", "behavioral tracking"]
 github: "https://github.com/catalystneuro/mousev1-to-nwb"
 date: "2023-10"
+funded_project: ""
 ---

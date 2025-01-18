@@ -8,4 +8,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/001075"
     name: "001075: Neural signal propagation atlas of C. elegans"
 date: "2024-03"
+funded_project: ""
 ---

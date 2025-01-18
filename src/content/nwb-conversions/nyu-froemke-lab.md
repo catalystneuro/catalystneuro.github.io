@@ -10,4 +10,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000114"
     name: "000114: Oxytocin neurons and social transmission"
 date: "2022-04"
+funded_project: ""
 ---

@@ -8,4 +8,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000947"
     name: "000947: Reach-related Single Unit Activity in the Parkinsonian Macaque"
 date: "2023-08"
+funded_project: ""
 ---

@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Jaeger lab's neuroscience d
 tags: ["electrophysiology", "neural computation", "motor control", "behavioral tracking"]
 github: "https://github.com/catalystneuro/jaeger-lab-to-nwb"
 date: "2019-10"
+funded_project: ""
 ---

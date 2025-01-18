@@ -20,6 +20,7 @@ type PortfolioItem = {
   dandi?: string | { url: string; name: string; }[];
   date: string;
   tags?: string[];
+  funded_project?: string;
 };
 
 interface BadgeProps {
@@ -41,6 +42,7 @@ const NWBConversions = () => {
   const [selectedInstitution, setSelectedInstitution] = useState<string>("All");
   const [selectedMethod, setSelectedMethod] = useState<string>("All");
   const [selectedArea, setSelectedArea] = useState<string>("All");
+  const [selectedFundedProject, setSelectedFundedProject] = useState<string>("All");
   const [sortBy, setSortBy] = useState<SortOption>("name");
   const [groupBy, setGroupBy] = useState<"none" | "institution" | "method" | "area">("none");
   const portfolioItems = loadPortfolio() as PortfolioItem[];
@@ -84,9 +86,10 @@ const NWBConversions = () => {
     }
   };
 
-  // Get unique institutions and tags for filter dropdowns
+  // Get unique institutions, tags, and funded projects for filter dropdowns
   const institutions = ["All", ...new Set(portfolioItems.map(item => item.institution))].sort();
   const tags = ["All", ...new Set(portfolioItems.flatMap(item => item.tags || []))].sort();
+  const fundedProjects = ["All", ...new Set(portfolioItems.map(item => item.funded_project).filter(Boolean))].sort();
 
   // Filter items based on search term, institution, method, and research area
   const filteredItems = portfolioItems.filter((item) => {
@@ -98,7 +101,8 @@ const NWBConversions = () => {
     const matchesInstitution = selectedInstitution === "All" || item.institution === selectedInstitution;
     const matchesMethod = selectedMethod === "All" || (item.tags && item.tags.some(tag => methods.includes(tag) && (selectedMethod === "All" || tag === selectedMethod)));
     const matchesArea = selectedArea === "All" || (item.tags && item.tags.some(tag => researchAreas.includes(tag) && (selectedArea === "All" || tag === selectedArea)));
-    return matchesSearch && matchesInstitution && matchesMethod && matchesArea;
+    const matchesFundedProject = selectedFundedProject === "All" || item.funded_project === selectedFundedProject;
+    return matchesSearch && matchesInstitution && matchesMethod && matchesArea && matchesFundedProject;
   });
 
   // Sort filtered items
@@ -230,6 +234,27 @@ const NWBConversions = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
+                    Funded Project: {selectedFundedProject}
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {fundedProjects.map((project) => (
+                    <DropdownMenuItem
+                      key={project}
+                      onClick={() => {
+                        setSelectedFundedProject(project);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      {project}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
                     Sort by
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -266,13 +291,20 @@ const NWBConversions = () => {
                   <Card key={index} className="hover:shadow-lg transition-shadow">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-xl">{item.lab}</CardTitle>
-                      <div className="flex items-center justify-between">
-                        <CardDescription className="text-primary font-medium">
-                          {item.institution}
-                        </CardDescription>
-                        <CardDescription className="text-sm text-muted-foreground">
-                          {item.date}
-                        </CardDescription>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <CardDescription className="text-primary font-medium">
+                            {item.institution}
+                          </CardDescription>
+                          <CardDescription className="text-sm text-muted-foreground">
+                            {item.date}
+                          </CardDescription>
+                        </div>
+                        {item.funded_project && (
+                          <CardDescription className="text-sm text-purple-600 font-medium">
+                            {item.funded_project}
+                          </CardDescription>
+                        )}
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-4">

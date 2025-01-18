@@ -5,4 +5,5 @@ description: "Developed comprehensive NWB conversion tools for the Stavisky lab'
 tags: ["brain-computer interface", "electrophysiology", "neural computation", "behavioral tracking"]
 github: "https://github.com/catalystneuro/stavisky-lab-to-nwb"
 date: "2023-05"
+funded_project: "SCGB NWB Adoption"
 ---

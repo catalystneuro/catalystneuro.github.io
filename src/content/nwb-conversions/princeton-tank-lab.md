@@ -5,4 +5,5 @@ description: "Developed comprehensive NWB conversion tools for the Tank lab's be
 tags: ["spatial navigation", "electrophysiology", "behavioral tracking", "neural computation"]
 github: "https://github.com/catalystneuro/tank-lab-to-nwb"
 date: "2020-10"
+funded_project: "SCGB NWB Adoption"
 ---

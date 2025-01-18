@@ -6,4 +6,5 @@ tags: ["visual processing", "electrophysiology", "neural computation", "behavior
 github: "https://github.com/catalystneuro/movshon-lab-to-nwb"
 dandi: []
 date: "2021-01"
+funded_project: "SCGB NWB Adoption"
 ---

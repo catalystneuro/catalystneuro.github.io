@@ -7,4 +7,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000114"
     name: "000114: Oxytocin neurons enable social transmission of maternal behaviour"
 date: "2024"
+funded_project: ""
 ---

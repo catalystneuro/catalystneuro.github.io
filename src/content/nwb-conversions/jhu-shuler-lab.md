@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Shuler lab's electrophysiol
 tags: ["behavioral tracking", "electrophysiology", "neural computation"]
 github: "https://github.com/catalystneuro/shuler-lab-to-nwb"
 date: "2022-11"
+funded_project: ""
 ---

@@ -8,4 +8,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000070"
     name: "000070: Neural population dynamics during reaching"
 date: "2021-02"
+funded_project: "SCGB NWB Adoption"
 ---

@@ -7,4 +7,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000045"
     name: "000045: IBL standardized decision-making experiments"
 date: "2020-04"
+funded_project: "SCGB NWB Adoption"
 ---

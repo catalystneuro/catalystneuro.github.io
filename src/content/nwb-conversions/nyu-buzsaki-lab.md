@@ -14,4 +14,5 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000233"
     name: "000233: Sharp Wave-Ripples and Glucose Regulation"
 date: "2019-11"
+funded_project: ""
 ---

@@ -5,4 +5,5 @@ description: "Developed comprehensive NWB conversion tools for the Constantinopl
 tags: ["behavioral tracking", "electrophysiology", "neural computation", "calcium imaging"]
 github: "https://github.com/catalystneuro/constantinople-lab-to-nwb"
 date: "2024-07"
+funded_project: ""
 ---

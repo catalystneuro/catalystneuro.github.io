@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Buffalo lab's multi-modal n
 tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/buffalo-lab-to-nwb"
 date: "2019-07"
+funded_project: "SCGB NWB Adoption"
 ---

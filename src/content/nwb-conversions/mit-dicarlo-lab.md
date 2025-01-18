@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the DiCarlo lab's neuroscience 
 tags: ["visual processing", "electrophysiology", "neural computation", "behavioral tracking"]
 github: "https://github.com/catalystneuro/dicarlo-lab-to-nwb"
 date: "2024-05"
+funded_project: "SCGB NWB Adoption"
 ---

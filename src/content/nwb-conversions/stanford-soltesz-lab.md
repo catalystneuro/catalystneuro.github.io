@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Soltesz lab's neuroscience 
 tags: ["electrophysiology", "neural computation", "behavioral tracking"]
 github: "https://github.com/catalystneuro/soltesz-lab-to-nwb"
 date: "2019-11"
+funded_project: ""
 ---
