@@ -30,6 +30,9 @@ const FundedProject = () => {
       if (projectTitle === "SCGB NWB Adoption") {
         return conv.funded_project === "SCGB NWB Adoption";
       }
+      if (projectTitle === "NYU Librarians NWB Adoption") {
+        return conv.funded_project === "NYU Librarians";
+      }
       return conv.funded_project === projectTitle;
     });
     setAffiliatedConversions(affiliated);
@@ -105,7 +108,7 @@ const FundedProject = () => {
               </div>
 
               {affiliatedConversions.length > 0 && (
-                <div>
+                <div className="mt-16">
                   <h2 className="text-2xl font-bold mb-4">Affiliated NWB Conversions</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {affiliatedConversions.map((conv, index) => (
