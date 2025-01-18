@@ -1,5 +1,5 @@
 ---
-title: "SpikeInterface Development Project"
+title: "SpikeInterface Development"
 funder: "Simons Foundation"
 status: "active"
 startDate: "2023-01-01"

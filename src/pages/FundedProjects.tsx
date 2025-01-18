@@ -42,9 +42,9 @@ const FundedProjects = () => {
             <a 
               key={index}
               href={`/funded-projects/${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-              className="no-underline"
+              className="no-underline h-full block"
             >
-              <Card className="hover:shadow-lg transition-shadow h-full">
+              <Card className="hover:shadow-lg transition-shadow h-full flex flex-col">
               <CardHeader className="space-y-4 flex-none">
                 <div className="flex items-start justify-between">
                   <CardTitle>{project.title}</CardTitle>
@@ -67,8 +67,8 @@ const FundedProjects = () => {
                   </div>
                 )}
               </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-muted-foreground h-full">
+              <CardContent className="flex-grow flex flex-col">
+                <p className="text-muted-foreground flex-grow">
                   {project.body}
                 </p>
               </CardContent>
