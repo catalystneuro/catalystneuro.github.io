@@ -37,10 +37,6 @@ export const Contact = () => {
       } finally {
         setLoading(false);
       }
-    } else {
-      // In production, let the form submit naturally to Netlify
-      setSubscribed(true);
-      setEmail("");
     }
   };
 
