@@ -38,6 +38,14 @@ export const LatestPosts = () => {
             </a>
           ))}
         </div>
+        <div className="flex justify-center mt-8">
+          <a 
+            href="/blog" 
+            className="inline-flex items-center px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            View All Posts
+          </a>
+        </div>
       </div>
     </section>
   );
