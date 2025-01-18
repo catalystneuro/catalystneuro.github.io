@@ -5,5 +5,5 @@ description: "Developed NWB conversion tools for the Howe lab's neurophysiology 
 tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/howe-lab-to-nwb"
 date: "2024-04"
-funded_project: ""
+funded_project: "Michael J. Fox ASAP"
 ---

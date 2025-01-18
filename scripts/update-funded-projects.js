@@ -8,22 +8,32 @@ const __dirname = path.dirname(__filename);
 const conversionsDir = path.join(__dirname, '../src/content/nwb-conversions');
 const files = fs.readdirSync(conversionsDir);
 
-// Map of lab names to their file names
+// Map of lab names to their funded projects
 const labMappings = {
-    'washington-buffalo-lab.md': true,  // Beth Buffalo
-    'international-brain-lab.md': true, // International Brain Laboratory
-    'princeton-tank-lab.md': true,      // David Tank
-    'nyu-movshon-lab.md': true,        // Tony Movshon
-    'stanford-shenoy-lab.md': true,     // Krishna Shenoy
-    'princeton-brody-lab.md': true,     // Carlos Brody
-    'mit-fee-lab.md': true,            // Michael Fee
-    'princeton-murthy-lab.md': true,    // Mala Murthy
-    'northwestern-pinto-lab.md': true,  // Lucas Pinto
-    'mit-jazayeri-lab.md': true,       // Mehrdad Jazayeri
-    'janelia-ahrens-lab.md': true,     // Misha Ahrens
-    'uc-davis-stavisky-lab.md': true,  // Sergey Stavisky
-    'harvard-datta-lab.md': true,      // Bob Datta
-    'mit-dicarlo-lab.md': true,        // James DiCarlo
+    // SCGB NWB Adoption
+    'washington-buffalo-lab.md': 'SCGB NWB Adoption',
+    'international-brain-lab.md': 'SCGB NWB Adoption',
+    'princeton-tank-lab.md': 'SCGB NWB Adoption',
+    'nyu-movshon-lab.md': 'SCGB NWB Adoption',
+    'stanford-shenoy-lab.md': 'SCGB NWB Adoption',
+    'princeton-brody-lab.md': 'SCGB NWB Adoption',
+    'mit-fee-lab.md': 'SCGB NWB Adoption',
+    'princeton-murthy-lab.md': 'SCGB NWB Adoption',
+    'northwestern-pinto-lab.md': 'SCGB NWB Adoption',
+    'mit-jazayeri-lab.md': 'SCGB NWB Adoption',
+    'janelia-ahrens-lab.md': 'SCGB NWB Adoption',
+    'uc-davis-stavisky-lab.md': 'SCGB NWB Adoption',
+    'harvard-datta-lab.md': 'SCGB NWB Adoption',
+    'mit-dicarlo-lab.md': 'SCGB NWB Adoption',
+
+    // Michael J. Fox ASAP
+    'pitt-turner-lab.md': 'Michael J. Fox ASAP',
+    'northwestern-lerner-lab.md': 'Michael J. Fox ASAP',
+    'ucsf-nelson-lab.md': 'Michael J. Fox ASAP',
+    'yale-higley-lab.md': 'Michael J. Fox ASAP',
+    'baylor-reimer-lab.md': 'Michael J. Fox ASAP',
+    'northwestern-dombeck-lab.md': 'Michael J. Fox ASAP',
+    'bu-howe-lab.md': 'Michael J. Fox ASAP',
 };
 
 for (const file of files) {
@@ -36,10 +46,10 @@ for (const file of files) {
         // Update the funded_project field
         const updatedContent = content.replace(
             /funded_project: ".*"/,
-            'funded_project: "SCGB NWB Adoption"'
+            `funded_project: "${labMappings[file]}"`
         );
         
         fs.writeFileSync(filePath, updatedContent);
-        console.log(`Updated ${file} with SCGB NWB Adoption`);
+        console.log(`Updated ${file} with ${labMappings[file]}`);
     }
 }

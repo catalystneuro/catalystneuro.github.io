@@ -6,5 +6,5 @@ tags: ["behavioral tracking", "electrophysiology", "neural computation"]
 github: "https://github.com/catalystneuro/nelson-lab-to-nwb"
 dandi: []
 date: "2023-10"
-funded_project: ""
+funded_project: "Michael J. Fox ASAP"
 ---
