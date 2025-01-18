@@ -39,8 +39,13 @@ const FundedProjects = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8">
           {currentProjects.map((project, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
-              <CardHeader className="space-y-4">
+            <a 
+              key={index}
+              href={`/funded-projects/${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+              className="no-underline"
+            >
+              <Card className="hover:shadow-lg transition-shadow h-full">
+              <CardHeader className="space-y-4 flex-none">
                 <div className="flex items-start justify-between">
                   <CardTitle>{project.title}</CardTitle>
                   <Badge className={getStatusColor(project.status)} variant="outline">
@@ -62,12 +67,13 @@ const FundedProjects = () => {
                   </div>
                 )}
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground h-full">
                   {project.body}
                 </p>
               </CardContent>
-            </Card>
+              </Card>
+            </a>
           ))}
         </div>
 

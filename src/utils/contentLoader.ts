@@ -21,6 +21,7 @@ export interface PortfolioItem {
   github: string;
   dandi?: string | DandiDataset[];
   date: string;
+  funded_project?: string;
 }
 
 export interface JobOpening {

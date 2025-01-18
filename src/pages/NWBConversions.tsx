@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Github, ExternalLink, ChevronDown } from "lucide-react";
+import { Github, ExternalLink, ChevronDown, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { loadPortfolio } from "@/utils/contentLoader";
@@ -301,9 +301,17 @@ const NWBConversions = () => {
                           </CardDescription>
                         </div>
                         {item.funded_project && (
-                          <CardDescription className="text-sm text-purple-600 font-medium">
-                            {item.funded_project}
-                          </CardDescription>
+                          <a 
+                            href={`/funded-projects/${item.funded_project === "Michael J. Fox ASAP" ? "asap-nwb-adoption" : 
+                              item.funded_project === "SCGB NWB Adoption" ? "scgb-nwb-adoption" : 
+                              item.funded_project?.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} 
+                            className="no-underline"
+                          >
+                            <CardDescription className="text-sm text-purple-600 font-medium hover:text-purple-800 transition-colors flex items-center gap-1">
+                              <LinkIcon className="w-3 h-3" />
+                              {item.funded_project}
+                            </CardDescription>
+                          </a>
                         )}
                       </div>
                     </CardHeader>

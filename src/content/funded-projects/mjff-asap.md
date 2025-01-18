@@ -1,5 +1,5 @@
 ---
-title: "Michael J. Fox ASAP NWB Adoption Project"
+title: "ASAP NWB Adoption"
 funder: "Michael J. Fox Foundation"
 status: "active"
 startDate: "2023-01-01"

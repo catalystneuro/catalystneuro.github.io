@@ -1,5 +1,5 @@
 ---
-title: "Simons Foundation SCGB NWB Adoption Project"
+title: "SCGB NWB Adoption"
 funder: "Simons Foundation"
 status: "active"
 startDate: "2022-06-01"

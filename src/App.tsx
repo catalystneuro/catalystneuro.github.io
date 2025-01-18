@@ -15,6 +15,7 @@ import JobPosition from "./pages/JobPosition";
 import About from "./pages/About";
 import FundedProjects from "./pages/FundedProjects";
 import Success from "./pages/Success";
+import FundedProject from "./pages/FundedProject";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ const App = () => {
       '/openings': <Openings />,
       '/about': <About />,
       '/funded-projects': <FundedProjects />,
+      '/funded-projects/': <FundedProjects />,
       '/success': <Success />
     };
 
@@ -49,6 +51,9 @@ const App = () => {
     }
     if (normalizedPath.startsWith('/openings/')) {
       return <JobPosition />;
+    }
+    if (normalizedPath.startsWith('/funded-projects/') && normalizedPath !== '/funded-projects/') {
+      return <FundedProject />;
     }
 
     return routes[normalizedPath] || <div>Page not found</div>;
