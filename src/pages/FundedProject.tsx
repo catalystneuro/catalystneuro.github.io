@@ -33,6 +33,9 @@ const FundedProject = () => {
       if (projectTitle === "NYU Librarians NWB Adoption") {
         return conv.funded_project === "NYU Librarians";
       }
+      if (projectTitle === "Ripple U19 NWB Adoption") {
+        return conv.funded_project === "Ripple U19";
+      }
       return conv.funded_project === projectTitle;
     });
     setAffiliatedConversions(affiliated);
