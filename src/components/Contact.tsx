@@ -77,7 +77,7 @@ export const Contact = () => {
               data-netlify="true"
               name="newsletter"
               method="POST"
-              action="/success"
+              action="/"
               netlify-honeypot="bot-field"
             >
               <input type="hidden" name="bot-field" />

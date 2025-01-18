@@ -11,9 +11,22 @@
   functionsPort = 9999
 
 [[redirects]]
+  from = "/success"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Form submission success redirect
+[[redirects]]
+  from = "/"
+  to = "/success"
+  status = 302
+  force = true
+  conditions = {Success = ["true"]}
 
 [[headers]]
   for = "/images/*"
