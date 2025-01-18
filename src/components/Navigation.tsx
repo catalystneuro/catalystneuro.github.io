@@ -18,6 +18,7 @@ export const Navigation = () => {
     },
     { label: "Blog", path: "/blog" },
     { label: "Openings", path: "/openings" },
+    { label: "Contact", path: "/contact" },
   ];
 
   return (
