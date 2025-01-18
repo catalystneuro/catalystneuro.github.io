@@ -7,7 +7,5 @@ date: "2025-01"
 tags:
   - electrophysiology
   - behavioral tracking
-  - video
-  - sensory stimulation
 funded_project: SFARI ARC Spyglass
 ---
