@@ -50,7 +50,9 @@ export const Contact = () => {
             <span>Email us at:</span>
             <a 
               href="mailto:info@catalystneuro.com" 
-              className="text-lg text-primary hover:underline"
+              className="text-lg text-primary hover:underline cursor-pointer"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               info@catalystneuro.com
             </a>
