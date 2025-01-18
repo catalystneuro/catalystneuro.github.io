@@ -47,13 +47,13 @@ const Blog = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentPosts.map((post) => (
             <a href={`/blog/${post.slug}`} key={post.slug}>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
                 <img
                   src={post.image}
                   alt={post.title}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
-                <CardHeader>
+                <CardHeader className="flex-none">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm text-muted-foreground">{post.date}</span>
                     <div className="flex items-center text-sm text-muted-foreground">
@@ -64,20 +64,24 @@ const Blog = () => {
                   <CardTitle className="text-xl">{post.title}</CardTitle>
                   <CardDescription>{post.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.keywords.map((keyword) => (
-                      <span
-                        key={keyword}
-                        className="px-2 py-1 bg-secondary text-secondary-foreground rounded-full text-xs"
-                      >
-                        {keyword}
-                      </span>
-                    ))}
+                <CardContent className="flex flex-col flex-grow">
+                  <div className="flex-grow">
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.keywords.map((keyword) => (
+                        <span
+                          key={keyword}
+                          className="px-2 py-1 bg-secondary text-secondary-foreground rounded-full text-xs"
+                        >
+                          {keyword}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <span className="text-primary hover:text-primary/80 transition-colors">
-                    Read More →
-                  </span>
+                  <div className="mt-auto pt-4">
+                    <span className="text-primary hover:text-primary/80 transition-colors">
+                      Read More →
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             </a>

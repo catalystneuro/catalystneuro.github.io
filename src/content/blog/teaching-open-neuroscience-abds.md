@@ -44,19 +44,11 @@ The success of the Academy was greatly enhanced by its location at Brackenhurst,
 The spacious grounds and communal areas fostered natural networking opportunities, enabling instructors and attendees to continue discussions beyond the formal sessions. These informal interactions proved invaluable for building lasting connections within the African neuroscience community. The peaceful atmosphere of Brackenhurst, combined with its excellent facilities, created an environment where both teaching and learning could flourish.
 
 Brackenhurst was home also to some impressive Kenyan wildlife, including monkeys!
-<!-- gallery-start width="500px" aspect="9/16" -->
-- https://www.youtube.com/watch?v=ZIK5zVxiG_Y
-<!-- gallery-end -->
 
 ## Safari Adventure at Nairobi National Park
 
 One of the highlights of our time together was a memorable safari trip to Nairobi National Park, generously organized by one of the instructors, Silke Anders. The entire school had the incredible opportunity to experience Kenya's magnificent wildlife firsthand. We were fortunate to observe a diverse array of animals in their natural habitat, including majestic giraffes, powerful lions, endangered rhinoceros, and striking zebras. This shared adventure not only provided a welcome break from our intensive academic sessions but also fostered stronger bonds between ABDS students and instructors.
 
-<!-- gallery-start width="500px" aspect="9/16" -->
-- https://www.youtube.com/shorts/w7qpkkwmpI8
-- https://www.youtube.com/shorts/JaTDbPI_ypI
-- https://www.youtube.com/shorts/9ibogcGa7W8
-<!-- gallery-end -->
 
 
 ## Impact and Future Directions
