@@ -10,35 +10,34 @@ export const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    setLoading(true);
-    setError(null);
+  const handleSubmit = import.meta.env.DEV
+    ? async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
 
-    // In development, handle the submission with the local function
-    if (import.meta.env.DEV) {
-      e.preventDefault();
-      try {
-        const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        });
+        try {
+          const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+          });
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message || 'Failed to subscribe');
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to subscribe');
+          }
+
+          setSubscribed(true);
+          setEmail("");
+        } catch (error) {
+          setError(error instanceof Error ? error.message : 'Failed to subscribe');
+          console.error("Newsletter signup error:", error);
+        } finally {
+          setLoading(false);
         }
-
-        setSubscribed(true);
-        setEmail("");
-      } catch (error) {
-        setError(error instanceof Error ? error.message : 'Failed to subscribe');
-        console.error("Newsletter signup error:", error);
-      } finally {
-        setLoading(false);
       }
-    }
-  };
+    : undefined;
 
   return (
     <section className="py-20 bg-white" id="contact">
