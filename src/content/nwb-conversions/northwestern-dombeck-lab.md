@@ -5,5 +5,5 @@ description: "Developed NWB conversion tools for the Dombeck lab's fiber photome
 tags: ["behavioral tracking", "calcium imaging", "neural computation", "motor control"]
 github: "https://github.com/catalystneuro/dombeck-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/001038"
-date: "2024"
+date: "2024-02"
 ---

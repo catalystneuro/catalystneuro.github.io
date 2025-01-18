@@ -7,5 +7,5 @@ github: "https://github.com/catalystneuro/shenoy-lab-to-nwb"
 dandi:
   - url: "https://dandiarchive.org/dandiset/000070"
     name: "000070: Neural population dynamics during reaching"
-date: "2024"
+date: "2021-02"
 ---

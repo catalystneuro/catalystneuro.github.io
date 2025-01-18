@@ -5,5 +5,5 @@ description: "Developed comprehensive NWB conversion tools for the Movshon lab's
 tags: ["visual processing", "electrophysiology", "neural computation", "behavioral tracking"]
 github: "https://github.com/catalystneuro/movshon-lab-to-nwb"
 dandi: []
-date: "2024"
+date: "2021-01"
 ---

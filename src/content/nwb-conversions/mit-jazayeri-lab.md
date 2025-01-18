@@ -9,5 +9,5 @@ dandi:
     name: "000130: DMFC activity during time interval reproduction"
   - url: "https://dandiarchive.org/dandiset/000897"
     name: "000897: Entorhinal cortex activity during mental navigation"
-date: "2023-2025"
+date: "2023-07"
 ---

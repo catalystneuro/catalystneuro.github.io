@@ -7,5 +7,5 @@ github: "https://github.com/catalystneuro/lerner-lab-to-nwb"
 dandi:
   - url: "https://dandiarchive.org/dandiset/000971"
     name: "000971: Dopamine signaling and compulsive behavior in striatum"
-date: "2024"
+date: "2024-01"
 ---

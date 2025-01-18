@@ -7,5 +7,5 @@ github: "https://github.com/catalystneuro/tye-lab-to-nwb"
 dandi:
   - url: "https://dandiarchive.org/dandiset/001195"
     name: "001195: Separable Dorsal Raphe Dopamine Projections Mediate Sociability and Valence"
-date: "2024"
+date: "2023-01"
 ---

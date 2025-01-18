@@ -9,5 +9,5 @@ dandi:
     name: "000053: MEC recordings during linear track and open exploration"
   - url: "https://dandiarchive.org/dandiset/000054"
     name: "000054: Experience-dependent contextual codes in hippocampus"
-date: "2019-2022"
+date: "2019-07"
 ---

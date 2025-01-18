@@ -5,5 +5,5 @@ description: "Developed NWB conversion tools for the Datta lab's behavioral neur
 tags: ["behavioral tracking", "calcium imaging", "neural computation"]
 github: "https://github.com/catalystneuro/datta-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000559"
-date: "2023-2024"
+date: "2023-05"
 ---

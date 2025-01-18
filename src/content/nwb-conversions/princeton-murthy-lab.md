@@ -7,5 +7,5 @@ github: "https://github.com/catalystneuro/murthy-lab-to-nwb"
 dandi:
   - url: "https://dandiarchive.org/dandiset/000951"
     name: "000951: Dataset for Mapping model units to visual neurons reveals population code for social behavior"
-date: "2024"
+date: "2022-08"
 ---

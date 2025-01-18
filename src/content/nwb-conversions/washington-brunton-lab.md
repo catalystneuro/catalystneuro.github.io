@@ -5,5 +5,5 @@ description: "Developed NWB conversion tools for the Brunton lab's human neurobe
 tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/brunton-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000055"
-date: "2020-2022"
+date: "2020-11"
 ---

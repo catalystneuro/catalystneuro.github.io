@@ -6,5 +6,5 @@ github: "https://github.com/catalystneuro/IBL-to-nwb"
 dandi:
   - url: "https://dandiarchive.org/dandiset/000045"
     name: "000045: IBL standardized decision-making experiments"
-date: "2020-2025"
+date: "2020-04"
 ---

@@ -5,5 +5,5 @@ description: "Developed NWB conversion tools for the Nelson lab's behavioral neu
 tags: ["behavioral tracking", "electrophysiology", "neural computation"]
 github: "https://github.com/catalystneuro/nelson-lab-to-nwb"
 dandi: []
-date: "2024"
+date: "2023-10"
 ---

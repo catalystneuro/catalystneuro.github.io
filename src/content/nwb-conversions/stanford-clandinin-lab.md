@@ -5,5 +5,5 @@ description: "Developed NWB conversion tools for the Clandinin lab's whole-brain
 tags: ["calcium imaging", "behavioral tracking", "visual processing"]
 github: "https://github.com/catalystneuro/clandinin-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000727"
-date: "2023-2024"
+date: "2023-07"
 ---
