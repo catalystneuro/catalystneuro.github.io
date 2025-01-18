@@ -45,16 +45,16 @@ export const Contact = () => {
         <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
         
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center gap-2 text-lg mb-2">
+          <div className="inline-flex items-center justify-center gap-2 text-lg">
             <Mail className="h-5 w-5" />
             <span>Email us at:</span>
+            <a 
+              href="mailto:info@catalystneuro.com" 
+              className="text-lg text-primary hover:underline"
+            >
+              info@catalystneuro.com
+            </a>
           </div>
-          <a 
-            href="mailto:info@catalystneuro.com" 
-            className="text-xl text-primary hover:underline"
-          >
-            info@catalystneuro.com
-          </a>
         </div>
 
         <div className="max-w-xl mx-auto">
