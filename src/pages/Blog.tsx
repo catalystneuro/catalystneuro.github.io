@@ -29,7 +29,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">Latest Posts</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">Blog</h1>
         
         <div className="max-w-xl mx-auto mb-8">
           <Input
