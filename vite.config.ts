@@ -43,6 +43,10 @@ export default defineConfig(({ mode }) => ({
       input: 'index.html',
       output: {
         assetFileNames: (assetInfo) => {
+          // Keep markdown files in their original structure
+          if (assetInfo.name && /\.md$/.test(assetInfo.name)) {
+            return assetInfo.name;
+          }
           // Keep image names and paths as they are
           if (assetInfo.name && /\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
             return assetInfo.name;

@@ -59,57 +59,60 @@ function processContent(content: string): string {
 }
 
 // Load and parse all markdown files from the blog directory
-export const loadMarkdownFiles = () => {
+export const loadMarkdownFiles = async () => {
   try {
-    // Use raw loader to get markdown content directly
+    // Use dynamic imports for markdown files
     const files = import.meta.glob('../content/blog/*.md', { 
       as: 'raw',
-      eager: true 
+      eager: false 
     });
 
     console.log('Found files:', Object.keys(files));
 
-    const posts = Object.entries(files)
-      .map(([path, content]) => {
-        try {
-          if (typeof content !== 'string') {
-            console.error('Invalid content type for file:', path);
-            return null;
-          }
-
-          // Split content into frontmatter and markdown
-          const [, frontmatter, ...contentParts] = content.split('---\n');
-          if (!frontmatter) {
-            console.error('No frontmatter found:', path);
-            return null;
-          }
-
-          // Parse frontmatter
-          const data = parseFrontmatter(frontmatter);
-          if (!data) {
-            console.error('Failed to parse frontmatter:', path);
-            return null;
-          }
-
-          const slug = path.split('/').pop()?.replace('.md', '') || '';
-          const mdContent = contentParts.join('---\n').trim();
-
-          return {
-            title: data.title || '',
-            date: data.date || '',
-            description: data.description || '',
-            image: data.image || '',
-            readTime: data.readTime || '',
-            keywords: data.keywords || [],
-            gallery: data.gallery || [],
-            slug,
-            content: processContent(mdContent),
-          } as BlogPost;
-        } catch (error) {
-          console.error('Error processing file:', path, error instanceof Error ? error.message : error);
+    const entries = Object.entries(files);
+    const postsPromises = entries.map(async ([path, importFn]) => {
+      try {
+        const content = await importFn();
+        if (typeof content !== 'string') {
+          console.error('Invalid content type for file:', path);
           return null;
         }
-      })
+
+        // Split content into frontmatter and markdown
+        const [, frontmatter, ...contentParts] = content.split('---\n');
+        if (!frontmatter) {
+          console.error('No frontmatter found:', path);
+          return null;
+        }
+
+        // Parse frontmatter
+        const data = parseFrontmatter(frontmatter);
+        if (!data) {
+          console.error('Failed to parse frontmatter:', path);
+          return null;
+        }
+
+        const slug = path.split('/').pop()?.replace('.md', '') || '';
+        const mdContent = contentParts.join('---\n').trim();
+
+        return {
+          title: data.title || '',
+          date: data.date || '',
+          description: data.description || '',
+          image: data.image || '',
+          readTime: data.readTime || '',
+          keywords: data.keywords || [],
+          gallery: data.gallery || [],
+          slug,
+          content: processContent(mdContent),
+        } as BlogPost;
+      } catch (error) {
+        console.error('Error processing file:', path, error instanceof Error ? error.message : error);
+        return null;
+      }
+    });
+
+    const posts = (await Promise.all(postsPromises))
       .filter((post): post is BlogPost => post !== null)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -185,5 +188,8 @@ function parseFrontmatter(frontmatter: string) {
   }
 }
 
-// Export the blog posts
-export const blogPosts = loadMarkdownFiles();
+// Export the blog posts loader function
+export const getBlogPosts = async () => {
+  const posts = await loadMarkdownFiles();
+  return posts;
+};

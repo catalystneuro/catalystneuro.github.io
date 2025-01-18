@@ -1,15 +1,42 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { blogPosts } from "@/utils/blogLoader";
+import { getBlogPosts, BlogPost } from "@/utils/blogLoader";
+import { useEffect, useState } from "react";
 
 export const LatestPosts = () => {
-  const latestPosts = blogPosts.slice(0, 3);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const loadedPosts = await getBlogPosts();
+        setPosts(loadedPosts.slice(0, 3));
+      } catch (error) {
+        console.error('Error loading blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-8 md:py-16" style={{ background: '#E8E9F2' }}>
+        <div className="container mx-auto px-4 text-center">
+          Loading latest posts...
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-8 md:py-16" style={{ background: '#E8E9F2' }}>
       <div className="container mx-auto px-4">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground">Latest News & Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {latestPosts.map((post) => (
+          {posts.map((post) => (
             <a href={`/blog/${post.slug}`} key={post.slug} className="block">
               <Card className="h-full hover:shadow-lg transition-shadow">
                 <img

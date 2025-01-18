@@ -1,17 +1,44 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { BookOpen } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/utils/blogLoader";
+import { getBlogPosts, BlogPost } from "@/utils/blogLoader";
 
 const POSTS_PER_PAGE = 6;
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredPosts = blogPosts.filter((post) => {
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const loadedPosts = await getBlogPosts();
+        setPosts(loadedPosts);
+      } catch (error) {
+        console.error('Error loading blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
+        <div className="container mx-auto px-4 py-8 text-center">
+          Loading posts...
+        </div>
+      </div>
+    );
+  }
+
+  const filteredPosts = posts.filter((post) => {
     const searchLower = searchTerm.toLowerCase();
     return (
       post.title.toLowerCase().includes(searchLower) ||
