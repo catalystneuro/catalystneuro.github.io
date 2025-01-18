@@ -6,5 +6,5 @@ tags: ["calcium imaging", "behavioral tracking", "visual processing"]
 github: "https://github.com/catalystneuro/clandinin-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000727"
 date: "2023-07"
-funded_project: ""
+funded_project: "SCPAB NWB Adoption"
 ---
