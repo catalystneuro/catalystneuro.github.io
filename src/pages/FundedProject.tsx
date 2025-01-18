@@ -1,5 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Github } from "lucide-react";
 import { loadFundedProjects, loadPortfolio } from "@/utils/contentLoader";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
@@ -78,9 +80,29 @@ const FundedProject = () => {
               )}
             </CardHeader>
             <CardContent>
-              <p className="text-lg mb-8">
-                {project.body}
-              </p>
+              <div className="space-y-8">
+                <p className="text-lg">
+                  {project.body}
+                </p>
+
+                {project.github && project.github.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {project.github.map((repo, index) => (
+                      <Button key={index} variant="outline" size="sm" asChild>
+                        <a
+                          href={repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center"
+                        >
+                          <Github className="w-4 h-4 mr-2" />
+                          {repo.split('/').pop()}
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {affiliatedConversions.length > 0 && (
                 <div>

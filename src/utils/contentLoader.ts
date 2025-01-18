@@ -54,6 +54,7 @@ export interface FundedProject {
   description: string;
   image?: string;
   body?: string;
+  github?: string[];
 }
 
 function loadMarkdownFiles(directory: string) {
@@ -104,6 +105,7 @@ export const loadFundedProjects = (): FundedProject[] => {
         description: attributes.description,
         image: attributes.image,
         body: body.trim(),
+        github: attributes.github,
       };
     })
     .sort((a, b) => b.startDate.localeCompare(a.startDate));

@@ -1,7 +1,7 @@
 ---
 title: "SpikeInterface Development"
 funder: "Simons Foundation"
-status: "active"
+status: "completed"
 startDate: "2023-01-01"
 description: "Development and enhancement of the SpikeInterface framework for spike sorting"
 image: "/images/funded-projects/spikeinterface_logo.webp"
