@@ -33,8 +33,12 @@ const FundedProjects = () => {
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center">Funded Projects</h1>
-        <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
           Our work is supported by leading institutions committed to advancing neuroscience data standards and tools.
+        </p>
+
+        <p className="text-sm text-muted-foreground text-center mb-8">
+          Showing {currentProjects.length} of {projects.length} entries
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8">
