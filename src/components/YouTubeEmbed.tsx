@@ -4,7 +4,7 @@ interface YouTubeEmbedProps {
 
 export const YouTubeEmbed = ({ videoId }: YouTubeEmbedProps) => {
   return (
-    <div className="aspect-w-16 aspect-h-9 w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
+    <div className="w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg" style={{ height: '500px' }}>
       <iframe
         src={`https://www.youtube.com/embed/${videoId}`}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
