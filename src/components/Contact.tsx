@@ -11,36 +11,36 @@ export const Contact = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    // In production, let the form submit normally to Netlify
-    if (!import.meta.env.DEV) {
-      setLoading(true);
-      return;
-    }
-
-    // In development, handle the submission with the local function
-    e.preventDefault();
     setLoading(true);
     setError(null);
 
-    try {
-      const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+    // In development, handle the submission with the local function
+    if (import.meta.env.DEV) {
+      e.preventDefault();
+      try {
+        const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to subscribe');
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Failed to subscribe');
+        }
+
+        setSubscribed(true);
+        setEmail("");
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'Failed to subscribe');
+        console.error("Newsletter signup error:", error);
+      } finally {
+        setLoading(false);
       }
-
+    } else {
+      // In production, let the form submit naturally to Netlify
       setSubscribed(true);
       setEmail("");
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to subscribe');
-      console.error("Newsletter signup error:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
