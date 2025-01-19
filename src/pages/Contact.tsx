@@ -4,10 +4,10 @@ import { Mail, MapPin } from "lucide-react";
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background">
+    <h2 className="text-3xl font-bold text-center mb-12">Contact Us</h2>
     <Contact />
       <section className="py-20 bg-white">
         <div className="container max-w-4xl">
-          <h2 className="text-3xl font-bold text-center mb-12">Contact Us</h2>
           
           <div className="text-center mb-16 space-y-12">
 
