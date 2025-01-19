@@ -3,7 +3,7 @@
 [![Tests](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml/badge.svg)](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/catalystneuro/catalystneuro.github.io/branch/main/graph/badge.svg)](https://codecov.io/gh/catalystneuro/catalystneuro.github.io)
 
-Official website for CatalystNeuro, showcasing our services, funded projects, NWB conversions, team, and blog!
+Official website for CatalystNeuro, showcasing our services, funded projects, NWB conversions, team, and blog.
 
 ## Tech Stack
 
