@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import { loadSoftware } from "@/utils/contentLoader";
 
 const Software = () => {
@@ -18,7 +19,7 @@ const Software = () => {
           <h2 className="text-3xl font-bold mb-6">Core Tools</h2>
           <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {softwareList
-              .filter(software => !software.name.startsWith('NDX'))
+              .filter(software => !software.name.startsWith('NDX') && software.type !== 'guide')
               .map((software) => (
                 <Card key={software.name} className="flex flex-col">
                   <img
@@ -52,15 +53,46 @@ const Software = () => {
                       </a>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                      <a
-                        href={software.docs}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Link
+                        to={software.docs}
                         className="flex items-center"
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Documentation
-                      </a>
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+          </div>
+        </div>
+
+        <div className="mb-12">
+          <h2 className="text-3xl font-bold mb-6">Documentation & Guides</h2>
+          <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+            {softwareList
+              .filter(software => software.type === 'guide')
+              .map((software) => (
+                <Card key={software.name} className="flex flex-col">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-2xl">{software.name}</CardTitle>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="text-muted-foreground">{software.description}</p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button variant="outline" size="sm" asChild>
+                      <Link
+                        to={software.docs}
+                        className="flex items-center"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View Guide
+                      </Link>
                     </Button>
                   </CardFooter>
                 </Card>
