@@ -17,7 +17,7 @@ const ServiceCard = ({
   buttonLink: string;
   features?: string[];
 }) => (
-  <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <Card data-testid="service-card" className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
     <CardHeader>
       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
         <Icon className="w-6 h-6 text-primary" />

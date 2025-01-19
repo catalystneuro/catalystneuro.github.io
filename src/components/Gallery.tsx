@@ -57,6 +57,7 @@ export const Gallery = ({
           />
         ) : isLocalVideo ? (
           <video
+            data-testid="video-player"
             className="w-full h-full object-cover rounded-lg shadow-lg bg-black"
             controls
             playsInline
