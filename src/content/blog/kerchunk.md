@@ -1,5 +1,5 @@
 ---
-title: "The Data Standardization Dilemma: Format vs. API"
+title: "Virtual Data Standards: A New Path Forward for Scientific Data"
 date: "2024-01-18"
 description: "An exploration of different approaches to data standardization in scientific computing, with a focus on the Kerchunk solution for efficient data access"
 readTime: "15 min"
@@ -88,7 +88,20 @@ The "virtual" nature of these datasets is key. When Kerchunk creates a mapping, 
 
 For example, imagine you have a large collection of HDF5 files containing neural recording data. Rather than converting all these files to Zarr (which would double your storage requirements), you can use Kerchunk to create virtual Zarr datasets. These virtual datasets can then be read efficiently from any programming language with Zarr support, with the actual data being read directly from the original HDF5 files only when needed.
 
-Let me add a section about LINDI and its extensions to the Kerchunk approach:
+One of the elegant aspects of the Kerchunk approach is its flexibility in how it handles different types of data. While its primary purpose is to create mappings to external data, it can also directly store smaller pieces of data within the JSON file itself. Small attributes can be encoded directly in the mapping file, eliminating the need for external references. Small datasets can also be included in the mapping file using base64 encoding.
+
+Instead of creating references to tiny external files, which could be inefficient to access, this information becomes immediately available when the JSON mapping is loaded. For example, channel labels, time stamps, or experimental parameters can be stored directly in the mapping file, while the large raw data arrays remain as references to the original files. This flexibility helps optimize performance – frequently accessed small data is immediately available, while large data chunks are accessed only when needed. It's another example of how the virtual dataset approach can adapt to different needs and usage patterns.
+
+### Additional Benefits of Virtual Dataset Mapping
+
+While our focus has been on standardization and cross-language accessibility, the virtual dataset approach enables several other powerful capabilities worth noting. By separating data description from the data itself, we can:
+
+- Update and adjust metadata without modifying large data files
+- Create explicit links between processed data and raw data sources without altering original files
+- Form collections of data objects from different datasets and link them together in sophisticated ways
+- Feed data efficiently into modern visualization and analysis tools
+
+These capabilities are already being put to use in real-world applications like Neurosift, a web-based visualization platform for neurophysiology data. While a full exploration of these features is beyond the scope of this discussion, they represent important additional benefits of this approach to data standardization.
 
 ### Beyond Basic Mapping: LINDI and Advanced Data Structures
 
@@ -98,6 +111,21 @@ LINDI extends the Kerchunk approach by adding support for these more complex dat
 
 By supporting these more sophisticated data structures, LINDI makes it possible to create virtual mappings for a broader range of HDF5 files without losing important structural information. This is crucial for formats like NWB (Neurodata Without Borders) that make extensive use of HDF5's linking capabilities to organize complex experimental data.
 
+### The MATLAB Challenge and Opportunity
+
+A significant gap in the current ecosystem is MATLAB support. Despite MATLAB's widespread use in neuroscience and other scientific fields, there is currently no MATLAB implementation of the Zarr specification. This means that MATLAB users cannot yet take advantage of these virtual dataset approaches – a limitation that affects a large portion of the scientific community.
+
+However, this gap also presents an opportunity. Creating a MATLAB Zarr implementation would immediately unlock access to a vast ecosystem of data through these virtual mappings. This is particularly interesting when we consider MATLAB's own file formats. Modern MATLAB (.mat) files actually use HDF5 as their underlying storage format. This means that, once implemented, MATLAB users could use the virtual dataset approach to efficiently access MATLAB files in cloud storage without having to download entire files – something that's currently challenging with traditional MATLAB file access methods.
+
+The path forward is clear, though non-trivial: the MATLAB scientific computing community needs a robust Zarr implementation. While this requires significant development effort, the payoff would be substantial – not just for accessing virtual datasets, but for bringing MATLAB users into the broader ecosystem of modern, cloud-native scientific data tools.
+
+### Modernizing Legacy Tools: Neo's Virtual Dataset Evolution
+
+We're currently leading an effort to bring virtual dataset capabilities to Neo, the popular Python library for handling neurophysiology data. Neo has long served the neuroscience community by providing a common interface to various data formats, but like many API-based solutions, it faces the language lock-in challenges we discussed earlier.
+
+Our project aims to enhance Neo with the ability to generate these virtual dataset descriptions. Rather than just reading data into Python objects, Neo will create standardized JSON mappings that describe how to access the underlying data. This is a powerful evolution: instead of Neo's format support being useful only to Python users, its deep knowledge of various neurophysiology file formats will be leveraged by any programming language that can read these virtual datasets.
+
+This represents a fundamental shift in how we think about scientific data tools. Rather than trying to make Neo a universal translator, we're transforming it into more of a cartographer, creating maps that anyone can follow regardless of their preferred programming language.
 
 ### When Virtual Isn't Enough: The Case for Physical Data Conversion
 
