@@ -88,8 +88,21 @@ The "virtual" nature of these datasets is key. When Kerchunk creates a mapping, 
 
 For example, imagine you have a large collection of HDF5 files containing neural recording data. Rather than converting all these files to Zarr (which would double your storage requirements), you can use Kerchunk to create virtual Zarr datasets. These virtual datasets can then be read efficiently from any programming language with Zarr support, with the actual data being read directly from the original HDF5 files only when needed.
 
-When Virtual Isn't Enough: The Case for Physical Data Conversion
+Let me add a section about LINDI and its extensions to the Kerchunk approach:
+
+### Beyond Basic Mapping: LINDI and Advanced Data Structures
+
+While Kerchunk provides an excellent foundation for virtual datasets, some data formats include features that don't map cleanly to the Zarr specification. HDF5, for instance, supports sophisticated data organization features like links and references that have no direct equivalent in Zarr. This is where LINDI (LiNked Data Interface) comes in.
+
+LINDI extends the Kerchunk approach by adding support for these more complex data structures. It maintains the core idea of creating virtual mappings but expands the specification to handle HDF5 links and references. This is particularly important for scientific datasets where these features are used to represent relationships between different parts of the data – like linking an electrode's recording data to its position information, or connecting spike times to the original voltage traces that produced them.
+
+By supporting these more sophisticated data structures, LINDI makes it possible to create virtual mappings for a broader range of HDF5 files without losing important structural information. This is crucial for formats like NWB (Neurodata Without Borders) that make extensive use of HDF5's linking capabilities to organize complex experimental data.
+
+
+### When Virtual Isn't Enough: The Case for Physical Data Conversion
+
 While the virtual dataset approach is powerful, it's not a universal solution. Some data formats present challenges that can't be solved through virtual mapping alone. For instance, some proprietary formats may require specialized software libraries to read, making it impossible to describe their data layout in a simple JSON mapping. Others might store data in ways that are fundamentally inefficient or incompatible with modern computing needs – like storing what should be a single large array as thousands of tiny files, or using compression formats that don't support random access.
+
 In these cases, we still need to bite the bullet and convert the data into a more suitable format. The good news is that we can be strategic about when we do this. The decision to convert data can be based on clear criteria:
 
 * Does the format require proprietary software to read?
