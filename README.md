@@ -1,72 +1,109 @@
-# Welcome to your Lovable project
+# CatalystNeuro Website
 
 [![Tests](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml/badge.svg)](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/catalystneuro/catalystneuro.github.io/branch/main/graph/badge.svg)](https://codecov.io/gh/catalystneuro/catalystneuro.github.io)
 
-## Project info
+Official website for CatalystNeuro, showcasing our services, funded projects, NWB conversions, team, and blog.
 
-**URL**: https://lovable.dev/projects/22fbd523-dc9b-4cd8-826a-7dba03a59fd9
+## Tech Stack
 
-## How can I edit this code?
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui (based on Radix UI)
+- **Routing**: React Router
+- **Content**: Markdown with front matter
+- **Testing**: Vitest + React Testing Library
+- **Deployment**: Netlify
 
-There are several ways of editing your application.
+## Project Structure
 
-**Use Lovable**
+```
+.
+├── src/
+│   ├── components/     # React components
+│   ├── content/        # Markdown content (blog, projects, etc.)
+│   ├── pages/         # Page components
+│   ├── utils/         # Utility functions
+│   └── hooks/         # Custom React hooks
+├── public/            # Static assets
+├── scripts/          # Build and maintenance scripts
+└── netlify/          # Netlify serverless functions
+```
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/22fbd523-dc9b-4cd8-826a-7dba03a59fd9) and start prompting.
+## Development
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (LTS version recommended)
+- npm
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+```bash
+git clone https://github.com/catalystneuro/catalystneuro.github.io.git
+cd catalystneuro.github.io
+```
 
-Follow these steps:
+2. Install dependencies:
+```bash
+npm install
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The site will be available at `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run test` - Run tests
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run lint` - Run ESLint
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Testing
 
-## What technologies are used for this project?
+Tests are written using Vitest and React Testing Library. Run the test suite:
 
-This project is built with .
+```bash
+npm run test
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+For coverage report:
 
-## How can I deploy this project?
+```bash
+npm run test:coverage
+```
 
-Simply open [Lovable](https://lovable.dev/projects/22fbd523-dc9b-4cd8-826a-7dba03a59fd9) and click on Share -> Publish.
+## Deployment
 
-## I want to use a custom domain - is that possible?
+The site is automatically deployed to Netlify when changes are pushed to the main branch. The build process:
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+1. Builds the React application
+2. Generates static HTML
+3. Deploys to Netlify CDN
+
+Manual deployment can be triggered through the Netlify dashboard or CLI.
+
+### Environment Variables
+
+Required environment variables for deployment:
+- `NETLIFY_ACCESS_TOKEN` - For Netlify API access
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and ensure they pass
+5. Submit a pull request
+
+## License
+
+Copyright © CatalystNeuro. All rights reserved.
