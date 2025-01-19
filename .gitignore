@@ -25,3 +25,12 @@ dist-ssr
 
 node_modules/*
 .idea/
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test coverage
+coverage/

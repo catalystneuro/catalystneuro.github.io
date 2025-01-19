@@ -79,6 +79,7 @@ export const Gallery = ({
               size="icon"
               className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-background/80 hover:bg-background"
               onClick={handlePrevImage}
+              aria-label="Previous image"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -87,6 +88,7 @@ export const Gallery = ({
               size="icon"
               className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-background/80 hover:bg-background"
               onClick={handleNextImage}
+              aria-label="Next image"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>

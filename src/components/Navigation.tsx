@@ -37,7 +37,7 @@ export const Navigation = () => {
             </Link>
             <Menubar className="border-none">
               <MenubarMenu>
-                <MenubarTrigger className="font-bold">
+                <MenubarTrigger className="font-bold" aria-label="Menu">
                   <Menu className="h-6 w-6" />
                 </MenubarTrigger>
                 <MenubarContent>
@@ -108,6 +108,7 @@ export const Navigation = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"
+                aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
               </a>
