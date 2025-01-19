@@ -2,50 +2,17 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { getBlogPosts, BlogPost as BlogPostType } from "@/utils/blogLoader";
+import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
-import { useEffect, useState } from "react";
 
 export const BlogPost = () => {
-  const [post, setPost] = useState<BlogPostType | null>(null);
-  const [loading, setLoading] = useState(true);
   const slug = window.location.pathname.split('/blog/')[1];
-
-  useEffect(() => {
-    const loadPost = async () => {
-      try {
-        const posts = await getBlogPosts();
-        const foundPost = posts.find(p => p.slug === slug);
-        setPost(foundPost || null);
-      } catch (error) {
-        console.error('Error loading blog post:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPost();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background pt-16">
-        <div className="container mx-auto px-4 py-8 text-center">
-          Loading post...
-        </div>
-      </div>
-    );
-  }
-
+  const post = blogPosts.find(p => p.slug === slug);
+  
   if (!post) {
-    return (
-      <div className="min-h-screen bg-background pt-16">
-        <div className="container mx-auto px-4 py-8 text-center">
-          Post not found
-        </div>
-      </div>
-    );
+    return <div>Post not found</div>;
   }
+
 
   return (
     <div className="min-h-screen bg-background pt-16">
