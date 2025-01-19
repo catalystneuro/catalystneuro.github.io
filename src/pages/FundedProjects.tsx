@@ -1,17 +1,68 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { loadFundedProjects } from "@/utils/contentLoader";
 import { format } from "date-fns";
 import { useState } from "react";
+
+type SortOption = "title" | "date" | "funder";
 
 const ITEMS_PER_PAGE = 6;
 
 const FundedProjects = () => {
   const projects = loadFundedProjects();
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE);
-  const currentProjects = projects.slice(
+  const [selectedStatus, setSelectedStatus] = useState<string>("All");
+  const [selectedFunder, setSelectedFunder] = useState<string>("All");
+  const [sortBy, setSortBy] = useState<SortOption>("date");
+
+  // Get unique statuses and funders for filter dropdowns
+  const statuses = ["All", ...new Set(projects.map(project => project.status))].sort();
+  const funders = ["All", ...new Set(projects.map(project => project.funder))].sort();
+
+  // Filter projects based on search term, status, and funder
+  const filteredProjects = projects.filter((project) => {
+    const searchLower = searchTerm.toLowerCase();
+    const matchesSearch = 
+      (project.title || "").toLowerCase().includes(searchLower) ||
+      (project.funder || "").toLowerCase().includes(searchLower) ||
+      (project.description || "").toLowerCase().includes(searchLower) ||
+      (project.body || "").toLowerCase().includes(searchLower);
+    
+    const matchesStatus = selectedStatus === "All" || project.status === selectedStatus;
+    const matchesFunder = selectedFunder === "All" || project.funder === selectedFunder;
+    
+    return matchesSearch && matchesStatus && matchesFunder;
+  });
+
+  // Sort filtered projects
+  const sortedProjects = [...filteredProjects].sort((a, b) => {
+    switch (sortBy) {
+      case "title":
+        return (a.title || "").localeCompare(b.title || "");
+      case "date":
+        // Simple string comparison since dates are in YYYY-MM-DD format
+        const dateA = String(a.startDate || "");
+        const dateB = String(b.startDate || "");
+        return dateB > dateA ? 1 : dateB < dateA ? -1 : 0; // Sort in descending order (newest first)
+      case "funder":
+        return (a.funder || "").localeCompare(b.funder || "");
+      default:
+        return 0;
+    }
+  });
+
+  const totalPages = Math.ceil(sortedProjects.length / ITEMS_PER_PAGE);
+  const currentProjects = sortedProjects.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -37,9 +88,86 @@ const FundedProjects = () => {
           Our work is supported by leading institutions committed to advancing neuroscience data standards and tools.
         </p>
 
-        <p className="text-sm text-muted-foreground text-center mb-8">
-          Showing {currentProjects.length} of {projects.length} entries
-        </p>
+        <div className="max-w-4xl mx-auto mb-8 space-y-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Input
+              type="search"
+              placeholder="Search by title, funder, or description..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="flex-grow"
+            />
+            <div className="flex flex-wrap gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    Status: {selectedStatus}
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {statuses.map((status) => (
+                    <DropdownMenuItem
+                      key={status}
+                      onClick={() => {
+                        setSelectedStatus(status);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      {status}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    Funder: {selectedFunder}
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {funders.map((funder) => (
+                    <DropdownMenuItem
+                      key={funder}
+                      onClick={() => {
+                        setSelectedFunder(funder);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      {funder}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    Sort by
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => setSortBy("title")}>
+                    Title
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("funder")}>
+                    Funder
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setSortBy("date")}>
+                    Start Date
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground text-center">
+            Showing {currentProjects.length} of {filteredProjects.length} entries
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8">
           {currentProjects.map((project, index) => (
