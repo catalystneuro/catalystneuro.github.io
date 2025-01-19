@@ -3,9 +3,10 @@ import frontMatter from 'front-matter';
 export interface SoftwareItem {
   name: string;
   description: string;
-  status: string;
-  image: string;
-  github: string;
+  status?: string;
+  type?: 'core' | 'extension' | 'guide';
+  image?: string;
+  github?: string;
   docs: string;
 }
 

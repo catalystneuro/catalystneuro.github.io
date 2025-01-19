@@ -18,6 +18,7 @@ import FundedProjects from "./pages/FundedProjects";
 import Success from "./pages/Success";
 import FundedProject from "./pages/FundedProject";
 import Contact from "./pages/Contact";
+import Guide from "./pages/Guide";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path="/funded-projects/:project" element={<FundedProject />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/guides/:id" element={<Guide />} />
                 <Route path="*" element={<div>Page not found</div>} />
               </Routes>
             </main>
