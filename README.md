@@ -1,5 +1,8 @@
 # Welcome to your Lovable project
 
+[![Tests](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml/badge.svg)](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/catalystneuro/catalystneuro.github.io/branch/main/graph/badge.svg)](https://codecov.io/gh/catalystneuro/catalystneuro.github.io)
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/22fbd523-dc9b-4cd8-826a-7dba03a59fd9
