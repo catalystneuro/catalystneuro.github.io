@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { blogPosts } from "@/utils/blogLoader";
 
 export const LatestPosts = () => {
@@ -10,7 +11,7 @@ export const LatestPosts = () => {
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground">Latest News & Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {latestPosts.map((post) => (
-            <a href={`/blog/${post.slug}`} key={post.slug} className="block">
+            <Link to={`/blog/${post.slug}`} key={post.slug} className="block">
               <Card className="h-full hover:shadow-lg transition-shadow">
                 <img
                   src={post.image}
@@ -35,16 +36,16 @@ export const LatestPosts = () => {
                   <span className="text-sm text-muted-foreground">{post.date}</span>
                 </CardContent>
               </Card>
-            </a>
+            </Link>
           ))}
         </div>
         <div className="flex justify-center mt-8">
-          <a 
-            href="/blog" 
+          <Link 
+            to="/blog" 
             className="inline-flex items-center px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
           >
             View All Posts
-          </a>
+          </Link>
         </div>
       </div>
     </section>

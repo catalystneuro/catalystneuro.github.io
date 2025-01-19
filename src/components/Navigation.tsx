@@ -1,6 +1,7 @@
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Menu, Github, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "../../public/lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png";
 
 export const Navigation = () => {
@@ -27,13 +28,13 @@ export const Navigation = () => {
         <div className="h-16 flex items-center">
           {/* Mobile View */}
           <div className="flex justify-between items-center w-full md:hidden">
-            <a href="/">
+            <Link to="/">
               <img 
                 src={logo}
                 alt="CatalystNeuro"
                 className="h-8"
               />
-            </a>
+            </Link>
             <Menubar className="border-none">
               <MenubarMenu>
                 <MenubarTrigger className="font-bold">
@@ -44,16 +45,16 @@ export const Navigation = () => {
                     item.items ? (
                       item.items.map((subItem) => (
                         <MenubarItem key={subItem.path}>
-                          <a href={subItem.path} className="block w-full">
+                          <Link to={subItem.path} className="block w-full">
                             {subItem.label}
-                          </a>
+                          </Link>
                         </MenubarItem>
                       ))
                     ) : (
                       <MenubarItem key={item.path}>
-                        <a href={item.path} className="block w-full">
+                        <Link to={item.path} className="block w-full">
                           {item.label}
-                        </a>
+                        </Link>
                       </MenubarItem>
                     )
                   ))}
@@ -64,13 +65,13 @@ export const Navigation = () => {
 
           {/* Desktop View */}
           <div className="hidden md:flex items-center justify-between flex-1">
-            <a href="/">
+            <Link to="/">
               <img 
                 src={logo}
                 alt="CatalystNeuro"
                 className="h-10"
               />
-            </a>
+            </Link>
             <div className="flex items-center space-x-6">
               {menuItems.map((item) => (
                 item.items ? (
@@ -82,24 +83,24 @@ export const Navigation = () => {
                     <DropdownMenuContent>
                       {item.items.map((subItem) => (
                         <DropdownMenuItem key={subItem.path}>
-                          <a 
-                            href={subItem.path}
+                          <Link 
+                            to={subItem.path}
                             className="block w-full"
                           >
                             {subItem.label}
-                          </a>
+                          </Link>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <a 
+                  <Link 
                     key={item.path}
-                    href={item.path}
+                    to={item.path}
                     className="hover:text-primary transition-colors"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 )
               ))}
               <a

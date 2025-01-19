@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { BookOpen } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { blogPosts } from "@/utils/blogLoader";
 
 const POSTS_PER_PAGE = 6;
@@ -46,7 +47,7 @@ const Blog = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentPosts.map((post) => (
-            <a href={`/blog/${post.slug}`} key={post.slug}>
+            <Link to={`/blog/${post.slug}`} key={post.slug}>
               <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
                 <img
                   src={post.image}
@@ -84,7 +85,7 @@ const Blog = () => {
                   </div>
                 </CardContent>
               </Card>
-            </a>
+            </Link>
           ))}
         </div>
 

@@ -4,9 +4,10 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
+import { useParams } from "react-router-dom";
 
 export const BlogPost = () => {
-  const slug = window.location.pathname.split('/blog/')[1];
+  const { slug } = useParams();
   const post = blogPosts.find(p => p.slug === slug);
   
   if (!post) {

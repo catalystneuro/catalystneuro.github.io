@@ -60,15 +60,12 @@ blogSlugs.forEach(slug => {
 // Update the root index.html as well
 fs.writeFileSync(path.join(distDir, 'index.html'), fixedTemplate);
 
-// Copy content and images directories to dist
-const dirsToCopy = ['images', 'src/content'];
-dirsToCopy.forEach(dir => {
-  const srcDir = path.join(rootDir, dir);
-  const targetDir = path.join(distDir, dir.replace('src/', ''));
-  if (fs.existsSync(srcDir)) {
-    if (!fs.existsSync(targetDir)) {
-      fs.mkdirSync(targetDir, { recursive: true });
-    }
-    fs.cpSync(srcDir, targetDir, { recursive: true });
+// Copy images directory to dist if it exists
+const imagesDir = path.join(rootDir, 'images');
+const distImagesDir = path.join(distDir, 'images');
+if (fs.existsSync(imagesDir)) {
+  if (!fs.existsSync(distImagesDir)) {
+    fs.mkdirSync(distImagesDir, { recursive: true });
   }
-});
+  fs.cpSync(imagesDir, distImagesDir, { recursive: true });
+}

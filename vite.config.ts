@@ -34,21 +34,15 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
-  assetsInclude: ["**/*.md", "src/content/**/*.md"],
+  assetsInclude: ["**/*.md"],
   build: {
     assetsDir: 'assets',
     copyPublicDir: true,
     outDir: 'dist',
     rollupOptions: {
-      input: {
-        main: 'index.html'
-      },
+      input: 'index.html',
       output: {
         assetFileNames: (assetInfo) => {
-          // Keep markdown files in their original structure
-          if (assetInfo.name && assetInfo.name.endsWith('.md')) {
-            return assetInfo.name.replace('src/', '');
-          }
           // Keep image names and paths as they are
           if (assetInfo.name && /\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
             return assetInfo.name;
