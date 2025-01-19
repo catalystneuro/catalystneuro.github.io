@@ -62,7 +62,7 @@ function processContent(content: string): string {
 export const loadMarkdownFiles = () => {
   try {
     // Use raw loader to get markdown content directly
-    const files = import.meta.glob('../content/blog/*.md', { 
+    const files = import.meta.glob(['../content/blog/*.md', '/content/blog/*.md'], { 
       as: 'raw',
       eager: true 
     });
@@ -91,7 +91,9 @@ export const loadMarkdownFiles = () => {
             return null;
           }
 
-          const slug = path.split('/').pop()?.replace('.md', '') || '';
+          // Handle both development and production paths
+          const slug = path.split('/blog/').pop()?.replace('.md', '') || 
+                      path.split('/content/blog/').pop()?.replace('.md', '') || '';
           const mdContent = contentParts.join('---\n').trim();
 
           return {
