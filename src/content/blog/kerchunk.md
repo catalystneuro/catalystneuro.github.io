@@ -237,11 +237,7 @@ Consider a lab collecting high-density electrode recordings stored in flat binar
             "units": "uV",
             "scale_factor": 2.34375,  # To convert to microvolts
         },
-        "ap_band/0": {
-            "ref": "myrecording_g0_t0.imec0.ap.bin",
-            "offset": 0,
-            "size": 13824000000  # Total file size in bytes
-        }
+        "ap_band/0": ["myrecording_g0_t0.imec0.ap.bin", 0, 13824000000]   # filename, offset, size
     }
 }
 ```
