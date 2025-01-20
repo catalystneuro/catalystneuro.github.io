@@ -102,6 +102,26 @@ For neurophysiology data, this becomes particularly powerful. A raw array of num
 
 The combination is particularly elegant because these Xarray annotations can be stored directly in the virtual dataset description. Small coordinate arrays and metadata can be encoded directly in the JSON file, while larger coordinate arrays (like timestamps for long recordings) can be referenced just like the main data. This gives us a complete description of not just how to access the data, but what that data represents.
 
+Benefits of Xarray Integration:
+
+1. **Self-Describing Data**
+   - Dimensions have meaningful names
+   - Units are explicitly specified
+   - Coordinate systems are defined
+   - Metadata is machine-readable
+
+2. **Enhanced Analysis Capabilities**
+   - Select data by physical coordinates
+   - Automatic alignment of different datasets
+   - Unit-aware computations
+   - Smart broadcasting based on dimensions
+
+3. **Interoperability**
+   - Common interface across data types
+   - Compatible with Dask for parallel computing
+   - Easy conversion to other formats (NetCDF, etc.)
+   - Integration with visualization tools
+
 ### Additional Benefits of Virtual Dataset Mapping
 
 While our focus has been on standardization and cross-language accessibility, the virtual dataset approach enables several other powerful capabilities worth noting. By separating data description from the data itself, we can:
@@ -335,10 +355,6 @@ To make this approach successful, we need:
    - Performance best practices
    - Migration tutorials
 
-## Adding Semantic Context with Xarray Integration
-
-While Kerchunk gives us the physical layout of the data, Xarray integration allows us to add crucial semantic meaning to our datasets. This combination provides both efficient access and rich contextual information about what the data represents.
-
 ### Example: Annotated Electrophysiology Data
 
 Here's how we might extend our earlier electrophysiology example with Xarray-compatible metadata:
@@ -376,42 +392,3 @@ Here's how we might extend our earlier electrophysiology example with Xarray-com
     }
 }
 ```
-
-### Benefits of Xarray Integration
-
-1. **Self-Describing Data**
-   - Dimensions have meaningful names
-   - Units are explicitly specified
-   - Coordinate systems are defined
-   - Metadata is machine-readable
-
-2. **Enhanced Analysis Capabilities**
-   - Select data by physical coordinates
-   - Automatic alignment of different datasets
-   - Unit-aware computations
-   - Smart broadcasting based on dimensions
-
-3. **Interoperability**
-   - Common interface across data types
-   - Compatible with Dask for parallel computing
-   - Easy conversion to other formats (NetCDF, etc.)
-   - Integration with visualization tools
-
-
-### Current Limitations
-
-#### Language Support Gaps
-- No MATLAB implementation of Zarr exists, which is significant given MATLAB's widespread use in scientific computing
-- Limited support in other scientific computing environments
-
-#### Technical Limitations
-- The current zarr-python implementation cannot efficiently read regions of unchunked flat datasets
-  - Unlike HDF5, which can read arbitrary regions of contiguous data
-  - Forces users to either chunk their data (increasing complexity and potentially storage) or read more data than necessary
-  - This is particularly problematic for large, simple binary files where chunking adds unnecessary overhead
-
-#### Practical Implications
-These limitations mean that:
-1. For simple flat binary files, HDF5 might still be a better choice if partial reads are important
-2. Users might need to maintain multiple versions of data (chunked and unchunked) for different use cases
-3. Performance optimization becomes more complex since you can't easily balance between chunked and unchunked access patterns
