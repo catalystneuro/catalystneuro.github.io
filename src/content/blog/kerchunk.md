@@ -11,7 +11,9 @@ keywords: [
   "zarr",
   "data formats",
   "API design",
-  "cloud computing"
+  "cloud computing",
+  "NWB",
+  "BIDS"
 ]
 ---
 
@@ -92,6 +94,14 @@ One of the elegant aspects of the Kerchunk approach is its flexibility in how it
 
 Instead of creating references to tiny external files, which could be inefficient to access, this information becomes immediately available when the JSON mapping is loaded. For example, channel labels, time stamps, or experimental parameters can be stored directly in the mapping file, while the large raw data arrays remain as references to the original files. This flexibility helps optimize performance – frequently accessed small data is immediately available, while large data chunks are accessed only when needed. It's another example of how the virtual dataset approach can adapt to different needs and usage patterns.
 
+### Adding Meaning with Xarray
+
+While virtual datasets solve the technical problem of data access, we still need to add semantic meaning to our data. This is where Xarray becomes a powerful complement to our approach. Xarray allows us to label the dimensions and coordinates of our data arrays, add units and other metadata, and work with the data in a more scientifically meaningful way.
+
+For neurophysiology data, this becomes particularly powerful. A raw array of numbers from an electrode recording becomes much more useful when we can label its dimensions as 'time' and 'channel', associate proper units like 'seconds' and 'microvolts', and attach important metadata like sampling rate or electrode positions. With behavioral data, we might label dimensions as 'frame', 'x', and 'y', with coordinates in meaningful spatial units and timestamps for each frame.
+
+The combination is particularly elegant because these Xarray annotations can be stored directly in the virtual dataset description. Small coordinate arrays and metadata can be encoded directly in the JSON file, while larger coordinate arrays (like timestamps for long recordings) can be referenced just like the main data. This gives us a complete description of not just how to access the data, but what that data represents.
+
 ### Additional Benefits of Virtual Dataset Mapping
 
 While our focus has been on standardization and cross-language accessibility, the virtual dataset approach enables several other powerful capabilities worth noting. By separating data description from the data itself, we can:
@@ -103,6 +113,16 @@ While our focus has been on standardization and cross-language accessibility, th
 
 These capabilities are already being put to use in real-world applications like Neurosift, a web-based visualization platform for neurophysiology data. While a full exploration of these features is beyond the scope of this discussion, they represent important additional benefits of this approach to data standardization.
 
+### Complementing Existing APIs
+
+While we've discussed some limitations of API-based standardization, it's important to note that the virtual dataset approach isn't meant to replace existing APIs like Neo, NDI, or ONE. Instead, it can complement and enhance them. Decades of development have gone into creating sophisticated analysis, visualization, and data management tools around these APIs, representing an invaluable ecosystem for neuroscience research.
+
+The virtual dataset approach can coexist seamlessly with these API-based tools in two ways. First, since this approach doesn't require modifying the original data files, existing APIs can continue to access the data exactly as they do now. There's no need to choose between approaches – researchers can use both simultaneously, selecting the most appropriate tool for each specific task.
+
+Second, and perhaps more interestingly, these APIs could be enhanced to support reading from virtual dataset descriptions. By implementing Kerchunk-compatible readers, APIs like Neo could automatically gain support for any data format that has been mapped using this approach. This would actually expand the reach of these APIs, allowing them to support new data formats without requiring format-specific implementation work.
+
+This kind of integration could offer the best of both worlds: the language-agnostic accessibility of virtual datasets combined with the sophisticated processing and analysis capabilities of existing APIs. Rather than forcing a choice between approaches, we can build bridges between them, making our data more accessible while preserving access to the rich ecosystem of existing tools.
+
 ### Beyond Basic Mapping: LINDI and Advanced Data Structures
 
 While Kerchunk provides an excellent foundation for virtual datasets, some data formats include features that don't map cleanly to the Zarr specification. HDF5, for instance, supports sophisticated data organization features like links and references that have no direct equivalent in Zarr. This is where LINDI (LiNked Data Interface) comes in.
@@ -110,6 +130,20 @@ While Kerchunk provides an excellent foundation for virtual datasets, some data 
 LINDI extends the Kerchunk approach by adding support for these more complex data structures. It maintains the core idea of creating virtual mappings but expands the specification to handle HDF5 links and references. This is particularly important for scientific datasets where these features are used to represent relationships between different parts of the data – like linking an electrode's recording data to its position information, or connecting spike times to the original voltage traces that produced them.
 
 By supporting these more sophisticated data structures, LINDI makes it possible to create virtual mappings for a broader range of HDF5 files without losing important structural information. This is crucial for formats like NWB (Neurodata Without Borders) that make extensive use of HDF5's linking capabilities to organize complex experimental data.
+
+### Virtual NWB files
+
+One compelling application of this approach is the ability to create virtual NWB (Neurodata Without Borders) files. NWB is a sophisticated standard that uses HDF5's linking capabilities extensively to organize complex neurophysiology data. Using LINDI, we can create virtual NWB files that maintain all the standard's organizational structure and metadata requirements while pointing to data that lives in its original location and format. This means researchers can make their data "NWB-compliant" without actually converting terabytes of raw data into new files. The virtual NWB file serves as a standardized view of the data, complete with all the required metadata and organizational structure, while the underlying data remains untouched. This approach could significantly lower the barrier to adopting the NWB standard, especially for labs with large existing datasets or ongoing experiments.
+
+However, there is an important trade-off to consider: data accessed through these virtual NWB files won't benefit from the performance advantages of chunking and compression that come with native NWB files. For data archives like DANDI, this could be addressed by creating optimized, chunked, and compressed versions of the data on the server side. This would allow users to access the data efficiently while still maintaining the original files for reference and verification. The virtual NWB files could then be updated to point to these optimized versions when accessing data through the archive.
+
+### Extending BIDS: Supporting New Data Types
+
+This virtual dataset approach could also help expand the Brain Imaging Data Structure (BIDS) standard to support new types of data. Currently, BIDS works well for established neuroimaging formats like NIfTI and DICOM because these formats are already well-standardized. However, when researchers want to include new types of data in their BIDS datasets – like novel imaging techniques or custom electrophysiology recordings – they face challenges because BIDS hasn't yet standardized these formats.
+
+A particularly relevant application would be behavioral and physiological data. Modern neuroscience increasingly relies on sophisticated behavioral tracking – from simple video recordings to complex multi-camera setups, depth sensors, and automated tracking systems. Each of these might store data differently: pose estimation as CSV or HDF5 files, or raw video in various formats. Similarly, physiological measurements like heart rate, respiration, temperature, or eye tracking often come from different devices with their own proprietary formats. Using virtual dataset mappings, researchers could make all these diverse data types accessible through a common interface while maintaining the original files. This would allow BIDS to support the growing diversity of behavioral and physiological measurements without requiring researchers to convert their data to new formats.
+
+More broadly, using virtual dataset mappings, we could extend BIDS support to these new data types without waiting for format standardization. Researchers could maintain their data in its original format while providing standardized JSON descriptions that detail how to read it. These descriptions could live alongside the traditional BIDS metadata files, maintaining BIDS's familiar organization while making the data accessible through standard tools. This would allow the BIDS community to experiment with supporting new data types before committing to specific format requirements.
 
 ### The MATLAB Challenge and Opportunity
 
@@ -140,7 +174,13 @@ In these cases, we still need to bite the bullet and convert the data into a mor
 
 When these issues arise, converting to a well-designed format like Zarr becomes the pragmatic choice, despite the overhead. The key is making this decision deliberately, based on concrete needs, rather than converting everything by default. This hybrid approach – using virtual datasets where possible and physical conversion where necessary – gives us the best of both worlds.
 
-### How It Works
+### Technical limitation: zarr-python support for unchunked arrays
+
+A significant limitation in the current zarr-python implementation concerns its handling of unchunked datasets. Unlike HDF5, which can efficiently read arbitrary regions from contiguous data files, Zarr lacks native support for partial reads of unchunked data. For formats like SpikeGLX, which stores neural recordings as large, contiguous binary files, this becomes particularly problematic. Accessing even a small time window of neural data might require reading much more data than necessary, significantly impacting performance and resource usage. This issue is especially relevant for electrophysiology data, where researchers often need to access specific time segments of recordings that can be many hundreds of gigabytes in total size.
+
+This limitation creates a difficult choice: either accept the performance penalties of inefficient reads, or chunk the data and potentially double storage requirements. While chunking can optimize certain access patterns, it adds complexity and storage overhead that might not be justified for simple, flat binary files. Moreover, the original unchunked files often need to be maintained for compatibility with existing tools and workflows.
+
+# How It Works
 
 Rather than creating new JSON schemas, we use Kerchunk to generate references that map existing data files into the Zarr format. Kerchunk creates JSON files that describe:
 - The location of data chunks
