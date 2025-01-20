@@ -137,6 +137,8 @@ One compelling application of this approach is the ability to create virtual NWB
 
 However, there is an important trade-off to consider: data accessed through these virtual NWB files won't benefit from the performance advantages of chunking and compression that come with native NWB files. For data archives like DANDI, this could be addressed by creating optimized, chunked, and compressed versions of the data on the server side. This would allow users to access the data efficiently while still maintaining the original files for reference and verification. The virtual NWB files could then be updated to point to these optimized versions when accessing data through the archive.
 
+The approach works in the other direction as well. Tools like Neurosift use Kerchunk and LINDI to read from existing NWB files, creating virtual datasets that map to the internal data arrays within NWB files. This enables efficient, cloud-friendly access to NWB data without requiring specialized HDF5 libraries. By converting NWB's complex internal structure into simple Zarr-compatible maps, tools can access just the specific data they need without having to understand the full NWB specification.
+
 ### Extending BIDS: Supporting New Data Types
 
 This virtual dataset approach could also help expand the Brain Imaging Data Structure (BIDS) standard to support new types of data. Currently, BIDS works well for established neuroimaging formats like NIfTI and DICOM because these formats are already well-standardized. However, when researchers want to include new types of data in their BIDS datasets – like novel imaging techniques or custom electrophysiology recordings – they face challenges because BIDS hasn't yet standardized these formats.
