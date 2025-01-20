@@ -225,18 +225,23 @@ Consider a lab collecting high-density electrode recordings stored in flat binar
 {
     "version": 1,
     "refs": {
-        "voltage_data/.zarray": {
-            "shape": [3600000, 384],  # 1 hour @ 1kHz, 384 channels
-            "chunks": [60000, 384],    # 1-minute chunks
-            "dtype": "<f4",
-            "compressor": null
+        ".zgroup": {"zarr_format": 2},
+        "ap_band/.zarray": {
+            "shape": [18000000, 384],  # 10 minutes @ 30kHz, 384 channels
+            "dtype": "<i2",            # 16-bit integers
+            "compressor": null,        # The data in the .bin file is uncompressed
+            "chunks": [18000000, 384]  # Zarr, unlike HDF5, requires data to be chunked, so we just create one big chunk
         },
-        "voltage_data/0.0": {
-            "ref": "original_recording.bin",
+        "ap_band/.zattrs": {
+            "_ARRAY_DIMENSIONS": ["time", "channel"],   # this is an Xarray convention
+            "units": "uV",
+            "scale_factor": 2.34375,  # To convert to microvolts
+        },
+        "ap_band/0": {
+            "ref": "myrecording_g0_t0.imec0.ap.bin",
             "offset": 0,
-            "size": 92160000  # Bytes for first chunk
+            "size": 13824000000  # Total file size in bytes
         }
-        # ... additional chunks
     }
 }
 ```
