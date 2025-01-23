@@ -39,8 +39,8 @@
     {
       "name": "Paul Adkisson",
       "isActive": true,
-      "role": "Neurodata Programmer",
-      "description": "Paul Adkisson received his B.S. in Neuroscience from the University of California Los Angeles and his M.S.E. in Biomedical Engineering from Johns Hopkins.  In his Master's research, he investigated the effects of different types of electrical stimulation on networks of neurons using computational models.  Now, he works on the SpikeInterface platform to develop modular spike sorting pipelines available to all.  In his free time he enjoys rock climbing and backpacking.",
+      "role": "Research Software Engineer",
+      "description": "Paul Adkisson received his B.S. in Neuroscience from the University of California Los Angeles and his M.S.E. in Biomedical Engineering from Johns Hopkins. In his Master's research, he investigated the effects of different types of electrical stimulation on networks of neurons using computational models. At CatalystNeuro, he specializes in Python development, data standardization, and implementing robust software solutions for neuroscience research. His work helps neuroscience labs of all shapes and sizes convert their data to NWB and share it on DANDI, enabling researchers worldwide to more easily access, understand, and build upon each other's discoveries. In his free time, he enjoys rock climbing and backpacking.",
       "image": "/images/team/paul_adkisson.jpg",
       "github": "https://github.com/pauladkisson"
     },
