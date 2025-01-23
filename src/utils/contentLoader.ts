@@ -7,7 +7,7 @@ export interface SoftwareItem {
   type?: 'core' | 'extension' | 'guide';
   image?: string;
   github?: string;
-  docs: string;
+  docs?: string;
 }
 
 interface DandiDataset {

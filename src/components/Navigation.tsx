@@ -9,7 +9,13 @@ export const Navigation = () => {
   const menuItems = [
     { label: "About", path: "/about" },
     { label: "Team", path: "/team" },
-    { label: "Software", path: "/software" },
+    {
+      label: "Software",
+      items: [
+        { label: "NWB Software", path: "/nwb-software" },
+        { label: "Analysis Software", path: "/analysis-software" },
+      ],
+    },
     {
       label: "Portfolio",
       items: [
