@@ -17,7 +17,7 @@ const AnalysisSoftware = () => {
 
         <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           {softwareList
-            .filter(software => ['SpikeInterface', 'VAME', 'Voluseg'].includes(software.name))
+            .filter(software => ['SpikeInterface', 'VAME', 'Voluseg', 'Neo'].includes(software.name))
             .map((software) => (
               <Card key={software.name} className="flex flex-col">
                 {software.image && (
