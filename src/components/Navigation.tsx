@@ -9,7 +9,13 @@ export const Navigation = () => {
   const menuItems = [
     { label: "About", path: "/about" },
     { label: "Team", path: "/team" },
-    { label: "Software", path: "/software" },
+    {
+      label: "Software",
+      items: [
+        { label: "NWB Software", path: "/nwb-software" },
+        { label: "Analysis Software", path: "/analysis-software" },
+      ],
+    },
     {
       label: "Portfolio",
       items: [
@@ -82,7 +88,7 @@ export const Navigation = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       {item.items.map((subItem) => (
-                        <DropdownMenuItem key={subItem.path}>
+                        <DropdownMenuItem key={subItem.path} asChild>
                           <Link 
                             to={subItem.path}
                             className="block w-full"

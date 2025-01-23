@@ -10,7 +10,8 @@ import Team from "./pages/Team";
 import Blog from "./pages/Blog";
 import { BlogPost } from "./components/BlogPost";
 import NWBConversions from "./pages/NWBConversions";
-import Software from "./pages/Software";
+import NWBSoftware from "./pages/NWBSoftware";
+import AnalysisSoftware from "./pages/AnalysisSoftware";
 import Openings from "./pages/Openings";
 import JobPosition from "./pages/JobPosition";
 import About from "./pages/About";
@@ -37,7 +38,8 @@ const App = () => {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/nwb-conversions" element={<NWBConversions />} />
-                <Route path="/software" element={<Software />} />
+                <Route path="/nwb-software" element={<NWBSoftware />} />
+                <Route path="/analysis-software" element={<AnalysisSoftware />} />
                 <Route path="/openings" element={<Openings />} />
                 <Route path="/openings/:position" element={<JobPosition />} />
                 <Route path="/about" element={<About />} />

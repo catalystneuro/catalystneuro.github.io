@@ -4,13 +4,13 @@ import { Github, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { loadSoftware } from "@/utils/contentLoader";
 
-const Software = () => {
+const NWBSoftware = () => {
   const softwareList = loadSoftware();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">Our Software</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">NWB Software</h1>
         <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
           We develop open-source tools to make neurophysiology data management and standardization accessible to all researchers.
         </p>
@@ -19,7 +19,7 @@ const Software = () => {
           <h2 className="text-3xl font-bold mb-6">Core Tools</h2>
           <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {softwareList
-              .filter(software => !software.name.startsWith('NDX') && software.type !== 'guide')
+              .filter(software => !software.name.startsWith('NDX') && software.type !== 'guide' && !['SpikeInterface', 'VAME', 'Voluseg'].includes(software.name))
               .map((software) => (
                 <Card key={software.name} className="flex flex-col">
                   <img
@@ -142,4 +142,4 @@ const Software = () => {
   );
 };
 
-export default Software;
+export default NWBSoftware;
