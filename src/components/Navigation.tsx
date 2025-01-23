@@ -88,7 +88,7 @@ export const Navigation = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       {item.items.map((subItem) => (
-                        <DropdownMenuItem key={subItem.path}>
+                        <DropdownMenuItem key={subItem.path} asChild>
                           <Link 
                             to={subItem.path}
                             className="block w-full"
