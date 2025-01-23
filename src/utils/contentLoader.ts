@@ -4,7 +4,7 @@ export interface SoftwareItem {
   name: string;
   description: string;
   status?: string;
-  type?: 'core' | 'extension' | 'guide';
+  type?: 'core' | 'extension' | 'guide' | 'analysis';
   image?: string;
   github?: string;
   docs?: string;

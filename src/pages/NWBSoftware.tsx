@@ -19,7 +19,7 @@ const NWBSoftware = () => {
           <h2 className="text-3xl font-bold mb-6">Core Tools</h2>
           <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {softwareList
-              .filter(software => !software.name.startsWith('NDX') && software.type !== 'guide' && !['SpikeInterface', 'VAME', 'Voluseg'].includes(software.name))
+              .filter(software => software.type === 'core')
               .map((software) => (
                 <Card key={software.name} className="flex flex-col">
                   <img
@@ -68,43 +68,10 @@ const NWBSoftware = () => {
         </div>
 
         <div className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Documentation & Guides</h2>
-          <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-            {softwareList
-              .filter(software => software.type === 'guide')
-              .map((software) => (
-                <Card key={software.name} className="flex flex-col">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle className="text-2xl">{software.name}</CardTitle>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex-grow">
-                    <p className="text-muted-foreground">{software.description}</p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link
-                        to={software.docs}
-                        className="flex items-center"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        View Guide
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-          </div>
-        </div>
-
-        <div>
           <h2 className="text-3xl font-bold mb-6">Neurodata Extensions</h2>
           <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {softwareList
-              .filter(software => software.name.startsWith('NDX'))
+              .filter(software => software.type === 'extension')
               .map((software) => (
                 <Card key={software.name} className="flex flex-col">
                   <CardHeader>
@@ -131,6 +98,39 @@ const NWBSoftware = () => {
                         <Github className="w-4 h-4 mr-2" />
                         GitHub
                       </a>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-3xl font-bold mb-6">Documentation & Guides</h2>
+          <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+            {softwareList
+              .filter(software => software.type === 'guide')
+              .map((software) => (
+                <Card key={software.name} className="flex flex-col">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-2xl">{software.name}</CardTitle>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="text-muted-foreground">{software.description}</p>
+                  </CardContent>
+                  <CardFooter>
+                    <Button variant="outline" size="sm" asChild>
+                      <Link
+                        to={software.docs}
+                        className="flex items-center"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View Guide
+                      </Link>
                     </Button>
                   </CardFooter>
                 </Card>

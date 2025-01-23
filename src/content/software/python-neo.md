@@ -5,4 +5,5 @@ status: Active
 github: https://github.com/NeuralEnsemble/python-neo
 docs: https://neo.readthedocs.io/
 image: /images/software/neo_logo.webp
+type: analysis
 ---
