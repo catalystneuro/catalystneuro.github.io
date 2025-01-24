@@ -20,9 +20,25 @@ export const BlogPost = () => {
       <div className="container mx-auto px-4 py-8">
         <article className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-          <div className="flex items-center justify-between text-sm text-muted-foreground mb-8">
-            <span>{post.date}</span>
-            <span>{post.readTime}</span>
+          <div className="flex flex-col gap-4 mb-8">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span>{post.date}</span>
+              <span>{post.readTime}</span>
+            </div>
+            {post.keywords?.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {post.keywords
+                  .filter(keyword => keyword && keyword.trim())
+                  .map((keyword, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 text-sm rounded-full bg-secondary text-secondary-foreground"
+                    >
+                      {keyword.trim()}
+                    </span>
+                  ))}
+              </div>
+            )}
           </div>
           <img
             src={post.image}

@@ -161,11 +161,23 @@ function parseFrontmatter(frontmatter: string) {
         if (trimmedLine.endsWith(']')) {
           // End of array
           arrayItems.push(trimmedLine.replace(/[\s,\]]$/, ''));
-          data[currentKey] = arrayItems.map(item => 
-            item.trim().replace(/^["'](.*)["']$/, '$1') // Remove quotes
-              .replace(/^[-\s]*/, '') // Remove leading dash and spaces
-              .trim()
-          );
+          if (currentKey === 'keywords') {
+            data[currentKey] = arrayItems.map(item => 
+              item.trim()
+                .replace(/^[-\s]*/, '') // Remove leading dash and spaces
+                .replace(/["']/g, '') // Remove all quotes
+                .replace(/,\s*$/, '') // Remove trailing commas
+                .trim()
+            ).filter(item => item !== ''); // Remove empty items
+          } else {
+            data[currentKey] = arrayItems.map(item => 
+              item.trim()
+                .replace(/^["'](.*)["']$/, '$1') // Remove quotes
+                .replace(/^[-\s]*/, '') // Remove leading dash and spaces
+                .replace(/,\s*$/, '') // Remove trailing commas
+                .trim()
+            ).filter(item => item !== ''); // Remove empty items
+          }
           isInArray = false;
           currentKey = null;
           arrayItems = [];
