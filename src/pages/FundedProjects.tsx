@@ -88,19 +88,19 @@ const FundedProjects = () => {
           Our work is supported by leading institutions committed to advancing neuroscience data standards and tools.
         </p>
 
-        <div className="max-w-4xl mx-auto mb-8 space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
+        <div className="max-w-4xl mx-auto mb-8 space-y-4 px-4">
+          <div className="flex flex-col gap-4">
             <Input
               type="search"
-              placeholder="Search by title, funder, or description..."
+              placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="flex-grow"
+              className="w-full"
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start w-full">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
@@ -169,7 +169,7 @@ const FundedProjects = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8 px-4">
           {currentProjects.map((project, index) => (
             <a 
               key={index}

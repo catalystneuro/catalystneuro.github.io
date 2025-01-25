@@ -3,8 +3,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-50 border-t">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-gray-900">Company</h3>
             <ul className="space-y-2">
