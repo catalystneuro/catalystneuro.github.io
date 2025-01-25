@@ -60,7 +60,6 @@ export interface FundedProject {
 
 function loadMarkdownFiles(directory: string) {
   const files = import.meta.glob('../content/**/*.md', { as: 'raw', eager: true });
-  
   return Object.entries(files)
     .filter(([path]) => path.includes(`/${directory}/`))
     .map(([_, content]) => {
@@ -73,8 +72,11 @@ export const loadSoftware = (): SoftwareItem[] => {
   return loadMarkdownFiles('software') as SoftwareItem[];
 };
 
+export const portfolio = loadMarkdownFiles('nwb-conversions') as PortfolioItem[];
+
+// Keep the sync version for backward compatibility
 export const loadPortfolio = (): PortfolioItem[] => {
-  return loadMarkdownFiles('nwb-conversions') as PortfolioItem[];
+  return portfolio;
 };
 
 export const loadOpenings = (): JobOpening[] => {
@@ -91,10 +93,9 @@ export const loadAbout = (): AboutContent => {
   return attributes as AboutContent;
 };
 
-export const loadFundedProjects = (): FundedProject[] => {
+export const fundedProjects = (() => {
   const files = import.meta.glob('../content/**/*.md', { as: 'raw', eager: true });
-  
-  return Object.entries(files)
+  const projects = Object.entries(files)
     .filter(([path]) => path.includes('/funded-projects/'))
     .map(([_, content]) => {
       const { attributes, body } = frontMatter<FundedProject>(content);
@@ -110,4 +111,11 @@ export const loadFundedProjects = (): FundedProject[] => {
       };
     })
     .sort((a, b) => b.startDate.localeCompare(a.startDate));
+  
+  return projects;
+})();
+
+// Keep the async version for backward compatibility
+export const loadFundedProjects = (): Promise<FundedProject[]> => {
+  return Promise.resolve(fundedProjects);
 };

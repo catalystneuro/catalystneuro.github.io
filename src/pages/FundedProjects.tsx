@@ -9,16 +9,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { loadFundedProjects } from "@/utils/contentLoader";
+import { fundedProjects } from "@/utils/contentLoader";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 type SortOption = "title" | "date" | "funder";
 
 const ITEMS_PER_PAGE = 6;
 
 const FundedProjects = () => {
-  const projects = loadFundedProjects();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState<string>("All");
@@ -26,11 +25,18 @@ const FundedProjects = () => {
   const [sortBy, setSortBy] = useState<SortOption>("date");
 
   // Get unique statuses and funders for filter dropdowns
-  const statuses = ["All", ...new Set(projects.map(project => project.status))].sort();
-  const funders = ["All", ...new Set(projects.map(project => project.funder))].sort();
+  const statuses = useMemo(() => 
+    ["All", ...new Set(fundedProjects.map(project => project.status))].sort(),
+    []
+  );
+  
+  const funders = useMemo(() => 
+    ["All", ...new Set(fundedProjects.map(project => project.funder))].sort(),
+    []
+  );
 
   // Filter projects based on search term, status, and funder
-  const filteredProjects = projects.filter((project) => {
+  const filteredProjects = fundedProjects.filter((project) => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = 
       (project.title || "").toLowerCase().includes(searchLower) ||
