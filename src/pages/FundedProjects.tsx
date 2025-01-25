@@ -9,16 +9,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { loadFundedProjects } from "@/utils/contentLoader";
+import { fundedProjects } from "@/utils/contentLoader";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 type SortOption = "title" | "date" | "funder";
 
 const ITEMS_PER_PAGE = 6;
 
 const FundedProjects = () => {
-  const projects = loadFundedProjects();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState<string>("All");
@@ -26,11 +25,18 @@ const FundedProjects = () => {
   const [sortBy, setSortBy] = useState<SortOption>("date");
 
   // Get unique statuses and funders for filter dropdowns
-  const statuses = ["All", ...new Set(projects.map(project => project.status))].sort();
-  const funders = ["All", ...new Set(projects.map(project => project.funder))].sort();
+  const statuses = useMemo(() => 
+    ["All", ...new Set(fundedProjects.map(project => project.status))].sort(),
+    []
+  );
+  
+  const funders = useMemo(() => 
+    ["All", ...new Set(fundedProjects.map(project => project.funder))].sort(),
+    []
+  );
 
   // Filter projects based on search term, status, and funder
-  const filteredProjects = projects.filter((project) => {
+  const filteredProjects = fundedProjects.filter((project) => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = 
       (project.title || "").toLowerCase().includes(searchLower) ||
@@ -50,10 +56,11 @@ const FundedProjects = () => {
       case "title":
         return (a.title || "").localeCompare(b.title || "");
       case "date":
-        // Simple string comparison since dates are in YYYY-MM-DD format
+        // Convert dates to strings and handle undefined values
         const dateA = String(a.startDate || "");
         const dateB = String(b.startDate || "");
-        return dateB > dateA ? 1 : dateB < dateA ? -1 : 0; // Sort in descending order (newest first)
+        // Compare dates as strings (YYYY-MM-DD format will sort correctly)
+        return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
       case "funder":
         return (a.funder || "").localeCompare(b.funder || "");
       default:
@@ -88,19 +95,19 @@ const FundedProjects = () => {
           Our work is supported by leading institutions committed to advancing neuroscience data standards and tools.
         </p>
 
-        <div className="max-w-4xl mx-auto mb-8 space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
+        <div className="max-w-4xl mx-auto mb-8 space-y-4 px-4">
+          <div className="flex flex-col gap-4">
             <Input
               type="search"
-              placeholder="Search by title, funder, or description..."
+              placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="flex-grow"
+              className="w-full"
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start w-full">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
@@ -169,7 +176,7 @@ const FundedProjects = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8 px-4">
           {currentProjects.map((project, index) => (
             <a 
               key={index}

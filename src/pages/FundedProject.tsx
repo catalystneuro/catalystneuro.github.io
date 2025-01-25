@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
-import { loadFundedProjects, loadPortfolio } from "@/utils/contentLoader";
+import { fundedProjects, portfolio } from "@/utils/contentLoader";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
@@ -15,13 +15,12 @@ const FundedProject = () => {
     const path = window.location.pathname;
     const projectId = path.split('/').pop();
 
-    // Load project data
-    const projects = loadFundedProjects();
-    const currentProject = projects.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === projectId);
+    // Get project data from pre-loaded projects
+    const currentProject = fundedProjects.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === projectId);
     setProject(currentProject);
 
-    // Load affiliated NWB conversions
-    const conversions = loadPortfolio();
+    // Get affiliated NWB conversions from pre-loaded portfolio
+    const conversions = portfolio;
     const affiliated = conversions.filter(conv => {
       const projectTitle = currentProject?.title;
       if (projectTitle === "ASAP NWB Adoption") {
