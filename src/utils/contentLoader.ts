@@ -110,7 +110,13 @@ export const fundedProjects = (() => {
         github: attributes.github,
       };
     })
-    .sort((a, b) => b.startDate.localeCompare(a.startDate));
+    .sort((a, b) => {
+      // Convert dates to strings and handle undefined values
+      const dateA = String(a.startDate || '');
+      const dateB = String(b.startDate || '');
+      // Compare dates as strings (YYYY-MM-DD format will sort correctly)
+      return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
+    });
   
   return projects;
 })();

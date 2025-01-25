@@ -56,10 +56,11 @@ const FundedProjects = () => {
       case "title":
         return (a.title || "").localeCompare(b.title || "");
       case "date":
-        // Simple string comparison since dates are in YYYY-MM-DD format
+        // Convert dates to strings and handle undefined values
         const dateA = String(a.startDate || "");
         const dateB = String(b.startDate || "");
-        return dateB > dateA ? 1 : dateB < dateA ? -1 : 0; // Sort in descending order (newest first)
+        // Compare dates as strings (YYYY-MM-DD format will sort correctly)
+        return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
       case "funder":
         return (a.funder || "").localeCompare(b.funder || "");
       default:
