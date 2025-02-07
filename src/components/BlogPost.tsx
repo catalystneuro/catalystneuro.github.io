@@ -1,14 +1,26 @@
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import rehypeSlug from "rehype-slug";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 export const BlogPost = () => {
   const { slug } = useParams();
+  const { hash } = useLocation();
   const post = blogPosts.find(p => p.slug === slug);
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [hash]);
   
   if (!post) {
     return <div>Post not found</div>;
@@ -30,12 +42,40 @@ export const BlogPost = () => {
             className="w-full h-64 object-cover rounded-lg mb-8"
           />
           <ReactMarkdown
-            rehypePlugins={[rehypeRaw]}
+            rehypePlugins={[rehypeRaw, rehypeSlug]}
             components={{
-              h1: ({node, ...props}) => <h1 className="text-4xl font-bold mt-8 mb-4" {...props} />,
-              h2: ({node, ...props}) => <h2 className="text-3xl font-bold mt-6 mb-3" {...props} />,
-              h3: ({node, ...props}) => <h3 className="text-2xl font-bold mt-5 mb-2" {...props} />,
-              h4: ({node, ...props}) => <h4 className="text-xl font-bold mt-4 mb-2" {...props} />,
+              h1: ({node, ...props}) => (
+                <h1 className="text-4xl font-bold mt-8 mb-4 group relative flex items-center" {...props}>
+                  <a href={`#${props.id}`} className="absolute -left-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    #
+                  </a>
+                  {props.children}
+                </h1>
+              ),
+              h2: ({node, ...props}) => (
+                <h2 className="text-3xl font-bold mt-6 mb-3 group relative flex items-center" {...props}>
+                  <a href={`#${props.id}`} className="absolute -left-5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    #
+                  </a>
+                  {props.children}
+                </h2>
+              ),
+              h3: ({node, ...props}) => (
+                <h3 className="text-2xl font-bold mt-5 mb-2 group relative flex items-center" {...props}>
+                  <a href={`#${props.id}`} className="absolute -left-5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    #
+                  </a>
+                  {props.children}
+                </h3>
+              ),
+              h4: ({node, ...props}) => (
+                <h4 className="text-xl font-bold mt-4 mb-2 group relative flex items-center" {...props}>
+                  <a href={`#${props.id}`} className="absolute -left-5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    #
+                  </a>
+                  {props.children}
+                </h4>
+              ),
               p: ({node, ...props}) => <p className="my-4 leading-relaxed" {...props} />,
               ul: ({node, ...props}) => <ul className="list-disc list-inside my-4" {...props} />,
               ol: ({node, ...props}) => <ol className="list-decimal list-inside my-4" {...props} />,
