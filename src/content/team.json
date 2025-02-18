@@ -31,8 +31,8 @@
     {
       "name": "Heberto Mayorquin, PhD",
       "isActive": true,
-      "role": "Neurodata Scientist",
-      "description": "Ramón Heberto Martinez Mayorquin has a BSC in Physics and an MSc in Complexity Science and a Ph.D. in Computational Neuroscience. During his Ph.D., he studied in the theoretical and computational study of associative neural networks (e.g. Hopfield Network). During his studies, he has developed an interest in software practices that assure efficient, reproducible, and robust scientific simulations. This, together with his love for statistics and data wrangling has led him to move forward with a career in data science where he can combine and further develop those interests.",
+      "role": "Sr. Research Software Engineer",
+      "description": "Ramón Heberto Martinez Mayorquin holds a B.Sc. in Physics, an M.Sc. in Complexity Science, and a Ph.D. in Computational Neuroscience. His doctoral research focused on the theoretical and computational study of associative neural networks, such as Hopfield Networks. Throughout his academic journey, he developed a strong interest in software practices that ensure efficient, reproducible, and robust scientific simulations. Combined with his passion for statistics and data wrangling, this has led him to pursue a career at the intersection of research and software engineering, where he continues to refine and expand these interests.",
       "image": "/images/team/heberto_mayorquin.jpg",
       "github": "https://github.com/h-mayorquin"
     },
