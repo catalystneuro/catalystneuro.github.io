@@ -9,10 +9,10 @@ export const Hero = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="relative z-10 md:flex md:items-center md:justify-between">
           <div className="md:w-3/5">
-            <div className="inline-flex items-center rounded-full border border-primary/30 bg-white/80 px-3 py-1 text-sm text-primary shadow-sm backdrop-blur-sm">
+            <a href="/analysis-software" className="inline-flex items-center rounded-full border border-primary/30 bg-white/80 px-3 py-1 text-sm text-primary shadow-sm backdrop-blur-sm hover:bg-white hover:shadow-md transition-all duration-200">
               <span className="mr-2 rounded-full bg-primary px-1.5 py-0.5 text-xs text-white">New</span>
               Open source neurophysiology tools for researchers
-            </div>
+            </a>
             
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-secondary sm:text-6xl">
               Transforming Neurophysiology Data
@@ -24,7 +24,7 @@ export const Hero = () => {
             </p>
             
             <div className="mt-10 flex flex-wrap gap-4 md:gap-x-6">
-              <a href="/software">
+              <a href="/nwb-software">
                 <Button size="lg" className="group bg-primary hover:bg-primary/90">
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
