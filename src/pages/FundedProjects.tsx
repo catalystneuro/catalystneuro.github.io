@@ -109,7 +109,7 @@ const FundedProjects = () => {
             <div className="flex flex-wrap gap-2 justify-center sm:justify-start w-full">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Status: {selectedStatus}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -130,7 +130,7 @@ const FundedProjects = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Funder: {selectedFunder}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -151,7 +151,7 @@ const FundedProjects = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Sort by
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -222,7 +222,6 @@ const FundedProjects = () => {
             variant="outline"
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="border-primary/30 hover:bg-primary/5"
           >
             Previous
           </Button>
@@ -231,7 +230,6 @@ const FundedProjects = () => {
               key={i + 1}
               variant={currentPage === i + 1 ? "default" : "outline"}
               onClick={() => setCurrentPage(i + 1)}
-              className={currentPage === i + 1 ? "bg-primary hover:bg-primary/90" : "border-primary/30 hover:bg-primary/5"}
             >
               {i + 1}
             </Button>
@@ -240,7 +238,6 @@ const FundedProjects = () => {
             variant="outline"
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="border-primary/30 hover:bg-primary/5"
           >
             Next
           </Button>

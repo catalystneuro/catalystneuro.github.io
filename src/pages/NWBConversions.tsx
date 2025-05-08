@@ -147,7 +147,7 @@ const NWBConversions = () => {
             <div className="flex flex-wrap gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Method: {selectedMethod}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -168,7 +168,7 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Research Area: {selectedArea}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -189,7 +189,7 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Group by
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -211,7 +211,7 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Institution: {selectedInstitution}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -232,7 +232,7 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Funded Project: {selectedFundedProject}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -253,7 +253,7 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
+                  <Button variant="outline">
                     Sort by
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -342,7 +342,7 @@ const NWBConversions = () => {
                     )}
                     <div className="flex space-x-2">
                       {item.github && (
-                        <Button variant="outline" size="sm" className="border-primary/30 hover:bg-primary/5" asChild>
+                        <Button variant="outline" size="sm" asChild>
                           <a
                             href={item.github}
                             target="_blank"
@@ -356,7 +356,7 @@ const NWBConversions = () => {
                       )}
                       {item.dandi &&
                         (typeof item.dandi === "string" ? (
-                          <Button variant="outline" size="sm" className="border-primary/30 hover:bg-primary/5" asChild>
+                          <Button variant="outline" size="sm" asChild>
                             <a
                               href={item.dandi}
                               target="_blank"
@@ -373,7 +373,6 @@ const NWBConversions = () => {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="border-primary/30 hover:bg-primary/5 flex items-center"
                               >
                                 <ExternalLink className="w-4 h-4 mr-2" />
                                 DANDI
@@ -411,7 +410,6 @@ const NWBConversions = () => {
             variant="outline"
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="border-primary/30 hover:bg-primary/5"
           >
             Previous
           </Button>
@@ -420,7 +418,6 @@ const NWBConversions = () => {
               key={i + 1}
               variant={currentPage === i + 1 ? "default" : "outline"}
               onClick={() => setCurrentPage(i + 1)}
-              className={currentPage === i + 1 ? "bg-primary hover:bg-primary/90" : "border-primary/30 hover:bg-primary/5"}
             >
               {i + 1}
             </Button>
@@ -429,7 +426,6 @@ const NWBConversions = () => {
             variant="outline"
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="border-primary/30 hover:bg-primary/5"
           >
             Next
           </Button>
