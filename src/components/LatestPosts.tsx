@@ -8,19 +8,19 @@ export const LatestPosts = () => {
   return (
     <section className="py-8 md:py-16" style={{ background: '#E8E9F2' }}>
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground">Latest News & Events</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-secondary">Latest News & Events</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {latestPosts.map((post) => (
             <Link to={`/blog/${post.slug}`} key={post.slug} className="block">
-              <Card className="h-full hover:shadow-lg transition-shadow">
+              <Card className="h-full hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10">
                 <img
                   src={post.image}
                   alt={post.title}
                   className="w-full h-40 md:h-48 object-cover"
                 />
                 <CardHeader>
-                  <CardTitle className="text-lg md:text-xl line-clamp-2">{post.title}</CardTitle>
-                  <CardDescription className="line-clamp-3">{post.description}</CardDescription>
+                  <CardTitle className="text-lg md:text-xl line-clamp-2 text-secondary">{post.title}</CardTitle>
+                  <CardDescription className="line-clamp-3 text-secondary/75">{post.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2 mb-4">
@@ -33,7 +33,7 @@ export const LatestPosts = () => {
                       </span>
                     ))}
                   </div>
-                  <span className="text-sm text-muted-foreground">{post.date}</span>
+                  <span className="text-sm text-secondary/65">{post.date}</span>
                 </CardContent>
               </Card>
             </Link>
