@@ -12,6 +12,7 @@ import {
 import { fundedProjects } from "@/utils/contentLoader";
 import { format } from "date-fns";
 import { useState, useMemo } from "react";
+import PageLayout from "@/components/PageLayout";
 
 type SortOption = "title" | "date" | "funder";
 
@@ -88,14 +89,12 @@ const FundedProjects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">Funded Projects</h1>
-        <p className="text-center text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Our work is supported by leading institutions committed to advancing neuroscience data standards and tools.
-        </p>
-
-        <div className="max-w-4xl mx-auto mb-8 space-y-4 px-4">
+    <PageLayout
+      title="Funded Projects"
+      subtitle="Our work is supported by leading institutions committed to advancing neuroscience data standards and tools."
+    >
+      <div className="max-w-4xl mx-auto mb-8 space-y-4 px-4">
+        <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm">
           <div className="flex flex-col gap-4">
             <Input
               type="search"
@@ -110,7 +109,7 @@ const FundedProjects = () => {
             <div className="flex flex-wrap gap-2 justify-center sm:justify-start w-full">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
                     Status: {selectedStatus}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -131,7 +130,7 @@ const FundedProjects = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
                     Funder: {selectedFunder}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -152,7 +151,7 @@ const FundedProjects = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button variant="outline" className="border-primary/30 hover:bg-primary/5 hover:border-primary/50">
                     Sort by
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -171,19 +170,20 @@ const FundedProjects = () => {
               </DropdownMenu>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-sm text-secondary/65 text-center mt-4">
             Showing {currentProjects.length} of {filteredProjects.length} entries
           </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8 px-4">
-          {currentProjects.map((project, index) => (
-            <a 
-              key={index}
-              href={`/funded-projects/${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-              className="no-underline h-full block"
-            >
-              <Card className="hover:shadow-lg transition-shadow h-full flex flex-col">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto mb-8 px-4">
+        {currentProjects.map((project, index) => (
+          <a 
+            key={index}
+            href={`/funded-projects/${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+            className="no-underline h-full block"
+          >
+            <Card className="hover:shadow-lg transition-shadow h-full flex flex-col backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30">
               <CardHeader className="space-y-4 flex-none">
                 <div className="flex items-start justify-between">
                   <CardTitle>{project.title}</CardTitle>
@@ -191,8 +191,8 @@ const FundedProjects = () => {
                     {project.status}
                   </Badge>
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  <span className="font-medium">{project.funder}</span>
+                <div className="text-sm text-secondary/65">
+                  <span className="font-medium text-primary">{project.funder}</span>
                   <span className="mx-2">•</span>
                   <span>Started {format(new Date(project.startDate), 'MMMM yyyy')}</span>
                 </div>
@@ -207,44 +207,46 @@ const FundedProjects = () => {
                 )}
               </CardHeader>
               <CardContent className="flex-grow flex flex-col">
-                <p className="text-muted-foreground flex-grow">
+                <p className="text-secondary/75 text-sm leading-relaxed flex-grow">
                   {project.body}
                 </p>
               </CardContent>
-              </Card>
-            </a>
-          ))}
-        </div>
-
-        {totalPages > 1 && (
-          <div className="flex justify-center gap-2 mt-8 mb-6">
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <Button
-                key={i + 1}
-                variant={currentPage === i + 1 ? "default" : "outline"}
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </Button>
-            ))}
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
-          </div>
-        )}
+            </Card>
+          </a>
+        ))}
       </div>
-    </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-8 mb-6">
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="border-primary/30 hover:bg-primary/5"
+          >
+            Previous
+          </Button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Button
+              key={i + 1}
+              variant={currentPage === i + 1 ? "default" : "outline"}
+              onClick={() => setCurrentPage(i + 1)}
+              className={currentPage === i + 1 ? "bg-primary hover:bg-primary/90" : "border-primary/30 hover:bg-primary/5"}
+            >
+              {i + 1}
+            </Button>
+          ))}
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="border-primary/30 hover:bg-primary/5"
+          >
+            Next
+          </Button>
+        </div>
+      )}
+    </PageLayout>
   );
 };
 
