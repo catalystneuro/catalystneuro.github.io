@@ -8,6 +8,7 @@ tags:
   - electrophysiology
   - behavioral tracking
   - video
-  - brain-computer interface
+  - autism
 funded_project: SFARI ARC Spyglass
+species: Rat
 ---

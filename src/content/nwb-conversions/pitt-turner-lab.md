@@ -9,4 +9,5 @@ dandi:
     name: "000947: Reach-related Single Unit Activity in the Parkinsonian Macaque"
 date: "2023-08"
 funded_project: "Michael J. Fox ASAP"
+species: Macaques
 ---

@@ -7,5 +7,7 @@ date: "2025-01"
 tags:
   - electrophysiology
   - behavioral tracking
+  - autism
 funded_project: SFARI ARC Spyglass
+species: Rat
 ---

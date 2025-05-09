@@ -7,4 +7,5 @@ github: "https://github.com/catalystneuro/datta-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000559"
 date: "2023-05"
 funded_project: "SCGB NWB Adoption"
+species: Mice
 ---

@@ -22,15 +22,20 @@ type PortfolioItem = {
   date: string;
   tags?: string[];
   funded_project?: string;
+  species?: string | string[];
 };
 
 interface BadgeProps {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
-const Badge = ({ children, className = "" }: BadgeProps) => (
-  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${className}`}>
+const Badge = ({ children, className = "", onClick }: BadgeProps) => (
+  <span 
+    className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${className} ${onClick ? "cursor-pointer hover:opacity-80" : ""}`}
+    onClick={onClick}
+  >
     {children}
   </span>
 );
@@ -44,13 +49,14 @@ const NWBConversions = () => {
   const [selectedMethod, setSelectedMethod] = useState<string>("All");
   const [selectedArea, setSelectedArea] = useState<string>("All");
   const [selectedFundedProject, setSelectedFundedProject] = useState<string>("All");
+  const [selectedSpecies, setSelectedSpecies] = useState<string>("All");
   const [sortBy, setSortBy] = useState<SortOption>("name");
-  const [groupBy, setGroupBy] = useState<"none" | "institution" | "method" | "area">("none");
+  const [groupBy, setGroupBy] = useState<"none" | "institution" | "method" | "area" | "species">("none");
   const portfolioItems = loadPortfolio() as PortfolioItem[];
 
   // Separate methods and research areas
-  const methods = ["All", "electrophysiology", "calcium imaging", "behavioral tracking", "brain-computer interface"];
-  const researchAreas = ["All", "visual processing", "motor control", "social behavior", "neural computation", "spatial navigation"];
+  const methods = ["All", "electrophysiology", "calcium imaging", "behavioral tracking", "brain-computer interface", "fiber photometry", "pose estimation", "video", "optogenetics"];
+  const researchAreas = ["All", "visual processing", "motor control", "social behavior", "spatial navigation", "Parkinson's disease", "autism"];
 
   // Group items based on selection
   const groupItems = (items: PortfolioItem[]) => {
@@ -82,17 +88,36 @@ const NWBConversions = () => {
           });
           return acc;
         }, {} as Record<string, PortfolioItem[]>);
+      case "species":
+        return items.reduce((acc, item) => {
+          if (!item.species) {
+            if (!acc["Unknown"]) acc["Unknown"] = [];
+            acc["Unknown"].push(item);
+            return acc;
+          }
+          
+          const species = Array.isArray(item.species) ? item.species : [item.species];
+          species.forEach(sp => {
+            if (!acc[sp]) acc[sp] = [];
+            acc[sp].push(item);
+          });
+          return acc;
+        }, {} as Record<string, PortfolioItem[]>);
       default:
         return { "All": items };
     }
   };
 
-  // Get unique institutions, tags, and funded projects for filter dropdowns
+  // Get unique institutions, tags, funded projects, and species for filter dropdowns
   const institutions = ["All", ...new Set(portfolioItems.map(item => item.institution))].sort();
   const tags = ["All", ...new Set(portfolioItems.flatMap(item => item.tags || []))].sort();
   const fundedProjects = ["All", ...new Set(portfolioItems.map(item => item.funded_project).filter(Boolean))].sort();
+  const speciesList = ["All", ...new Set(portfolioItems.flatMap(item => {
+    if (!item.species) return [];
+    return Array.isArray(item.species) ? item.species : [item.species];
+  }))].sort();
 
-  // Filter items based on search term, institution, method, and research area
+  // Filter items based on search term, institution, method, research area, and species
   const filteredItems = portfolioItems.filter((item) => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = item.lab.toLowerCase().includes(searchLower) ||
@@ -103,7 +128,13 @@ const NWBConversions = () => {
     const matchesMethod = selectedMethod === "All" || (item.tags && item.tags.some(tag => methods.includes(tag) && (selectedMethod === "All" || tag === selectedMethod)));
     const matchesArea = selectedArea === "All" || (item.tags && item.tags.some(tag => researchAreas.includes(tag) && (selectedArea === "All" || tag === selectedArea)));
     const matchesFundedProject = selectedFundedProject === "All" || item.funded_project === selectedFundedProject;
-    return matchesSearch && matchesInstitution && matchesMethod && matchesArea && matchesFundedProject;
+    const matchesSpecies = selectedSpecies === "All" || 
+      (item.species && (
+        (Array.isArray(item.species) && item.species.includes(selectedSpecies)) || 
+        (!Array.isArray(item.species) && item.species === selectedSpecies)
+      ));
+    
+    return matchesSearch && matchesInstitution && matchesMethod && matchesArea && matchesFundedProject && matchesSpecies;
   });
 
   // Sort filtered items
@@ -133,7 +164,7 @@ const NWBConversions = () => {
     >
       <div className="max-w-4xl mx-auto mb-8 space-y-4">
         <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm">
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col gap-4">
             <Input
               type="search"
               placeholder="Search by lab, institution, or description..."
@@ -142,12 +173,15 @@ const NWBConversions = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="flex-grow"
+              className="w-full"
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline" 
+                    className={selectedMethod !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Method: {selectedMethod}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -168,7 +202,10 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    className={selectedArea !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Research Area: {selectedArea}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -207,11 +244,17 @@ const NWBConversions = () => {
                   <DropdownMenuItem onClick={() => setGroupBy("area")}>
                     Research Area
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setGroupBy("species")}>
+                    Species
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    className={selectedInstitution !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Institution: {selectedInstitution}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -232,7 +275,34 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    className={selectedSpecies !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
+                    Species: {selectedSpecies}
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {speciesList.map((species) => (
+                    <DropdownMenuItem
+                      key={species}
+                      onClick={() => {
+                        setSelectedSpecies(species);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      {species}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline"
+                    className={selectedFundedProject !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Funded Project: {selectedFundedProject}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -291,16 +361,24 @@ const NWBConversions = () => {
               {items
                 .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
                 .map((item, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30">
+                <Card key={index} className="hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30 flex flex-col">
+                  <div className="absolute top-3 right-3">
+                    <span className="text-xs text-secondary/65 bg-white/70 px-2 py-1 rounded-md">
+                      {item.date}
+                    </span>
+                  </div>
                   <CardHeader className="pb-3">
                     <CardTitle className="text-xl">{item.lab}</CardTitle>
                     <div className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <CardDescription className="text-primary font-medium">
+                      <div className="flex items-center">
+                        <CardDescription 
+                          className="text-primary font-medium cursor-pointer hover:text-primary/80 transition-colors"
+                          onClick={() => {
+                            setSelectedInstitution(item.institution);
+                            setCurrentPage(1);
+                          }}
+                        >
                           {item.institution}
-                        </CardDescription>
-                        <CardDescription className="text-sm text-secondary/65">
-                          {item.date}
                         </CardDescription>
                       </div>
                       {item.funded_project && (
@@ -316,9 +394,37 @@ const NWBConversions = () => {
                           </CardDescription>
                         </a>
                       )}
+                      {item.species && (
+                        <div className="flex flex-wrap gap-1 items-center">
+                          {Array.isArray(item.species) ? (
+                            item.species.map((species, i) => (
+                              <span 
+                                key={i}
+                                className="text-sm text-amber-700 font-medium cursor-pointer hover:text-amber-900 hover:underline transition-colors"
+                                onClick={() => {
+                                  setSelectedSpecies(species);
+                                  setCurrentPage(1);
+                                }}
+                              >
+                                {species}{i < item.species.length - 1 ? "," : ""}
+                              </span>
+                            ))
+                          ) : (
+                            <span 
+                              className="text-sm text-amber-700 font-medium cursor-pointer hover:text-amber-900 hover:underline transition-colors"
+                              onClick={() => {
+                                setSelectedSpecies(item.species as string);
+                                setCurrentPage(1);
+                              }}
+                            >
+                              {item.species}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 flex-grow">
                     <p className="text-secondary/75 text-sm leading-relaxed">
                       {item.description}
                     </p>
@@ -334,12 +440,23 @@ const NWBConversions = () => {
                                 ? "bg-green-100 text-green-800 ring-green-600/20"
                                 : "bg-primary/10 text-primary ring-primary/20"
                             }
+                            onClick={() => {
+                              if (methods.includes(tag)) {
+                                setSelectedMethod(tag);
+                                setCurrentPage(1);
+                              } else if (researchAreas.includes(tag)) {
+                                setSelectedArea(tag);
+                                setCurrentPage(1);
+                              }
+                            }}
                           >
                             {tag}
                           </Badge>
                         ))}
                       </div>
                     )}
+                  </CardContent>
+                  <CardFooter className="pt-0 mt-auto">
                     <div className="flex space-x-2">
                       {item.github && (
                         <Button variant="outline" size="sm" asChild>
@@ -396,7 +513,7 @@ const NWBConversions = () => {
                           </DropdownMenu>
                         ))}
                     </div>
-                  </CardContent>
+                  </CardFooter>
                 </Card>
               ))}
             </div>

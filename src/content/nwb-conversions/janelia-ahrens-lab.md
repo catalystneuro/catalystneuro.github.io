@@ -7,4 +7,5 @@ github: "https://github.com/catalystneuro/ahrens-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000350"
 date: "2022-07"
 funded_project: "SCGB NWB Adoption"
+species: Zebra fish
 ---
