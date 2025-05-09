@@ -6,5 +6,5 @@ tags: ["visual processing", "electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/dicarlo-lab-to-nwb"
 date: "2024-05"
 funded_project: "SCGB NWB Adoption"
-species: Macaca mulatta
+species: Macaque
 ---

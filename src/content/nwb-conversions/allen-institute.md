@@ -9,5 +9,5 @@ dandi:
     name: "000458: Simultaneous electroencephalography, extracellular electrophysiology, and cortical electrical stimulation in head-fixed mice"
 date: "2020-03"
 funded_project: ""
-species: Mice
+species: Mouse
 ---
