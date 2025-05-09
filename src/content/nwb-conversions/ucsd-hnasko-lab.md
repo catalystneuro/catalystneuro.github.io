@@ -1,13 +1,9 @@
 ---
 lab: Thomas Hnasko
 institution: UC San Diego
-description: Converting multimodal neuroscience data including fiber photometry, optogenetic stimulation, behavioral tracking, and histology imaging. The data includes shock interface recordings, video tracking with AnyMaze, fiber photometry signals from TDT systems, and pose estimation using DeepLabCut.
+description: Developing NWB conversion tools for the Hnasko lab's research on fiber photometry alongside behavioral measurements. The pipeline standardizes data from TDT systems (fiber photometry and TTL pulses), behavioral videos from AnyMaze, synchronization signals, histology images from Zeiss microscopes, and in-progress work on processed fiber photometry data and pose estimation. These tools enable comprehensive analysis of neural activity in relation to behavior and facilitate data sharing through the DANDI Archive.
+tags: ["fiber photometry", "behavioral tracking", "optogenetics", "pose estimation", "video"]
 github: https://github.com/catalystneuro/hnasko-lab-to-nwb
 date: "2024-11"
-tags:
-  - behavioral tracking
-  - fiber photometry
-  - optogenetics
-  - video
-funded_project: Michael J. Fox ASAP
+species: Mouse
 ---

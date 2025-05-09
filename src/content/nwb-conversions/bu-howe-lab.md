@@ -10,4 +10,5 @@ tags:
 github: "https://github.com/catalystneuro/howe-lab-to-nwb"
 date: "2024-04"
 funded_project: "Michael J. Fox ASAP"
+species: "Mouse"
 ---

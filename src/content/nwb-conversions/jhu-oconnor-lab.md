@@ -9,4 +9,5 @@ dandi:
     name: "000226"
 date: "2021-11"
 funded_project: ""
+species: "Mouse"
 ---
