@@ -12,4 +12,5 @@ tags:
 github: "https://github.com/catalystneuro/meletis-lab-to-nwb"
 date: "2025-05"
 funded_project: Michael J. Fox ASAP
+species: Mouse
 ---

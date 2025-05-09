@@ -8,4 +8,5 @@ tags:
 github: https://github.com/catalystneuro/feldman-lab-to-nwb
 date: "2021-03"
 funded_project: ""
+species: Rat
 ---
