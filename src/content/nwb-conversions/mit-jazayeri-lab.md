@@ -11,4 +11,5 @@ dandi:
     name: "000897: Entorhinal cortex activity during mental navigation"
 date: "2023-07"
 funded_project: "SCGB NWB Adoption"
+species: Macaque
 ---

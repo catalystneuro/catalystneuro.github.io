@@ -17,19 +17,19 @@ const ServiceCard = ({
   buttonLink: string;
   features?: string[];
 }) => (
-          <Card data-testid="service-card" className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+  <Card data-testid="service-card" className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm bg-white/80 border-primary/10">
     <CardHeader>
       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
         <Icon className="w-6 h-6 text-primary" />
       </div>
-      <CardTitle className="text-2xl">{title}</CardTitle>
-      <CardDescription className="text-base">{description}</CardDescription>
+      <CardTitle className="text-2xl text-secondary">{title}</CardTitle>
+      <CardDescription className="text-base text-secondary/75">{description}</CardDescription>
     </CardHeader>
     <CardContent className="space-y-4">
       {features.length > 0 && (
         <ul className="space-y-2">
           {features.map((feature, index) => (
-            <li key={index} className="flex items-center gap-2">
+            <li key={index} className="flex items-center gap-2 text-secondary/75">
               <div className="w-1.5 h-1.5 rounded-full bg-primary/60" />
               {feature}
             </li>
@@ -51,8 +51,8 @@ export const Services = () => {
     <section className="py-20 bg-gray-50">
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold mb-6">Our Services</h2>
-          <p className="text-lg text-muted-foreground">
+          <h2 className="text-4xl font-bold mb-6 text-secondary">Our Services</h2>
+          <p className="text-lg text-secondary/75">
             CatalystNeuro has worked successfully with diverse scientific research groups in a variety of capacities. 
             All work we do with scientific research groups is open source, so our team can fit seamlessly with research 
             groups without worry of expensive licensing fees or vendor lock-in.
@@ -104,7 +104,7 @@ export const Services = () => {
         </div>
 
         <div className="mt-16 max-w-4xl mx-auto">
-          <h2 className="text-2xl font-bold text-center mb-8">Additional Capabilities</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-secondary">Additional Capabilities</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { icon: Cloud, label: "Cloud Integration" },
@@ -112,11 +112,11 @@ export const Services = () => {
               { icon: BarChart, label: "Data Analytics" },
               { icon: Share2, label: "Open Source" },
             ].map((item, index) => (
-              <div key={index} className="flex flex-col items-center text-center group">
+              <div key={index} className="flex flex-col items-center text-center group backdrop-blur-sm bg-white/80 p-4 rounded-lg border border-primary/5 shadow-sm">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <item.icon className="w-6 h-6 text-primary" />
                 </div>
-                <span className="text-sm font-medium">{item.label}</span>
+                <span className="text-sm font-medium text-secondary">{item.label}</span>
               </div>
             ))}
           </div>

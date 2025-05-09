@@ -1,22 +1,23 @@
+import { MapPin } from "lucide-react";
 import { Contact } from "@/components/Contact";
-import { Mail, MapPin } from "lucide-react";
+import PageLayout from "@/components/PageLayout";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-background">
-    <h2 className="text-3xl font-bold text-center mb-12">Contact Us</h2>
-    <Contact />
-      <section className="py-20 bg-white">
+    <PageLayout
+      title="Contact Us"
+      subtitle="We'd love to hear from you. Get in touch with our team."
+    >
+      <Contact />
+      <section className="py-10">
         <div className="container max-w-4xl">
-          
-          <div className="text-center mb-16 space-y-12">
-
+          <div className="text-center space-y-12 backdrop-blur-sm bg-white/80 p-8 rounded-2xl shadow-sm border border-primary/10">
             <div className="space-y-2">
               <div className="inline-flex items-center justify-center gap-2 text-lg">
-                <MapPin className="h-5 w-5" />
-                <span className="font-semibold">Mailing Address:</span>
+                <MapPin className="h-5 w-5 text-primary" />
+                <span className="font-semibold text-secondary">Mailing Address:</span>
               </div>
-              <div className="text-lg">
+              <div className="text-lg text-secondary/75">
                 <p>CatalystNeuro</p>
                 <p>150 E B St Lbby #1810 SMB#45673</p>
                 <p>Casper, WY 82601</p>
@@ -25,6 +26,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </main>
+    </PageLayout>
   );
 }

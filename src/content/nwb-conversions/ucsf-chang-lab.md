@@ -7,4 +7,5 @@ github: "https://github.com/catalystneuro/chang-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/000019"
 date: "2020-2022"
 funded_project: ""
+species: Human
 ---

@@ -1,4 +1,6 @@
 import { Github, Link as LinkIcon, Twitter, X } from "lucide-react";
+import PageLayout from "@/components/PageLayout";
+import teamData from '../content/team.json';
 
 // Custom Bluesky icon component to match Lucide style
 const BlueSkyIcon = ({ size = 20, className = "" }) => (
@@ -13,112 +15,111 @@ const BlueSkyIcon = ({ size = 20, className = "" }) => (
   </svg>
 );
 
-import teamData from '../content/team.json';
 const currentTeamMembers = teamData.members.filter(member => member.isActive);
 const previousTeamMembers = teamData.members.filter(member => !member.isActive);
 
 const Team = () => {
   return (
-    <div className="bg-gradient-to-b from-gradient-start to-gradient-end">
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold text-center mb-12">Our Team</h1>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {currentTeamMembers.map((member) => (
-            <div 
-              key={member.name}
-              className="bg-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <div className="mb-4">
-                <img 
-                  src={member.image}
-                  alt={member.name}
-                  className="w-40 h-40 rounded-full mx-auto object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-center">{member.name}</h3>
-              <p className="text-primary mb-3 text-center">{member.role}</p>
-              <p className="text-muted-foreground mb-4 text-sm">{member.description}</p>
-              <div className="flex justify-center space-x-4">
+    <PageLayout
+      title="Our Team"
+      subtitle="Meet the skilled professionals behind CatalystNeuro's innovative solutions."
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {currentTeamMembers.map((member) => (
+          <div 
+            key={member.name}
+            className="backdrop-blur-sm bg-white/80 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow border border-primary/10 hover:border-primary/30"
+          >
+            <div className="mb-4">
+              <img 
+                src={member.image}
+                alt={member.name}
+                className="w-40 h-40 rounded-full mx-auto object-cover"
+              />
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-center text-secondary">{member.name}</h3>
+            <p className="text-primary mb-3 text-center">{member.role}</p>
+            <p className="text-secondary/75 mb-4 text-sm">{member.description}</p>
+            <div className="flex justify-center space-x-4">
+              <a 
+                href={member.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary/65 hover:text-primary transition-colors"
+                title="GitHub"
+              >
+                <Github size={20} />
+              </a>
+              {member.personalPage && (
                 <a 
-                  href={member.github}
+                  href={member.personalPage}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                  title="GitHub"
+                  className="text-secondary/65 hover:text-primary transition-colors"
+                  title="Personal Page"
                 >
-                  <Github size={20} />
+                  <LinkIcon size={20} />
                 </a>
-                {member.personalPage && (
-                  <a 
-                    href={member.personalPage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                    title="Personal Page"
-                  >
-                    <LinkIcon size={20} />
-                  </a>
-                )}
-                {member.twitter && (
-                  <a 
-                    href={member.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                    title="Twitter/X"
-                  >
-                    <X size={20} />
-                  </a>
-                )}
-                {member.bluesky && (
-                  <a 
-                    href={member.bluesky}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                    title="Bluesky"
-                  >
-                    <BlueSkyIcon size={20} />
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {previousTeamMembers.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-3xl font-semibold text-center mb-8">Previous Team Members</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {previousTeamMembers.map((member) => (
-                <div 
-                  key={member.name}
-                  className="bg-card/80 p-4 rounded-lg shadow hover:shadow-md transition-shadow"
+              )}
+              {member.twitter && (
+                <a 
+                  href={member.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-secondary/65 hover:text-primary transition-colors"
+                  title="Twitter/X"
                 >
-                  <h3 className="text-lg font-semibold mb-1 text-center">{member.name}</h3>
-                  <p className="text-primary/80 mb-2 text-center text-sm">{member.role}</p>
-                  <p className="text-muted-foreground mb-3 text-sm">{member.description}</p>
-                  {member.github && (
-                    <div className="flex justify-center">
-                      <a 
-                        href={member.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                        title="GitHub"
-                      >
-                        <Github size={18} />
-                      </a>
-                    </div>
-                  )}
-                </div>
-              ))}
+                  <X size={20} />
+                </a>
+              )}
+              {member.bluesky && (
+                <a 
+                  href={member.bluesky}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-secondary/65 hover:text-primary transition-colors"
+                  title="Bluesky"
+                >
+                  <BlueSkyIcon size={20} />
+                </a>
+              )}
             </div>
           </div>
-        )}
+        ))}
       </div>
-    </div>
+
+      {previousTeamMembers.length > 0 && (
+        <div className="mt-16">
+          <h2 className="text-3xl font-semibold mb-8 text-secondary">Previous Team Members</h2>
+          <div className="h-1 w-24 bg-primary mb-8 rounded"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {previousTeamMembers.map((member) => (
+              <div 
+                key={member.name}
+                className="backdrop-blur-sm bg-white/70 p-4 rounded-lg shadow hover:shadow-md transition-shadow border border-primary/5 hover:border-primary/20"
+              >
+                <h3 className="text-lg font-semibold mb-1 text-center text-secondary">{member.name}</h3>
+                <p className="text-primary/80 mb-2 text-center text-sm">{member.role}</p>
+                <p className="text-secondary/75 mb-3 text-sm">{member.description}</p>
+                {member.github && (
+                  <div className="flex justify-center">
+                    <a 
+                      href={member.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-secondary/65 hover:text-primary transition-colors"
+                      title="GitHub"
+                    >
+                      <Github size={18} />
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </PageLayout>
   );
 };
 
