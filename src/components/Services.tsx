@@ -48,19 +48,12 @@ const ServiceCard = ({
 
 export const Services = () => {
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-white to-gradient-start relative my-4 md:my-8">
-      {/* Top section divider */}
-      <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-white to-transparent"></div>
-      
-      {/* Side pattern elements */}
-      <div className="absolute right-0 top-1/4 w-24 h-48 bg-primary/5 rounded-l-full -z-10 hidden lg:block"></div>
-      <div className="absolute left-0 bottom-1/4 w-24 h-48 bg-primary/5 rounded-r-full -z-10 hidden lg:block"></div>
-      
-      <div className="container relative z-10">
-        <div className="max-w-2xl mx-auto text-center mb-10">
+    <section className="py-20 bg-gray-50">
+      <div className="container">
+        <div className="max-w-2xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary">Our Services</h2>
-          <div className="w-24 h-1 bg-primary mx-auto mt-3 rounded-full"></div>
-          <p className="text-secondary/75 max-w-2xl mx-auto mt-4 text-lg">
+          <div className="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+          <p className="text-secondary/75 max-w-2xl mx-auto mt-5 text-lg">
             CatalystNeuro has worked successfully with diverse scientific research groups in a variety of capacities. 
             All work we do with scientific research groups is open source, so our team can fit seamlessly with research 
             groups without worry of expensive licensing fees or vendor lock-in.
@@ -111,7 +104,7 @@ export const Services = () => {
           />
         </div>
 
-        <div className="mt-12 max-w-4xl mx-auto">
+        <div className="mt-16 max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-center mb-8 text-secondary">Additional Capabilities</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -124,7 +117,7 @@ export const Services = () => {
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <item.icon className="w-6 h-6 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-secondary">{item.label}</span>
+                <span className="text-sm font-medium">{item.label}</span>
               </div>
             ))}
           </div>

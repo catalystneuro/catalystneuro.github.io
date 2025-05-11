@@ -9,4 +9,5 @@ dandi:
     name: "000971: Dopamine signaling and compulsive behavior in striatum"
 date: "2024-01"
 funded_project: "Michael J. Fox ASAP"
+species: Mouse
 ---

@@ -6,4 +6,5 @@ tags: ["brain-computer interface", "electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/stavisky-lab-to-nwb"
 date: "2023-05"
 funded_project: "SCGB NWB Adoption"
+species: Macaque
 ---

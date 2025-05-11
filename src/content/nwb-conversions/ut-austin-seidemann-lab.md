@@ -6,4 +6,5 @@ tags: ["visual processing", "electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/seidemann-lab-to-nwb"
 date: "2022-05"
 funded_project: ""
+species: Macaque
 ---

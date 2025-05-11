@@ -6,4 +6,5 @@ tags: ["behavioral tracking", "electrophysiology", "optogenetics"]
 github: "https://github.com/catalystneuro/schneider-lab-to-nwb"
 date: "2024-08"
 funded_project: "NYU Librarians"
+species: Songbird
 ---

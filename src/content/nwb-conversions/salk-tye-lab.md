@@ -9,4 +9,5 @@ dandi:
     name: "001195: Separable Dorsal Raphe Dopamine Projections Mediate Sociability and Valence"
 date: "2023-01"
 funded_project: ""
+species: Mouse
 ---
