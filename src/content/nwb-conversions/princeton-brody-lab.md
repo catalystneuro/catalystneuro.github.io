@@ -6,4 +6,5 @@ tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/brody-lab-to-nwb"
 date: "2021-03"
 funded_project: "SCGB NWB Adoption"
+species: Rats
 ---
