@@ -492,7 +492,7 @@ const NWBConversions = () => {
                                 size="sm"
                               >
                                 <ExternalLink className="w-4 h-4 mr-2" />
-                                DANDI
+                                DANDI ({item.dandi.length})
                                 <ChevronDown className="w-4 h-4 ml-2" />
                               </Button>
                             </DropdownMenuTrigger>

@@ -6,5 +6,5 @@ tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/higley-lab-to-nwb"
 date: "2023-09"
 funded_project: "Michael J. Fox ASAP"
-species: Mice
+species: Mouse
 ---
