@@ -45,10 +45,10 @@
       "github": "https://github.com/pauladkisson"
     },
     {
-      "name": "Anna (Szonja) Weigl",
+      "name": "Szonja Weigl",
       "isActive": true,
-      "role": "Neurodata Programmer",
-      "description": "Szonja comes from the interdisciplinary field between computer science and neuroscience. She holds a BSc and MSc in Info-bionics Engineering, and has experience in software development. She is keen to learn about and to build reliable, scalable, and maintainable data analysis tools and pipelines. Besides working at CatalystNeuro, she is also working at the Lyon Neuroscience Research Center (CRNL) as an Engineer in a research group interested in learning and memory in the field of Cognitive Neuroscience.",
+      "role": "Research Software Engineer",
+      "description": "Szonja comes from the interdisciplinary field between computer science and neuroscience. She holds a BSc and MSc in Info-Bionics Engineering from Pázmány Péter Catholic University Faculty of Information Technology and Bionics. She brings experience in software development and a passion for building reliable, scalable, and maintainable data analysis tools and pipelines. What she enjoys most about assisting labs convert data to NWB is that every project is unique — each one brings new challenges and opportunities to grow. Outside of work, she loves traveling, rock climbing, and painting.",
       "image": "/images/team/szonja_weigl.jpg",
       "github": "https://github.com/weiglszonja"
     },
