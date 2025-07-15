@@ -7,4 +7,5 @@ github: "https://github.com/catalystneuro/dombeck-lab-to-nwb"
 dandi: "https://dandiarchive.org/dandiset/001038"
 date: "2024-02"
 funded_project: "Michael J. Fox ASAP"
+species: Mouse
 ---

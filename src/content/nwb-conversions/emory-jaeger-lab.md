@@ -6,4 +6,5 @@ tags: ["electrophysiology", "motor control", "behavioral tracking"]
 github: "https://github.com/catalystneuro/jaeger-lab-to-nwb"
 date: "2019-10"
 funded_project: ""
+species: "Mouse"
 ---

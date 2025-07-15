@@ -6,4 +6,5 @@ tags: ["behavioral tracking", "electrophysiology"]
 github: "https://github.com/catalystneuro/shuler-lab-to-nwb"
 date: "2022-11"
 funded_project: ""
+species: "Mouse"
 ---

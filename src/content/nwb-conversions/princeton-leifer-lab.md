@@ -9,4 +9,5 @@ dandi:
     name: "001075: Neural signal propagation atlas of C. elegans"
 date: "2024-03"
 funded_project: "SCPAB NWB Adoption"
+species: C. elegans
 ---

@@ -5,4 +5,5 @@ description: "Developed NWB conversion tools for the Schnitzer lab's in vivo cal
 tags: ["calcium imaging", "behavioral tracking"]
 date: "2024"
 funded_project: "Ripple U19"
+species: Mouse
 ---

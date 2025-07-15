@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Github, ExternalLink, ChevronDown, Link as LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import PageLayout from "@/components/PageLayout";
 
 type SortOption = "name" | "date" | "institution";
 type PortfolioItem = {
@@ -21,15 +22,20 @@ type PortfolioItem = {
   date: string;
   tags?: string[];
   funded_project?: string;
+  species?: string | string[];
 };
 
 interface BadgeProps {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
-const Badge = ({ children, className = "" }: BadgeProps) => (
-  <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${className}`}>
+const Badge = ({ children, className = "", onClick }: BadgeProps) => (
+  <span 
+    className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${className} ${onClick ? "cursor-pointer hover:opacity-80" : ""}`}
+    onClick={onClick}
+  >
     {children}
   </span>
 );
@@ -43,13 +49,14 @@ const NWBConversions = () => {
   const [selectedMethod, setSelectedMethod] = useState<string>("All");
   const [selectedArea, setSelectedArea] = useState<string>("All");
   const [selectedFundedProject, setSelectedFundedProject] = useState<string>("All");
+  const [selectedSpecies, setSelectedSpecies] = useState<string>("All");
   const [sortBy, setSortBy] = useState<SortOption>("name");
-  const [groupBy, setGroupBy] = useState<"none" | "institution" | "method" | "area">("none");
+  const [groupBy, setGroupBy] = useState<"none" | "institution" | "method" | "area" | "species">("none");
   const portfolioItems = loadPortfolio() as PortfolioItem[];
 
   // Separate methods and research areas
-  const methods = ["All", "electrophysiology", "calcium imaging", "behavioral tracking", "brain-computer interface"];
-  const researchAreas = ["All", "visual processing", "motor control", "social behavior", "neural computation", "spatial navigation"];
+  const methods = ["All", "electrophysiology", "calcium imaging", "behavioral tracking", "brain-computer interface", "fiber photometry", "pose estimation", "video", "optogenetics"];
+  const researchAreas = ["All", "visual processing", "motor control", "social behavior", "spatial navigation", "Parkinson's disease", "autism"];
 
   // Group items based on selection
   const groupItems = (items: PortfolioItem[]) => {
@@ -63,7 +70,7 @@ const NWBConversions = () => {
         }, {} as Record<string, PortfolioItem[]>);
       case "method":
         return items.reduce((acc, item) => {
-          item.tags.forEach(tag => {
+          item.tags?.forEach(tag => {
             if (methods.includes(tag)) {
               if (!acc[tag]) acc[tag] = [];
               acc[tag].push(item);
@@ -73,11 +80,26 @@ const NWBConversions = () => {
         }, {} as Record<string, PortfolioItem[]>);
       case "area":
         return items.reduce((acc, item) => {
-          item.tags.forEach(tag => {
+          item.tags?.forEach(tag => {
             if (researchAreas.includes(tag)) {
               if (!acc[tag]) acc[tag] = [];
               acc[tag].push(item);
             }
+          });
+          return acc;
+        }, {} as Record<string, PortfolioItem[]>);
+      case "species":
+        return items.reduce((acc, item) => {
+          if (!item.species) {
+            if (!acc["Unknown"]) acc["Unknown"] = [];
+            acc["Unknown"].push(item);
+            return acc;
+          }
+          
+          const species = Array.isArray(item.species) ? item.species : [item.species];
+          species.forEach(sp => {
+            if (!acc[sp]) acc[sp] = [];
+            acc[sp].push(item);
           });
           return acc;
         }, {} as Record<string, PortfolioItem[]>);
@@ -86,12 +108,16 @@ const NWBConversions = () => {
     }
   };
 
-  // Get unique institutions, tags, and funded projects for filter dropdowns
+  // Get unique institutions, tags, funded projects, and species for filter dropdowns
   const institutions = ["All", ...new Set(portfolioItems.map(item => item.institution))].sort();
   const tags = ["All", ...new Set(portfolioItems.flatMap(item => item.tags || []))].sort();
   const fundedProjects = ["All", ...new Set(portfolioItems.map(item => item.funded_project).filter(Boolean))].sort();
+  const speciesList = ["All", ...new Set(portfolioItems.flatMap(item => {
+    if (!item.species) return [];
+    return Array.isArray(item.species) ? item.species : [item.species];
+  }))].sort();
 
-  // Filter items based on search term, institution, method, and research area
+  // Filter items based on search term, institution, method, research area, and species
   const filteredItems = portfolioItems.filter((item) => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = item.lab.toLowerCase().includes(searchLower) ||
@@ -102,7 +128,13 @@ const NWBConversions = () => {
     const matchesMethod = selectedMethod === "All" || (item.tags && item.tags.some(tag => methods.includes(tag) && (selectedMethod === "All" || tag === selectedMethod)));
     const matchesArea = selectedArea === "All" || (item.tags && item.tags.some(tag => researchAreas.includes(tag) && (selectedArea === "All" || tag === selectedArea)));
     const matchesFundedProject = selectedFundedProject === "All" || item.funded_project === selectedFundedProject;
-    return matchesSearch && matchesInstitution && matchesMethod && matchesArea && matchesFundedProject;
+    const matchesSpecies = selectedSpecies === "All" || 
+      (item.species && (
+        (Array.isArray(item.species) && item.species.includes(selectedSpecies)) || 
+        (!Array.isArray(item.species) && item.species === selectedSpecies)
+      ));
+    
+    return matchesSearch && matchesInstitution && matchesMethod && matchesArea && matchesFundedProject && matchesSpecies;
   });
 
   // Sort filtered items
@@ -126,15 +158,13 @@ const NWBConversions = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">NWB Conversions</h1>
-        <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          We've collaborated with leading research institutions worldwide to advance neuroscience data standardization and analysis.
-        </p>
-
-        <div className="max-w-4xl mx-auto mb-8 space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
+    <PageLayout
+      title="NWB Conversions"
+      subtitle="We've collaborated with leading research institutions worldwide to advance neuroscience data standardization and analysis."
+    >
+      <div className="max-w-4xl mx-auto mb-8 space-y-4">
+        <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm">
+          <div className="flex flex-col gap-4">
             <Input
               type="search"
               placeholder="Search by lab, institution, or description..."
@@ -143,12 +173,15 @@ const NWBConversions = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="flex-grow"
+              className="w-full"
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline" 
+                    className={selectedMethod !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Method: {selectedMethod}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -169,7 +202,10 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    className={selectedArea !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Research Area: {selectedArea}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -208,11 +244,17 @@ const NWBConversions = () => {
                   <DropdownMenuItem onClick={() => setGroupBy("area")}>
                     Research Area
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setGroupBy("species")}>
+                    Species
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    className={selectedInstitution !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Institution: {selectedInstitution}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -233,7 +275,34 @@ const NWBConversions = () => {
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    className={selectedSpecies !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
+                    Species: {selectedSpecies}
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {speciesList.map((species) => (
+                    <DropdownMenuItem
+                      key={species}
+                      onClick={() => {
+                        setSelectedSpecies(species);
+                        setCurrentPage(1);
+                      }}
+                    >
+                      {species}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline"
+                    className={selectedFundedProject !== "All" ? "bg-amber-50 border-amber-200" : ""}
+                  >
                     Funded Project: {selectedFundedProject}
                     <ChevronDown className="w-4 h-4 ml-2" />
                   </Button>
@@ -273,164 +342,213 @@ const NWBConversions = () => {
               </DropdownMenu>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-sm text-secondary/65 text-center mt-4">
             Showing {currentItems.length} of {filteredItems.length} entries
           </p>
         </div>
+      </div>
 
-        <div className="space-y-8">
-          {Object.entries(groupItems(sortedItems)).map(([group, items]) => (
-            <div key={group}>
-              {groupBy !== "none" && (
-                <h2 className="text-2xl font-bold mb-4">{group}</h2>
-              )}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {items
-                  .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
-                  .map((item, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-xl">{item.lab}</CardTitle>
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between">
-                          <CardDescription className="text-primary font-medium">
-                            {item.institution}
-                          </CardDescription>
-                          <CardDescription className="text-sm text-muted-foreground">
-                            {item.date}
-                          </CardDescription>
-                        </div>
-                        {item.funded_project && (
-                          <a 
-                            href={`/funded-projects/${item.funded_project === "Michael J. Fox ASAP" ? "asap-nwb-adoption" : 
-                              item.funded_project === "SCGB NWB Adoption" ? "scgb-nwb-adoption" : 
-                              item.funded_project?.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} 
-                            className="no-underline"
-                          >
-                            <CardDescription className="text-sm text-purple-600 font-medium hover:text-purple-800 transition-colors flex items-center gap-1">
-                              <LinkIcon className="w-3 h-3" />
-                              {item.funded_project}
-                            </CardDescription>
-                          </a>
-                        )}
+      <div className="space-y-8">
+        {Object.entries(groupItems(sortedItems)).map(([group, items]) => (
+          <div key={group}>
+            {groupBy !== "none" && (
+              <div className="flex items-center mb-4">
+                <h2 className="text-2xl font-bold text-secondary">{group}</h2>
+                <div className="h-px flex-grow ml-4 bg-gradient-to-r from-primary/20 to-transparent"></div>
+              </div>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {items
+                .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+                .map((item, index) => (
+                <Card key={index} className="hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30 flex flex-col h-full">
+                  <div className="absolute top-3 right-3">
+                    <span className="text-xs text-secondary/65 bg-white/70 px-2 py-1 rounded-md">
+                      {item.date}
+                    </span>
+                  </div>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-xl">{item.lab}</CardTitle>
+                    <div className="space-y-1">
+                      <div className="flex items-center">
+                        <CardDescription 
+                          className="text-primary font-medium cursor-pointer hover:text-primary/80 transition-colors"
+                          onClick={() => {
+                            setSelectedInstitution(item.institution);
+                            setCurrentPage(1);
+                          }}
+                        >
+                          {item.institution}
+                        </CardDescription>
                       </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {item.description}
-                      </p>
-                      {item.tags && (
-                        <div className="flex flex-wrap gap-2">
-                          {item.tags.map((tag, i) => (
-                            <Badge
-                              key={i}
-                              className={
-                                methods.includes(tag)
-                                  ? "bg-blue-100 text-blue-800 ring-blue-600/20"
-                                  : researchAreas.includes(tag)
-                                  ? "bg-green-100 text-green-800 ring-green-600/20"
-                                  : "bg-primary/10 text-primary ring-primary/20"
-                              }
+                      {item.funded_project && (
+                        <a 
+                          href={`/funded-projects/${item.funded_project === "Michael J. Fox ASAP" ? "asap-nwb-adoption" : 
+                            item.funded_project === "SCGB NWB Adoption" ? "scgb-nwb-adoption" : 
+                            item.funded_project?.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} 
+                          className="no-underline"
+                        >
+                          <CardDescription className="text-sm text-purple-600 font-medium hover:text-purple-800 transition-colors flex items-center gap-1">
+                            <LinkIcon className="w-3 h-3" />
+                            {item.funded_project}
+                          </CardDescription>
+                        </a>
+                      )}
+                      {item.species && (
+                        <div className="flex flex-wrap gap-1 items-center">
+                          {Array.isArray(item.species) ? (
+                            item.species.map((species, i) => (
+                              <span 
+                                key={i}
+                                className="text-sm text-amber-700 font-medium cursor-pointer hover:text-amber-900 hover:underline transition-colors"
+                                onClick={() => {
+                                  setSelectedSpecies(species);
+                                  setCurrentPage(1);
+                                }}
+                              >
+                                {species}{i < item.species.length - 1 ? "," : ""}
+                              </span>
+                            ))
+                          ) : (
+                            <span 
+                              className="text-sm text-amber-700 font-medium cursor-pointer hover:text-amber-900 hover:underline transition-colors"
+                              onClick={() => {
+                                setSelectedSpecies(item.species as string);
+                                setCurrentPage(1);
+                              }}
                             >
-                              {tag}
-                            </Badge>
-                          ))}
+                              {item.species}
+                            </span>
+                          )}
                         </div>
                       )}
-                      <div className="flex space-x-2">
-                        {item.github && (
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4 flex-grow">
+                    <p className="text-secondary/75 text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                    {item.tags && (
+                      <div className="flex flex-wrap gap-2">
+                        {item.tags.map((tag, i) => (
+                          <Badge
+                            key={i}
+                            className={
+                              methods.includes(tag)
+                                ? "bg-blue-100 text-blue-800 ring-blue-600/20"
+                                : researchAreas.includes(tag)
+                                ? "bg-green-100 text-green-800 ring-green-600/20"
+                                : "bg-primary/10 text-primary ring-primary/20"
+                            }
+                            onClick={() => {
+                              if (methods.includes(tag)) {
+                                setSelectedMethod(tag);
+                                setCurrentPage(1);
+                              } else if (researchAreas.includes(tag)) {
+                                setSelectedArea(tag);
+                                setCurrentPage(1);
+                              }
+                            }}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                  <CardFooter className="pt-0 mt-auto">
+                    <div className="flex space-x-2">
+                      {item.github && (
+                        <Button variant="outline" size="sm" asChild>
+                          <a
+                            href={item.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center"
+                          >
+                            <Github className="w-4 h-4 mr-2" />
+                            GitHub
+                          </a>
+                        </Button>
+                      )}
+                      {item.dandi &&
+                        (typeof item.dandi === "string" ? (
                           <Button variant="outline" size="sm" asChild>
                             <a
-                              href={item.github}
+                              href={item.dandi}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center"
                             >
-                              <Github className="w-4 h-4 mr-2" />
-                              GitHub
+                              <ExternalLink className="w-4 h-4 mr-2" />
+                              DANDI
                             </a>
                           </Button>
-                        )}
-                        {item.dandi &&
-                          (typeof item.dandi === "string" ? (
-                            <Button variant="outline" size="sm" asChild>
-                              <a
-                                href={item.dandi}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center"
+                        ) : (
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
                               >
                                 <ExternalLink className="w-4 h-4 mr-2" />
-                                DANDI
-                              </a>
-                            </Button>
-                          ) : (
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="flex items-center"
-                                >
-                                  <ExternalLink className="w-4 h-4 mr-2" />
-                                  DANDI
-                                  <ChevronDown className="w-4 h-4 ml-2" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent>
-                                {item.dandi.map((dataset, i) => (
-                                  <DropdownMenuItem key={i}>
-                                    <a
-                                      href={dataset.url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="flex items-center w-full"
-                                    >
-                                      {dataset.name}
-                                    </a>
-                                  </DropdownMenuItem>
-                                ))}
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                                DANDI ({item.dandi.length})
+                                <ChevronDown className="w-4 h-4 ml-2" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              {item.dandi.map((dataset, i) => (
+                                <DropdownMenuItem key={i}>
+                                  <a
+                                    href={dataset.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center w-full"
+                                  >
+                                    {dataset.name}
+                                  </a>
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        ))}
+                    </div>
+                  </CardFooter>
+                </Card>
+              ))}
             </div>
-            </div>
-          ))}
-        </div>
-
-        {Number(totalPages) > 1 ? (
-          <div className="flex justify-center gap-2 mt-8">
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <Button
-                key={i + 1}
-                variant={currentPage === i + 1 ? "default" : "outline"}
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </Button>
-            ))}
-            <Button
-              variant="outline"
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
           </div>
-        ) : null}
+        ))}
       </div>
-    </div>
+
+      {Number(totalPages) > 1 ? (
+        <div className="flex justify-center gap-2 mt-8">
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Button
+              key={i + 1}
+              variant={currentPage === i + 1 ? "default" : "outline"}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          ))}
+          <Button
+            variant="outline"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </Button>
+        </div>
+      ) : null}
+    </PageLayout>
   );
 };
 

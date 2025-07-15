@@ -6,6 +6,9 @@ github: "https://github.com/catalystneuro/IBL-to-nwb"
 dandi:
   - url: "https://dandiarchive.org/dandiset/000045"
     name: "000045: IBL standardized decision-making experiments"
+  - url: "https://dandiarchive.org/dandiset/000409"
+    name: "IBL Brain Wide Map"
 date: "2020-04"
 funded_project: "SCGB NWB Adoption"
+species: Mouse
 ---

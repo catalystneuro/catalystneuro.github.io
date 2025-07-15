@@ -30,13 +30,33 @@ export default {
         primary: {
           DEFAULT: "#1466A7",
           foreground: "#ffffff",
+          50: "#F0F7FC",
+          100: "#DAEAF7",
+          200: "#B5D5EF",
+          300: "#8FBFE7",
+          400: "#6AAADF",
+          500: "#4494D6",
+          600: "#1466A7",
+          700: "#0F5289",
+          800: "#0B3F6A",
+          900: "#072C4C",
         },
         secondary: {
           DEFAULT: "#101642",
           foreground: "#ffffff",
+          50: "#F4F4F9",
+          100: "#E9E9F2",
+          200: "#D3D3E6",
+          300: "#BDBDD9",
+          400: "#A7A7CD",
+          500: "#9191C0",
+          600: "#1E2263",
+          700: "#101642",
+          800: "#0C102F",
+          900: "#080A1F",
         },
         accent: {
-          DEFAULT: "#1466A7",
+          DEFAULT: "#3F8CCA", // A slightly lighter blue that complements primary
           foreground: "#ffffff",
         },
         destructive: {
@@ -67,6 +87,8 @@ export default {
       animation: {
         "flow-right": "flow 15s linear infinite",
         "scroll": "scroll 25s linear infinite",
+        "float": "float 6s ease-in-out infinite",
+        "gradient-text": "gradient-text 8s linear infinite",
       },
       keyframes: {
         flow: {
@@ -77,6 +99,16 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" }
         },
+        float: {
+          "0%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+          "100%": { transform: "translateY(0px)" }
+        },
+        "gradient-text": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" }
+        }
       },
     },
   },

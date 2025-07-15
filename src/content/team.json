@@ -31,8 +31,8 @@
     {
       "name": "Heberto Mayorquin, PhD",
       "isActive": true,
-      "role": "Neurodata Scientist",
-      "description": "Ramón Heberto Martinez Mayorquin has a BSC in Physics and an MSc in Complexity Science and a Ph.D. in Computational Neuroscience. During his Ph.D., he studied in the theoretical and computational study of associative neural networks (e.g. Hopfield Network). During his studies, he has developed an interest in software practices that assure efficient, reproducible, and robust scientific simulations. This, together with his love for statistics and data wrangling has led him to move forward with a career in data science where he can combine and further develop those interests.",
+      "role": "Sr. Research Software Engineer",
+      "description": "Ramón Heberto Martinez Mayorquin holds a B.Sc. in Physics, an M.Sc. in Complexity Science, and a Ph.D. in Computational Neuroscience. His doctoral research focused on the theoretical and computational study of associative neural networks, such as Hopfield Networks. Throughout his academic journey, he developed a strong interest in software practices that ensure efficient, reproducible, and robust scientific simulations. Combined with his passion for statistics and data wrangling, this has led him to pursue a career at the intersection of research and software engineering, where he continues to refine and expand these interests.",
       "image": "/images/team/heberto_mayorquin.jpg",
       "github": "https://github.com/h-mayorquin"
     },
@@ -40,15 +40,15 @@
       "name": "Paul Adkisson",
       "isActive": true,
       "role": "Research Software Engineer",
-      "description": "Paul Adkisson received his B.S. in Neuroscience from the University of California Los Angeles and his M.S.E. in Biomedical Engineering from Johns Hopkins. In his Master's research, he investigated the effects of different types of electrical stimulation on networks of neurons using computational models. At CatalystNeuro, he specializes in Python development, data standardization, and implementing robust software solutions for neuroscience research. His work helps neuroscience labs of all shapes and sizes convert their data to NWB and share it on DANDI, enabling researchers worldwide to more easily access, understand, and build upon each other's discoveries. In his free time, he enjoys rock climbing and backpacking.",
+      "description": "Paul Adkisson holds a B.S. in Neuroscience from UCLA and an M.S.E. in Biomedical Engineering from Johns Hopkins, where he researched electrical stimulation effects on neuronal networks. At CatalystNeuro, he specializes in Python development and data standardization for neuroscience research. He helps labs convert data to NWB and share it on DANDI, making research more accessible worldwide. Outside work, Paul enjoys rock climbing and backpacking.",
       "image": "/images/team/paul_adkisson.jpg",
       "github": "https://github.com/pauladkisson"
     },
     {
-      "name": "Anna (Szonja) Weigl",
+      "name": "Szonja Weigl",
       "isActive": true,
-      "role": "Neurodata Programmer",
-      "description": "Szonja comes from the interdisciplinary field between computer science and neuroscience. She holds a BSc and MSc in Info-bionics Engineering, and has experience in software development. She is keen to learn about and to build reliable, scalable, and maintainable data analysis tools and pipelines. Besides working at CatalystNeuro, she is also working at the Lyon Neuroscience Research Center (CRNL) as an Engineer in a research group interested in learning and memory in the field of Cognitive Neuroscience.",
+      "role": "Research Software Engineer",
+      "description": "Szonja comes from the interdisciplinary field between computer science and neuroscience. She holds a BSc and MSc in Info-Bionics Engineering from Pázmány Péter Catholic University Faculty of Information Technology and Bionics. She brings experience in software development and a passion for building reliable, scalable, and maintainable data analysis tools and pipelines. What she enjoys most about assisting labs convert data to NWB is that every project is unique — each one brings new challenges and opportunities to grow. Outside of work, she loves traveling, rock climbing, and painting.",
       "image": "/images/team/szonja_weigl.jpg",
       "github": "https://github.com/weiglszonja"
     },

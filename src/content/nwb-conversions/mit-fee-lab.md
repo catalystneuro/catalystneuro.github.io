@@ -6,4 +6,5 @@ tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/fee-lab-to-nwb"
 date: "2022-05"
 funded_project: "SCGB NWB Adoption"
+species: Zebra finch
 ---

@@ -8,4 +8,5 @@ tags:
   - calcium imaging
   - behavioral tracking
   - electrophysiology
+species: Mouse
 ---

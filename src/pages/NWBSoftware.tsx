@@ -3,25 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { loadSoftware } from "@/utils/contentLoader";
+import PageLayout from "@/components/PageLayout";
 
 const NWBSoftware = () => {
   const softwareList = loadSoftware();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8 text-center">NWB Software</h1>
-        <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          We develop open-source tools to make neurophysiology data management and standardization accessible to all researchers.
-        </p>
-
-        <div className="mb-12">
+    <PageLayout
+      title="NWB Software"
+      subtitle="We develop open-source tools to make neurophysiology data management and standardization accessible to all researchers."
+    >
+      <div className="space-y-12">
+        <div>
           <h2 className="text-3xl font-bold mb-6">Core Tools</h2>
           <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {softwareList
               .filter(software => software.type === 'core')
               .map((software) => (
-                <Card key={software.name} className="flex flex-col">
+                <Card key={software.name} className="flex flex-col hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30">
                   <img
                     src={software.image}
                     alt={software.name}
@@ -38,7 +37,7 @@ const NWBSoftware = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow">
-                    <p className="text-muted-foreground">{software.description}</p>
+                    <p className="text-secondary/75">{software.description}</p>
                   </CardContent>
                   <CardFooter className="flex gap-4">
                     <Button variant="outline" size="sm" asChild>
@@ -67,13 +66,13 @@ const NWBSoftware = () => {
           </div>
         </div>
 
-        <div className="mb-12">
+        <div>
           <h2 className="text-3xl font-bold mb-6">Neurodata Extensions</h2>
           <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             {softwareList
               .filter(software => software.type === 'extension')
               .map((software) => (
-                <Card key={software.name} className="flex flex-col">
+                <Card key={software.name} className="flex flex-col hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
@@ -85,7 +84,7 @@ const NWBSoftware = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow">
-                    <p className="text-muted-foreground">{software.description}</p>
+                    <p className="text-secondary/75">{software.description}</p>
                   </CardContent>
                   <CardFooter>
                     <Button variant="outline" size="sm" asChild>
@@ -111,7 +110,7 @@ const NWBSoftware = () => {
             {softwareList
               .filter(software => software.type === 'guide')
               .map((software) => (
-                <Card key={software.name} className="flex flex-col">
+                <Card key={software.name} className="flex flex-col hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div>
@@ -120,7 +119,7 @@ const NWBSoftware = () => {
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow">
-                    <p className="text-muted-foreground">{software.description}</p>
+                    <p className="text-secondary/75">{software.description}</p>
                   </CardContent>
                   <CardFooter>
                     <Button variant="outline" size="sm" asChild>
@@ -138,7 +137,7 @@ const NWBSoftware = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

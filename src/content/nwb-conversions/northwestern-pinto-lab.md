@@ -6,4 +6,5 @@ tags: ["behavioral tracking", "calcium imaging", "spatial navigation"]
 github: "https://github.com/catalystneuro/pinto-lab-to-nwb"
 date: "2023-03"
 funded_project: "SCGB NWB Adoption"
+species: Mouse
 ---

@@ -6,4 +6,5 @@ tags: ["behavioral tracking", "electrophysiology", "calcium imaging"]
 github: "https://github.com/catalystneuro/constantinople-lab-to-nwb"
 date: "2024-07"
 funded_project: "NYU Librarians"
+species: Rat
 ---
