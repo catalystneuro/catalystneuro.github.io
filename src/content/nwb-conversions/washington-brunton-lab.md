@@ -7,8 +7,9 @@ tags:
   - behavioral tracking
   - motor control
 github: "https://github.com/catalystneuro/brunton-lab-to-nwb"
-dandi: "https://dandiarchive.org/dandiset/000055"
 date: "2020-11"
-funded_project: ""
+dandi:
+  - url: "https://dandiarchive.org/dandiset/000055"
+    name: "000055: AJILE12: Long-term naturalistic human intracranial neural recordings and pose"
 species: Human
 ---
