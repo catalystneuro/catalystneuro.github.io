@@ -7,7 +7,9 @@ tags:
   - electrophysiology
   - Parkinson's disease
 github: "https://github.com/catalystneuro/nelson-lab-to-nwb"
-dandi: []
+dandi:
+  - url: https://dandiarchive.org/dandiset/001130
+    name: "001130: Aberrant Striatal Activity in Parkinsonism and Levodopa-Induced Dyskinesia"
 date: "2023-10"
 funded_project: "Michael J. Fox ASAP"
 species: Mouse
