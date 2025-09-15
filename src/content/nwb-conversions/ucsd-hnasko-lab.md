@@ -6,4 +6,5 @@ tags: ["fiber photometry", "behavioral tracking", "optogenetics", "pose estimati
 github: https://github.com/catalystneuro/hnasko-lab-to-nwb
 date: "2024-11"
 species: Mouse
+funded_project: "Michael J. Fox ASAP"
 ---
