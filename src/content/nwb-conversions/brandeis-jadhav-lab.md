@@ -1,7 +1,7 @@
 ---
 lab: Shantanu Jadhav
 institution: Brandeis University
-description: Converting behavior and electrophysiology data from multiple projects, including integration with Spyglass as part of a Simons Foundation SFARI ARC project. The first dataset includes behavioral tracking, video recordings, spike sorting, and LFP recordings from experiments studying neural mechanisms of learning and memory. The second dataset focuses on pro-social behaviors in wild-type and Fmr1-/y rat pairs performing cooperative tasks on W mazes to obtain joint rewards, aiming to investigate the neural mechanisms underlying social interaction deficits associated with autism spectrum disorders.
+description: Converted behavior and electrophysiology data from multiple projects, including integration with Spyglass as part of a Simons Foundation SFARI ARC project. The first dataset includes behavioral tracking, video recordings, spike sorting, and LFP recordings from experiments studying neural mechanisms of learning and memory. The second dataset focuses on pro-social behaviors in wild-type and Fmr1-/y rat pairs performing cooperative tasks on W mazes to obtain joint rewards, aiming to investigate the neural mechanisms underlying social interaction deficits associated with autism spectrum disorders.
 github: https://github.com/catalystneuro/jadhav-lab-to-nwb
 dandi:
   - url: "https://dandiarchive.org/dandiset/001343"
