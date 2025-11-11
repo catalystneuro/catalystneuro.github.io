@@ -1,10 +1,11 @@
 ---
 lab: Jim Surmeier
 institution: Northwestern University
-description: NWB conversion pipeline for Surmeier lab's multimodal ex-vivo brain slice recordings from a mouse model of Parkinson's disease and levodopa-induced dyskinesia. The dataset includes patch-clamp electrophysiology (somatic and dendritic excitability), two-photon calcium imaging with simultaneous electrophysiology, acetylcholine biosensor recordings (GRABACh3.0), confocal microscopy for spine density analysis, optogenetic stimulation, behavioral scoring (AIM scores and contralateral rotations), and video recordings. Data encompasses direct and indirect pathway spiny projection neurons (dSPNs and iSPNs) from the dorsolateral striatum in 6-OHDA lesioned mice with chronic levodopa treatment. All protocols are linked to protocols.io documentation.
+description: NWB conversion pipeline for Surmeier lab's multimodal ex-vivo brain slice recordings from a mouse model of Parkinson's disease and levodopa-induced dyskinesia. The dataset includes patch-clamp electrophysiology (somatic and dendritic excitability), two-photon calcium imaging (standard imaging and line scans) with simultaneous electrophysiology, acetylcholine biosensor recordings (GRABACh3.0), confocal microscopy for spine density analysis, optogenetic stimulation, behavioral scoring (AIM scores and contralateral rotations), and video recordings. Data encompasses direct and indirect pathway spiny projection neurons (dSPNs and iSPNs) from the dorsolateral striatum in 6-OHDA lesioned mice with chronic levodopa treatment. All protocols are linked to protocols.io documentation.
 tags:
   - electrophysiology
   - calcium imaging
+  - line scan imaging
   - optogenetics
   - behavioral tracking
   - video
