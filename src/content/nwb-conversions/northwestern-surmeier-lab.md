@@ -22,6 +22,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/001538"
     name: "001538: State-dependent modulation of spiny projection neurons controls levodopa-induced dyskinesia in a mouse model of Parkinson's disease"
 date: "2025-01"
-species: "Mus musculus"
+species: "Mouse"
 funded_project: "Michael J. Fox Foundation ASAP"
 ---
