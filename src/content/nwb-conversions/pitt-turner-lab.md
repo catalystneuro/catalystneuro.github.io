@@ -11,5 +11,5 @@ dandi:
     name: "001636: Pyramidal tract and corticostriatal neuron recordings in MPTP-treated macaque performing visuomotor tasks"
 date: "2025-10"
 funded_project: "Michael J. Fox ASAP"
-species: Macaca mulatta
+species: Macaque
 ---
