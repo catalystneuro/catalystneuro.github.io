@@ -7,4 +7,4 @@ description: "Development of the DANDI Archive platform for neurophysiology data
 image: "/images/funded-projects/dandi_logo.png"
 ---
 
-Through NIH funding, we contribute to the development of the DANDI Archive, a platform for sharing and archiving neurophysiology data. This project aims to create a robust infrastructure for storing, sharing, and discovering neuroscience datasets in the NWB format.
+Through NIH funding, we contribute to the development of the DANDI Archive, a platform for sharing and archiving neurophysiology data. This project is led by Satrajit Ghosh at MIT and Yaroslav Halchenko at Dartmouth College and aims to create a robust infrastructure for storing, sharing, and discovering neuroscience datasets in the NWB format.

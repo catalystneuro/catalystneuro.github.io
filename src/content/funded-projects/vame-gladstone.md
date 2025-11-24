@@ -1,5 +1,5 @@
 ---
-title: "VAME Development for Gladstone Institute"
+title: "VAME Development"
 funder: "Gladstone Institute"
 status: "active"
 startDate: "2024-01-01"

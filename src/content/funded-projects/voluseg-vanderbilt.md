@@ -1,5 +1,5 @@
 ---
-title: "Voluseg Development for Vanderbilt"
+title: "Voluseg Development"
 funder: "Vanderbilt University"
 status: "active"
 startDate: "2023-06-01"
