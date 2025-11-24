@@ -1,7 +1,7 @@
 ---
 title: "NWB Widgets"
 funder: "Allen Institute"
-status: "active"
+status: "completed"
 startDate: "2020-04-01"
 description: "Interactive visualization of NWB data in Jupyter"
 image: "/images/software/nwb-widgets-logo.png"
