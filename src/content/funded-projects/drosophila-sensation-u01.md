@@ -1,7 +1,7 @@
 ---
 title: "Drosophila Sensation U01"
 funder: "National Institutes of Health"
-status: "active"
+status: "completed"
 startDate: "2024-08-01"
 description: "Standardizing Drosophila sensory neuroscience data using NWB"
 image: "/images/sponsors/nih_logo.png"
