@@ -15,7 +15,7 @@ export const Hero = () => {
             </a>
             
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-secondary sm:text-6xl">
-              Transforming Neurophysiology Data
+              Empowering Neurophysiology Data
               <span className="text-primary block">for Open Science</span>
             </h1>
             
