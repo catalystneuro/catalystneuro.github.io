@@ -1,7 +1,7 @@
 ---
 title: "NYU Librarians NWB Adoption"
 funder: "New York University"
-status: "active"
+status: "completed"
 startDate: "2024-07-01"
 description: "Supporting NWB adoption for NYU neuroscience labs"
 image: "/images/funded-projects/New_York_University-Logo.png"

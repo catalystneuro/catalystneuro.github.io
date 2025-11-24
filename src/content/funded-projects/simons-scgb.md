@@ -1,7 +1,7 @@
 ---
 title: "SCGB NWB Adoption"
 funder: "Simons Foundation"
-status: "active"
+status: "completed"
 startDate: "2022-06-01"
 description: "Accelerating NWB adoption across the neuroscience community"
 image: "/images/sponsors/simons_foundation_logo.avif"
