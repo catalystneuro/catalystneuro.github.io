@@ -20,6 +20,7 @@ import Success from "./pages/Success";
 import FundedProject from "./pages/FundedProject";
 import Contact from "./pages/Contact";
 import Guide from "./pages/Guide";
+import Consultation from "./pages/Consultation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => {
                 <Route path="/success" element={<Success />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/guides/:id" element={<Guide />} />
+                <Route path="/consultation" element={<Consultation />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
