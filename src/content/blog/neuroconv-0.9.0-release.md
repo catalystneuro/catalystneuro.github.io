@@ -2,7 +2,7 @@
 title: "NeuroConv 0.9.0 Release"
 date: "2025-12-08"
 description: "NeuroConv 0.9.0 introduces redesigned TIFF and Miniscope converters, new behavioral data documentation, NWB repacking functionality, and SpikeGLX improvements."
-image: "/images/neuroconv-logo.png"
+image: "/images/software/neuroconv_logo.png"
 readTime: "3 min read"
 keywords: ["NeuroConv", "NWB", "neurophysiology", "data conversion", "TIFF", "Miniscope", "SpikeGLX", "release"]
 ---
