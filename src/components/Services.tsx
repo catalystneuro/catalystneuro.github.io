@@ -1,4 +1,4 @@
-import { Calendar, Brain, FileCode, Database, Cloud, Users, BarChart, Book, Share2 } from "lucide-react";
+import { Calendar, Brain, FileCode, Database, Cloud, Users, BarChart, Book, Share2, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -8,7 +8,8 @@ const ServiceCard = ({
   icon: Icon, 
   buttonText, 
   buttonLink,
-  features = []
+  features = [],
+  showLink = false
 }: { 
   title: string;
   description: string;
@@ -16,6 +17,7 @@ const ServiceCard = ({
   buttonText: string;
   buttonLink: string;
   features?: string[];
+  showLink?: boolean;
 }) => (
   <Card data-testid="service-card" className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm bg-white/80 border-primary/10">
     <CardHeader>
@@ -29,19 +31,19 @@ const ServiceCard = ({
       {features.length > 0 && (
         <ul className="space-y-2">
           {features.map((feature, index) => (
-            <li key={index} className="flex items-center gap-2 text-secondary/75">
-              <div className="w-1.5 h-1.5 rounded-full bg-primary/60" />
+            <li key={index} className="flex items-start gap-2 text-secondary/75">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
               {feature}
             </li>
           ))}
         </ul>
       )}
-      {/* Consultation buttons temporarily disabled
-      <Button className="w-full group" onClick={() => window.open(buttonLink)}>
-        {buttonText}
-        <Icon className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-      </Button>
-      */}
+      {showLink && (
+        <a href={buttonLink} className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors">
+          {buttonText}
+          <span className="ml-1">→</span>
+        </a>
+      )}
     </CardContent>
   </Card>
 );
@@ -62,44 +64,43 @@ export const Services = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           <ServiceCard
-            title="NWB Conversion Pipelines"
-            description="Standardize and publish your experimental data with NWB and DANDI Archive."
+            title="Open Data Management"
+            description="Convert your data to Neurodata Without Borders (NWB) and publish on the DANDI Archive."
             icon={Database}
-            buttonText="Get Started"
-            buttonLink="/contact"
+            buttonText="View Our Work"
+            buttonLink="/nwb-conversions"
+            showLink={true}
             features={[
-              "NIH data sharing policy compliance",
-              "DANDI Archive integration",
-              "Comprehensive metadata support",
-              "Analysis tool ecosystem access"
+              "Open source conversion pipeline",
+              "Compliance with government and foundation funders",
+              "Includes notebooks demonstrating data use",
+              "Experience with 60+ labs"
             ]}
           />
 
           <ServiceCard
-            title="Spike Sorting Pipelines"
-            description="Custom spike sorting solutions using SpikeInterface for your specific needs."
+            title="Software Engineering"
+            description="Integrate existing analysis, visualization, and data management tools with open data via NWB and DANDI."
+            icon={Code}
+            buttonText="View Our Work"
+            buttonLink="/analysis-software"
+            showLink={true}
+            features={[
+              "Professionalize software through packaging, testing, and documentation",
+              "Create reproducible workflows for data processing and analysis"
+            ]}
+          />
+
+          <ServiceCard
+            title="AI in Neuro"
+            description="Leverage AI and machine learning to accelerate neuroscience research."
             icon={Brain}
             buttonText="Get Started"
             buttonLink="/contact"
             features={[
-              "Technology-specific customization",
-              "Open source implementation",
-              "Team training and support",
-              "Pipeline modification guidance"
-            ]}
-          />
-
-          <ServiceCard
-            title="Grant Applications"
-            description="Expert data infrastructure support for NIH grant applications."
-            icon={FileCode}
-            buttonText="Get Started"
-            buttonLink="/contact"
-            features={[
-              "Data standardization & sharing",
-              "Electronic lab notebooks",
-              "Data dashboards & visualization",
-              "Cloud technology integration"
+              "Develop agents to automate processing steps",
+              "Data curation for building neural foundation models",
+              "Training in agentic code generation"
             ]}
           />
         </div>

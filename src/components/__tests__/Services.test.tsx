@@ -13,37 +13,34 @@ describe('Services', () => {
   })
 
   describe('Main Service Cards', () => {
-    it('renders NWB Conversion Pipelines card', () => {
-      const card = screen.getByText('NWB Conversion Pipelines')
+    it('renders Open Data Management card', () => {
+      const card = screen.getByText('Open Data Management')
       expect(card).toBeInTheDocument()
       
       // Check features
-      expect(screen.getByText('NIH data sharing policy compliance')).toBeInTheDocument()
-      expect(screen.getByText('DANDI Archive integration')).toBeInTheDocument()
-      expect(screen.getByText('Comprehensive metadata support')).toBeInTheDocument()
-      expect(screen.getByText('Analysis tool ecosystem access')).toBeInTheDocument()
+      expect(screen.getByText('Open source conversion pipeline')).toBeInTheDocument()
+      expect(screen.getByText('Compliance with government and foundation funders')).toBeInTheDocument()
+      expect(screen.getByText('Includes notebooks demonstrating data use')).toBeInTheDocument()
+      expect(screen.getByText('Experience with 60+ labs')).toBeInTheDocument()
     })
 
-    it('renders Spike Sorting Pipelines card', () => {
-      const card = screen.getByText('Spike Sorting Pipelines')
+    it('renders Software Engineering card', () => {
+      const card = screen.getByText('Software Engineering')
       expect(card).toBeInTheDocument()
       
       // Check features
-      expect(screen.getByText('Technology-specific customization')).toBeInTheDocument()
-      expect(screen.getByText('Open source implementation')).toBeInTheDocument()
-      expect(screen.getByText('Team training and support')).toBeInTheDocument()
-      expect(screen.getByText('Pipeline modification guidance')).toBeInTheDocument()
+      expect(screen.getByText('Professionalize software through packaging, testing, and documentation')).toBeInTheDocument()
+      expect(screen.getByText('Create reproducible workflows for data processing and analysis')).toBeInTheDocument()
     })
 
-    it('renders Grant Applications card', () => {
-      const card = screen.getByText('Grant Applications')
+    it('renders AI in Neuro card', () => {
+      const card = screen.getByText('AI in Neuro')
       expect(card).toBeInTheDocument()
       
       // Check features
-      expect(screen.getByText('Data standardization & sharing')).toBeInTheDocument()
-      expect(screen.getByText('Electronic lab notebooks')).toBeInTheDocument()
-      expect(screen.getByText('Data dashboards & visualization')).toBeInTheDocument()
-      expect(screen.getByText('Cloud technology integration')).toBeInTheDocument()
+      expect(screen.getByText('Develop agents to automate processing steps')).toBeInTheDocument()
+      expect(screen.getByText('Data curation for building neural foundation models')).toBeInTheDocument()
+      expect(screen.getByText('Training in agentic code generation')).toBeInTheDocument()
     })
 
     it('applies hover styles to service cards', () => {
@@ -97,16 +94,5 @@ describe('Services', () => {
     })
   })
 
-  // Service cards now have "Get Started" buttons that link to /contact
-  it('renders Get Started buttons for each service card', () => {
-    const getStartedButtons = screen.getAllByRole('button', { name: /get started/i })
-    expect(getStartedButtons).toHaveLength(3)
-  })
-
-  it('links Get Started buttons to contact page', () => {
-    const getStartedLinks = screen.getAllByRole('link', { name: /get started/i })
-    getStartedLinks.forEach(link => {
-      expect(link).toHaveAttribute('href', '/contact')
-    })
-  })
+  // Note: "Get Started" buttons are currently commented out in the component
 })
