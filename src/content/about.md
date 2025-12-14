@@ -1,35 +1,39 @@
 ---
-sections:
-  - title: "Our Mission"
-    icon: "Brain"
-    content: >
-      The collection of neurophysiology data is resource-intensive, requiring skilled personnel and often involving animal subjects. While this data has immense potential for reuse and collaboration, sharing it effectively remains a significant challenge. Labs face technical barriers in standardizing data formats, preserving essential metadata, and developing shareable software tools. This leads to redundant data collection and isolated software development, ultimately slowing scientific progress and reducing the impact of valuable research.
-
-      CatalystNeuro bridges this gap by providing specialized data and software engineering expertise to the neuroscience community. We help labs implement data standards, develop maintainable software, and create efficient data processing pipelines. Our work enables researchers to focus on scientific discovery while ensuring their data and tools can be easily shared and reused by the broader community. By facilitating open science and collaboration, we maximize the value of neurophysiology research and accelerate the advancement of neuroscience.
-
-  - title: "Who We Are"
-    icon: "Users"
-    content: >
-      We are a team of Research Software Engineers focusing on Open Data and Open Software in neurophysiology research. Our international team consists of neuroscientist software developers who are deeply passionate about employing data and software engineering to create a seamless network among data producers, tool developers, and users within the neuroscience community.
-
-  - title: "Our Solution"
-    icon: "Globe"
-    content: >
-      CatalystNeuro is designed to be complementary to labs. We focus on data and software engineering so labs can focus on advancing and communicating scientific discoveries. Despite being a for-profit organization, we adhere to an open-source approach with permissive licensing for our developed software, thereby offering free access to anyone in the community. We build and maintain a suite of open source tools that enable labs to accelerate their analyses and data management processes.
-
-  - title: "Data Sharing in Neurophysiology"
-    icon: "Database"
-    content: >
-      In collaboration with BRAIN-endorsed teams, we are developing an infrastructure that promotes active cooperation across the neurophysiology community. We utilize the Neurodata Without Borders (NWB) standard for neurophysiology data and work closely with the DANDI Archive, which accepts NWB data and is capable of storing terabytes of neurophysiology data at no charge. As part of the development teams for these projects, we create open-source software to simplify the usage of these tools, including:
-
-      - NWB Inspector: A tool that scans NWB files for potential errors and areas of improvement, generating a comprehensive report.
-      - NeuroConv: A utility that automates the conversion from proprietary neurophysiology data formats to NWB.
-      - NWB GUIDE: A graphical user interface (GUI) that offers a code-free solution for conversion to NWB (currently in progress).
-
-      We collaborate with individual labs to develop tailored solutions to help them leverage these resources. This includes both virtual and in-person training, and contracts for the development of customized solutions.
-
-  - title: "Spike Sorting"
-    icon: "Brain"
-    content: >
-      Spike sorting is the process of identifying neuronal action potentials in an electrophysiology recordings and assigning them to different neurons. Spike sorting is a challenging problem that is far from solved, and the recent advances in electrophysiology channel count and density have made the problem much more difficult. SpikeInterface is an open source software solution that makes it easy to access state-of-the-art spike sorting technology. With a few lines of code, SpikeInterface enables you to load and pre-process an electrophysiology recording, run several state-of-the-art spike sorters, compare them, post-process and curate the output, compute quality metrics, and visualize the results.
+title: "About CatalystNeuro"
 ---
+
+## Our Mission
+
+Neurophysiology data collection is exceptionally resource-intensive, requiring significant investment in skilled personnel, specialized equipment, and often involving animal subjects. Each dataset represents countless hours of careful experimentation and holds tremendous potential for advancing our understanding of the brain. Yet despite this value, sharing neurophysiology data remains a major challenge. Labs struggle with technical barriers in standardizing data formats, preserving critical metadata, and developing software that others can use. The result is redundant data collection across the field and isolated software development that limits scientific progress.
+
+CatalystNeuro exists to solve this problem. We provide specialized data and software engineering expertise that enables labs to focus on scientific discovery rather than data infrastructure. By helping researchers implement data standards, develop maintainable software, and create efficient processing pipelines, we ensure that valuable neurophysiology data can be easily shared and reused. Our work accelerates the advancement of neuroscience by facilitating open science and collaboration across the global research community.
+
+## Who We Are
+
+We are a team of Research Software Engineers specializing in open data and open software for neurophysiology research. Our international team brings together neuroscientists and software developers who are passionate about building the technical infrastructure that connects data producers, tool developers, and researchers across the neuroscience community. We understand both the scientific challenges and the engineering solutions needed to make neurophysiology data truly accessible.
+
+## Our Approach
+
+CatalystNeuro is designed to complement academic labs by handling the data and software engineering challenges that often fall outside their core expertise. This allows researchers to concentrate on advancing and communicating scientific discoveries. Despite being a for-profit organization, we adhere to an open-source approach with permissive licensing for all software we develop, making our tools freely available to the entire scientific community. We build and maintain a comprehensive suite of open-source tools that enable labs to accelerate their analyses and streamline their data management processes.
+
+## Our Services
+
+### Data Standardization
+
+In collaboration with NIH BRAIN Initiative-endorsed teams, we develop infrastructure that promotes collaboration across the neurophysiology community. We specialize in the [Neurodata Without Borders (NWB)](https://nwb.org) standard for neurophysiology data and work closely with the [DANDI Archive](https://dandiarchive.org), which provides free storage for terabytes of NWB-formatted neurophysiology data.
+
+As core contributors to these projects, we create open-source software that makes these tools accessible:
+
+- **[NWB Inspector](https://github.com/NeurodataWithoutBorders/nwbinspector)**: Scans NWB files for potential errors and best practice violations, generating comprehensive quality reports.
+- **[NeuroConv](https://github.com/catalystneuro/neuroconv)**: Automates conversion from dozens of proprietary neurophysiology data formats to NWB.
+- **[NWB GUIDE](https://github.com/NeurodataWithoutBorders/nwb-guide)**: A graphical interface that provides a code-free solution for data conversion.
+
+We partner with individual labs to develop customized solutions, offering both virtual and in-person training as well as contracts for tailored development work.
+
+### Software Engineering
+
+We help labs integrate their existing analysis, visualization, and data management tools with the broader open science ecosystem via NWB and DANDI. Our team professionalizes research software through proper packaging, comprehensive testing, and thorough documentation—transforming prototype code into reliable, maintainable tools. We also design reproducible workflows for data processing and analysis, ensuring that research outputs can be shared and replicated across the scientific community.
+
+### AI in Neuroscience
+
+We leverage artificial intelligence and machine learning to accelerate neuroscience research. Our services include developing AI agents to automate repetitive processing steps, curating datasets for building neural foundation models, and providing training in agentic code generation. These capabilities enable labs to harness modern AI tools to streamline their research workflows and extract new insights from their data.

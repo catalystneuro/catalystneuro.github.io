@@ -1,4 +1,4 @@
-import { Github, Link as LinkIcon, Twitter, X } from "lucide-react";
+import { Github, Link as LinkIcon, X } from "lucide-react";
 import PageLayout from "@/components/PageLayout";
 import teamData from '../content/team.json';
 
@@ -34,7 +34,7 @@ const Team = () => {
               <img 
                 src={member.image}
                 alt={member.name}
-                className="w-40 h-40 rounded-full mx-auto object-cover"
+                className="w-48 h-48 rounded-full mx-auto object-cover"
               />
             </div>
             <h3 className="text-xl font-semibold mb-2 text-center text-secondary">{member.name}</h3>
@@ -83,6 +83,19 @@ const Team = () => {
                   <BlueSkyIcon size={20} />
                 </a>
               )}
+              {(member as any).orcid && (
+                <a 
+                  href={(member as any).orcid}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-secondary/65 hover:text-primary transition-colors"
+                  title="ORCID"
+                >
+                  <svg width={20} height={20} viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M128,0C57.3,0,0,57.3,0,128s57.3,128,128,128s128-57.3,128-128S198.7,0,128,0z M86.3,186.2H70.9V79.1h15.4V186.2z M78.6,70.3c-5.4,0-9.8-4.4-9.8-9.8c0-5.4,4.4-9.8,9.8-9.8c5.4,0,9.8,4.4,9.8,9.8C88.4,65.9,84,70.3,78.6,70.3z M180.5,186.2h-15.4v-54.5c0-16.6-5.9-24.6-17.6-24.6c-13,0-19.5,9.1-19.5,24.6v54.5h-15.4V104.8h15.4v12.5c5.7-8.4,14.4-14.4,27.1-14.4c20.4,0,25.4,13.6,25.4,34.6V186.2z"/>
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
         ))}
@@ -91,7 +104,6 @@ const Team = () => {
       {previousTeamMembers.length > 0 && (
         <div className="mt-16">
           <h2 className="text-3xl font-semibold mb-8 text-secondary">Previous Team Members</h2>
-          <div className="h-1 w-24 bg-primary mb-8 rounded"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {previousTeamMembers.map((member) => (
               <div 

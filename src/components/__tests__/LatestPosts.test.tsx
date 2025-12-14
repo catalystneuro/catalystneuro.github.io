@@ -109,12 +109,16 @@ describe('LatestPosts', () => {
     expect(viewAllButton).toHaveAttribute('href', '/blog')
   })
 
-  it('applies hover styles to post cards', () => {
+  it('renders post cards with proper structure for hover effects', () => {
     render(<LatestPosts />)
     
-    const cards = screen.getAllByRole('link').slice(0, 3) // Get only post cards, not the View All link
-    cards.forEach(card => {
-      expect(card.querySelector('.hover\\:shadow-lg')).toBeInTheDocument()
+    // Get only post cards (first 3 links), not the View All link
+    const postLinks = screen.getAllByRole('link').slice(0, 3)
+    expect(postLinks).toHaveLength(3)
+    
+    // Each post link should have the group class for hover effects
+    postLinks.forEach(link => {
+      expect(link).toHaveClass('group')
     })
   })
 })

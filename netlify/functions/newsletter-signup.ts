@@ -28,11 +28,33 @@ const handler: Handler = async (event) => {
     const { email } = JSON.parse(event.body || '{}');
 
     if (!email) {
-      return { statusCode: 400, body: JSON.stringify({ message: 'Email is required' }) };
+      return { 
+        statusCode: 400, 
+        headers: corsHeaders,
+        body: JSON.stringify({ message: 'Email is required' }) 
+      };
     }
 
-    // Here you would typically add the email to your newsletter service
-    // For now, we'll just return success since Netlify Forms will capture the submission
+    // Submit to Netlify Forms by posting to the site itself
+    const siteUrl = process.env.URL || 'https://catalystneuro.com';
+    
+    const formData = new URLSearchParams();
+    formData.append('form-name', 'newsletter');
+    formData.append('email', email);
+
+    const response = await fetch(siteUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString(),
+    });
+
+    if (!response.ok) {
+      console.error('Netlify form submission failed:', response.status, response.statusText);
+      throw new Error('Failed to submit to Netlify Forms');
+    }
+
     return {
       statusCode: 200,
       headers: {

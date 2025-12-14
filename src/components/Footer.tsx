@@ -11,7 +11,7 @@ const Footer = () => {
               <li><a href="/about" className="text-sm text-gray-600 hover:text-gray-900">About</a></li>
               <li><a href="/team" className="text-sm text-gray-600 hover:text-gray-900">Team</a></li>
               <li><a href="/openings" className="text-sm text-gray-600 hover:text-gray-900">Careers</a></li>
-              <li><a href="/services" className="text-sm text-gray-600 hover:text-gray-900">Services</a></li>
+              <li><a href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact</a></li>
             </ul>
           </div>
           
@@ -19,8 +19,9 @@ const Footer = () => {
             <h3 className="text-sm font-semibold text-gray-900">Resources</h3>
             <ul className="space-y-2">
               <li><a href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</a></li>
-              <li><a href="/portfolio" className="text-sm text-gray-600 hover:text-gray-900">Portfolio</a></li>
-              <li><a href="/software" className="text-sm text-gray-600 hover:text-gray-900">Software</a></li>
+              <li><a href="/funded-projects" className="text-sm text-gray-600 hover:text-gray-900">Funded Projects</a></li>
+              <li><a href="/nwb-software" className="text-sm text-gray-600 hover:text-gray-900">NWB Software</a></li>
+              <li><a href="/analysis-software" className="text-sm text-gray-600 hover:text-gray-900">Analysis Software</a></li>
             </ul>
           </div>
 
@@ -39,7 +40,7 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="https://www.linkedin.com/company/catalystneuro" 
+                  href="https://www.linkedin.com/company/catalyst-neuro" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-sm text-gray-600 hover:text-gray-900"
