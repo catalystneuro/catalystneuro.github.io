@@ -24,13 +24,14 @@ export const Navigation = () => {
       items: [
         { label: "NWB Software", path: "/nwb-software" },
         { label: "Analysis Software", path: "/analysis-software" },
+        { label: "NWB Conversions", path: "/nwb-conversions" },
       ],
     },
     {
       label: "Portfolio",
       items: [
-        { label: "NWB Conversions", path: "/nwb-conversions" },
         { label: "Funded Projects", path: "/funded-projects" },
+        { label: "Publications", path: "/publications" },
       ],
     },
     { label: "Blog", path: "/blog" },

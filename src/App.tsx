@@ -18,6 +18,7 @@ import About from "./pages/About";
 import FundedProjects from "./pages/FundedProjects";
 import Success from "./pages/Success";
 import FundedProject from "./pages/FundedProject";
+import Publications from "./pages/Publications";
 import Contact from "./pages/Contact";
 import Guide from "./pages/Guide";
 import Consultation from "./pages/Consultation";
@@ -47,6 +48,7 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/funded-projects" element={<FundedProjects />} />
                 <Route path="/funded-projects/:project" element={<FundedProject />} />
+                <Route path="/publications" element={<Publications />} />
                 <Route path="/success" element={<Success />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/guides/:id" element={<Guide />} />
