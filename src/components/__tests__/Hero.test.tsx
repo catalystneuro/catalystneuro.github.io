@@ -7,7 +7,7 @@ describe('Hero', () => {
     render(<Hero />)
     
     // Test main heading with its two parts
-    expect(screen.getByText('Transforming Neurophysiology Data')).toBeInTheDocument()
+    expect(screen.getByText('Empowering Neurophysiology Data')).toBeInTheDocument()
     expect(screen.getByText('for Open Science')).toBeInTheDocument()
     
     // Test description text
@@ -19,7 +19,7 @@ describe('Hero', () => {
     
     // Get Started button
     const getStartedLink = screen.getByRole('link', { name: /get started/i })
-    expect(getStartedLink).toHaveAttribute('href', '/software')
+    expect(getStartedLink).toHaveAttribute('href', '/nwb-software')
     
     // Learn More button
     const learnMoreLink = screen.getByRole('link', { name: /learn more/i })

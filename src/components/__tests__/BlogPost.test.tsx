@@ -53,8 +53,9 @@ describe('BlogPost', () => {
     
     // Test basic content
     expect(screen.getByText('Test Blog Post')).toBeInTheDocument()
-    expect(screen.getByText('2024-01-01')).toBeInTheDocument()
-    expect(screen.getByText('5 min read')).toBeInTheDocument()
+    // Date and read time are combined in a single element
+    expect(screen.getByText(/Published on 2024-01-01/)).toBeInTheDocument()
+    expect(screen.getByText(/5 min read/)).toBeInTheDocument()
     
     // Test markdown headings
     expect(screen.getByRole('heading', { name: 'Heading 1', level: 1 })).toBeInTheDocument()

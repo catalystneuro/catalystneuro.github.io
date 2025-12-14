@@ -1,43 +1,43 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
 
 export const Contact = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = import.meta.env.DEV
-    ? async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-        try {
-          const response = await fetch('http://localhost:9999/.netlify/functions/newsletter-signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
-          });
+    const apiUrl = import.meta.env.DEV 
+      ? 'http://localhost:9999/.netlify/functions/newsletter-signup'
+      : '/.netlify/functions/newsletter-signup';
 
-          if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Failed to subscribe');
-          }
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
 
-          setSubscribed(true);
-          setEmail("");
-        } catch (error) {
-          setError(error instanceof Error ? error.message : 'Failed to subscribe');
-          console.error("Newsletter signup error:", error);
-        } finally {
-          setLoading(false);
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to subscribe');
       }
-    : undefined;
+
+      setSubscribed(true);
+      setEmail("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to subscribe');
+      console.error("Newsletter signup error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="py-20 bg-white" id="contact">
@@ -71,17 +71,12 @@ export const Contact = () => {
             <form 
               onSubmit={handleSubmit} 
               className="flex gap-4"
-              data-netlify="true"
-              name="newsletter"
-              method="POST"
-              action="/"
-              netlify-honeypot="bot-field"
             >
-              <input type="hidden" name="bot-field" />
-              <input type="hidden" name="form-name" value="newsletter" />
               <input
                 type="email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
                 className="flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"

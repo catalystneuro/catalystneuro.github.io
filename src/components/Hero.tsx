@@ -39,7 +39,7 @@ export const Hero = () => {
           </div>
           
           <div className="hidden md:block md:w-2/5">
-            <div className="relative mt-10 md:mt-0">
+            <div className="relative mt-10 md:mt-0 animate-float">
               <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary to-accent opacity-30 blur"></div>
               <div className="relative rounded-lg bg-white p-6 shadow-lg">
                 <div className="grid grid-cols-2 gap-4">

@@ -97,9 +97,16 @@ describe('Services', () => {
     })
   })
 
-  // Note: Consultation buttons are currently disabled in the component
-  it('does not render consultation buttons', () => {
-    expect(screen.queryByText('Schedule a Consultation')).not.toBeInTheDocument()
-    expect(screen.queryByText('Request Consultation')).not.toBeInTheDocument()
+  // Service cards now have "Get Started" buttons that link to /contact
+  it('renders Get Started buttons for each service card', () => {
+    const getStartedButtons = screen.getAllByRole('button', { name: /get started/i })
+    expect(getStartedButtons).toHaveLength(3)
+  })
+
+  it('links Get Started buttons to contact page', () => {
+    const getStartedLinks = screen.getAllByRole('link', { name: /get started/i })
+    getStartedLinks.forEach(link => {
+      expect(link).toHaveAttribute('href', '/contact')
+    })
   })
 })

@@ -1,10 +1,20 @@
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Menu, Github, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../public/lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png";
 
 export const Navigation = () => {
+  const location = useLocation();
+  
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+  
+  const isDropdownActive = (items: { path: string }[]) => {
+    return items.some(item => location.pathname.startsWith(item.path));
+  };
 
   const menuItems = [
     { label: "About", path: "/about" },
@@ -82,7 +92,7 @@ export const Navigation = () => {
               {menuItems.map((item) => (
                 item.items ? (
                   <DropdownMenu key={item.label}>
-                    <DropdownMenuTrigger className="flex items-center hover:text-primary transition-colors">
+                    <DropdownMenuTrigger className={`flex items-center transition-colors ${isDropdownActive(item.items) ? 'text-primary font-medium' : 'hover:text-primary'}`}>
                       {item.label}
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </DropdownMenuTrigger>
@@ -91,7 +101,7 @@ export const Navigation = () => {
                         <DropdownMenuItem key={subItem.path} asChild>
                           <Link 
                             to={subItem.path}
-                            className="block w-full"
+                            className={`block w-full ${isActive(subItem.path) ? 'text-primary font-medium' : ''}`}
                           >
                             {subItem.label}
                           </Link>
@@ -103,7 +113,7 @@ export const Navigation = () => {
                   <Link 
                     key={item.path}
                     to={item.path}
-                    className="hover:text-primary transition-colors"
+                    className={`transition-colors ${isActive(item.path) ? 'text-primary font-medium' : 'hover:text-primary'}`}
                   >
                     {item.label}
                   </Link>

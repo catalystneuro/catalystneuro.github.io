@@ -65,8 +65,8 @@ export const Services = () => {
             title="NWB Conversion Pipelines"
             description="Standardize and publish your experimental data with NWB and DANDI Archive."
             icon={Database}
-            buttonText="Schedule a Consultation"
-            buttonLink="#schedule-consultation"
+            buttonText="Get Started"
+            buttonLink="/contact"
             features={[
               "NIH data sharing policy compliance",
               "DANDI Archive integration",
@@ -79,8 +79,8 @@ export const Services = () => {
             title="Spike Sorting Pipelines"
             description="Custom spike sorting solutions using SpikeInterface for your specific needs."
             icon={Brain}
-            buttonText="Request Consultation"
-            buttonLink="#spike-sorting"
+            buttonText="Get Started"
+            buttonLink="/contact"
             features={[
               "Technology-specific customization",
               "Open source implementation",
@@ -93,8 +93,8 @@ export const Services = () => {
             title="Grant Applications"
             description="Expert data infrastructure support for NIH grant applications."
             icon={FileCode}
-            buttonText="Schedule Consultation"
-            buttonLink="#grant-consultation"
+            buttonText="Get Started"
+            buttonLink="/contact"
             features={[
               "Data standardization & sharing",
               "Electronic lab notebooks",
