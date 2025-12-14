@@ -57,9 +57,9 @@ describe('BlogPost', () => {
     expect(screen.getByText(/Published on 2024-01-01/)).toBeInTheDocument()
     expect(screen.getByText(/5 min read/)).toBeInTheDocument()
     
-    // Test markdown headings
-    expect(screen.getByRole('heading', { name: 'Heading 1', level: 1 })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Heading 2', level: 2 })).toBeInTheDocument()
+    // Test markdown headings (regex to handle anchor link prefix)
+    expect(screen.getByRole('heading', { name: /Heading 1/, level: 1 })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Heading 2/, level: 2 })).toBeInTheDocument()
     
     // Test list items
     expect(screen.getByText('List item 1')).toBeInTheDocument()

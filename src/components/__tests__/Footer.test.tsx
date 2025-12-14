@@ -28,7 +28,7 @@ describe('Footer', () => {
     expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer')
     
     const linkedinLink = screen.getByRole('link', { name: 'LinkedIn' })
-    expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/company/catalystneuro')
+    expect(linkedinLink).toHaveAttribute('href', 'https://www.linkedin.com/company/catalyst-neuro')
     expect(linkedinLink).toHaveAttribute('target', '_blank')
     expect(linkedinLink).toHaveAttribute('rel', 'noopener noreferrer')
   })
