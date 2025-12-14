@@ -1,6 +1,6 @@
 import PageLayout from "@/components/PageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, FileText, BookOpen } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Publication {
@@ -106,48 +106,6 @@ const Publications = () => {
             </Card>
           ))}
         </div>
-
-        {/* Additional Resources */}
-        <Card className="backdrop-blur-sm bg-white/80 border-primary/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BookOpen className="h-6 w-6 text-primary" />
-              More Publications
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-secondary/75">
-              CatalystNeuro team members contribute to numerous scientific publications 
-              in neuroscience data standards, software tools, and open science. 
-              For a complete list of publications, visit our profiles:
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild variant="outline" className="flex-1">
-                <a 
-                  href="https://scholar.google.com/citations?user=w4fggRkAAAAJ" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  Google Scholar
-                </a>
-              </Button>
-              <Button asChild variant="outline" className="flex-1">
-                <a 
-                  href="https://orcid.org/0000-0001-5725-6910" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  ORCID Profile
-                </a>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </PageLayout>
   );
