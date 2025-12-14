@@ -13,20 +13,20 @@ export const Contact = () => {
     setLoading(true);
     setError(null);
 
-    const apiUrl = import.meta.env.DEV 
-      ? 'http://localhost:9999/.netlify/functions/newsletter-signup'
-      : '/.netlify/functions/newsletter-signup';
-
     try {
-      const response = await fetch(apiUrl, {
+      // Submit directly to Netlify Forms
+      const formData = new URLSearchParams();
+      formData.append('form-name', 'newsletter');
+      formData.append('email', email);
+
+      const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString(),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to subscribe');
+        throw new Error('Failed to subscribe');
       }
 
       setSubscribed(true);
