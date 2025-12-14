@@ -37,14 +37,9 @@ export interface JobOpening {
   enabled?: boolean;
 }
 
-export interface AboutSection {
-  title: string;
-  icon: string;
-  content: string;
-}
-
 export interface AboutContent {
-  sections: AboutSection[];
+  title: string;
+  body: string;
 }
 
 export interface FundedProject {
@@ -87,10 +82,10 @@ export const loadAbout = (): AboutContent => {
   const files = import.meta.glob('../content/**/*.md', { as: 'raw', eager: true });
   const aboutPath = Object.keys(files).find(path => path.includes('/about.md'));
   if (!aboutPath || !files[aboutPath]) {
-    return { sections: [] };
+    return { title: '', body: '' };
   }
-  const { attributes } = frontMatter(files[aboutPath]);
-  return attributes as AboutContent;
+  const { attributes, body } = frontMatter<{ title: string }>(files[aboutPath]);
+  return { title: attributes.title, body: body.trim() };
 };
 
 export const fundedProjects = (() => {
