@@ -5,6 +5,7 @@ import { FeaturedIn } from "@/components/FeaturedIn";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { LatestPosts } from "@/components/LatestPosts";
 import { Contact } from "@/components/Contact";
+import { MemberOf } from "@/components/MemberOf";
 import { BrandBanner } from "@/components/BrandBanner";
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
         <h2 className="text-3xl font-bold text-center mb-8">Life at CatalystNeuro</h2>
         <YouTubeEmbed videoId="uRYOrGt1wMo" />
       </div>
+      <MemberOf />
       <BrandBanner />
       <Contact />
     </div>
