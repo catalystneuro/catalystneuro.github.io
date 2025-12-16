@@ -1,5 +1,6 @@
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { Menu, Github, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../public/lovable-uploads/c816ee3f-4861-41a1-90a1-3af8e81d86c3.png";
@@ -129,6 +130,11 @@ export const Navigation = () => {
               >
                 <Github className="h-5 w-5" />
               </a>
+              <Link to="/consultation">
+                <Button size="sm" className="bg-primary hover:bg-primary/90">
+                  Request Consultation
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
