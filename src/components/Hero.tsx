@@ -1,9 +1,12 @@
 import { ArrowRight, Code, Brain, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NeuralNetworkBackground } from "./NeuralNetworkBackground";
 
 export const Hero = () => {
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-primary/10 to-transparent py-20 sm:py-32">
+      {/* Neural Network Animation Background */}
+      <NeuralNetworkBackground />
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMxNDY2QTciIGZpbGwtb3BhY2l0eT0iMC4wNCIgdHJhbnNmb3JtPSJyb3RhdGUoNDUgLTE3NC42NiA1NC44OCkiPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
       
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -39,7 +42,7 @@ export const Hero = () => {
           </div>
           
           <div className="hidden md:block md:w-2/5">
-            <div className="relative mt-10 md:mt-0 animate-float">
+            <div className="relative mt-10 md:mt-0">
               <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary to-accent opacity-30 blur"></div>
               <div className="relative rounded-lg bg-white p-6 shadow-lg">
                 <div className="grid grid-cols-2 gap-4">
