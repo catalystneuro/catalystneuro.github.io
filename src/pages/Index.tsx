@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero";
 import { Services } from "@/components/Services";
 import { Testimonials } from "@/components/Testimonials";
+import { FeaturedIn } from "@/components/FeaturedIn";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { LatestPosts } from "@/components/LatestPosts";
 import { Contact } from "@/components/Contact";
@@ -12,6 +13,7 @@ const Index = () => {
       <Hero />
       <Services />
       <Testimonials />
+      <FeaturedIn />
       <LatestPosts />
       <div className="w-full max-w-5xl mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-8">Life at CatalystNeuro</h2>
