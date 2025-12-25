@@ -1,4 +1,4 @@
-import { ArrowRight, Code, Brain, Share2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NeuralNetworkBackground } from "./NeuralNetworkBackground";
 
@@ -7,11 +7,9 @@ export const Hero = () => {
     <div className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-primary/10 to-transparent py-20 sm:py-32">
       {/* Neural Network Animation Background */}
       <NeuralNetworkBackground />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMxNDY2QTciIGZpbGwtb3BhY2l0eT0iMC4wNCIgdHJhbnNmb3JtPSJyb3RhdGUoNDUgLTE3NC42NiA1NC44OCkiPjxjaXJjbGUgY3g9IjEiIGN5PSIxIiByPSIxIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
       
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="relative z-10 md:flex md:items-center md:justify-between">
-          <div className="md:w-3/5">
+        <div className="relative z-10 max-w-3xl">
             <a href="/analysis-software" className="inline-flex items-center rounded-full border border-primary/30 bg-white/80 px-3 py-1 text-sm text-primary shadow-sm backdrop-blur-sm hover:bg-white hover:shadow-md transition-all duration-200">
               <span className="mr-2 rounded-full bg-primary px-1.5 py-0.5 text-xs text-white">New</span>
               Open source neurophysiology tools for researchers
@@ -39,39 +37,8 @@ export const Hero = () => {
                 </Button>
               </a>
             </div>
-          </div>
-          
-          <div className="hidden md:block md:w-2/5">
-            <div className="relative mt-10 md:mt-0">
-              <div className="absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary to-accent opacity-30 blur"></div>
-              <div className="relative rounded-lg bg-white p-6 shadow-lg">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex flex-col items-center rounded-md bg-primary/5 p-4">
-                    <Code className="h-8 w-8 text-primary mb-2" />
-                    <h3 className="font-medium text-secondary">Standardize</h3>
-                  </div>
-                  <div className="flex flex-col items-center rounded-md bg-primary/5 p-4">
-                    <Brain className="h-8 w-8 text-primary mb-2" />
-                    <h3 className="font-medium text-secondary">Analyze</h3>
-                  </div>
-                  <div className="flex flex-col items-center rounded-md bg-primary/5 p-4">
-                    <Share2 className="h-8 w-8 text-primary mb-2" />
-                    <h3 className="font-medium text-secondary">Share</h3>
-                  </div>
-                  <div className="flex flex-col items-center rounded-md bg-primary/5 p-4">
-                    <svg className="h-8 w-8 text-primary mb-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 4L12 20M12 4L8 8M12 4L16 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <h3 className="font-medium text-secondary">Publish</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
     </div>
   );
 };

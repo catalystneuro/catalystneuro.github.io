@@ -22,6 +22,7 @@ export const NeuralNetworkBackground = () => {
   const animationRef = useRef<number>();
   const neuronsRef = useRef<Neuron[]>([]);
   const pulsesRef = useRef<Pulse[]>([]);
+  const lastTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -71,14 +72,23 @@ export const NeuralNetworkBackground = () => {
       
       neuronsRef.current = neurons;
       pulsesRef.current = [];
+      lastTimeRef.current = 0;
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
     // Animation loop
-    const animate = () => {
+    const animate = (timestamp: number) => {
       if (!canvas || !ctx) return;
+
+      // Calculate delta time and cap it to prevent large jumps when tab is backgrounded
+      const deltaTime = lastTimeRef.current ? timestamp - lastTimeRef.current : 16.67;
+      const cappedDelta = Math.min(deltaTime, 50); // Cap at 50ms to prevent speedup
+      lastTimeRef.current = timestamp;
+
+      // Normalize to 60fps (16.67ms per frame)
+      const timeScale = cappedDelta / 16.67;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -88,9 +98,9 @@ export const NeuralNetworkBackground = () => {
 
       // Update neurons
       neurons.forEach((neuron) => {
-        neuron.x += neuron.vx;
-        neuron.y += neuron.vy;
-        neuron.pulsePhase += 0.02;
+        neuron.x += neuron.vx * timeScale;
+        neuron.y += neuron.vy * timeScale;
+        neuron.pulsePhase += 0.02 * timeScale;
 
         // Bounce off edges
         if (neuron.x < 0 || neuron.x > canvas.width) neuron.vx *= -1;
@@ -159,7 +169,7 @@ export const NeuralNetworkBackground = () => {
       // Update and draw pulses
       for (let i = pulses.length - 1; i >= 0; i--) {
         const pulse = pulses[i];
-        pulse.progress += pulse.speed;
+        pulse.progress += pulse.speed * timeScale;
         
         if (pulse.progress >= 1) {
           // Pulse reached destination - maybe trigger cascading pulse

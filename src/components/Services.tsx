@@ -19,9 +19,9 @@ const ServiceCard = ({
   features?: string[];
   showLink?: boolean;
 }) => (
-  <Card data-testid="service-card" className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm bg-white/80 border-primary/10">
+  <Card data-testid="service-card" className="group hover:shadow-md transition-shadow duration-300 bg-white border-gray-200">
     <CardHeader>
-      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
         <Icon className="w-6 h-6 text-primary" />
       </div>
       <CardTitle className="text-2xl text-secondary">{title}</CardTitle>
@@ -50,12 +50,11 @@ const ServiceCard = ({
 
 export const Services = () => {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-white">
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary">Our Services</h2>
-          <div className="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
-          <p className="text-secondary/75 max-w-2xl mx-auto mt-5 text-lg">
+          <p className="text-secondary/75 max-w-2xl mx-auto mt-4 text-lg">
             CatalystNeuro has worked successfully with diverse scientific research groups in a variety of capacities. 
             All work we do with scientific research groups is open source, so our team can fit seamlessly with research 
             groups without worry of expensive licensing fees or vendor lock-in.
@@ -114,8 +113,8 @@ export const Services = () => {
               { icon: BarChart, label: "Data Analytics" },
               { icon: Share2, label: "Open Source" },
             ].map((item, index) => (
-              <div key={index} className="flex flex-col items-center text-center group backdrop-blur-sm bg-white/80 p-4 rounded-lg border border-primary/5 shadow-sm">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <div key={index} className="flex flex-col items-center text-center bg-white p-4 rounded-lg border border-gray-200">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
                   <item.icon className="w-6 h-6 text-primary" />
                 </div>
                 <span className="text-sm font-medium">{item.label}</span>

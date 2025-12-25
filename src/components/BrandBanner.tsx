@@ -16,37 +16,20 @@ export const BrandBanner = () => {
   ];
 
   return (
-    <section className="py-12 bg-white">
-      <h2 className="text-2xl font-semibold text-center text-gray-600 mb-8">Trusted By Leading Institutions</h2>
-      <div className="relative overflow-hidden">
-        <div data-testid="left-gradient" className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
-        <div data-testid="right-gradient" className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
-        <div className="flex animate-scroll gap-12 whitespace-nowrap px-12">
-          {/* First set of logos */}
+    <section className="py-16 bg-gray-50">
+      <div className="container max-w-5xl">
+        <h2 className="text-sm font-medium text-secondary/60 uppercase tracking-wider text-center mb-10">Our Partners</h2>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-8 items-center">
           {brands.map((brand, index) => (
-            <div 
-              key={`${brand.name}-${index}`} 
+            <div
+              key={`${brand.name}-${index}`}
               data-testid="logo-container"
-              className="w-40 h-20 flex-shrink-0 grayscale hover:grayscale-0 transition-all"
+              className="flex items-center justify-center h-16 grayscale hover:grayscale-0 transition-all duration-300"
             >
               <img
                 src={brand.logo}
                 alt={brand.name}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ))}
-          {/* Duplicate set for seamless loop */}
-          {brands.map((brand, index) => (
-            <div 
-              key={`${brand.name}-duplicate-${index}`} 
-              data-testid="logo-container"
-              className="w-40 h-20 flex-shrink-0 grayscale hover:grayscale-0 transition-all"
-            >
-              <img
-                src={brand.logo}
-                alt={brand.name}
-                className="w-full h-full object-contain"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
           ))}

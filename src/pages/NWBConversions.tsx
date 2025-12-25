@@ -163,7 +163,7 @@ const NWBConversions = () => {
       subtitle="We've collaborated with leading research institutions worldwide to advance neuroscience data standardization and analysis."
     >
       <div className="max-w-4xl mx-auto mb-8 space-y-4">
-        <div className="p-4 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm">
+        <div className="p-4 bg-white rounded-lg border border-gray-200">
           <div className="flex flex-col gap-4">
             <Input
               type="search"
@@ -361,7 +361,7 @@ const NWBConversions = () => {
               {items
                 .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
                 .map((item, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30 flex flex-col h-full">
+                <Card key={index} className="hover:shadow-md transition-shadow duration-300 bg-white border-gray-200 flex flex-col h-full">
                   <div className="absolute top-3 right-3">
                     <span className="text-xs text-secondary/65 bg-white/70 px-2 py-1 rounded-md">
                       {item.date}
