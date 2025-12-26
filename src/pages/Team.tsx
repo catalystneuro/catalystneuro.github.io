@@ -24,11 +24,11 @@ const Team = () => {
       title="Our Team"
       subtitle="Meet the skilled professionals behind CatalystNeuro's innovative solutions."
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentTeamMembers.map((member) => (
           <div 
             key={member.name}
-            className="backdrop-blur-sm bg-white/80 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow border border-primary/10 hover:border-primary/30"
+            className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300"
           >
             <div className="mb-4">
               <img 
@@ -103,12 +103,12 @@ const Team = () => {
 
       {previousTeamMembers.length > 0 && (
         <div className="mt-16">
-          <h2 className="text-3xl font-semibold mb-8 text-secondary">Previous Team Members</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <h2 className="text-3xl font-bold mb-8 text-secondary">Previous Team Members</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {previousTeamMembers.map((member) => (
               <div 
                 key={member.name}
-                className="backdrop-blur-sm bg-white/70 p-4 rounded-lg shadow hover:shadow-md transition-shadow border border-primary/5 hover:border-primary/20"
+                className="bg-white p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300"
               >
                 <h3 className="text-lg font-semibold mb-1 text-center text-secondary">{member.name}</h3>
                 <p className="text-primary/80 mb-2 text-center text-sm">{member.role}</p>

@@ -38,8 +38,7 @@ export const FeaturedIn = () => {
       <div className="container max-w-5xl">
         {/* Featured In Section */}
         <div className="text-center mb-10">
-          <h2 className="text-sm font-medium text-primary/70 uppercase tracking-wider">Featured In</h2>
-          <div className="w-16 h-1 bg-primary mx-auto mt-3 rounded-full"></div>
+          <h2 className="text-sm font-medium text-secondary/60 uppercase tracking-wider">Featured In</h2>
         </div>
         
         <div className="grid md:grid-cols-3 gap-6">
@@ -49,7 +48,7 @@ export const FeaturedIn = () => {
               href={article.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block p-6 rounded-xl border border-gray-200 hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-gray-50/50"
+              className="group block p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300 bg-white"
             >
               <div className="flex items-start justify-between mb-3">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">

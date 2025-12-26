@@ -18,22 +18,21 @@ const testimonials: Testimonial[] = [
 
 export const Testimonials = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-20 bg-gray-50">
       <div className="container max-w-5xl">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary">What Our Clients Say</h2>
-          <div className="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
         </div>
         
         <div className="relative">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="relative bg-white rounded-2xl shadow-lg p-8 md:p-12 border border-primary/10"
+              className="relative bg-white rounded-lg shadow-sm p-8 md:p-12 border border-gray-200"
             >
               {/* Decorative quote marks */}
-              <Quote className="absolute top-6 left-6 h-12 w-12 text-primary/10" />
-              <Quote className="absolute bottom-6 right-6 h-12 w-12 text-primary/10 rotate-180" />
+              <Quote className="absolute top-6 left-6 h-8 w-8 text-primary/20" />
+              <Quote className="absolute bottom-6 right-6 h-8 w-8 text-primary/20 rotate-180" />
               
               <div className="relative z-10">
                 <blockquote className="text-lg md:text-xl text-secondary/85 leading-relaxed italic text-center mb-8">
@@ -41,7 +40,6 @@ export const Testimonials = () => {
                 </blockquote>
                 
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-1 bg-primary/30 rounded-full mb-4"></div>
                   <div className="text-center">
                     <p className="font-semibold text-secondary text-lg">{testimonial.name}</p>
                     <p className="text-secondary/70">{testimonial.title}</p>

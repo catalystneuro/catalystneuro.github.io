@@ -8,6 +8,7 @@ export interface BlogPost {
   gallery?: string[];
   readTime: string;
   keywords: string[];
+  author?: string;
 }
 
 // Process content to handle inline galleries
@@ -102,6 +103,7 @@ export const loadMarkdownFiles = () => {
             readTime: data.readTime || '',
             keywords: data.keywords || [],
             gallery: data.gallery || [],
+            author: data.author || undefined,
             slug,
             content: processContent(mdContent),
           } as BlogPost;

@@ -30,7 +30,7 @@ export const BlogPost = () => {
   return (
     <PageLayout
       title={post.title}
-      subtitle={`Published on ${post.date} • ${post.readTime}`}
+      subtitle={`Published on ${post.date} • ${post.readTime}${post.author ? ` • By ${post.author}` : ''}`}
     >
       <article className="prose prose-lg max-w-4xl mx-auto backdrop-blur-sm bg-white/80 p-8 rounded-2xl shadow-sm border border-primary/10">
         <img

@@ -18,6 +18,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
       textColor: {
         DEFAULT: "#101642",
       },
@@ -56,7 +59,7 @@ export default {
           900: "#080A1F",
         },
         accent: {
-          DEFAULT: "#3F8CCA", // A slightly lighter blue that complements primary
+          DEFAULT: "#3F8CCA",
           foreground: "#ffffff",
         },
         destructive: {

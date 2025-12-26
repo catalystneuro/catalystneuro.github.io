@@ -6,19 +6,16 @@ export const LatestPosts = () => {
   const latestPosts = blogPosts.slice(0, 3);
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-gradient-start to-gradient-end relative">
-      {/* Top section divider */}
-      <div className="absolute top-0 left-0 w-full h-8 bg-gradient-to-b from-white to-transparent"></div>
+    <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="mb-10 md:mb-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary">Latest News & Events</h2>
-          <div className="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
-          <p className="text-secondary/75 max-w-2xl mx-auto mt-5 text-lg">Stay updated with our latest developments, research breakthroughs, and community events</p>
+          <p className="text-secondary/75 max-w-2xl mx-auto mt-4 text-lg">Stay updated with our latest developments, research breakthroughs, and community events</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {latestPosts.map((post) => (
             <Link to={`/blog/${post.slug}`} key={post.slug} className="block group">
-              <Card className="h-full transition-all duration-300 border border-transparent bg-white shadow-sm group-hover:shadow-lg group-hover:border-primary/10 overflow-hidden">
+              <Card className="h-full transition-shadow duration-300 border border-gray-200 bg-white group-hover:shadow-md overflow-hidden">
                 <div className="relative overflow-hidden">
                   <img
                     src={post.image}
@@ -71,21 +68,6 @@ export const LatestPosts = () => {
         </div>
       </div>
       
-      {/* Bottom section divider */}
-      <div className="absolute bottom-0 left-0 w-full h-8 bg-gradient-to-t from-white to-transparent"></div>
-      
-      {/* Subtle wave pattern at top and bottom */}
-      <div className="absolute top-0 left-0 w-full">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 48" fill="none" preserveAspectRatio="none" className="w-full h-6 text-white/50">
-          <path d="M0 48L60 42.6667C120 37.3333 240 26.6667 360 21.3333C480 16 600 16 720 18.6667C840 21.3333 960 26.6667 1080 32C1200 37.3333 1320 42.6667 1380 45.3333L1440 48V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V48Z" fill="currentColor" fillOpacity="0.1"/>
-        </svg>
-      </div>
-      
-      <div className="absolute bottom-0 left-0 w-full rotate-180">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 48" fill="none" preserveAspectRatio="none" className="w-full h-6 text-white/50">
-          <path d="M0 48L60 42.6667C120 37.3333 240 26.6667 360 21.3333C480 16 600 16 720 18.6667C840 21.3333 960 26.6667 1080 32C1200 37.3333 1320 42.6667 1380 45.3333L1440 48V0H1380C1320 0 1200 0 1080 0C960 0 840 0 720 0C600 0 480 0 360 0C240 0 120 0 60 0H0V48Z" fill="currentColor" fillOpacity="0.1"/>
-        </svg>
-      </div>
     </section>
   );
 };
