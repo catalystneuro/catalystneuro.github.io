@@ -22,13 +22,6 @@ const articles: Article[] = [
     url: "https://www.thetransmitter.org/craft-and-careers/should-neuroscientists-vibe-code/",
     author: "Benjamin Dichter",
     description: "Exploring the role of AI in scientific programming"
-  },
-  {
-    title: "Neurophysiology data sharing system faces funding cliff",
-    publication: "The Transmitter",
-    url: "https://www.thetransmitter.org/community/neurophysiology-data-sharing-system-faces-funding-cliff/",
-    author: "Quoted: Benjamin Dichter",
-    description: "The future of open neuroscience data infrastructure"
   }
 ];
 
