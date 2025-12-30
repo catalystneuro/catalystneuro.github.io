@@ -6,6 +6,7 @@ import { FeaturedIn } from "@/components/FeaturedIn";
 import { LatestPosts } from "@/components/LatestPosts";
 import { Contact } from "@/components/Contact";
 import { BrandBanner } from "@/components/BrandBanner";
+import { InstitutionsBanner } from "@/components/InstitutionsBanner";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <WhyUs />
       <Services />
       <BrandBanner />
+      <InstitutionsBanner />
       <FeaturedIn />
       <Testimonials />
       <LatestPosts />

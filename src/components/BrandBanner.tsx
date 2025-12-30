@@ -1,7 +1,7 @@
 import nihLogo from "/images/sponsors/nih_logo.png";
 import allenLogo from "/images/sponsors/allen_institute_logo.jpeg";
 import kavliLogo from "/images/sponsors/kavli_foundation_logo.png";
-import mjffLogo from "/images/sponsors/MJFF_logo.jpg";
+import mjffLogo from "/images/sponsors/MJFF_logo.png";
 import simonsLogo from "/images/sponsors/simons_foundation_logo.avif";
 import mitLogo from "/images/sponsors/MIT_logo.png";
 
