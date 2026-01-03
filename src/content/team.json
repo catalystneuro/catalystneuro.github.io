@@ -38,10 +38,10 @@
       "github": "https://github.com/h-mayorquin"
     },
     {
-      "name": "Paul Adkisson",
+      "name": "Paul Adkisson-Floro",
       "isActive": true,
       "role": "Research Software Engineer",
-      "description": "Paul Adkisson holds a B.S. in Neuroscience from UCLA and an M.S.E. in Biomedical Engineering from Johns Hopkins, where he researched electrical stimulation effects on neuronal networks. At CatalystNeuro, he specializes in Python development and data standardization for neuroscience research. He helps labs convert data to NWB and share it on DANDI, making research more accessible worldwide. Outside work, Paul enjoys rock climbing and backpacking.",
+      "description": "Paul Adkisson-Floro holds a B.S. in Neuroscience from UCLA and an M.S.E. in Biomedical Engineering from Johns Hopkins, where he researched electrical stimulation effects on neuronal networks. At CatalystNeuro, he specializes in Python development and data standardization for neuroscience research. He helps labs convert data to NWB and share it on DANDI, making research more accessible worldwide. Outside work, Paul enjoys rock climbing and backpacking.",
       "image": "/images/team/paul_adkisson.jpg",
       "github": "https://github.com/pauladkisson"
     },
