@@ -1,12 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NeuralNetworkBackground } from "./NeuralNetworkBackground";
 
 export const Hero = () => {
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-primary/10 to-transparent py-20 sm:py-32">
-      {/* Neural Network Animation Background */}
-      <NeuralNetworkBackground />
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage: "url('/images/stock/neuron-microscopy.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
       
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="relative z-10 max-w-3xl">

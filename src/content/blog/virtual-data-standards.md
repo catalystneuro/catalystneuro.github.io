@@ -2,7 +2,7 @@
 title: "Virtual Data Standards: A New Path Forward for Scientific Data"
 date: "2025-12-19"
 description: "Scientific data standardization is at a crossroads. This article presents virtual datasets as a third way to make data accessible across programming languages and computing environments while preserving original files."
-image: "/images/blog/virtual-data-standards-banner.png"
+image: "/images/blog/virtual-data-standards-new.jpg"
 readTime: "15 min read"
 author: "Benjamin Dichter"
 keywords: ["NWB", "Zarr", "data standardization", "virtual datasets", "Kerchunk", "LINDI", "neurophysiology", "cloud computing"]

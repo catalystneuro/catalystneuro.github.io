@@ -2,15 +2,16 @@ import { Calendar, Brain, FileCode, Database, Cloud, Users, BarChart, Book, Shar
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-const ServiceCard = ({ 
-  title, 
-  description, 
-  icon: Icon, 
-  buttonText, 
+const ServiceCard = ({
+  title,
+  description,
+  icon: Icon,
+  buttonText,
   buttonLink,
   features = [],
-  showLink = false
-}: { 
+  showLink = false,
+  image
+}: {
   title: string;
   description: string;
   icon: any;
@@ -18,8 +19,18 @@ const ServiceCard = ({
   buttonLink: string;
   features?: string[];
   showLink?: boolean;
+  image?: string;
 }) => (
-  <Card data-testid="service-card" className="group hover:shadow-md transition-shadow duration-300 bg-white border-gray-200">
+  <Card data-testid="service-card" className="group hover:shadow-md transition-shadow duration-300 bg-white border-gray-200 overflow-hidden">
+    {image && (
+      <div className="h-40 overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+    )}
     <CardHeader>
       <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
         <Icon className="w-6 h-6 text-primary" />
@@ -50,8 +61,17 @@ const ServiceCard = ({
 
 export const Services = () => {
   return (
-    <section className="py-20 bg-white">
-      <div className="container">
+    <section className="py-20 bg-white relative">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage: "url('/images/stock/circuit-board.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div className="container relative z-10">
         <div className="max-w-2xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary">Our Services</h2>
           <p className="text-secondary/75 max-w-2xl mx-auto mt-4 text-lg">
@@ -69,6 +89,7 @@ export const Services = () => {
             buttonText="View Our Work"
             buttonLink="/nwb-conversions"
             showLink={true}
+            image="/images/stock/global-network.jpg"
             features={[
               "Open source conversion pipeline",
               "Compliance with government and foundation funders",
@@ -84,6 +105,7 @@ export const Services = () => {
             buttonText="View Our Work"
             buttonLink="/analysis-software"
             showLink={true}
+            image="/images/stock/software-engineering.jpg"
             features={[
               "Professionalize software through packaging, testing, and documentation",
               "Create reproducible workflows for data processing and analysis"
@@ -96,6 +118,7 @@ export const Services = () => {
             icon={Brain}
             buttonText="Get Started"
             buttonLink="/contact"
+            image="/images/stock/server-data.jpg"
             features={[
               "Develop agents to automate processing steps",
               "Data curation for building neural foundation models",
