@@ -57,10 +57,16 @@ function loadMarkdownFiles(directory: string) {
   const files = import.meta.glob('../content/**/*.md', { as: 'raw', eager: true });
   return Object.entries(files)
     .filter(([path]) => path.includes(`/${directory}/`))
-    .map(([_, content]) => {
-      const { attributes } = frontMatter(content);
-      return attributes as any;
-    });
+    .map(([path, content]) => {
+      try {
+        const { attributes } = frontMatter(content);
+        return attributes as any;
+      } catch (error) {
+        console.error(`Error parsing frontmatter in ${path}:`, error instanceof Error ? error.message : error);
+        return null;
+      }
+    })
+    .filter((item) => item !== null);
 }
 
 export const loadSoftware = (): SoftwareItem[] => {
@@ -84,27 +90,38 @@ export const loadAbout = (): AboutContent => {
   if (!aboutPath || !files[aboutPath]) {
     return { title: '', body: '' };
   }
-  const { attributes, body } = frontMatter<{ title: string }>(files[aboutPath]);
-  return { title: attributes.title, body: body.trim() };
+  try {
+    const { attributes, body } = frontMatter<{ title: string }>(files[aboutPath]);
+    return { title: attributes.title, body: body.trim() };
+  } catch (error) {
+    console.error(`Error parsing frontmatter in ${aboutPath}:`, error instanceof Error ? error.message : error);
+    return { title: '', body: '' };
+  }
 };
 
 export const fundedProjects = (() => {
   const files = import.meta.glob('../content/**/*.md', { as: 'raw', eager: true });
   const projects = Object.entries(files)
     .filter(([path]) => path.includes('/funded-projects/'))
-    .map(([_, content]) => {
-      const { attributes, body } = frontMatter<FundedProject>(content);
-      return {
-        title: attributes.title,
-        funder: attributes.funder,
-        status: attributes.status,
-        startDate: attributes.startDate,
-        description: attributes.description,
-        image: attributes.image,
-        body: body.trim(),
-        github: attributes.github,
-      };
+    .map(([path, content]) => {
+      try {
+        const { attributes, body } = frontMatter<FundedProject>(content);
+        return {
+          title: attributes.title,
+          funder: attributes.funder,
+          status: attributes.status,
+          startDate: attributes.startDate,
+          description: attributes.description,
+          image: attributes.image,
+          body: body.trim(),
+          github: attributes.github,
+        };
+      } catch (error) {
+        console.error(`Error parsing frontmatter in ${path}:`, error instanceof Error ? error.message : error);
+        return null;
+      }
     })
+    .filter((item): item is FundedProject => item !== null)
     .sort((a, b) => {
       // Convert dates to strings and handle undefined values
       const dateA = String(a.startDate || '');
