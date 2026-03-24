@@ -1,7 +1,7 @@
 ---
 title: "Neurodata Without Borders NIH Grant"
 funder: "National Institutes of Health"
-status: "active"
+status: "completed"
 startDate: "2022-01-01"
 description: "Development and maintenance of the Neurodata Without Borders (NWB) ecosystem"
 image: "/images/funded-projects/nwb_logo.png"
