@@ -4,25 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import { fundedProjects, portfolio } from "@/utils/contentLoader";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
+import { Head } from "vite-react-ssg";
 
 const FundedProject = () => {
-  const [project, setProject] = useState<any>(null);
-  const [affiliatedConversions, setAffiliatedConversions] = useState<any[]>([]);
+  const { project: projectId } = useParams();
 
-  useEffect(() => {
-    // Get project ID from URL path
-    const path = window.location.pathname;
-    const projectId = path.split('/').pop();
+  const project = useMemo(
+    () => fundedProjects.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === projectId),
+    [projectId]
+  );
 
-    // Get project data from pre-loaded projects
-    const currentProject = fundedProjects.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === projectId);
-    setProject(currentProject);
-
-    // Get affiliated NWB conversions from pre-loaded portfolio
-    const conversions = portfolio;
-    const affiliated = conversions.filter(conv => {
-      const projectTitle = currentProject?.title;
+  const affiliatedConversions = useMemo(() => {
+    if (!project) return [];
+    const projectTitle = project.title;
+    return portfolio.filter(conv => {
       if (projectTitle === "ASAP NWB Adoption") {
         return conv.funded_project === "Michael J. Fox ASAP";
       }
@@ -37,8 +34,7 @@ const FundedProject = () => {
       }
       return conv.funded_project === projectTitle;
     });
-    setAffiliatedConversions(affiliated);
-  }, []);
+  }, [project]);
 
   if (!project) {
     return <div>Loading...</div>;
@@ -59,6 +55,10 @@ const FundedProject = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
+      <Head>
+        <title>{`${project.title} — CatalystNeuro`}</title>
+        <meta name="description" content={project.description} />
+      </Head>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <Card className="mb-8">

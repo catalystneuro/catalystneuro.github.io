@@ -35,6 +35,13 @@ export default defineConfig(({ mode }) => ({
     }
   },
   assetsInclude: ["**/*.md"],
+  ssgOptions: {
+    entry: "src/main.tsx",
+    // Emit /route/index.html (matches the prior layout and the SPA redirects).
+    dirStyle: "nested",
+    // Concrete paths for dynamic routes come from each route's getStaticPaths().
+    includeAllRoutes: false,
+  },
   build: {
     assetsDir: 'assets',
     copyPublicDir: true,
