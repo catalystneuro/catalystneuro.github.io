@@ -18,25 +18,30 @@ export const Navigation = () => {
   };
 
   const menuItems = [
-    { label: "About", path: "/about" },
-    { label: "Team", path: "/team" },
+    {
+      label: "About",
+      items: [
+        { label: "About", path: "/about" },
+        { label: "Team", path: "/team" },
+        { label: "Openings", path: "/openings" },
+      ],
+    },
     {
       label: "Software",
       items: [
         { label: "NWB Software", path: "/nwb-software" },
         { label: "Analysis Software", path: "/analysis-software" },
-        { label: "NWB Conversions", path: "/nwb-conversions" },
       ],
     },
     {
       label: "Portfolio",
       items: [
+        { label: "NWB Conversions", path: "/nwb-conversions" },
         { label: "Funded Projects", path: "/funded-projects" },
         { label: "Publications", path: "/publications" },
       ],
     },
     { label: "Blog", path: "/blog" },
-    { label: "Openings", path: "/openings" },
     { label: "Contact", path: "/contact" },
   ];
 
