@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import Seo from "@/components/Seo";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import frontMatter from "front-matter";
@@ -32,6 +33,7 @@ const Guide = () => {
 
   return (
     <div className="min-h-screen bg-background pt-16">
+      <Seo title={attributes.name} description={attributes.description} />
       <div className="container mx-auto px-4 py-8">
         <article className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-4">{attributes.name}</h1>

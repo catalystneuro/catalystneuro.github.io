@@ -7,6 +7,7 @@ import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import Seo from "@/components/Seo";
 import PageLayout from "@/components/PageLayout";
 
 export const BlogPost = () => {
@@ -32,6 +33,7 @@ export const BlogPost = () => {
       title={post.title}
       subtitle={`Published on ${post.date} • ${post.readTime}${post.author ? ` • By ${post.author}` : ''}`}
     >
+      <Seo title={post.title} description={post.description} image={post.image} type="article" />
       <article className="prose prose-lg max-w-4xl mx-auto backdrop-blur-sm bg-white/80 p-8 rounded-2xl shadow-sm border border-primary/10">
         <img
           src={post.image}

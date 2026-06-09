@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "generate-html": "node scripts/generate-html.js",
-    "build": "vite build && npm run generate-html",
-    "build:dev": "vite build --mode development",
+    "copy-assets": "node scripts/copy-assets.js",
+    "build": "vite-react-ssg build && npm run copy-assets",
+    "build:dev": "vite-react-ssg build --mode development && npm run copy-assets",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
@@ -71,6 +71,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.3",
+    "vite-react-ssg": "^0.9.1-beta.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
