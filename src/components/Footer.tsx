@@ -65,10 +65,18 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/20 pt-8">
+        <div className="mt-8 border-t border-white/20 pt-8 flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4">
           <p className="text-sm text-white/60 text-center">
             © {currentYear} CatalystNeuro. All rights reserved.
           </p>
+          <a
+            href="/catalystneuro-fcoi-policy.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-white/60 hover:text-white transition-colors"
+          >
+            FCOI Policy
+          </a>
         </div>
       </div>
     </footer>
