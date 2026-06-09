@@ -7,7 +7,7 @@ import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { Head } from "vite-react-ssg";
+import Seo from "@/components/Seo";
 import PageLayout from "@/components/PageLayout";
 
 export const BlogPost = () => {
@@ -33,18 +33,7 @@ export const BlogPost = () => {
       title={post.title}
       subtitle={`Published on ${post.date} • ${post.readTime}${post.author ? ` • By ${post.author}` : ''}`}
     >
-      <Head>
-        <title>{`${post.title} — CatalystNeuro`}</title>
-        <meta name="description" content={post.description} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
-        {post.image && <meta property="og:image" content={post.image} />}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.description} />
-        {post.image && <meta name="twitter:image" content={post.image} />}
-      </Head>
+      <Seo title={post.title} description={post.description} image={post.image} type="article" />
       <article className="prose prose-lg max-w-4xl mx-auto backdrop-blur-sm bg-white/80 p-8 rounded-2xl shadow-sm border border-primary/10">
         <img
           src={post.image}

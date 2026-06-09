@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Head } from "vite-react-ssg";
+import Seo from "@/components/Seo";
 import { loadOpenings } from "@/utils/contentLoader";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
@@ -15,10 +15,7 @@ const JobPosition = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end">
-      <Head>
-        <title>{`${position.title} — CatalystNeuro`}</title>
-        <meta name="description" content={position.description} />
-      </Head>
+      <Seo title={position.title} description={position.description} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           <img

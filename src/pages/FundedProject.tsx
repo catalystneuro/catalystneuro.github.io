@@ -6,7 +6,7 @@ import { fundedProjects, portfolio } from "@/utils/contentLoader";
 import { format } from "date-fns";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { Head } from "vite-react-ssg";
+import Seo from "@/components/Seo";
 
 const FundedProject = () => {
   const { project: projectId } = useParams();
@@ -55,10 +55,7 @@ const FundedProject = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end pt-16">
-      <Head>
-        <title>{`${project.title} — CatalystNeuro`}</title>
-        <meta name="description" content={project.description} />
-      </Head>
+      <Seo title={project.title} description={project.description} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <Card className="mb-8">
