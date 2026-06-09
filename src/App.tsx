@@ -2,9 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+import { Outlet, useMatches } from "react-router-dom";
+import type { RouteRecord } from "vite-react-ssg";
 import { Navigation } from "./components/Navigation";
 import Footer from "./components/Footer";
+import Seo from "./components/Seo";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Blog from "./pages/Blog";
@@ -23,44 +25,117 @@ import Contact from "./pages/Contact";
 import Guide from "./pages/Guide";
 import Consultation from "./pages/Consultation";
 import NotFound from "./pages/NotFound";
+import { blogPosts } from "./utils/blogLoader";
+import { fundedProjects, loadOpenings } from "./utils/contentLoader";
 
 const queryClient = new QueryClient();
 
-const App = () => {
+interface RouteMeta {
+  title?: string;
+  description?: string;
+}
+
+const Layout = () => {
+  const matches = useMatches();
+  const meta = [...matches]
+    .reverse()
+    .map((m) => m.handle as RouteMeta | undefined)
+    .find((h) => h && (h.title || h.description));
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <div className="min-h-screen flex flex-col">
-            <Navigation />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/nwb-conversions" element={<NWBConversions />} />
-                <Route path="/nwb-software" element={<NWBSoftware />} />
-                <Route path="/analysis-software" element={<AnalysisSoftware />} />
-                <Route path="/openings" element={<Openings />} />
-                <Route path="/openings/:position" element={<JobPosition />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/funded-projects" element={<FundedProjects />} />
-                <Route path="/funded-projects/:project" element={<FundedProject />} />
-                <Route path="/publications" element={<Publications />} />
-                <Route path="/success" element={<Success />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/guides/:id" element={<Guide />} />
-                <Route path="/consultation" element={<Consultation />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </TooltipProvider>
+        <Seo title={meta?.title} description={meta?.description} />
+        <Toaster />
+        <Sonner />
+        <div className="min-h-screen flex flex-col">
+          <Navigation />
+          <main className="flex-grow">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 };
 
-export default App;
+// Guide slugs are derived from the software content filenames.
+const guideSlugs = Object.keys(
+  import.meta.glob("./content/software/*.md")
+).map((path) => path.split("/").pop()!.replace(/\.md$/, ""));
+
+const projectSlug = (title: string) =>
+  title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+export const routes: RouteRecord[] = [
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Index /> },
+      { path: "team", element: <Team />, handle: { title: "Team" } },
+      { path: "blog", element: <Blog />, handle: { title: "Blog" } },
+      {
+        path: "blog/:slug",
+        element: <BlogPost />,
+        getStaticPaths: () => blogPosts.map((p) => `/blog/${p.slug}`),
+      },
+      {
+        path: "nwb-conversions",
+        element: <NWBConversions />,
+        handle: { title: "NWB Conversions" },
+      },
+      {
+        path: "nwb-software",
+        element: <NWBSoftware />,
+        handle: { title: "NWB Software" },
+      },
+      {
+        path: "analysis-software",
+        element: <AnalysisSoftware />,
+        handle: { title: "Analysis Software" },
+      },
+      { path: "openings", element: <Openings />, handle: { title: "Openings" } },
+      {
+        path: "openings/:position",
+        element: <JobPosition />,
+        getStaticPaths: () => loadOpenings().map((o) => `/openings/${o.id}`),
+      },
+      { path: "about", element: <About />, handle: { title: "About" } },
+      {
+        path: "funded-projects",
+        element: <FundedProjects />,
+        handle: { title: "Funded Projects" },
+      },
+      {
+        path: "funded-projects/:project",
+        element: <FundedProject />,
+        getStaticPaths: () =>
+          fundedProjects.map((p) => `/funded-projects/${projectSlug(p.title)}`),
+      },
+      {
+        path: "publications",
+        element: <Publications />,
+        handle: { title: "Publications" },
+      },
+      { path: "success", element: <Success /> },
+      { path: "contact", element: <Contact />, handle: { title: "Contact" } },
+      {
+        path: "guides/:id",
+        element: <Guide />,
+        getStaticPaths: () => guideSlugs.map((slug) => `/guides/${slug}`),
+      },
+      {
+        path: "consultation",
+        element: <Consultation />,
+        handle: { title: "Request a Consultation" },
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+        handle: { title: "Page Not Found" },
+      },
+    ],
+  },
+];
