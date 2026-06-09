@@ -13,22 +13,11 @@ describe('Contact', () => {
     vi.stubEnv('DEV', true) // Enable development mode for testing handleSubmit
   })
 
-  it('renders contact information correctly', () => {
-    render(<Contact />)
-    
-    expect(screen.getByText('Get in Touch')).toBeInTheDocument()
-    expect(screen.getByText('Email us at:')).toBeInTheDocument()
-    
-    const emailLink = screen.getByText('info@catalystneuro.com')
-    expect(emailLink).toHaveAttribute('href', 'mailto:info@catalystneuro.com')
-    expect(emailLink).toHaveAttribute('target', '_blank')
-    expect(emailLink).toHaveAttribute('rel', 'noopener noreferrer')
-  })
-
   it('renders newsletter subscription form', () => {
     render(<Contact />)
-    
-    expect(screen.getByText('Stay Updated with Our Newsletter')).toBeInTheDocument()
+
+    expect(screen.getByText('Stay Updated')).toBeInTheDocument()
+    expect(screen.getByText('Subscribe to our newsletter for the latest news and updates.')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Enter your email')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Subscribe' })).toBeInTheDocument()
   })
