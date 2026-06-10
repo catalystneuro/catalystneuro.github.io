@@ -31,6 +31,7 @@ export const Navigation = () => {
       items: [
         { label: "NWB Software", path: "/nwb-software" },
         { label: "Analysis Software", path: "/analysis-software" },
+        { label: "Guides", path: "/guides" },
       ],
     },
     {

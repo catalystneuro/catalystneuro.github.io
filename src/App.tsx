@@ -23,6 +23,7 @@ import FundedProject from "./pages/FundedProject";
 import Publications from "./pages/Publications";
 import Contact from "./pages/Contact";
 import Guide from "./pages/Guide";
+import Guides from "./pages/Guides";
 import Consultation from "./pages/Consultation";
 import NotFound from "./pages/NotFound";
 import { blogPosts } from "./utils/blogLoader";
@@ -121,6 +122,11 @@ export const routes: RouteRecord[] = [
       },
       { path: "success", element: <Success /> },
       { path: "contact", element: <Contact />, handle: { title: "Contact" } },
+      {
+        path: "guides",
+        element: <Guides />,
+        handle: { title: "Documentation & Guides" },
+      },
       {
         path: "guides/:id",
         element: <Guide />,
