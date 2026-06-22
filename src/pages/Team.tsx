@@ -125,9 +125,9 @@ const Team = () => {
                 <h3 className="text-lg font-semibold mb-1 text-center text-secondary">{member.name}</h3>
                 <p className="text-primary/80 mb-2 text-center text-sm">{member.role}</p>
                 <p className="text-secondary/75 mb-3 text-sm">{member.description}</p>
-                {member.github && (
-                  <div className="flex justify-center">
-                    <a 
+                <div className="flex justify-center space-x-3">
+                  {member.github && (
+                    <a
                       href={member.github}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -136,8 +136,19 @@ const Team = () => {
                     >
                       <Github size={18} />
                     </a>
-                  </div>
-                )}
+                  )}
+                  {(member as any).orcid && (
+                    <a
+                      href={(member as any).orcid}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-secondary/65 hover:text-primary transition-colors"
+                      title="ORCID"
+                    >
+                      <OrcidIcon size={18} />
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>

@@ -81,14 +81,16 @@
       "isActive": false,
       "role": "Former Neurodata Scientist",
       "description": "Cody Baker was the lead developer of NeuroConv and NWB Inspector. He led several lab engagements, building custom conversion pipelines for leading labs using state-of-the-art data acquisition equipment.",
-      "github": "https://github.com/CodyCBakerPhD"
+      "github": "https://github.com/CodyCBakerPhD",
+      "orcid": "https://orcid.org/0000-0002-0829-4790"
     },
     {
       "name": "Julia Sprenger, Ph.D.",
       "isActive": false,
       "role": "Former Research Software Engineer",
       "description": "Julia Sprenger specialized in building efficient, universal API support for diverse electrophysiology data formats using python-neo.",
-      "github": "https://github.com/juliasprenger"
+      "github": "https://github.com/juliasprenger",
+      "orcid": "https://orcid.org/0000-0002-9986-7477"
     },
     {
       "name": "Vincent Provosto",
@@ -102,21 +104,24 @@
       "isActive": false,
       "role": "Former Software Engineer",
       "description": "Garrett Flynn was the lead developer of the NWB GUIDE project at CatalystNeuro.",
-      "github": "https://github.com/garrettmflynn"
+      "github": "https://github.com/garrettmflynn",
+      "orcid": "https://orcid.org/0000-0002-7996-8713"
     },
     {
       "name": "Felix Pei",
       "isActive": false,
       "role": "Former Research Software Engineer",
       "description": "Felix Pei contributed to CatalystNeuro's data standardization and conversion tools.",
-      "github": "https://github.com/fpei-ibm"
+      "github": "https://github.com/fpei-ibm",
+      "orcid": "https://orcid.org/0009-0001-3193-5541"
     },
     {
       "name": "Saksham Sharda",
       "isActive": false,
       "role": "Former Research Software Engineer",
       "description": "Saksham Sharda led several lab engagements to build custom NWB conversion pipelines.",
-      "github": "https://github.com/Saksham20"
+      "github": "https://github.com/Saksham20",
+      "orcid": "https://orcid.org/0000-0001-7663-1755"
     }
   ]
 }
