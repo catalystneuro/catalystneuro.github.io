@@ -93,8 +93,13 @@ Manual deployment can be triggered through the Netlify dashboard or CLI.
 
 ### Environment Variables
 
-Required environment variables for deployment:
-- `NETLIFY_ACCESS_TOKEN` - For Netlify API access
+All environment variables are optional. Set them in the Netlify dashboard
+(Site settings → Environment variables) for production, or in a local `.env`
+file for development (see `.env.example`):
+
+- `VITE_GA_MEASUREMENT_ID` - Google Analytics 4 Measurement ID (e.g. `G-XXXXXXXXXX`).
+  When unset, no analytics script is loaded, so local dev and deploy previews
+  stay untracked.
 
 ## Contributing
 

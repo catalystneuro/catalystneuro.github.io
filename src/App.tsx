@@ -7,6 +7,7 @@ import type { RouteRecord } from "vite-react-ssg";
 import { Navigation } from "./components/Navigation";
 import Footer from "./components/Footer";
 import Seo from "./components/Seo";
+import Analytics from "./components/Analytics";
 import Index from "./pages/Index";
 import Team from "./pages/Team";
 import Blog from "./pages/Blog";
@@ -47,6 +48,7 @@ const Layout = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Seo title={meta?.title} description={meta?.description} />
+        <Analytics />
         <Toaster />
         <Sonner />
         <div className="min-h-screen flex flex-col">
