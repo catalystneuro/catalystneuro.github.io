@@ -53,6 +53,8 @@ const Blog = () => {
               <img
                 src={post.image}
                 alt={post.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-48 object-cover rounded-t-lg"
               />
               <CardHeader className="flex-none">

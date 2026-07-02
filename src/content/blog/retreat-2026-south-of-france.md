@@ -2,7 +2,7 @@
 title: "The 2026 CatalystNeuro Retreat, South of France"
 date: "2026-06-18"
 description: "Once a year the distributed CatalystNeuro team gets into the same building. This spring that building was a villa in the hills above Nice, for a week of team-led talks, Côte d'Azur evenings, and the unstructured time that turns coworkers into a team."
-image: "/images/retreat-2026/villa/group-villa-steps.jpg"
+image: "/images/retreat-2026/villa/group-villa-steps.webp"
 readTime: "4 min read"
 keywords: ["CatalystNeuro", "company retreat", "South of France", "Nice", "team building", "open neuroscience", "NWB"]
 ---
