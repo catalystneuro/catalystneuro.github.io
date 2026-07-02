@@ -75,8 +75,24 @@ export const routes: RouteRecord[] = [
     element: <Layout />,
     children: [
       { index: true, element: <Index /> },
-      { path: "team", element: <Team />, handle: { title: "Team" } },
-      { path: "blog", element: <Blog />, handle: { title: "Blog" } },
+      {
+        path: "team",
+        element: <Team />,
+        handle: {
+          title: "Team",
+          description:
+            "Meet the CatalystNeuro team — neuroscientists and software engineers building open-source tools and data standards for neurophysiology research.",
+        },
+      },
+      {
+        path: "blog",
+        element: <Blog />,
+        handle: {
+          title: "Blog",
+          description:
+            "Insights, updates, and technical articles from the CatalystNeuro team on NWB, open neuroscience data, and reproducible research software.",
+        },
+      },
       {
         path: "blog/:slug",
         element: <BlogPost />,
@@ -85,29 +101,61 @@ export const routes: RouteRecord[] = [
       {
         path: "nwb-conversions",
         element: <NWBConversions />,
-        handle: { title: "NWB Conversions" },
+        handle: {
+          title: "NWB Conversions",
+          description:
+            "Explore CatalystNeuro's neurophysiology data conversions to Neurodata Without Borders (NWB), built in collaboration with leading research institutions worldwide.",
+        },
       },
       {
         path: "nwb-software",
         element: <NWBSoftware />,
-        handle: { title: "NWB Software" },
+        handle: {
+          title: "NWB Software",
+          description:
+            "Open-source tools from CatalystNeuro that make neurophysiology data management and standardization with Neurodata Without Borders accessible to all researchers.",
+        },
       },
       {
         path: "analysis-software",
         element: <AnalysisSoftware />,
-        handle: { title: "Analysis Software" },
+        handle: {
+          title: "Analysis Software",
+          description:
+            "Open-source neuroscience analysis packages CatalystNeuro develops and contributes to, including spike sorting, imaging, and behavior pipelines.",
+        },
       },
-      { path: "openings", element: <Openings />, handle: { title: "Openings" } },
+      {
+        path: "openings",
+        element: <Openings />,
+        handle: {
+          title: "Openings",
+          description:
+            "Join CatalystNeuro and help shape the future of neuroscience data management. See our open positions for software engineers and scientists.",
+        },
+      },
       {
         path: "openings/:position",
         element: <JobPosition />,
         getStaticPaths: () => loadOpenings().map((o) => `/openings/${o.id}`),
       },
-      { path: "about", element: <About />, handle: { title: "About" } },
+      {
+        path: "about",
+        element: <About />,
+        handle: {
+          title: "About",
+          description:
+            "CatalystNeuro's mission, vision, and approach to advancing neuroscience data standards through open-source software and expert engineering.",
+        },
+      },
       {
         path: "funded-projects",
         element: <FundedProjects />,
-        handle: { title: "Funded Projects" },
+        handle: {
+          title: "Funded Projects",
+          description:
+            "Grant-funded work at CatalystNeuro, supported by leading institutions committed to advancing neuroscience data standards and open-source tools.",
+        },
       },
       {
         path: "funded-projects/:project",
@@ -118,14 +166,30 @@ export const routes: RouteRecord[] = [
       {
         path: "publications",
         element: <Publications />,
-        handle: { title: "Publications" },
+        handle: {
+          title: "Publications",
+          description:
+            "Peer-reviewed research publications and scientific contributions from the CatalystNeuro team on neurophysiology data, NWB, and open science.",
+        },
       },
       { path: "success", element: <Success /> },
-      { path: "contact", element: <Contact />, handle: { title: "Contact" } },
+      {
+        path: "contact",
+        element: <Contact />,
+        handle: {
+          title: "Contact",
+          description:
+            "Get in touch with CatalystNeuro to discuss NWB conversions, data standardization, and open-source software for your neuroscience lab.",
+        },
+      },
       {
         path: "guides",
         element: <Guides />,
-        handle: { title: "Documentation & Guides" },
+        handle: {
+          title: "Documentation & Guides",
+          description:
+            "Step-by-step guides and reference documentation for working with CatalystNeuro tools and the Neurodata Without Borders (NWB) ecosystem.",
+        },
       },
       {
         path: "guides/:id",
@@ -135,7 +199,11 @@ export const routes: RouteRecord[] = [
       {
         path: "consultation",
         element: <Consultation />,
-        handle: { title: "Request a Consultation" },
+        handle: {
+          title: "Request a Consultation",
+          description:
+            "Book a time to discuss your neurophysiology data project with the CatalystNeuro team, from NWB conversion to custom analysis pipelines.",
+        },
       },
       {
         path: "*",
