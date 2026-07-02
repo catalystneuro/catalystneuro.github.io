@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen } from '../../test/utils'
+import { render, screen, waitFor } from '../../test/utils'
 import { BlogPost } from '../BlogPost'
 import * as router from 'react-router-dom'
 import * as blogLoader from '@/utils/blogLoader'
@@ -66,12 +66,16 @@ describe('BlogPost', () => {
     expect(screen.getByText('List item 2')).toBeInTheDocument()
   })
 
-  it('renders code blocks with syntax highlighting', () => {
+  it('renders code blocks with syntax highlighting', async () => {
     render(<BlogPost />)
-    
-    // Test code block
-    const codeBlock = screen.getByRole('code')
-    expect(codeBlock).toHaveClass('language-python')
+
+    // The syntax highlighter is lazy-loaded, so wait for its chunk to resolve
+    // and replace the plain <pre> fallback.
+    const codeBlock = await waitFor(() => {
+      const el = screen.getByRole('code')
+      expect(el).toHaveClass('language-python')
+      return el
+    })
     expect(codeBlock.textContent).toContain('print("Hello World!")')
   })
 
