@@ -4,6 +4,11 @@ import { BlogPost } from '../BlogPost'
 import * as router from 'react-router-dom'
 import * as blogLoader from '@/utils/blogLoader'
 import type { BlogPost as BlogPostType } from '@/utils/blogLoader'
+// Eagerly transform the lazily-imported syntax highlighter at collection time
+// so React.lazy resolves quickly during the (timed) code-block test instead of
+// paying the transform cost inside waitFor — otherwise CI's slower runner only
+// ever sees the Suspense fallback before the timeout.
+import '../CodeBlock'
 
 // Mock react-router-dom's useParams
 vi.mock('react-router-dom', async () => {
@@ -75,7 +80,7 @@ describe('BlogPost', () => {
       const el = screen.getByRole('code')
       expect(el).toHaveClass('language-python')
       return el
-    })
+    }, { timeout: 5000 })
     expect(codeBlock.textContent).toContain('print("Hello World!")')
   })
 
