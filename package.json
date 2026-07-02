@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "copy-assets": "node scripts/copy-assets.js",
-    "build": "vite-react-ssg build && npm run copy-assets",
-    "build:dev": "vite-react-ssg build --mode development && npm run copy-assets",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "build": "vite-react-ssg build && npm run copy-assets && npm run generate-sitemap",
+    "build:dev": "vite-react-ssg build --mode development && npm run copy-assets && npm run generate-sitemap",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
