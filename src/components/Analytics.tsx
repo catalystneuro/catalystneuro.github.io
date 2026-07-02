@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
-const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+// Built-in Measurement ID, overridable per environment via the env var.
+const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-FRC1ZQ1WCF";
+
+// Only report from the live site, so localhost and *.netlify.app deploy
+// previews never pollute analytics.
+const PRODUCTION_HOSTS = ["catalystneuro.com", "www.catalystneuro.com"];
 
 declare global {
   interface Window {
@@ -13,18 +18,17 @@ declare global {
 /**
  * Google Analytics 4 integration.
  *
- * No-ops unless VITE_GA_MEASUREMENT_ID is set at build time, so local dev and
- * deploy previews stay untracked. The gtag script is injected on mount (never
- * during SSR, since effects don't run there), and because this is a
- * single-page app we send a page_view on every route change — the base gtag
- * snippet only fires one on the initial load.
+ * The gtag script is injected on mount (never during SSR, since effects don't
+ * run there), and only on the production host. Because this is a single-page
+ * app we send a page_view on every route change — the base gtag snippet only
+ * fires once on the initial load.
  */
 const Analytics = () => {
   const { pathname, search } = useLocation();
   const initialized = useRef(false);
 
   useEffect(() => {
-    if (!GA_ID) return;
+    if (!GA_ID || !PRODUCTION_HOSTS.includes(window.location.hostname)) return;
 
     if (!initialized.current) {
       const script = document.createElement("script");

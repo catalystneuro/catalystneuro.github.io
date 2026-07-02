@@ -93,13 +93,14 @@ Manual deployment can be triggered through the Netlify dashboard or CLI.
 
 ### Environment Variables
 
-All environment variables are optional. Set them in the Netlify dashboard
-(Site settings → Environment variables) for production, or in a local `.env`
-file for development (see `.env.example`):
+Google Analytics 4 is built in (`src/components/Analytics.tsx`) and reports
+only from the live `catalystneuro.com` host, so local dev and Netlify deploy
+previews stay untracked automatically.
 
-- `VITE_GA_MEASUREMENT_ID` - Google Analytics 4 Measurement ID (e.g. `G-XXXXXXXXXX`).
-  When unset, no analytics script is loaded, so local dev and deploy previews
-  stay untracked.
+All environment variables are optional (see `.env.example`):
+
+- `VITE_GA_MEASUREMENT_ID` - overrides the built-in GA4 Measurement ID. Only
+  needed to report to a different GA property.
 
 ## Contributing
 
