@@ -38,6 +38,8 @@ export const BlogPost = () => {
         <img
           src={post.image}
           alt={post.title}
+          loading="lazy"
+          decoding="async"
           className="w-full h-64 object-cover rounded-lg mb-8"
         />
         <ReactMarkdown
@@ -83,6 +85,8 @@ export const BlogPost = () => {
               <img
                 src={src}
                 alt={alt}
+                loading="lazy"
+                decoding="async"
                 className="w-full rounded-lg my-8 shadow-lg"
                 {...props}
               />
