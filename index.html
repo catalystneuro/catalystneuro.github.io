@@ -8,17 +8,12 @@
     <meta name="keywords" content="neurophysiology, NWB, Neurodata Without Borders, DANDI Archive, spike sorting, neuroscience data, open science, data standardization" />
 
     <!--
-      Per-route <title>, description, and Open Graph / Twitter tags are rendered
-      at build time by the Seo component (src/components/Seo.tsx) via
-      react-helmet-async. Keep page-specific SEO there, not here, to avoid
-      duplicate tags in the prerendered HTML.
+      Per-route <title>, description, canonical, and Open Graph / Twitter tags
+      are rendered at build time by the Seo component (src/components/Seo.tsx)
+      via vite-react-ssg's <Head>. Keep page-specific SEO there, not here, to
+      avoid duplicate tags in the prerendered HTML.
     -->
-    <meta property="og:url" content="https://catalystneuro.com/" />
-    <meta name="twitter:url" content="https://catalystneuro.com/" />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://catalystneuro.com/" />
-    
     <!-- Additional SEO -->
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#1466A7" />
