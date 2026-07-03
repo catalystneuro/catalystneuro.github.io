@@ -1,13 +1,14 @@
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { blogPosts } from "@/utils/blogLoader";
 import { Gallery } from "@/components/Gallery";
 import { useParams, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import Seo from "@/components/Seo";
 import PageLayout from "@/components/PageLayout";
+
+const CodeBlock = lazy(() => import("@/components/CodeBlock"));
 
 export const BlogPost = () => {
   const { slug } = useParams();
@@ -32,10 +33,13 @@ export const BlogPost = () => {
       title={post.title}
       subtitle={`Published on ${post.date} • ${post.readTime}${post.author ? ` • By ${post.author}` : ''}`}
     >
+      <Seo title={post.title} description={post.description} image={post.image} type="article" />
       <article className="prose prose-lg max-w-4xl mx-auto backdrop-blur-sm bg-white/80 p-8 rounded-2xl shadow-sm border border-primary/10">
         <img
           src={post.image}
           alt={post.title}
+          loading="lazy"
+          decoding="async"
           className="w-full h-64 object-cover rounded-lg mb-8"
         />
         <ReactMarkdown
@@ -81,21 +85,25 @@ export const BlogPost = () => {
               <img
                 src={src}
                 alt={alt}
+                loading="lazy"
+                decoding="async"
                 className="w-full rounded-lg my-8 shadow-lg"
                 {...props}
               />
             ),
             code({className, children, ...props}) {
               const match = /language-(\w+)/.exec(className || '');
+              const value = String(children).replace(/\n$/, '');
               return match ? (
-                <SyntaxHighlighter
-                  style={vscDarkPlus}
-                  language={match[1]}
-                  className="rounded-lg my-6"
-                  PreTag="div"
+                <Suspense
+                  fallback={
+                    <pre className="rounded-lg my-6 bg-secondary/10 p-4 overflow-x-auto">
+                      <code>{value}</code>
+                    </pre>
+                  }
                 >
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
+                  <CodeBlock language={match[1]} value={value} />
+                </Suspense>
               ) : (
                 <code className="bg-secondary/10 px-2 py-1 rounded text-sm text-secondary" {...props}>
                   {children}

@@ -22,6 +22,8 @@ const AnalysisSoftware = () => {
                 <img
                   src={software.image}
                   alt={software.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-48 object-contain rounded-t-lg bg-white p-4"
                 />
               )}

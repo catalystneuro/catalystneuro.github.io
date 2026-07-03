@@ -2,7 +2,7 @@
 name: "NWB Adoption Engagement Guide"
 description: "Guide for labs working with CatalystNeuro on NWB data conversion projects"
 type: "guide"
-docs: "/guides/nwb-engagement-guide.md"
+docs: "/guides/nwb-engagement-guide"
 ---
 
 #### Welcome to your NWB adoption engagement with CatalystNeuro!

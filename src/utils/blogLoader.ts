@@ -23,7 +23,7 @@ function processContent(content: string): string {
       // If a folder is specified, use all images from that folder
       try {
         // Use relative paths for images
-        const files = import.meta.glob('../../images/**/*.(jpg|jpeg|png|gif|mp4|webm|avif)', { 
+        const files = import.meta.glob('../../images/**/*.(jpg|jpeg|png|gif|mp4|webm|avif|webp)', {
           as: 'url',
           eager: true 
         });

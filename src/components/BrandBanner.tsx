@@ -29,6 +29,8 @@ export const BrandBanner = () => {
               <img
                 src={brand.logo}
                 alt={brand.name}
+                loading="lazy"
+                decoding="async"
                 className="max-h-full max-w-full object-contain"
               />
             </div>
