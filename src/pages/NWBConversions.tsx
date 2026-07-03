@@ -17,7 +17,7 @@ type PortfolioItem = {
   lab: string;
   institution: string;
   description: string;
-  github: string;
+  github: string | string[];
   dandi?: string | { url: string; name: string; }[];
   date: string;
   tags?: string[];
@@ -458,19 +458,44 @@ const NWBConversions = () => {
                   </CardContent>
                   <CardFooter className="pt-0 mt-auto">
                     <div className="flex space-x-2">
-                      {item.github && (
-                        <Button variant="outline" size="sm" asChild>
-                          <a
-                            href={item.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center"
-                          >
-                            <Github className="w-4 h-4 mr-2" />
-                            GitHub
-                          </a>
-                        </Button>
-                      )}
+                      {item.github &&
+                        (typeof item.github === "string" ? (
+                          <Button variant="outline" size="sm" asChild>
+                            <a
+                              href={item.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center"
+                            >
+                              <Github className="w-4 h-4 mr-2" />
+                              GitHub
+                            </a>
+                          </Button>
+                        ) : (
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="outline" size="sm">
+                                <Github className="w-4 h-4 mr-2" />
+                                GitHub ({item.github.length})
+                                <ChevronDown className="w-4 h-4 ml-2" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              {item.github.map((repo, i) => (
+                                <DropdownMenuItem key={i}>
+                                  <a
+                                    href={repo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center w-full"
+                                  >
+                                    {repo.replace(/^https?:\/\/github\.com\//, "")}
+                                  </a>
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        ))}
                       {item.dandi &&
                         (typeof item.dandi === "string" ? (
                           <Button variant="outline" size="sm" asChild>
