@@ -40,7 +40,7 @@ export const BlogPost = () => {
           alt={post.title}
           loading="lazy"
           decoding="async"
-          className="w-full h-64 object-cover rounded-lg mb-8"
+          className="w-full aspect-[3/1] object-cover rounded-lg mb-8"
         />
         <ReactMarkdown
           rehypePlugins={[rehypeRaw, rehypeSlug]}
