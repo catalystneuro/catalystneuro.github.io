@@ -54,6 +54,8 @@ export const InstitutionsBanner = () => {
               <img
                 src={institution.logo}
                 alt={institution.name}
+                loading="lazy"
+                decoding="async"
                 className="max-h-full max-w-full object-contain"
               />
             </div>

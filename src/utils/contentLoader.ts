@@ -19,7 +19,7 @@ export interface PortfolioItem {
   lab: string;
   institution: string;
   description: string;
-  github: string;
+  github: string | string[];
   dandi?: string | DandiDataset[];
   date: string;
   funded_project?: string;

@@ -35,6 +35,19 @@ export default defineConfig(({ mode }) => ({
     }
   },
   assetsInclude: ["**/*.md"],
+  ssr: {
+    // react-syntax-highlighter ships ESM with extensionless relative imports
+    // that Node's resolver rejects when externalized. Bundle it for SSG so
+    // Vite/Rollup resolves those imports instead.
+    noExternal: ["react-syntax-highlighter"],
+  },
+  ssgOptions: {
+    entry: "src/main.tsx",
+    // Emit /route/index.html (matches the prior layout and the SPA redirects).
+    dirStyle: "nested",
+    // Concrete paths for dynamic routes come from each route's getStaticPaths().
+    includeAllRoutes: false,
+  },
   build: {
     assetsDir: 'assets',
     copyPublicDir: true,

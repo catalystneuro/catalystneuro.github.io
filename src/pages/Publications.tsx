@@ -26,10 +26,10 @@ const publications: Publication[] = [
   {
     title: "Facilitating analysis of open neurophysiology data on the DANDI Archive using large language model tools",
     authors: "Magland JF, Ly R, Rübel O, Dichter B",
-    journal: "bioRxiv (Preprint)",
+    journal: "Scientific Data",
     year: 2025,
-    doi: "10.1101/2025.07.17.663965",
-    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12330691/",
+    doi: "10.1038/s41597-025-06285-x",
+    url: "https://www.nature.com/articles/s41597-025-06285-x",
     abstract: "We introduce an AI-powered, agentic chat assistant and a notebook generation pipeline for exploring DANDI datasets. The system leverages large language models (LLMs) to guide users through data access, visualization, and preliminary analysis of NWB neurophysiology data."
   },
   {
