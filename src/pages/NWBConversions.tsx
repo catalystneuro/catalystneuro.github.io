@@ -383,7 +383,7 @@ const NWBConversions = () => {
                       </div>
                       {item.funded_project && (
                         <a 
-                          href={`/funded-projects/${item.funded_project === "Michael J. Fox ASAP" ? "asap-nwb-adoption" : 
+                          href={`/funded-projects/${item.funded_project === "Aligning Science Across Parkinson's" ? "asap-nwb-adoption" :
                             item.funded_project === "SCGB NWB Adoption" ? "scgb-nwb-adoption" : 
                             item.funded_project?.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} 
                           className="no-underline"

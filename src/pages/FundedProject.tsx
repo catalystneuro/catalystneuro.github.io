@@ -21,7 +21,7 @@ const FundedProject = () => {
     const projectTitle = project.title;
     return portfolio.filter(conv => {
       if (projectTitle === "ASAP NWB Adoption") {
-        return conv.funded_project === "Michael J. Fox ASAP";
+        return conv.funded_project === "Aligning Science Across Parkinson's";
       }
       if (projectTitle === "SCGB NWB Adoption") {
         return conv.funded_project === "SCGB NWB Adoption";
