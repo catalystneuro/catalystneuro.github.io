@@ -1,7 +1,7 @@
 ---
 title: "Streaming Remote HDF5 Files from C++ with remfile-cpp"
 date: "2026-07-14"
-description: "A new HDF5 virtual file driver that streams remote NWB files over HTTP with adaptive caching. It opens files ~10x faster than ROS3, works with any HDF5 build, and is now integrated into AqNWB."
+description: "A new HDF5 virtual file driver that streams remote NWB files over HTTP with adaptive caching. It opens files several times faster than ROS3, works with any HDF5 build, and is now integrated into AqNWB."
 image: "/images/blog/remfile-cpp-banner.png"
 readTime: "8 min read"
 author: "Benjamin Dichter"
@@ -45,7 +45,9 @@ io->openRemote();
 
 HDF5 already ships a driver for this, called ROS3, and AqNWB [added support for it](https://github.com/NeurodataWithoutBorders/aqnwb/pull/308) alongside this work. So the obvious question is why build another one.
 
-The first reason is mundane but decisive: **ROS3 is frequently not there**. It's a compile-time option, and it is off in a great many builds. It's absent from Homebrew's HDF5. It was absent from every conda `h5py` environment on the machine used for this post. To benchmark ROS3 at all, we had to build a dedicated environment for it. A feature your users can't switch on isn't a feature. remfile-cpp needs only libcurl, so it works on any HDF5 from 1.10 through 2.x.
+The first reason is availability. ROS3 is a compile-time option, and whether you have it depends on how you got HDF5. Homebrew's HDF5 doesn't include it, and neither do the PyPI `h5py` wheels, which bundle their own HDF5. conda-forge's `hdf5` and Ubuntu's `libhdf5-dev` both do include it. Every environment on my machine that was missing ROS3 had `h5py` installed from pip; I had to build a dedicated environment to benchmark against it. remfile-cpp needs only libcurl, so it works with any HDF5 from 1.10 through 2.x regardless of how it was built.
+
+*(Correction: an earlier version of this post said ROS3 was "absent from every conda `h5py` environment," which overstated it. As [pointed out](https://github.com/HDFGroup/hdf5/discussions/6527) by the HDF Group, conda-forge's HDF5 ships the driver; the environments I hit had h5py from PyPI, not conda-forge.)*
 
 The second is that ROS3 speaks S3, while remfile-cpp speaks plain HTTP. That means it also works with presigned URLs, which matters, because presigned S3 URLs reject `HEAD` requests. remfile derives the file size from a one-byte range request instead. It's a small detail that decides whether a whole class of URLs works at all.
 
@@ -57,18 +59,19 @@ Opening an NWB file is not one big read. It's *hundreds of small scattered ones*
 
 remfile's answer, which we ported directly, is a chunk cache with an adaptive read-ahead, the "smart loader". Reads are served from an in-memory cache of 100 KiB chunks. On a cache miss, the driver fetches the missing chunk *and some of what follows*; when it detects sequential access it grows that window geometrically, and when access jumps around it shrinks it back. Metadata walks stay cheap; streaming reads coalesce into a few large requests.
 
-The effect is stark. Reading a 23 MB slice of an `ElectricalSeries` from a DANDI file, alternating drivers to cancel network drift:
+The effect shows up at open. Reading a 23 MB slice of an `ElectricalSeries` from a DANDI file, alternating drivers to cancel network drift, medians of 8 runs each:
 
-| Phase | ROS3 | remfile-cpp |
-|---|---|---|
-| open (`H5Fopen`) | 3.26 s | **0.33 s** |
-| metadata | 0.09 s | **0.00 s** |
-| bulk read (23 MB) | **1.06 s** | 2.11 s |
-| **total** | 4.40 s | **2.44 s** |
+| Phase | ROS3 (HDF5 2.1) | ROS3 (HDF5 develop) | remfile-cpp |
+|---|---|---|---|
+| open (`H5Fopen`) | 3.26 s | 1.51 s | **0.35 s** |
+| read (23 MB) | **1.06 s** | 1.58 s | 1.20 s |
+| **total** | 4.40 s | 3.08 s | **1.56 s** |
 
-About **2x faster end to end, and ~10x faster to open**. That open-time gap is the entire story: it's exactly the hundreds-of-tiny-reads workload a read-ahead cache is built for, and ROS3 caches almost nothing.
+remfile opens the file about **4x faster** than current ROS3, and is a bit under **2x faster** end to end on this workload. Opening one of these files is hundreds of small scattered reads (superblock, B-trees, object headers), which is exactly what a read-ahead cache is for. The read times are close enough, and noisy enough, that I wouldn't call a winner on the bulk read.
 
-Read the numbers honestly, though: on the *bulk read*, one big contiguous slurp, ROS3 was faster. That's the fair trade for speculative read-ahead, which fetches somewhat more than you asked for. But it's also how we found a bug.
+The two ROS3 columns are worth a note. When I first wrote this post, ROS3 opened this file in ~3.3 s and I reported a ~10x gap. Shortly after, the HDF Group [pointed out](https://github.com/HDFGroup/hdf5/discussions/6527) that ROS3 was eagerly caching several MiB at open, and a [commit that landed the same day](https://github.com/HDFGroup/hdf5/commit/1325d30b21ee1328e88103b269a74cad699fa7b6) moved that work to the first read and added an internal block cache. Rebuilding against `develop` cut ROS3's open time roughly in half, so the honest current gap is ~4x, not 10x. It will keep narrowing as that cache matures. The numbers above are from the rebuilt `develop`.
+
+The bulk read is also where I found a bug in my own port.
 
 ## The benchmark that found a bug
 
@@ -76,7 +79,7 @@ The first version of the port was **2.4x slower than ROS3** on bulk reads. That 
 
 The smart loader only ever *grows* its window geometrically: 100 KiB, then 170 KiB, then 290 KiB, and so on. It never asks how much the current read actually wants. So a single large read doesn't issue one large request. It *ramps up to it*, paying a full network round trip on every rung of the ladder. A 23 MB read was taking **11 sequential requests** where one would do.
 
-The fix is two lines: never fetch less than the current read already needs. Read-ahead beyond the request still follows the original logic, so sequential behavior is unchanged; only the wasted round trips disappear. That took 11 requests down to 5 and brought bulk-read throughput to parity with ROS3, while keeping the 10x advantage on open.
+The fix is two lines: never fetch less than the current read already needs. Read-ahead beyond the request still follows the original logic, so sequential behavior is unchanged; only the wasted round trips disappear. That took 11 requests down to 5 and brought bulk-read throughput to parity with ROS3, while keeping the open-time advantage.
 
 The same flaw exists in the Python original, where you can watch the ladder directly. Reading 64 KB with a 1 KB chunk size issues seven requests:
 
