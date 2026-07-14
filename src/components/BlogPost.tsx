@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
 import { blogPosts } from "@/utils/blogLoader";
@@ -43,6 +44,7 @@ export const BlogPost = () => {
           className="w-full aspect-[3/1] object-cover rounded-lg mb-8"
         />
         <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw, rehypeSlug]}
           components={{
             h1: ({node, ...props}) => (
@@ -110,6 +112,20 @@ export const BlogPost = () => {
                 </code>
               )
             },
+            table: ({node, ...props}) => (
+              <div className="my-8 overflow-x-auto">
+                <table className="w-full text-left border-collapse text-sm" {...props} />
+              </div>
+            ),
+            thead: ({node, ...props}) => (
+              <thead className="border-b-2 border-secondary/30" {...props} />
+            ),
+            th: ({node, ...props}) => (
+              <th className="py-3 px-4 font-semibold text-secondary" {...props} />
+            ),
+            td: ({node, ...props}) => (
+              <td className="py-3 px-4 border-b border-secondary/10" {...props} />
+            ),
             div: ({node, ...props}) => {
               if (props.className === 'gallery') {
                 const images = props['data-images']?.split('|') || [];
