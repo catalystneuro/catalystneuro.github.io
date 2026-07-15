@@ -25,6 +25,8 @@ const Openings = () => {
               <img
                 src={position.image}
                 alt={position.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-48 object-cover rounded-t-lg"
               />
               <CardHeader>

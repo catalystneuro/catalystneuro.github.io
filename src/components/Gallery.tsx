@@ -70,6 +70,8 @@ export const Gallery = ({
           <img
             src={currentFile}
             alt={`Gallery image ${currentImageIndex + 1}`}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover rounded-lg shadow-lg"
           />
         )}

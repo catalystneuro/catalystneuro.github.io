@@ -15,7 +15,8 @@ describe('Navigation', () => {
 
   it('renders all main navigation items', () => {
     render(<Navigation />)
-    const mainLinks = ['About', 'Team', 'Software', 'Portfolio', 'Blog', 'Openings', 'Contact']
+    // Top-level items; Team and Openings live inside the About dropdown.
+    const mainLinks = ['About', 'Software', 'Portfolio', 'Blog', 'Contact']
     mainLinks.forEach(link => {
       expect(screen.getByText(link)).toBeInTheDocument()
     })

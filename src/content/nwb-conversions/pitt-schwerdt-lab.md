@@ -5,6 +5,6 @@ description: "Developed NWB conversion tools for Schwerdt Lab's multi-modal neur
 tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/schwerdt-lab-to-nwb"
 date: "2025-06"
-funded_project: "Michael J. Fox ASAP"
+funded_project: "Aligning Science Across Parkinson's"
 species: Macaque
 ---

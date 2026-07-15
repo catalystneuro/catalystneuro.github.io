@@ -2,7 +2,7 @@
 title: "CatalystNeuro Team Retreat 2024: Strategy and Connection in Montecatini, Italy"
 date: "2024-10-01"
 description: "The CatalystNeuro team gathered in the beautiful Tuscan town of Montecatini for a retreat combining strategic planning with cultural experiences and team bonding."
-image: "/images/retreat-2024/lucca/0V8A8033.jpg"
+image: "/images/retreat-2024/lucca/0V8A8033.webp"
 readTime: "4 min read"
 keywords: ["CatalystNeuro", "company retreat", "Montecatini", "Italy", "team building", "Tuscany"]
 ---

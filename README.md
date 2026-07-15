@@ -93,8 +93,14 @@ Manual deployment can be triggered through the Netlify dashboard or CLI.
 
 ### Environment Variables
 
-Required environment variables for deployment:
-- `NETLIFY_ACCESS_TOKEN` - For Netlify API access
+Google Analytics 4 is built in (`src/components/Analytics.tsx`) and reports
+only from the live `catalystneuro.com` host, so local dev and Netlify deploy
+previews stay untracked automatically.
+
+All environment variables are optional (see `.env.example`):
+
+- `VITE_GA_MEASUREMENT_ID` - overrides the built-in GA4 Measurement ID. Only
+  needed to report to a different GA property.
 
 ## Contributing
 

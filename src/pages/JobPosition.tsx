@@ -1,10 +1,11 @@
-import { Navigation } from "@/components/Navigation";
+import { useParams } from "react-router-dom";
+import Seo from "@/components/Seo";
 import { loadOpenings } from "@/utils/contentLoader";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 
 const JobPosition = () => {
-  const id = window.location.pathname.split('/openings/')[1];
+  const { position: id } = useParams();
   const positions = loadOpenings();
   const position = positions.find(p => p.id === id);
 
@@ -14,12 +15,14 @@ const JobPosition = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gradient-start to-gradient-end">
-      <Navigation />
+      <Seo title={position.title} description={position.description} />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           <img
             src={position.image}
             alt={position.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-64 object-cover rounded-lg mb-8"
           />
           <h1 className="text-4xl font-bold mb-2">{position.title}</h1>

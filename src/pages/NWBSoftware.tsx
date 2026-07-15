@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { loadSoftware } from "@/utils/contentLoader";
 import PageLayout from "@/components/PageLayout";
@@ -24,6 +24,8 @@ const NWBSoftware = () => {
                   <img
                     src={software.image}
                     alt={software.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-48 object-contain rounded-t-lg bg-white p-4"
                   />
                   <CardHeader>
@@ -105,36 +107,17 @@ const NWBSoftware = () => {
         </div>
 
         <div>
-          <h2 className="text-3xl font-bold mb-6">Documentation & Guides</h2>
-          <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-            {softwareList
-              .filter(software => software.type === 'guide')
-              .map((software) => (
-                <Card key={software.name} className="flex flex-col hover:shadow-lg transition-shadow backdrop-blur-sm bg-white/80 border-primary/10 hover:border-primary/30">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <CardTitle className="text-2xl">{software.name}</CardTitle>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex-grow">
-                    <p className="text-secondary/75">{software.description}</p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link
-                        to={software.docs}
-                        className="flex items-center"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        View Guide
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-          </div>
+          <h2 className="text-3xl font-bold mb-4">Documentation & Guides</h2>
+          <p className="text-secondary/75 mb-6 max-w-2xl">
+            Step-by-step guides for sharing data with us and working through an NWB
+            adoption engagement.
+          </p>
+          <Button variant="outline" asChild>
+            <Link to="/guides" className="flex items-center">
+              See all guides
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          </Button>
         </div>
       </div>
     </PageLayout>
