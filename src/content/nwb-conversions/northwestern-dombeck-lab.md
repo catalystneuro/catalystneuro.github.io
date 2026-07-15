@@ -8,6 +8,6 @@ dandi:
     - url: https://dandiarchive.org/dandiset/001038
       name: "001038: Unique functional responses differentially map onto genetic subtypes of dopamine neurons"
 date: "2024-02"
-funded_project: "Michael J. Fox ASAP"
+funded_project: "Aligning Science Across Parkinson's"
 species: Mouse
 ---

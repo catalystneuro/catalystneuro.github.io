@@ -26,14 +26,14 @@ const labMappings = {
     'harvard-datta-lab.md': 'SCGB NWB Adoption',
     'mit-dicarlo-lab.md': 'SCGB NWB Adoption',
 
-    // Michael J. Fox ASAP
-    'pitt-turner-lab.md': 'Michael J. Fox ASAP',
-    'northwestern-lerner-lab.md': 'Michael J. Fox ASAP',
-    'ucsf-nelson-lab.md': 'Michael J. Fox ASAP',
-    'yale-higley-lab.md': 'Michael J. Fox ASAP',
-    'baylor-reimer-lab.md': 'Michael J. Fox ASAP',
-    'northwestern-dombeck-lab.md': 'Michael J. Fox ASAP',
-    'bu-howe-lab.md': 'Michael J. Fox ASAP',
+    // Aligning Science Across Parkinson's
+    'pitt-turner-lab.md': "Aligning Science Across Parkinson's",
+    'northwestern-lerner-lab.md': "Aligning Science Across Parkinson's",
+    'ucsf-nelson-lab.md': "Aligning Science Across Parkinson's",
+    'yale-higley-lab.md': "Aligning Science Across Parkinson's",
+    'baylor-reimer-lab.md': "Aligning Science Across Parkinson's",
+    'northwestern-dombeck-lab.md': "Aligning Science Across Parkinson's",
+    'bu-howe-lab.md': "Aligning Science Across Parkinson's",
 };
 
 for (const file of files) {
