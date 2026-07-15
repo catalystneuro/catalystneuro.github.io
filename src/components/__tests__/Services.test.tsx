@@ -46,7 +46,7 @@ describe('Services', () => {
     it('applies hover styles to service cards', () => {
       const cards = screen.getAllByTestId('service-card')
       cards.forEach(card => {
-        expect(card).toHaveClass('group', 'hover:shadow-lg', 'transition-all', 'duration-300', 'hover:-translate-y-1')
+        expect(card).toHaveClass('group', 'hover:shadow-md', 'transition-shadow', 'duration-300')
       })
     })
   })
@@ -69,13 +69,12 @@ describe('Services', () => {
       })
     })
 
-    it('applies hover styles to capability icons', () => {
-      const iconContainers = screen.getAllByRole('generic').filter(
-        element => element.className.includes('group-hover:scale-110')
-      )
-      expect(iconContainers.length).toBeGreaterThan(0)
-      iconContainers.forEach(container => {
-        expect(container).toHaveClass('group-hover:scale-110', 'transition-transform')
+    it('renders capability items as bordered cards', () => {
+      const cards = screen.getAllByText(/Cloud Integration|Team Training|Data Analytics|Open Source/)
+        .map(label => label.closest('div.rounded-lg'))
+      expect(cards.length).toBeGreaterThan(0)
+      cards.forEach(card => {
+        expect(card).toHaveClass('rounded-lg', 'border', 'border-gray-200')
       })
     })
   })

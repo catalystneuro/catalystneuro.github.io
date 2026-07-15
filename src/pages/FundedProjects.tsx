@@ -201,6 +201,8 @@ const FundedProjects = () => {
                     <img 
                       src={project.image} 
                       alt={`${project.funder} logo`}
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-full max-w-full object-contain"
                     />
                   </div>

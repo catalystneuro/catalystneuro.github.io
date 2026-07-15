@@ -2,7 +2,7 @@
 title: "Teaching Open Neuroscience at the African Brain Data Science Academy"
 date: "2025-01-14"
 description: "Reflections on teaching open neuroscience tools and practices at the African Brain Data Science Academy"
-image: "/images/ABDS2024/1734435457699.jpeg"
+image: "/images/ABDS2024/1734435457699.webp"
 readTime: "7 min read"
 keywords: ["neuroscience", "education", "Africa", "ABDS", "open science", "data science"]
 ---
@@ -23,11 +23,11 @@ A significant portion of our sessions focused on practical skills for working wi
 
 As part of the program, I contributed by leading two main sessions. The first focused on Neurodata Without Borders (NWB) and DANDI, where I introduced participants to these essential tools for standardizing and sharing neurophysiology data, demonstrating how they're revolutionizing data collaboration in neuroscience research.
 
-![Collaborative Learning](/images/ABDS2024/1734435457136.jpeg)
+![Collaborative Learning](/images/ABDS2024/1734435457136.webp)
 
 
 <!-- gallery-start width="500px" aspect="3/4" -->
-- /images/ABDS2024/1734435457725.jpeg
+- /images/ABDS2024/1734435457725.webp
 <!-- gallery-end -->
 
 

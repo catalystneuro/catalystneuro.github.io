@@ -10,6 +10,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000054"
     name: "000054: Experience-dependent contextual codes in hippocampus"
 date: "2019-07"
-funded_project: ""
+funded_project: "SCGB NWB Adoption"
 species: Mouse
 ---

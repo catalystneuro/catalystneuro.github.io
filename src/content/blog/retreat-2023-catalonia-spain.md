@@ -2,7 +2,7 @@
 title: "CatalystNeuro Team Retreat 2023: A Week in Catalonia"
 description: "The CatalystNeuro team gathered in a historic Catalan villa for a week of strategic planning, cultural experiences, and team bonding in the beautiful Costa Brava region."
 date: "2023-10-01"
-image: "/images/retreat-2023/cover.jpg"
+image: "/images/retreat-2023/cover.webp"
 readTime: "4 min read"
 keywords: ["CatalystNeuro", "company retreat", "Catalonia", "Spain", "team building", "Costa Brava"]
 ---
@@ -56,4 +56,4 @@ Being just 15 minutes from the golden beaches of Costa Brava, we took full advan
 
 Our week in Catalonia was more than just a retreat—it was a perfect blend of productive work sessions, cultural exploration, and team bonding. The combination of the villa's peaceful setting, the region's rich culture, and our focused collaborative sessions helped us align our vision and strengthen our commitment to advancing neuroscience data standards. As we returned to our respective locations around the world, we carried with us not just new strategies and plans, but also stronger connections and cherished memories of our time together in this beautiful corner of Spain.
 
-![Team photo](/images/retreat-2023/group_photo.jpg)
+![Team photo](/images/retreat-2023/group_photo.webp)

@@ -2,7 +2,7 @@
 name: "Sharing Data with CatalystNeuro"
 description: "Instructions for uploading your data to our size-unrestricted Google Drive folder using Globus"
 type: "guide"
-docs: "/guides/globus-guide.md"
+docs: "/guides/globus-guide"
 ---
 
 #### Thank you for sharing your data with the CatalystNeuro team!

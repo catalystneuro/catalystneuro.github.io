@@ -2,7 +2,7 @@
 title: "CatalystNeuro Team Retreat 2022: Uniting in Portugal's Douro Valley"
 date: "2022-10-14"
 description: "After months of remote work, the CatalystNeuro team gathered in Portugal's historic Douro Valley for their first post-lockdown retreat, combining strategic planning with cultural immersion."
-image: "/images/retreat-2022/IMG_4679.jpeg"
+image: "/images/retreat-2022/IMG_4679.webp"
 readTime: "4 min read"
 keywords: ["CatalystNeuro", "company retreat", "Douro Valley", "Portugal", "team building"]
 ---
@@ -13,8 +13,8 @@ After months of Zoom calls and virtual collaboration during the global lockdown,
 The historic wine region, with its terraced vineyards and winding river, provided the perfect backdrop for strengthening team bonds and mapping out our company's future.
 
 <!-- gallery-start aspect="16/9" -->
-- /images/retreat-2022/IMG_4673.jpeg
-- /images/retreat-2022/IMG_4622.jpeg
+- /images/retreat-2022/IMG_4673.webp
+- /images/retreat-2022/IMG_4622.webp
 <!-- gallery-end -->
 
 ## A Historic Setting for a Historic Moment
@@ -22,10 +22,10 @@ The historic wine region, with its terraced vineyards and winding river, provide
 Our home base for the week was the magnificent Casa do Monte, a centuries-old restored farmhouse nestled in the heart of the Lower Corgo region.
 
 <!-- gallery-start aspect="16/9" -->
-- /images/retreat-2022/IMG_4659.jpeg
-- /images/retreat-2022/IMG_4664.jpeg
-- /images/retreat-2022/IMG_4667.jpeg
-- /images/retreat-2022/IMG_4668.jpeg
+- /images/retreat-2022/IMG_4659.webp
+- /images/retreat-2022/IMG_4664.webp
+- /images/retreat-2022/IMG_4667.webp
+- /images/retreat-2022/IMG_4668.webp
 <!-- gallery-end -->
 
 
@@ -44,9 +44,9 @@ The retreat provided invaluable face-to-face time to discuss our ongoing project
 Being in Portugal wasn't just about the location – we embraced the culture wholeheartedly. From enjoying traditional Portuguese dinners at the villa to practicing our newly learned Portuguese phrases with locals, the team fully immersed themselves in the experience. The Douro Valley's UNESCO World Heritage status reminded us daily of the importance of preserving and building upon valuable legacy systems – a philosophy that resonates deeply with our work in neuroscience data standardization.
 
 <!-- gallery-start aspect="16/9" -->
-- /images/retreat-2022/IMG_4692.jpeg
-- /images/retreat-2022/IMG_4711.jpeg
-- /images/retreat-2022/IMG_4720.jpeg
+- /images/retreat-2022/IMG_4692.webp
+- /images/retreat-2022/IMG_4711.webp
+- /images/retreat-2022/IMG_4720.webp
 <!-- gallery-end -->
 
 ## Looking Forward
