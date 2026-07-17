@@ -1,5 +1,5 @@
 ---
-title: "ASAP NWB Adoption"
+title: "Aligning Science Across Parkinson's"
 funder: "Michael J. Fox Foundation"
 status: "active"
 startDate: "2023-01-01"

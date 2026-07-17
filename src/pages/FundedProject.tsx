@@ -19,21 +19,7 @@ const FundedProject = () => {
   const affiliatedConversions = useMemo(() => {
     if (!project) return [];
     const projectTitle = project.title;
-    return portfolio.filter(conv => {
-      if (projectTitle === "ASAP NWB Adoption") {
-        return conv.funded_project === "Aligning Science Across Parkinson's";
-      }
-      if (projectTitle === "SCGB NWB Adoption") {
-        return conv.funded_project === "SCGB NWB Adoption";
-      }
-      if (projectTitle === "NYU Librarians NWB Adoption") {
-        return conv.funded_project === "NYU Librarians";
-      }
-      if (projectTitle === "Ripple U19 NWB Adoption") {
-        return conv.funded_project === "Ripple U19";
-      }
-      return conv.funded_project === projectTitle;
-    });
+    return portfolio.filter(conv => conv.funded_project === projectTitle);
   }, [project]);
 
   if (!project) {

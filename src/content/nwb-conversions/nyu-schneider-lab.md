@@ -8,6 +8,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/001259"
     name: "001259: Cortical control of skilled, sound-guided behavior in mice"
 date: "2024-08"
-funded_project: "NYU Librarians"
+funded_project: "NYU Librarians NWB Adoption"
 species: Mouse
 ---
