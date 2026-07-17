@@ -3,7 +3,7 @@ import { Users, FolderGit2, Building2 } from "lucide-react";
 const stats = [
   { label: "Research Labs", value: "60+", icon: Users },
   { label: "Funded Projects", value: "14", icon: FolderGit2 },
-  { label: "Partner Institutions", value: "25+", icon: Building2 },
+  { label: "Partner Institutions", value: "30+", icon: Building2 },
 ];
 
 export const WhyUs = () => {
