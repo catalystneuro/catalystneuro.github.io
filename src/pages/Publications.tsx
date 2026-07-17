@@ -16,7 +16,7 @@ interface Publication {
 const publications: Publication[] = [
   {
     title: "NeuroConv: Streamlining Neurophysiology Data Conversion to the NWB Standard",
-    authors: "Mayorquin H, Baker C, Adkisson-Floro P, Weigl S, Trappani A, Tauffer L, Rübel O, Dichter B",
+    authors: "Mayorquin H, Baker C, Adkisson-Floro P, Weigl S, Trapani A, Tauffer L, Rübel O, Dichter B",
     journal: "SciPy Proceedings",
     year: 2025,
     doi: "10.25080/cehj4257",
