@@ -8,6 +8,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000971"
     name: "000971: Dopamine signaling and compulsive behavior in striatum"
 date: "2024-01"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: Mouse
 ---

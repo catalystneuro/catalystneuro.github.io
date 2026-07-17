@@ -16,6 +16,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/001711"
     name: "001711: Characterization of Sleep-Wake Patterns and Motor Behavior in a Progressive Mouse Model of Parkinson's Disease"
 date: "2024-12"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: "Mouse"
 ---

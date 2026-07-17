@@ -8,6 +8,6 @@ tags:
   - patch clamp
 github: https://github.com/catalystneuro/khaliq-lab-to-nwb
 date: "2024-12"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: "Macaque"
 ---

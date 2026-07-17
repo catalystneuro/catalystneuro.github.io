@@ -10,6 +10,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/001170"
     name: "001170: Mesoscale Two-Photon Calcium Imaging of Population Level Odor Responses from the Mouse Olfactory Bulb"
 date: "2024-04"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: "Mouse"
 ---

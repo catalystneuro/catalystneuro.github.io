@@ -9,7 +9,7 @@ tags:
   - Parkinson's disease
 github: "https://github.com/catalystneuro/howe-lab-to-nwb"
 date: "2024-04"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: "Mouse"
 dandi:
   - url: https://dandiarchive.org/dandiset/001084

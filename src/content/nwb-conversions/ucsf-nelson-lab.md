@@ -13,6 +13,6 @@ dandi:
   - url: https://dandiarchive.org/dandiset/001177
     name: "001177: Abnormal Striatal Activity in a Mouse Model of Impulse Control Disorder in Parkinson’s Disease"
 date: "2023-10"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: Mouse
 ---

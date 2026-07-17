@@ -5,6 +5,6 @@ description: "Developed NWB conversion tools for the Higley lab's neurophysiolog
 tags: ["electrophysiology", "behavioral tracking"]
 github: "https://github.com/catalystneuro/higley-lab-to-nwb"
 date: "2023-09"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: Mouse
 ---

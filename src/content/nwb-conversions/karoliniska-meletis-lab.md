@@ -11,6 +11,6 @@ tags:
   - Parkinson's disease
 github: "https://github.com/catalystneuro/meletis-lab-to-nwb"
 date: "2025-05"
-funded_project: "ASAP NWB Adoption"
+funded_project: "Aligning Science Across Parkinson's"
 species: Mouse
 ---
