@@ -24,6 +24,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000568"
     name: "000568: Probing subthreshold dynamics of hippocampal neurons by pulsed optogenetics"
 date: "2019-11"
-funded_project: "Ripple U19"
+funded_project: "Ripple U19 NWB Adoption"
 species: Rat
 ---

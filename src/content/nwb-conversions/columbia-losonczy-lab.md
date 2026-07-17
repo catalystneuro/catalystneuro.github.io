@@ -7,6 +7,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/000625"
     name: "000625: Molecularly Identified CA1 Interneuron Dynamics"
 date: "2024"
-funded_project: "Ripple U19"
+funded_project: "Ripple U19 NWB Adoption"
 species: Mouse
 ---

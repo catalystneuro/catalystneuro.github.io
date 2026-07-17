@@ -10,6 +10,6 @@ dandi:
   - url: "https://dandiarchive.org/dandiset/001636"
     name: "001636: Pyramidal tract and corticostriatal neuron recordings in MPTP-treated macaque performing visuomotor tasks"
 date: "2025-10"
-funded_project: "Aligning Science Across Parkinson's"
+funded_project: "ASAP NWB Adoption"
 species: Macaque
 ---
