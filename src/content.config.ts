@@ -24,6 +24,9 @@ const conversions = defineCollection({
     institution: z.string(),
     description: z.string(),
     species: z.union([z.string(), z.array(z.string())]).optional(),
+    // The month the engagement STARTED, not when it finished. Conversion
+    // projects typically run about a year, so do not label this as a
+    // completion date.
     date: z.union([z.string(), z.date()]).transform((v) => (v instanceof Date ? v.toISOString().slice(0, 7) : v)).optional(),
     tags: z.array(z.string()).optional(),
     github: z.union([z.string(), z.array(z.string())]).optional(),

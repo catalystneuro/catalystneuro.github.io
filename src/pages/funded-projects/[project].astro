@@ -84,7 +84,7 @@ const convs = affiliated
                     <h3><a href={`/nwb-conversions/${c.slug}`} class="fpd-conv-title">{c.lab}</a></h3>
                     <p class="pcard-sub">{c.institution}</p>
                   </div>
-                  {c.date && <span class="pcard-stamp">{c.date}</span>}
+                  {c.date && <span class="pcard-stamp" title={`Project started ${monthYear(c.date)}`}>{c.date}</span>}
                 </div>
 
                 <p class="pcard-desc">{c.description}</p>
