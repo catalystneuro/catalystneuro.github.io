@@ -59,7 +59,9 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
     border-bottom: 1px solid var(--color-line);
   }
   .hdr-inner { display: flex; align-items: center; justify-content: space-between; height: 4.25rem; gap: 1rem; }
-  .hdr-logo img { height: 30px; width: auto; display: block; }
+  /* The bar height is fixed at 4.25rem (68px), so the mark can grow to 40px
+     and still keep 14px of clearance above and below. */
+  .hdr-logo img { height: 40px; width: auto; display: block; }
   .hdr-nav { display: none; align-items: center; gap: 0.25rem; }
   @media (min-width: 960px) { .hdr-nav { display: flex; } }
 

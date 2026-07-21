@@ -13,3 +13,18 @@ date: "2025-10"
 funded_project: "Aligning Science Across Parkinson's"
 species: Macaque
 ---
+The Turner lab has collected single-unit recordings from macaque primary motor cortex during a joint flexion and extension task, as part of the ASAP initiative. The data were acquired both before and after induction of model parkinsonism through MPTP treatment, with corticospinal and corticostriatal neurons identified by antidromic stimulation. Our goal is to package this dataset in the NWB format and publish it to the DANDI Archive.
+
+## Conversion of Data Streams
+
+We developed an open-source Python package to convert the dataset to NWB, shared in a public GitHub repository. The pipeline handles extracellular electrophysiology, covering spike times, waveforms, and antidromic stimulation traces; behavioral task events including trial timing, reach targets, perturbations, and rewards; analog kinematics recorded as elbow joint angle; and trial-based LFP and EMG signals where present.
+
+The pipeline uses compression and chunking so that the files store efficiently and can be read directly in cloud environments. All data are converted and annotated in accordance with NWB best practices. Where inter-trial interval timing is available, the recordings are reconstructed as a contiguous representation, which makes the data more reusable and more compatible with downstream analysis tools.
+
+## Publication on DANDI
+
+We created a pipeline that uploads the specified list of converted sessions to the DANDI Archive automatically, along with a Dandiset annotated according to DANDI best practices.
+
+## Demonstrating NWB Usage
+
+We created Jupyter notebooks demonstrating how to read the converted files, access each data stream, and generate example visualizations. These notebooks were submitted to the [DANDI example-notebooks repository](https://github.com/dandi/example-notebooks).
