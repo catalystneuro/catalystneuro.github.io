@@ -1,10 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import Base from "../layouts/Base.astro";
-import PageHeader from "../components/PageHeader.astro";
-import Icon from "../components/Icon.astro";
-import { asArray, dandiList, slugify } from "../lib/format";
-import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../data/site-content";
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Icon from "../../components/Icon.astro";
+import { asArray, dandiList, slugify } from "../../lib/format";
+import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
 
 // Map every name a conversion might use for its funded project (the project's
 // own title, plus any alias) onto that project's detail-page slug.
@@ -29,6 +29,7 @@ const items = raw
     github: asArray(c.data.github),
     dandi: dandiList(c.data.dandi),
     funded: c.data.funded_project ?? "",
+    slug: slugify(c.data.lab),
   }))
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 
@@ -80,52 +81,51 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
 
       <p class="cv-count" id="cv-count">{items.length} labs</p>
 
-      <div class="cv-grid" id="cv-grid">
+      <div class="pcard-grid" id="cv-grid">
         {items.map((c) => (
           <article
-            class="card card-hover cv-card"
+            class="card card-hover pcard cv-card"
             data-search={`${c.lab} ${c.institution} ${c.description}`.toLowerCase()}
             data-tags={c.tags.join("|").toLowerCase()}
             data-inst={c.institution}
             data-species={c.species.join("|")}
             data-funded={c.funded}
           >
-            <div class="cv-card-head">
+            <div class="pcard-head">
               <div>
-                <h3>{c.lab}</h3>
-                <p class="cv-inst">{c.institution}</p>
+                <h3><a href={`/nwb-conversions/${c.slug}`} class="cv-title">{c.lab}</a></h3>
+                <p class="pcard-sub">{c.institution}</p>
               </div>
-              {c.date && <span class="cv-date">{c.date}</span>}
+              {c.date && <span class="pcard-stamp">{c.date}</span>}
             </div>
 
-            <p class="cv-desc">{c.description}</p>
-            <button type="button" class="cv-more" hidden>Show more</button>
+            <p class="pcard-desc">{c.description}</p>
+            <button type="button" class="pcard-more" hidden>Show more</button>
 
-            <div class="cv-tags">
-              {c.species.map((s) => <span class="tag cv-tag cv-tag--species">{s}</span>)}
-              {c.tags.filter((t) => methodSet.has(t.toLowerCase())).map((t) => <span class="tag cv-tag cv-tag--method">{t}</span>)}
-              {c.tags.filter((t) => areaSet.has(t.toLowerCase())).map((t) => <span class="tag cv-tag cv-tag--area">{t}</span>)}
-              {c.tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has(t.toLowerCase())).map((t) => <span class="tag cv-tag">{t}</span>)}
+            <div class="pcard-tags">
+              {c.species.map((s) => <span class="tag tag--species">{s}</span>)}
+              {c.tags.filter((t) => methodSet.has(t.toLowerCase())).map((t) => <span class="tag tag--method">{t}</span>)}
+              {c.tags.filter((t) => areaSet.has(t.toLowerCase())).map((t) => <span class="tag tag--area">{t}</span>)}
+              {c.tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has(t.toLowerCase())).map((t) => <span class="tag">{t}</span>)}
             </div>
 
-            {(c.github.length > 0 || c.dandi.length > 0) && (
-              <div class="cv-links">
-                {c.github.map((g, i) => (
-                  <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {c.github.length > 1 ? `Repo ${i + 1}` : "GitHub"}</a>
-                ))}
-                {c.dandi.map((dd) => (
-                  <a href={dd.url} target="_blank" rel="noopener" title={dd.name} class="btn btn-ghost btn-sm cv-dandi"><Icon name="database" size={14} /> DANDI {dd.url.split("/").pop()}</a>
-                ))}
-              </div>
-            )}
+            <div class="pcard-links">
+              <a href={`/nwb-conversions/${c.slug}`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
+              {c.github.map((g, i) => (
+                <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {c.github.length > 1 ? `Repo ${i + 1}` : "GitHub"}</a>
+              ))}
+              {c.dandi.map((dd) => (
+                <a href={dd.url} target="_blank" rel="noopener" title={dd.name} class="btn btn-ghost btn-sm cv-dandi"><Icon name="database" size={14} /> DANDI {dd.url.split("/").pop()}</a>
+              ))}
+            </div>
 
             {c.funded && (projectSlug.has(c.funded)
-              ? <a href={`/funded-projects/${projectSlug.get(c.funded)}`} class="cv-funded cv-funded-link"><Icon name="link" size={13} /> {c.funded}</a>
-              : <div class="cv-funded"><Icon name="link" size={13} /> {c.funded}</div>)}
+              ? <a href={`/funded-projects/${projectSlug.get(c.funded)}`} class="pcard-foot"><Icon name="link" size={13} /> {c.funded}</a>
+              : <div class="pcard-foot"><Icon name="link" size={13} /> {c.funded}</div>)}
           </article>
         ))}
       </div>
-      <p class="cv-empty" id="cv-empty" hidden>No conversions match your filters.</p>
+      <p class="pcard-empty" id="cv-empty" hidden>No conversions match your filters.</p>
 
       <nav class="cv-pager" id="cv-pager" aria-label="Conversions pagination" hidden>
         <button type="button" class="btn btn-ghost btn-sm" id="cv-prev">Previous</button>
@@ -145,35 +145,14 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
   .cv-select:focus { outline: none; border-color: var(--color-blue); }
   .cv-select.is-set { border-color: var(--color-blue); background: var(--color-blue-50); color: var(--color-blue-600); font-weight: 500; }
   .cv-reset { align-self: center; }
-  .cv-grid { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
-  @media (min-width: 700px) { .cv-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1050px) { .cv-grid { grid-template-columns: repeat(3, 1fr); } }
-  .cv-card { padding: 1.5rem; display: flex; flex-direction: column; }
-  .cv-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
-  .cv-card-head h3 { font-size: 1.12rem; line-height: 1.2; }
-  .cv-inst { color: var(--color-blue); font-size: 0.82rem; margin-top: 0.25rem; }
-  .cv-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-ink-soft); border: 1px solid var(--color-line); border-radius: 0.3rem; padding: 0.15rem 0.4rem; flex-shrink: 0; }
-  .cv-desc { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.55; margin: 0.9rem 0 0; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-  .cv-desc.is-open { -webkit-line-clamp: unset; }
-  .cv-more { align-self: flex-start; margin: 0.4rem 0 0.9rem; padding: 0; border: 0; background: none; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 500; color: var(--color-blue); cursor: pointer; }
-  .cv-more:hover { text-decoration: underline; text-underline-offset: 2px; }
-  .cv-more[hidden] + .cv-tags { margin-top: 0.9rem; }
-  .cv-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem; }
-  .cv-tag { background: #eef1f6; color: #4b5675; }
-  .cv-tag--species { background: color-mix(in srgb, #f59e0b 15%, white); color: #b45309; }
-  .cv-tag--method { background: var(--color-blue-50); color: var(--color-blue-600); }
-  .cv-tag--area { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; }
-  .cv-links { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: auto; max-width: 100%; }
-  .cv-links .btn { max-width: 100%; }
   .cv-dandi { color: var(--color-blue); }
-  .cv-funded { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px solid var(--color-line-soft); font-size: 0.78rem; color: var(--color-ink-soft); display: flex; align-items: center; gap: 0.35rem; }
-  .cv-funded-link { transition: color 0.15s; }
-  .cv-funded-link:hover { color: var(--color-blue); text-decoration: underline; text-underline-offset: 2px; }
-  .cv-empty { text-align: center; color: var(--color-ink-muted); padding: 3rem; }
+  .cv-title { color: inherit; }
+  .cv-title:hover { color: var(--color-blue); }
 </style>
 
 <script>
-  import { createPager } from "../lib/pager";
+  import { createPager } from "../../lib/pager";
+  import { createClampToggles } from "../../lib/clamp";
 
   const search = document.getElementById("cv-search") as HTMLInputElement;
   const selects = ["cv-method", "cv-area", "cv-inst", "cv-species", "cv-funded"].map(
@@ -183,39 +162,11 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
   const reset = document.getElementById("cv-reset") as HTMLButtonElement;
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".cv-card"));
 
-  // Descriptions are clamped to four lines. Reveal a "Show more" toggle only on
-  // the cards where the text actually overflows. Measure before the pager hides
-  // anything, since a display:none card reports zero height.
-  const clamped = cards.map((card) => ({
-    desc: card.querySelector(".cv-desc") as HTMLElement,
-    more: card.querySelector(".cv-more") as HTMLButtonElement,
-  }));
+  // Deep link from a funded project: /nwb-conversions?project=<name>
+  const preset = new URLSearchParams(location.search).get("project");
+  if (preset && [...funded.options].some((o) => o.value === preset)) funded.value = preset;
 
-  function measure() {
-    for (const { desc, more } of clamped) {
-      // Skip expanded cards and cards the pager has hidden — a display:none
-      // element measures zero and would wrongly look un-truncated.
-      if (desc.classList.contains("is-open") || desc.offsetParent === null) continue;
-      more.hidden = desc.scrollHeight <= desc.clientHeight + 1;
-    }
-  }
-
-  for (const { desc, more } of clamped) {
-    more.addEventListener("click", () => {
-      const open = desc.classList.toggle("is-open");
-      more.textContent = open ? "Show less" : "Show more";
-    });
-  }
-
-  measure();
-  // Web fonts can reflow the text after first paint, and column count changes
-  // with the viewport, so re-check on both.
-  document.fonts?.ready.then(measure);
-  let t: number;
-  window.addEventListener("resize", () => {
-    clearTimeout(t);
-    t = window.setTimeout(measure, 150);
-  });
+  const { measure } = createClampToggles(cards);
 
   const pager = createPager({
     cards,

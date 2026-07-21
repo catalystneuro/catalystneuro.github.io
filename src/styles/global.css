@@ -132,7 +132,12 @@
   .tag {
     font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em;
     padding: 0.2rem 0.55rem; border-radius: 0.35rem; white-space: nowrap;
+    background: #eef1f6; color: #4b5675;
   }
+  /* Tag colour encodes the facet: species, method, research area. */
+  .tag--species { background: color-mix(in srgb, #f59e0b 15%, white); color: #b45309; }
+  .tag--method { background: var(--color-blue-50); color: var(--color-blue-600); }
+  .tag--area { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; }
   .rule { height: 1px; background: var(--color-line); border: 0; }
 
   .badge {
@@ -190,6 +195,28 @@
 }
 .prose pre code { font-family: var(--font-mono); background: transparent; border: 0; padding: 0; }
 .prose h2 a, .prose h3 a { text-decoration: none; }
+
+/* Portfolio card grid, shared by NWB conversions and funded projects. */
+.pcard-grid { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 700px) { .pcard-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1050px) { .pcard-grid { grid-template-columns: repeat(3, 1fr); } }
+.pcard { padding: 1.5rem; display: flex; flex-direction: column; }
+.pcard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; }
+.pcard-head h3 { font-size: 1.12rem; line-height: 1.2; }
+.pcard-sub { color: var(--color-blue); font-size: 0.82rem; margin-top: 0.25rem; }
+.pcard-stamp { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-ink-soft); border: 1px solid var(--color-line); border-radius: 0.3rem; padding: 0.15rem 0.4rem; flex-shrink: 0; }
+.pcard-desc { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.55; margin: 0.9rem 0 0; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.pcard-desc.is-open { -webkit-line-clamp: unset; }
+.pcard-more { align-self: flex-start; margin: 0.4rem 0 0.9rem; padding: 0; border: 0; background: none; font-family: var(--font-sans); font-size: 0.8rem; font-weight: 500; color: var(--color-blue); cursor: pointer; }
+.pcard-more:hover { text-decoration: underline; text-underline-offset: 2px; }
+.pcard-more[hidden] + .pcard-tags { margin-top: 0.9rem; }
+.pcard-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem; }
+.pcard-links { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: auto; max-width: 100%; }
+.pcard-links .btn { max-width: 100%; }
+.pcard-foot { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px solid var(--color-line-soft); font-size: 0.78rem; color: var(--color-ink-soft); display: flex; align-items: center; gap: 0.35rem; }
+a.pcard-foot { transition: color 0.15s; }
+a.pcard-foot:hover { color: var(--color-blue); text-decoration: underline; text-underline-offset: 2px; }
+.pcard-empty { text-align: center; color: var(--color-ink-muted); padding: 3rem; }
 
 /* Pagination controls. Global because the page buttons are built in client
    scripts and so never receive Astro's component-scoping attribute. */

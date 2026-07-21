@@ -3,13 +3,57 @@ import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import PageHeader from "../../components/PageHeader.astro";
 import Icon from "../../components/Icon.astro";
-import { slugify, monthYear, statusColor } from "../../lib/format";
+import { slugify, monthYear, statusColor, repoName, asArray } from "../../lib/format";
+import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
 
-const projects = (await getCollection("fundedProjects")).sort((a, b) =>
+const raw = (await getCollection("fundedProjects")).sort((a, b) =>
   (a.data.startDate < b.data.startDate ? 1 : -1)
 );
-const funders = [...new Set(projects.map((p) => p.data.funder))].sort();
-const statuses = [...new Set(projects.map((p) => p.data.status))];
+const conversions = await getCollection("conversions");
+
+const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
+const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
+
+const projects = raw.map((p) => {
+  const alias = FUNDED_PROJECT_ALIASES[p.data.title];
+  const affiliated = conversions.filter(
+    (c) => c.data.funded_project === p.data.title || (alias && c.data.funded_project === alias)
+  );
+
+  // Projects carry no keywords of their own, so summarize the work actually
+  // done under them: the tags and species of their conversions, most common
+  // first, split into the same facets the conversions page uses.
+  const rank = (values: string[]) => {
+    const counts = new Map<string, number>();
+    for (const v of values) counts.set(v, (counts.get(v) ?? 0) + 1);
+    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([v]) => v);
+  };
+  const allTags = rank(affiliated.flatMap((c) => c.data.tags ?? []));
+
+  return {
+    title: p.data.title,
+    slug: slugify(p.data.title),
+    funder: p.data.funder,
+    status: p.data.status,
+    startDate: p.data.startDate,
+    description: p.data.description,
+    // The frontmatter description is a one-liner; the body carries the real
+    // explanation, which is what the expandable card text should show.
+    body: (p.body ?? "").trim().replace(/\s+/g, " "),
+    image: p.data.image,
+    github: asArray(p.data.github),
+    species: rank(affiliated.flatMap((c) => asArray(c.data.species))).slice(0, 3),
+    methods: allTags.filter((t) => methodSet.has(t.toLowerCase())).slice(0, 4),
+    areas: allTags.filter((t) => areaSet.has(t.toLowerCase())).slice(0, 3),
+    labCount: affiliated.length,
+    // Conversions may reference the project by an alias; link with the value
+    // the conversions filter actually holds.
+    filterName: alias ?? p.data.title,
+  };
+});
+
+const funders = [...new Set(projects.map((p) => p.funder))].sort();
+const statuses = [...new Set(projects.map((p) => p.status))];
 ---
 <Base title="Funded Projects" description="Grant-funded work at CatalystNeuro, supported by leading institutions committed to advancing neuroscience data standards and open-source tools.">
   <PageHeader
@@ -38,26 +82,50 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
 
       <p class="cv-count" id="fp-count">{projects.length} projects</p>
 
-      <div class="fp-grid" id="fp-grid">
+      <div class="pcard-grid" id="fp-grid">
         {projects.map((p) => (
-          <a
-            href={`/funded-projects/${slugify(p.data.title)}`}
-            class="card card-hover fp-card"
-            data-search={`${p.data.title} ${p.data.funder} ${p.data.description}`.toLowerCase()}
-            data-status={p.data.status}
-            data-funder={p.data.funder}
+          <article
+            class="card card-hover pcard fp-card"
+            data-search={`${p.title} ${p.funder} ${p.description}`.toLowerCase()}
+            data-status={p.status}
+            data-funder={p.funder}
           >
-            <div class="fp-card-top">
-              <span class={`badge badge--${statusColor(p.data.status)}`}>{p.data.status}</span>
-              {p.data.image && <img src={p.data.image} alt={p.data.funder} class="fp-logo" loading="lazy" />}
+            <div class="pcard-head">
+              <div>
+                <h3><a href={`/funded-projects/${p.slug}`} class="fp-title">{p.title}</a></h3>
+                <p class="pcard-sub">{p.funder}</p>
+              </div>
+              <span class={`badge badge--${statusColor(p.status)}`}>{p.status}</span>
             </div>
-            <h3>{p.data.title}</h3>
-            <p class="fp-funder">{p.data.funder} · Started {monthYear(p.data.startDate)}</p>
-            <p class="fp-desc">{p.data.description}</p>
-          </a>
+
+            {p.image && <div class="fp-logo-row"><img src={p.image} alt={p.funder} class="fp-logo" loading="lazy" /></div>}
+
+            <p class="pcard-desc">{p.body || p.description}</p>
+            <button type="button" class="pcard-more" hidden>Show more</button>
+
+            <div class="pcard-tags">
+              {p.species.map((s) => <span class="tag tag--species">{s}</span>)}
+              {p.methods.map((t) => <span class="tag tag--method">{t}</span>)}
+              {p.areas.map((t) => <span class="tag tag--area">{t}</span>)}
+              <span class="tag">Started {monthYear(p.startDate)}</span>
+            </div>
+
+            <div class="pcard-links">
+              <a href={`/funded-projects/${p.slug}`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
+              {p.github.map((g, i) => (
+                <a href={g} target="_blank" rel="noopener" title={g} class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {p.github.length > 1 ? repoName(g) : "GitHub"}</a>
+              ))}
+            </div>
+
+            {p.labCount > 0 && (
+              <a href={`/nwb-conversions?project=${encodeURIComponent(p.filterName)}`} class="pcard-foot">
+                <Icon name="link" size={13} /> {p.labCount} affiliated {p.labCount === 1 ? "conversion" : "conversions"}
+              </a>
+            )}
+          </article>
         ))}
       </div>
-      <p class="fp-empty" id="fp-empty" hidden>No projects match your filters.</p>
+      <p class="pcard-empty" id="fp-empty" hidden>No projects match your filters.</p>
 
       <nav class="cv-pager" id="fp-pager" aria-label="Projects pagination" hidden>
         <button type="button" class="btn btn-ghost btn-sm" id="fp-prev">Previous</button>
@@ -69,32 +137,31 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
 </Base>
 
 <style>
-  .fp-controls { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.2rem; }
+  .fp-controls { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.2rem; }
   .fp-search { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 16rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
   .fp-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
   .fp-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.92rem; color: var(--color-navy); }
   .fp-select { padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); font-family: var(--font-sans); font-size: 0.9rem; color: var(--color-navy); cursor: pointer; }
   .fp-select:focus { outline: none; border-color: var(--color-blue); }
-  .fp-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
-  @media (min-width: 720px) { .fp-grid { grid-template-columns: repeat(2, 1fr); } }
-  .fp-card { padding: 1.7rem; display: flex; flex-direction: column; }
-  .fp-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; min-height: 55px; }
+  .fp-title { color: inherit; }
+  .fp-title:hover { color: var(--color-blue); }
+  .fp-logo-row { margin-top: 1rem; }
   .fp-logo { max-height: 55px; max-width: 156px; object-fit: contain; }
-  .fp-card h3 { font-size: 1.25rem; }
-  .fp-funder { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.03em; margin: 0.5rem 0 0.8rem; }
-  .fp-desc { color: var(--color-ink-muted); font-size: 0.93rem; }
-  .fp-empty { text-align: center; color: var(--color-ink-muted); padding: 2rem; }
 </style>
 
 <script>
   import { createPager } from "../../lib/pager";
+  import { createClampToggles } from "../../lib/clamp";
 
   const q = document.getElementById("fp-search") as HTMLInputElement;
   const status = document.getElementById("fp-status") as HTMLSelectElement;
   const funder = document.getElementById("fp-funder") as HTMLSelectElement;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>(".fp-card"));
+
+  const { measure } = createClampToggles(cards);
 
   const pager = createPager({
-    cards: Array.from(document.querySelectorAll<HTMLElement>(".fp-card")),
+    cards,
     grid: document.getElementById("fp-grid") as HTMLElement,
     pager: document.getElementById("fp-pager") as HTMLElement,
     pages: document.getElementById("fp-pages") as HTMLElement,
@@ -113,5 +180,11 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
     },
   });
 
-  [q, status, funder].forEach((el) => el?.addEventListener("input", () => pager.refresh()));
+  function apply() {
+    pager.refresh();
+    measure();
+  }
+  [q, status, funder].forEach((el) => el?.addEventListener("input", apply));
+  // Cards revealed by paging were invisible when last measured, so re-check.
+  document.getElementById("fp-pager")?.addEventListener("click", () => measure());
 </script>
