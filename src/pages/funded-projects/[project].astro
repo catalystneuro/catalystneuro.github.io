@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { slugify, monthYear, statusColor, repoName } from "../../lib/format";
+import { FUNDED_PROJECT_ALIASES } from "../../data/site-content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("fundedProjects");
+  const conversions = await getCollection("conversions");
+  return projects.map((p) => {
+    const target = FUNDED_PROJECT_ALIASES[p.data.title] ?? p.data.title;
+    const affiliated = conversions.filter(
+      (c) => c.data.funded_project === p.data.title || c.data.funded_project === target
+    );
+    return { params: { project: slugify(p.data.title) }, props: { p, affiliated } };
+  });
+}
+
+const { p, affiliated } = Astro.props;
+const { Content } = await render(p);
+const d = p.data;
+---
+<Base title={d.title} description={d.description}>
+  <article>
+    <header class="post-head">
+      <div class="container-x post-head-inner">
+        <a href="/funded-projects" class="post-back"><Icon name="arrow" size={15} class="flip" /> All funded projects</a>
+        <div class="fpd-top">
+          <span class={`badge badge--${statusColor(d.status)}`}>{d.status}</span>
+          {d.image && <img src={d.image} alt={d.funder} class="fpd-logo" />}
+        </div>
+        <h1>{d.title}</h1>
+        <p class="post-meta">{d.funder} · Started {monthYear(d.startDate)}</p>
+      </div>
+    </header>
+
+    <div class="container-x post-wrap">
+      <div class="fpd-layout">
+        <div>
+          {d.description && <p class="fpd-lead">{d.description}</p>}
+          <div class="prose fpd-prose"><Content /></div>
+
+          {d.github && d.github.length > 0 && (
+            <div class="fpd-repos">
+              <span class="eyebrow">Repositories</span>
+              <div class="fpd-repo-list">
+                {d.github.map((g) => (
+                  <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> {repoName(g)}</a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {affiliated.length > 0 && (
+        <section class="fpd-affil">
+          <span class="eyebrow">Affiliated work</span>
+          <h2 class="section-title">NWB conversions under this project</h2>
+          <div class="fpd-affil-grid">
+            {affiliated.map((c) => (
+              <div class="card fpd-affil-card">
+                {c.data.date && <span class="fpd-affil-date">{c.data.date}</span>}
+                <h3>{c.data.lab}</h3>
+                <p class="fpd-affil-inst">{c.data.institution}</p>
+                <p class="fpd-affil-desc">{c.data.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-head { padding: 3rem 0 1.5rem; }
+  .post-head-inner { max-width: 48rem; margin-inline: auto; }
+  .post-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-blue); margin-bottom: 1.4rem; }
+  .post-back :global(.flip) { transform: rotate(180deg); }
+  .fpd-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .fpd-logo { max-height: 57px; max-width: 169px; object-fit: contain; }
+  .post-head h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); }
+  .post-meta { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--color-ink-muted); }
+  .post-wrap { padding-top: 2rem; }
+  .fpd-layout { max-width: 48rem; margin-inline: auto; }
+  .fpd-lead { font-size: 1.15rem; line-height: 1.6; color: var(--color-navy); font-weight: 450; margin-bottom: 1.4rem; }
+  .fpd-repos { margin-top: 2.2rem; }
+  .fpd-repos .eyebrow { margin-bottom: 0.9rem; }
+  .fpd-repo-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .fpd-affil { max-width: 48rem; margin: 4rem auto 0; padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
+  .fpd-affil .section-title { margin: 0.6rem 0 1.8rem; }
+  .fpd-affil-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .fpd-affil-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fpd-affil-card { padding: 1.4rem; }
+  .fpd-affil-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-ink-soft); }
+  .fpd-affil-card h3 { font-size: 1.1rem; margin-top: 0.4rem; }
+  .fpd-affil-inst { color: var(--color-blue); font-size: 0.85rem; margin: 0.2rem 0 0.7rem; }
+  .fpd-affil-desc { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

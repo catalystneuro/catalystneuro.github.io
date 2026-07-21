@@ -1,0 +1,58 @@
+---
+import { FOOTER, SITE } from "../consts";
+const year = 2026;
+---
+<footer class="ftr">
+  <div class="container-x">
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <img src="/images/logo.png" alt="CatalystNeuro" class="ftr-logo" width="180" height="36" />
+        <p class="ftr-tag">Data and software engineering for open neuroscience.</p>
+      </div>
+
+      <div class="ftr-cols">
+        {FOOTER.map((col) => (
+          <div>
+            <h3 class="ftr-h">{col.title}</h3>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} {...(l.external ? { target: "_blank", rel: "noopener" } : {})}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div>
+          <h3 class="ftr-h">Contact</h3>
+          <p class="ftr-note">Have questions? Get in touch with us.</p>
+          <a href={`mailto:${SITE.email}`} class="ftr-mail">{SITE.email}</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="ftr-rule" />
+    <div class="ftr-bottom">
+      <span>© {year} CatalystNeuro. All rights reserved.</span>
+      <a href="/catalystneuro-fcoi-policy.pdf" target="_blank" rel="noopener">FCOI Policy</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { background: var(--color-ink); color: rgba(255,255,255,0.72); padding: 4rem 0 2rem; margin-top: 5rem; }
+  .ftr-top { display: grid; gap: 3rem; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .ftr-top { grid-template-columns: 1.1fr 2fr; } }
+  .ftr-logo { height: 34px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+  .ftr-tag { margin: 1rem 0 1.4rem; max-width: 22rem; font-size: 0.95rem; line-height: 1.6; }
+  .ftr-cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  @media (min-width: 640px) { .ftr-cols { grid-template-columns: repeat(4, 1fr); } }
+  .ftr-h { color: #fff; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1rem; font-weight: 500; }
+  .ftr-cols ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .ftr-cols a, .ftr-mail { font-size: 0.9rem; color: rgba(255,255,255,0.72); transition: color 0.15s; }
+  .ftr-cols a:hover, .ftr-mail:hover { color: var(--color-signal-soft); }
+  .ftr-note { font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .ftr-rule { border: 0; height: 1px; background: rgba(255,255,255,0.1); margin: 3rem 0 1.5rem; }
+  .ftr-bottom { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between; font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+  .ftr-bottom a:hover { color: var(--color-signal-soft); }
+</style>

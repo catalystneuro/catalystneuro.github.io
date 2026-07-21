@@ -1,0 +1,13 @@
+---
+lab: "Michale Fee"
+institution: "Massachusetts Institute of Technology"
+description: "Developed NWB conversion tools for the Fee lab's neurophysiology datasets studying neural mechanisms of learning and behavior. The conversion pipeline supports complex data structures from electrophysiological recordings and behavioral measurements, with specialized interfaces for processing and analyzing neural activity patterns during behavioral tasks."
+tags: ["electrophysiology", "behavioral tracking"]
+github: "https://github.com/catalystneuro/fee-lab-to-nwb"
+date: "2022-05"
+funded_project: "SCGB NWB Adoption"
+species: Zebra finch
+dandi:
+    - url: https://dandiarchive.org/dandiset/000691
+      name: "000691: An optical design enabling lightweight and large field-of-view head-mounted microscopes"
+---

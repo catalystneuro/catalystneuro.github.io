@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts */
+@import "@fontsource-variable/figtree";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+
+/*
+  CatalystNeuro design system.
+  Brand constants (from the logo): navy #101642, blue #1466A7.
+  The rest of the palette is derived to support a technical, data-forward voice:
+  a near-black "ink" for dark sections, an electric "signal" cyan used sparingly
+  as the single accent, and cool paper/line neutrals.
+*/
+@theme {
+  --color-ink: #0a0e28;
+  --color-navy: #101642;
+  --color-navy-700: #1b2358;
+  --color-navy-600: #283066;
+
+  --color-blue: #1466a7;
+  --color-blue-600: #0f5289;
+  --color-blue-400: #3f8cca;
+  --color-blue-100: #dceaf6;
+  --color-blue-50: #eef6fc;
+
+  --color-signal: #22c7e6;      /* electric accent — "live" data */
+  --color-signal-soft: #7fe0f0;
+
+  --color-paper: #f5f8fc;
+  --color-surface: #ffffff;
+  --color-line: #dfe6f1;
+  --color-line-soft: #ecf1f8;
+
+  --color-ink-muted: #55607a;
+  --color-ink-soft: #7c86a0;
+
+  --font-display: "Figtree Variable", Figtree, system-ui, sans-serif;
+  --font-sans: "Inter Variable", Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-navy);
+    line-height: 1.08;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a { color: inherit; text-decoration: none; }
+}
+
+@layer components {
+  /* Monospace eyebrow / label — the recurring structural device */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-blue);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .eyebrow--plain::before { display: none; }
+
+  .container-x { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: 1.5rem; }
+
+  /* Primary button */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    font-family: var(--font-sans); font-weight: 500; font-size: 0.95rem;
+    padding: 0.7rem 1.35rem; border-radius: 0.55rem;
+    transition: all 0.2s var(--ease-out-expo);
+    cursor: pointer; border: 1px solid transparent; white-space: nowrap;
+  }
+  .btn-primary { background: var(--color-blue); color: #fff; box-shadow: 0 1px 2px rgba(16,22,66,0.16); }
+  .btn-primary:hover { background: var(--color-blue-600); transform: translateY(-1px); box-shadow: 0 8px 24px -8px rgba(20,102,167,0.55); }
+  .btn-ghost { background: transparent; color: var(--color-navy); border-color: var(--color-line); }
+  .btn-ghost:hover { border-color: var(--color-blue); color: var(--color-blue); }
+  .btn-ondark { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.22); }
+  .btn-ondark:hover { background: #fff; color: var(--color-navy); }
+  .btn-sm { padding: 0.45rem 0.85rem; font-size: 0.82rem; }
+
+  /* Card */
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 0.9rem;
+    transition: border-color 0.25s var(--ease-out-expo), box-shadow 0.25s var(--ease-out-expo), transform 0.25s var(--ease-out-expo);
+  }
+  .card-hover:hover { border-color: color-mix(in srgb, var(--color-blue) 45%, var(--color-line)); box-shadow: 0 20px 40px -28px rgba(16,22,66,0.4); transform: translateY(-3px); }
+
+  .tag {
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem; border-radius: 0.35rem; white-space: nowrap;
+  }
+  .rule { height: 1px; background: var(--color-line); border: 0; }
+
+  .badge {
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em; text-transform: capitalize;
+    padding: 0.22rem 0.6rem; border-radius: 0.35rem; font-weight: 500; white-space: nowrap;
+  }
+  .badge--green { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; }
+  .badge--gray  { background: #eef1f6; color: #4b5675; }
+  .badge--amber { background: color-mix(in srgb, #f59e0b 16%, white); color: #b45309; }
+  .badge--blue  { background: var(--color-blue-50); color: var(--color-blue-600); }
+}
+
+/* ------------------------------------------------------------------ */
+/* Long-form prose (blog posts, guides, about)                         */
+/* ------------------------------------------------------------------ */
+.prose {
+  font-size: 1.075rem;
+  line-height: 1.75;
+  color: #313a54;
+}
+.prose > * + * { margin-top: 1.3em; }
+.prose h2 {
+  font-size: 1.65rem; margin-top: 2.4em; margin-bottom: 0.2em;
+  padding-top: 1.2rem; border-top: 1px solid var(--color-line-soft);
+}
+.prose h3 { font-size: 1.28rem; margin-top: 1.8em; }
+.prose h4 { font-size: 1.08rem; margin-top: 1.6em; font-family: var(--font-sans); font-weight: 700; }
+.prose p { margin-block: 0; }
+.prose a { color: var(--color-blue); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: color-mix(in srgb, var(--color-blue) 40%, transparent); }
+.prose a:hover { text-decoration-color: var(--color-blue); }
+.prose strong { color: var(--color-navy); font-weight: 650; }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose ul { list-style: none; }
+.prose ul > li { position: relative; padding-left: 1.2em; }
+.prose ul > li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 6px; height: 6px; border-radius: 1px; background: var(--color-signal); transform: rotate(45deg); }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: 0.4em; }
+.prose blockquote {
+  border-left: 2px solid var(--color-blue); padding-left: 1.2rem;
+  color: var(--color-ink-muted); font-style: italic;
+}
+.prose img { border-radius: 0.7rem; border: 1px solid var(--color-line); margin-block: 1.6em; width: 100%; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.95rem; display: block; overflow-x: auto; }
+.prose th, .prose td { border: 1px solid var(--color-line); padding: 0.55rem 0.8rem; text-align: left; }
+.prose th { background: var(--color-paper); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.03em; text-transform: uppercase; }
+.prose :not(pre) > code {
+  font-family: var(--font-mono); font-size: 0.85em;
+  background: var(--color-blue-50); color: var(--color-blue-600);
+  padding: 0.12em 0.4em; border-radius: 0.3rem; border: 1px solid var(--color-line-soft);
+}
+.prose pre {
+  border-radius: 0.7rem; padding: 1.15rem 1.25rem; overflow-x: auto;
+  border: 1px solid #1f2545; font-size: 0.86rem; line-height: 1.6;
+  margin-block: 1.8em; box-shadow: 0 18px 40px -30px rgba(10,14,40,0.9);
+}
+.prose pre code { font-family: var(--font-mono); background: transparent; border: 0; padding: 0; }
+.prose h2 a, .prose h3 a { text-decoration: none; }
+
+/* Pagination controls. Global because the page buttons are built in client
+   scripts and so never receive Astro's component-scoping attribute. */
+.cv-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.4rem; margin-top: 2.5rem; }
+.cv-pages { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0 0.4rem; }
+.cv-page { min-width: 2.2rem; padding: 0.4rem 0.55rem; border: 1px solid var(--color-line); border-radius: 0.5rem; background: var(--color-surface); font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-ink-muted); cursor: pointer; }
+.cv-page:hover { border-color: var(--color-blue); color: var(--color-blue); }
+.cv-page[aria-current="page"] { background: var(--color-blue); border-color: var(--color-blue); color: #fff; }
+.cv-gap { min-width: 1.2rem; text-align: center; color: var(--color-ink-soft); font-family: var(--font-mono); font-size: 0.8rem; align-self: center; }
+.cv-pager .btn[disabled] { opacity: 0.4; pointer-events: none; }
+.cv-count { font-family: var(--font-mono); font-size: 0.78rem; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

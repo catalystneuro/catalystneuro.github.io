@@ -1,0 +1,79 @@
+---
+// Hydrates the <div class="cn-gallery" data-images="a|b|c"> placeholders emitted
+// by the remark-galleries build plugin into keyboard-accessible carousels.
+---
+<style is:global>
+  .cn-gallery { margin: 2rem 0; border: 1px solid var(--color-line); border-radius: 0.7rem; overflow: hidden; background: var(--color-ink); }
+  .cn-gallery-stage { position: relative; width: 100%; background: #000; }
+  .cn-gallery-track { display: flex; transition: transform 0.4s var(--ease-out-expo); }
+  .cn-gallery-slide { min-width: 100%; display: grid; place-items: center; }
+  .cn-gallery-slide img, .cn-gallery-slide video, .cn-gallery-slide iframe { width: 100%; height: 100%; object-fit: contain; display: block; border: 0; }
+  .cn-gallery-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 0; background: rgba(255,255,255,0.9); color: var(--color-navy); cursor: pointer; display: grid; place-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  .cn-gallery-nav:hover { background: #fff; }
+  .cn-gallery-prev { left: 0.8rem; } .cn-gallery-next { right: 0.8rem; }
+  .cn-gallery-nav[hidden] { display: none; }
+  .cn-gallery-dots { display: flex; gap: 0.4rem; justify-content: center; padding: 0.8rem; background: var(--color-ink); }
+  .cn-gallery-dot { width: 7px; height: 7px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.3); cursor: pointer; padding: 0; }
+  .cn-gallery-dot.is-active { background: var(--color-signal); }
+</style>
+
+<script>
+  function ytId(url: string): string | null {
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/);
+    return m ? m[1] : null;
+  }
+  function slideHTML(src: string): string {
+    const yt = ytId(src);
+    if (yt) return `<iframe src="https://www.youtube-nocookie.com/embed/${yt}" allowfullscreen loading="lazy"></iframe>`;
+    if (/\.(mp4|webm)$/i.test(src)) return `<video src="${src}" controls preload="metadata"></video>`;
+    return `<img src="${src}" alt="" loading="lazy" />`;
+  }
+
+  document.querySelectorAll<HTMLElement>(".cn-gallery").forEach((el) => {
+    const images = (el.dataset.images || "").split("|").filter(Boolean);
+    if (!images.length) { el.remove(); return; }
+    const aspect = el.dataset.aspect || "16/9";
+    const width = el.dataset.width || "";
+    if (width) { el.style.maxWidth = width; el.style.marginInline = "auto"; }
+    let i = 0;
+
+    const stage = document.createElement("div");
+    stage.className = "cn-gallery-stage";
+    stage.style.aspectRatio = aspect.replace("/", " / ");
+    const track = document.createElement("div");
+    track.className = "cn-gallery-track";
+    track.innerHTML = images.map((s) => `<div class="cn-gallery-slide">${slideHTML(s)}</div>`).join("");
+    stage.appendChild(track);
+
+    const multi = images.length > 1;
+    const prev = document.createElement("button");
+    prev.className = "cn-gallery-nav cn-gallery-prev"; prev.innerHTML = "‹"; prev.setAttribute("aria-label", "Previous");
+    const next = document.createElement("button");
+    next.className = "cn-gallery-nav cn-gallery-next"; next.innerHTML = "›"; next.setAttribute("aria-label", "Next");
+    if (!multi) { prev.hidden = true; next.hidden = true; }
+    stage.append(prev, next);
+    el.appendChild(stage);
+
+    let dots: HTMLButtonElement[] = [];
+    if (multi) {
+      const dotWrap = document.createElement("div");
+      dotWrap.className = "cn-gallery-dots";
+      images.forEach((_, idx) => {
+        const d = document.createElement("button");
+        d.className = "cn-gallery-dot"; d.setAttribute("aria-label", `Go to slide ${idx + 1}`);
+        d.addEventListener("click", () => go(idx));
+        dotWrap.appendChild(d); dots.push(d);
+      });
+      el.appendChild(dotWrap);
+    }
+
+    function go(n: number) {
+      i = (n + images.length) % images.length;
+      track.style.transform = `translateX(-${i * 100}%)`;
+      dots.forEach((d, idx) => d.classList.toggle("is-active", idx === i));
+    }
+    prev.addEventListener("click", () => go(i - 1));
+    next.addEventListener("click", () => go(i + 1));
+    go(0);
+  });
+</script>

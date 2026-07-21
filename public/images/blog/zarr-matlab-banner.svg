@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="zarr-matlab: Zarr v3, natively in MATLAB">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(230 45% 14%)"/>
+      <stop offset="55%" stop-color="hsl(220 55% 20%)"/>
+      <stop offset="100%" stop-color="hsl(24 70% 30%)"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="84%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="hsl(24 90% 55%)" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="hsl(24 90% 55%)" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+
+  <g transform="translate(0 137.5)">
+
+  <!-- chunked-array grid motif: an N-D array split into indexable chunks -->
+  <g transform="translate(770 60)" opacity="0.95">
+    <g stroke="white" stroke-opacity="0.35" stroke-width="2" fill="none">
+      <rect x="0" y="0" width="320" height="260" rx="6"/>
+    </g>
+    <g>
+      <!-- chunk grid -->
+      <g fill="hsl(24 85% 60%)" fill-opacity="0.85">
+        <rect x="6" y="6" width="72" height="60" rx="3"/>
+        <rect x="86" y="6" width="72" height="60" rx="3" fill="hsl(203 79% 62%)"/>
+        <rect x="166" y="6" width="72" height="60" rx="3" fill="hsl(24 85% 60%)"/>
+        <rect x="246" y="6" width="68" height="60" rx="3" fill="hsl(203 79% 62%)"/>
+
+        <rect x="6" y="72" width="72" height="60" rx="3" fill="hsl(203 79% 62%)"/>
+        <rect x="86" y="72" width="72" height="60" rx="3" fill="white" fill-opacity="0.55"/>
+        <rect x="166" y="72" width="72" height="60" rx="3" fill="hsl(203 79% 62%)"/>
+        <rect x="246" y="72" width="68" height="60" rx="3" fill="hsl(24 85% 60%)"/>
+
+        <rect x="6" y="138" width="72" height="60" rx="3" fill="hsl(24 85% 60%)"/>
+        <rect x="86" y="138" width="72" height="60" rx="3" fill="hsl(203 79% 62%)"/>
+        <rect x="166" y="138" width="72" height="60" rx="3" fill="white" fill-opacity="0.35"/>
+        <rect x="246" y="138" width="68" height="60" rx="3" fill="hsl(203 79% 62%)"/>
+
+        <rect x="6" y="204" width="72" height="50" rx="3" fill="hsl(203 79% 62%)"/>
+        <rect x="86" y="204" width="72" height="50" rx="3" fill="hsl(24 85% 60%)"/>
+        <rect x="166" y="204" width="72" height="50" rx="3" fill="hsl(203 79% 62%)"/>
+        <rect x="246" y="204" width="68" height="50" rx="3" fill="white" fill-opacity="0.5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- text block -->
+  <g font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="80" y="150" fill="white" font-size="72" font-weight="700">zarr-matlab</text>
+    <text x="82" y="203" fill="hsl(30 90% 78%)" font-size="30" font-weight="600">Zarr v3, natively in MATLAB</text>
+    <text x="82" y="248" fill="white" fill-opacity="0.8" font-size="22" font-weight="400">Free, open-source, pure-MATLAB implementation</text>
+    <text x="82" y="284" fill="white" fill-opacity="0.6" font-size="20" font-weight="400">CatalystNeuro</text>
+  </g>
+  </g>
+</svg>

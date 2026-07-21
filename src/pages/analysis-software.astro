@@ -1,0 +1,53 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+
+const items = (await getCollection("software")).filter((s) => s.data.type === "analysis");
+---
+<Base title="Analysis Software" description="Open-source neuroscience analysis packages CatalystNeuro develops and contributes to, including spike sorting, imaging, and behavior pipelines.">
+  <PageHeader
+    eyebrow="Analysis & pipelines"
+    title="Analysis software"
+    subtitle="We contribute to and collaborate with several open-source analysis packages in the neuroscience community."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="an-grid">
+        {items.map((s) => (
+          <article class="card card-hover an-card">
+            <div class="an-top">
+              {s.data.image
+                ? <div class="an-logo"><img src={s.data.image} alt={s.data.name} loading="lazy" /></div>
+                : <div class="an-logo an-logo--mono"><Icon name="chart" size={22} /></div>}
+              {s.data.status && <span class="tag an-status">{s.data.status}</span>}
+            </div>
+            <h3>{s.data.name}</h3>
+            <p>{s.data.description}</p>
+            <div class="an-links">
+              {s.data.github && <a href={s.data.github} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> GitHub</a>}
+              {s.data.docs && <a href={s.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="book" size={15} /> Docs</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .an-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .an-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .an-grid { grid-template-columns: repeat(3, 1fr); } }
+  .an-card { padding: 1.7rem; display: flex; flex-direction: column; }
+  .an-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+  .an-logo { height: 46px; max-width: 150px; display: flex; align-items: center; }
+  .an-logo img { max-height: 46px; max-width: 150px; object-fit: contain; }
+  .an-logo--mono { width: 46px; background: var(--color-blue-50); color: var(--color-blue); border-radius: 0.6rem; justify-content: center; }
+  .an-status { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; align-self: flex-start; }
+  .an-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .an-card p { color: var(--color-ink-muted); font-size: 0.93rem; flex: 1; margin-bottom: 1.2rem; }
+  .an-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+</style>

@@ -1,0 +1,11 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Astro emits real static pages for every route, so no SPA catch-all is needed.
+# A 404.html is generated automatically for unmatched paths.

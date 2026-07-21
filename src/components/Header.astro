@@ -1,0 +1,112 @@
+---
+import { NAV, SITE } from "../consts";
+import Icon from "./Icon.astro";
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(href + "/");
+---
+<header class="hdr" id="site-header">
+  <div class="container-x hdr-inner">
+    <a href="/" class="hdr-logo" aria-label="CatalystNeuro home">
+      <img src="/images/logo.png" alt="CatalystNeuro" width="168" height="34" />
+    </a>
+
+    <nav class="hdr-nav" aria-label="Primary">
+      {NAV.map((item) =>
+        item.children ? (
+          <div class="nav-group">
+            <button class:list={["nav-link", "nav-trigger", item.children.some((c) => isActive(c.href)) && "is-active"]} aria-haspopup="true" aria-expanded="false">
+              {item.label}
+              <Icon name="chevron" size={14} />
+            </button>
+            <div class="nav-menu" role="menu">
+              {item.children.map((c) => (
+                <a href={c.href} role="menuitem" class:list={["nav-menu-link", isActive(c.href) && "is-active"]}>{c.label}</a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} class:list={["nav-link", isActive(item.href) && "is-active"]}>{item.label}</a>
+        )
+      )}
+    </nav>
+
+    <div class="hdr-actions">
+      <a href={SITE.github} class="hdr-icon" aria-label="GitHub" target="_blank" rel="noopener">
+        <Icon name="github" size={20} />
+      </a>
+      <a href="/consultation" class="btn btn-primary btn-sm hdr-cta">Request consultation</a>
+      <button class="hdr-burger" id="burger" aria-label="Menu" aria-expanded="false">
+        <Icon name="menu" size={22} />
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-panel" id="mobile-panel" hidden>
+    <nav aria-label="Mobile">
+      {NAV.flatMap((item) => (item.children ? item.children : [item])).map((c) => (
+        <a href={c.href} class:list={["mobile-link", isActive(c.href) && "is-active"]}>{c.label}</a>
+      ))}
+      <a href="/consultation" class="btn btn-primary mobile-cta">Request consultation</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--color-paper) 82%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .hdr-inner { display: flex; align-items: center; justify-content: space-between; height: 4.25rem; gap: 1rem; }
+  .hdr-logo img { height: 30px; width: auto; display: block; }
+  .hdr-nav { display: none; align-items: center; gap: 0.25rem; }
+  @media (min-width: 960px) { .hdr-nav { display: flex; } }
+
+  .nav-link {
+    font-size: 0.9rem; font-weight: 500; color: var(--color-navy);
+    padding: 0.5rem 0.8rem; border-radius: 0.45rem; display: inline-flex; align-items: center; gap: 0.3rem;
+    background: none; border: 0; cursor: pointer; font-family: var(--font-sans);
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-link:hover { color: var(--color-blue); background: var(--color-blue-50); }
+  .nav-link.is-active { color: var(--color-blue); }
+
+  .nav-group { position: relative; }
+  .nav-menu {
+    position: absolute; top: calc(100% + 0.3rem); left: 0; min-width: 12rem;
+    background: var(--color-surface); border: 1px solid var(--color-line);
+    border-radius: 0.6rem; padding: 0.4rem; box-shadow: 0 18px 40px -20px rgba(16,22,66,0.35);
+    opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all 0.16s var(--ease-out-expo);
+  }
+  .nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-menu-link { display: block; padding: 0.5rem 0.7rem; border-radius: 0.4rem; font-size: 0.88rem; color: var(--color-navy); }
+  .nav-menu-link:hover { background: var(--color-blue-50); color: var(--color-blue); }
+  .nav-menu-link.is-active { color: var(--color-blue); }
+
+  .hdr-actions { display: flex; align-items: center; gap: 0.5rem; }
+  .hdr-icon { color: var(--color-navy); padding: 0.4rem; border-radius: 0.4rem; display: none; }
+  .hdr-icon:hover { color: var(--color-blue); background: var(--color-blue-50); }
+  .hdr-cta { display: none; }
+  @media (min-width: 960px) { .hdr-icon, .hdr-cta { display: inline-flex; } }
+
+  .hdr-burger { display: inline-flex; background: none; border: 0; color: var(--color-navy); cursor: pointer; padding: 0.3rem; }
+  @media (min-width: 960px) { .hdr-burger { display: none; } }
+
+  .mobile-panel { border-top: 1px solid var(--color-line); background: var(--color-surface); padding: 0.75rem 1.5rem 1.25rem; }
+  .mobile-panel nav { display: flex; flex-direction: column; gap: 0.15rem; }
+  .mobile-link { padding: 0.7rem 0.5rem; border-radius: 0.4rem; font-weight: 500; border-bottom: 1px solid var(--color-line-soft); }
+  .mobile-link.is-active { color: var(--color-blue); }
+  .mobile-cta { margin-top: 0.8rem; }
+</style>
+
+<script>
+  const burger = document.getElementById("burger");
+  const panel = document.getElementById("mobile-panel");
+  burger?.addEventListener("click", () => {
+    const open = panel?.hasAttribute("hidden");
+    if (open) panel?.removeAttribute("hidden");
+    else panel?.setAttribute("hidden", "");
+    burger.setAttribute("aria-expanded", String(!!open));
+  });
+</script>

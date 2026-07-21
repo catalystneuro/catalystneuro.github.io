@@ -1,0 +1,94 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+
+const all = await getCollection("software");
+const core = all.filter((s) => s.data.type === "core");
+const ext = all.filter((s) => s.data.type === "extension");
+---
+<Base title="NWB Software" description="Open-source tools from CatalystNeuro that make neurophysiology data management and standardization with Neurodata Without Borders accessible to all researchers.">
+  <PageHeader
+    eyebrow="Open-source tools"
+    title="NWB software"
+    subtitle="We develop open-source tools to make neurophysiology data management and standardization accessible to all researchers."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="sw-section-head">
+        <span class="eyebrow">Core tools</span>
+        <h2 class="section-title">The NWB toolchain</h2>
+      </div>
+      <div class="sw-grid">
+        {core.map((s) => (
+          <article class="card card-hover sw-card">
+            <div class="sw-top">
+              {s.data.image
+                ? <div class="sw-logo"><img src={s.data.image} alt={s.data.name} loading="lazy" /></div>
+                : <div class="sw-logo sw-logo--mono"><Icon name="database" size={22} /></div>}
+              {s.data.status && <span class="tag sw-status">{s.data.status}</span>}
+            </div>
+            <h3>{s.data.name}</h3>
+            <p>{s.data.description}</p>
+            <div class="sw-links">
+              {s.data.github && <a href={s.data.github} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> GitHub</a>}
+              {s.data.docs && <a href={s.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="book" size={15} /> Docs</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="sw-section-head sw-section-head--gap">
+        <span class="eyebrow">Neurodata extensions</span>
+        <h2 class="section-title">NDX extensions</h2>
+        <p class="section-lead">Community extensions to the NWB schema for specialized data types.</p>
+      </div>
+      <div class="sw-grid sw-grid--ext">
+        {ext.map((s) => (
+          <article class="card card-hover sw-card sw-card--sm">
+            <div class="sw-ndx-mark"><Icon name="code" size={16} /></div>
+            <h3>{s.data.name}</h3>
+            <p>{s.data.description}</p>
+            {s.data.github && <a href={s.data.github} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> GitHub</a>}
+          </article>
+        ))}
+      </div>
+
+      <div class="card sw-guide-cta">
+        <div>
+          <h3>Documentation & guides</h3>
+          <p>Step-by-step guides for sharing data with us and working through an NWB adoption engagement.</p>
+        </div>
+        <a href="/guides" class="btn btn-primary">See all guides <Icon name="arrow" size={15} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sw-section-head { margin-bottom: 2rem; }
+  .sw-section-head--gap { margin-top: 4.5rem; }
+  .sw-section-head .section-title { margin-top: 0.6rem; }
+  .sw-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .sw-grid { grid-template-columns: repeat(2, 1fr); } }
+  .sw-grid--ext { grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .sw-grid--ext { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .sw-grid--ext { grid-template-columns: repeat(4, 1fr); } }
+  .sw-card { padding: 1.8rem; display: flex; flex-direction: column; }
+  .sw-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .sw-card p { color: var(--color-ink-muted); font-size: 0.95rem; flex: 1; margin-bottom: 1.2rem; }
+  .sw-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; }
+  .sw-logo { height: 52px; max-width: 170px; display: flex; align-items: center; }
+  .sw-logo img { max-height: 52px; max-width: 170px; object-fit: contain; }
+  .sw-logo--mono { width: 52px; background: var(--color-blue-50); color: var(--color-blue); border-radius: 0.6rem; justify-content: center; }
+  .sw-status { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; align-self: flex-start; }
+  .sw-card--sm h3 { font-size: 1.05rem; }
+  .sw-card--sm p { font-size: 0.88rem; }
+  .sw-ndx-mark { width: 40px; height: 40px; border-radius: 0.5rem; background: var(--color-blue-50); color: var(--color-blue); display: grid; place-items: center; margin-bottom: 1rem; }
+  .sw-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .sw-guide-cta { margin-top: 3rem; padding: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; justify-content: space-between; background: linear-gradient(120deg, var(--color-blue-50), var(--color-surface)); }
+  .sw-guide-cta h3 { font-size: 1.35rem; }
+  .sw-guide-cta p { color: var(--color-ink-muted); margin-top: 0.4rem; max-width: 34rem; }
+</style>

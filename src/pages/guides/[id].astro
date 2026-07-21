@@ -1,0 +1,47 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import GalleryRuntime from "../../components/GalleryRuntime.astro";
+
+export async function getStaticPaths() {
+  const guides = (await getCollection("software")).filter((s) => s.data.type === "guide");
+  return guides.map((g) => ({ params: { id: g.id }, props: { g } }));
+}
+
+const { g } = Astro.props;
+const { Content } = await render(g);
+---
+<Base title={g.data.name} description={g.data.description}>
+  <article class="post">
+    <header class="post-head">
+      <div class="container-x post-head-inner">
+        <a href="/guides" class="post-back"><Icon name="arrow" size={15} class="flip" /> All guides</a>
+        <span class="eyebrow">Guide</span>
+        <h1>{g.data.name}</h1>
+        <p class="post-meta">{g.data.description}</p>
+        {g.data.docs && <a href={g.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm post-doc"><Icon name="external" size={15} /> External documentation</a>}
+      </div>
+    </header>
+
+    <div class="container-x post-wrap">
+      <div class="prose post-prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+  <GalleryRuntime />
+</Base>
+
+<style>
+  .post-head { padding: 3rem 0 1.5rem; }
+  .post-head-inner { max-width: 46rem; margin-inline: auto; }
+  .post-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-blue); margin-bottom: 1.4rem; }
+  .post-back :global(.flip) { transform: rotate(180deg); }
+  .post-head .eyebrow { margin-bottom: 0.8rem; }
+  .post-head h1 { font-size: clamp(2rem, 4.5vw, 2.8rem); }
+  .post-meta { margin-top: 1rem; color: var(--color-ink-muted); font-size: 1.05rem; }
+  .post-doc { margin-top: 1.4rem; }
+  .post-wrap { padding-top: 2rem; }
+  .post-prose { max-width: 46rem; margin-inline: auto; }
+</style>
