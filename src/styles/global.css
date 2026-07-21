@@ -165,7 +165,9 @@
 }
 .prose h3 { font-size: 1.28rem; margin-top: 1.8em; }
 .prose h4 { font-size: 1.08rem; margin-top: 1.6em; font-family: var(--font-sans); font-weight: 700; }
-.prose p { margin-block: 0; }
+/* Spacing between top-level blocks is handled by `.prose > * + *` above. Do not
+   add a `.prose p` margin rule: it has higher specificity than that selector
+   and silently collapses the space between paragraphs. */
 .prose a { color: var(--color-blue); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: color-mix(in srgb, var(--color-blue) 40%, transparent); }
 .prose a:hover { text-decoration-color: var(--color-blue); }
 .prose strong { color: var(--color-navy); font-weight: 650; }

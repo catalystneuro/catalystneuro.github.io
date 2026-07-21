@@ -245,6 +245,7 @@ export const RESEARCH_AREAS = [
   "Parkinson's disease",
   "autism",
   "decision-making",
+  "working memory",
   "sleep",
 ];
 

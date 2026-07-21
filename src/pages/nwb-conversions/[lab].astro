@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import { slugify, monthYear, asArray, dandiList, repoName } from "../../lib/format";
@@ -56,6 +56,11 @@ const areas = tags.filter((t) => areaSet.has(t.toLowerCase()));
 const other = tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has(t.toLowerCase()));
 
 const fundedHref = d.funded_project ? projectSlug[d.funded_project] : undefined;
+
+// Most conversions are frontmatter only. Where a file has a body, it holds the
+// long-form scope of work, rendered below the metadata blocks.
+const hasBody = !!c.body?.trim();
+const { Content } = await render(c);
 ---
 <Base title={`${d.lab} — NWB Conversion`} description={d.description}>
   <article>
@@ -121,6 +126,13 @@ const fundedHref = d.funded_project ? projectSlug[d.funded_project] : undefined;
         </section>
       )}
 
+      {hasBody && (
+        <section class="cvd-block cvd-sow">
+          <span class="eyebrow">Scope of work</span>
+          <div class="prose cvd-prose"><Content /></div>
+        </section>
+      )}
+
       {related.length > 0 && (
         <section class="cvd-related">
           <span class="eyebrow">Related work</span>
@@ -160,6 +172,9 @@ const fundedHref = d.funded_project ? projectSlug[d.funded_project] : undefined;
   .cvd-dandi a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .cvd-dandi svg { flex-shrink: 0; }
 
+  .cvd-sow { margin-top: 3rem; }
+  .cvd-prose { max-width: 48rem; }
+  .cvd-prose :global(h2) { font-size: 1.25rem; margin-top: 2rem; }
   .cvd-related { margin: 4rem 0 0; padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
   .cvd-related .eyebrow { margin-bottom: 1.4rem; }
   .cvd-related-card { padding: 1.4rem; }

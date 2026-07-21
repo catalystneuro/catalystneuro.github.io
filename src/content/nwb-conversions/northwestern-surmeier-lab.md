@@ -5,18 +5,11 @@ description: NWB conversion pipeline for Surmeier lab's multimodal ex-vivo brain
 tags:
   - electrophysiology
   - calcium imaging
-  - line scan imaging
   - optogenetics
   - behavioral tracking
   - video
   - two-photon microscopy
   - Parkinson's disease
-  - levodopa-induced dyskinesia
-  - striatum
-  - spiny projection neurons
-  - acetylcholine biosensor
-  - confocal microscopy
-  - spine density
 github: https://github.com/catalystneuro/surmeier-lab-to-nwb
 dandi:
   - url: "https://dandiarchive.org/dandiset/001538"
