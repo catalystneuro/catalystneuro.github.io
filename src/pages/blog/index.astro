@@ -7,11 +7,11 @@ import { longDate } from "../../lib/format";
 
 const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data.date ? 1 : -1));
 ---
-<Base title="Blog" description="Insights, updates, and technical articles from the CatalystNeuro team on NWB, open neuroscience data, and reproducible research software.">
+<Base title="Blog" description="Software releases, technical writing, and news from the CatalystNeuro team on NWB, open neuroscience data, and reproducible research software.">
   <PageHeader
     eyebrow="Writing"
     title="Blog"
-    subtitle="Insights, updates, and technical articles from our team."
+    subtitle="Software releases, technical writing, and news from the team."
     count={`${posts.length} posts`}
   />
 
