@@ -2,8 +2,8 @@
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
-import { slugify, monthYear, statusColor, repoName } from "../../lib/format";
-import { FUNDED_PROJECT_ALIASES } from "../../data/site-content";
+import { slugify, monthYear, statusColor, repoName, asArray, dandiList } from "../../lib/format";
+import { FUNDED_PROJECT_ALIASES, METHODS, RESEARCH_AREAS } from "../../data/site-content";
 
 export async function getStaticPaths() {
   const projects = await getCollection("fundedProjects");
@@ -20,6 +20,23 @@ export async function getStaticPaths() {
 const { p, affiliated } = Astro.props;
 const { Content } = await render(p);
 const d = p.data;
+
+const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
+const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
+
+const convs = affiliated
+  .map((c) => ({
+    lab: c.data.lab,
+    slug: slugify(c.data.lab),
+    institution: c.data.institution,
+    description: c.data.description,
+    date: c.data.date ?? "",
+    species: asArray(c.data.species),
+    tags: c.data.tags ?? [],
+    github: asArray(c.data.github),
+    dandi: dandiList(c.data.dandi),
+  }))
+  .sort((a, b) => (a.date < b.date ? 1 : -1));
 ---
 <Base title={d.title} description={d.description}>
   <article>
@@ -54,20 +71,50 @@ const d = p.data;
         </div>
       </div>
 
-      {affiliated.length > 0 && (
+      {convs.length > 0 && (
         <section class="fpd-affil">
           <span class="eyebrow">Affiliated work</span>
           <h2 class="section-title">NWB conversions under this project</h2>
-          <div class="fpd-affil-grid">
-            {affiliated.map((c) => (
-              <div class="card fpd-affil-card">
-                {c.data.date && <span class="fpd-affil-date">{c.data.date}</span>}
-                <h3>{c.data.lab}</h3>
-                <p class="fpd-affil-inst">{c.data.institution}</p>
-                <p class="fpd-affil-desc">{c.data.description}</p>
-              </div>
+          <p class="cv-count" id="fpd-count">{convs.length} labs</p>
+          <div class="pcard-grid" id="fpd-grid">
+            {convs.map((c) => (
+              <article class="card card-hover pcard fpd-conv">
+                <div class="pcard-head">
+                  <div>
+                    <h3><a href={`/nwb-conversions/${c.slug}`} class="fpd-conv-title">{c.lab}</a></h3>
+                    <p class="pcard-sub">{c.institution}</p>
+                  </div>
+                  {c.date && <span class="pcard-stamp">{c.date}</span>}
+                </div>
+
+                <p class="pcard-desc">{c.description}</p>
+                <button type="button" class="pcard-more" hidden>Show more</button>
+
+                <div class="pcard-tags">
+                  {c.species.map((s) => <span class="tag tag--species">{s}</span>)}
+                  {c.tags.filter((t) => methodSet.has(t.toLowerCase())).map((t) => <span class="tag tag--method">{t}</span>)}
+                  {c.tags.filter((t) => areaSet.has(t.toLowerCase())).map((t) => <span class="tag tag--area">{t}</span>)}
+                  {c.tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has(t.toLowerCase())).map((t) => <span class="tag">{t}</span>)}
+                </div>
+
+                <div class="pcard-links">
+                  <a href={`/nwb-conversions/${c.slug}`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
+                  {c.github.map((g, i) => (
+                    <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {c.github.length > 1 ? `Repo ${i + 1}` : "GitHub"}</a>
+                  ))}
+                  {c.dandi.map((dd) => (
+                    <a href={dd.url} target="_blank" rel="noopener" title={dd.name} class="btn btn-ghost btn-sm fpd-dandi"><Icon name="database" size={14} /> DANDI {dd.url.split("/").pop()}</a>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
+
+          <nav class="cv-pager" id="fpd-pager" aria-label="Affiliated conversions pagination" hidden>
+            <button type="button" class="btn btn-ghost btn-sm" id="fpd-prev">Previous</button>
+            <div class="cv-pages" id="fpd-pages"></div>
+            <button type="button" class="btn btn-ghost btn-sm" id="fpd-next">Next</button>
+          </nav>
         </section>
       )}
     </div>
@@ -76,7 +123,6 @@ const d = p.data;
 
 <style>
   .post-head { padding: 3rem 0 1.5rem; }
-  .post-head-inner { max-width: 48rem; margin-inline: auto; }
   .post-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-blue); margin-bottom: 1.4rem; }
   .post-back :global(.flip) { transform: rotate(180deg); }
   .fpd-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
@@ -84,18 +130,40 @@ const d = p.data;
   .post-head h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); }
   .post-meta { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--color-ink-muted); }
   .post-wrap { padding-top: 2rem; }
-  .fpd-layout { max-width: 48rem; margin-inline: auto; }
+  .fpd-layout { max-width: none; }
+  /* The prose keeps a readable measure even though the page is full width. */
+  .fpd-lead, .fpd-prose, .fpd-repos { max-width: 48rem; }
   .fpd-lead { font-size: 1.15rem; line-height: 1.6; color: var(--color-navy); font-weight: 450; margin-bottom: 1.4rem; }
   .fpd-repos { margin-top: 2.2rem; }
   .fpd-repos .eyebrow { margin-bottom: 0.9rem; }
   .fpd-repo-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .fpd-affil { max-width: 48rem; margin: 4rem auto 0; padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
+  .fpd-affil { margin: 4rem 0 0; padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
   .fpd-affil .section-title { margin: 0.6rem 0 1.8rem; }
-  .fpd-affil-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
-  @media (min-width: 640px) { .fpd-affil-grid { grid-template-columns: repeat(2, 1fr); } }
-  .fpd-affil-card { padding: 1.4rem; }
-  .fpd-affil-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-ink-soft); }
-  .fpd-affil-card h3 { font-size: 1.1rem; margin-top: 0.4rem; }
-  .fpd-affil-inst { color: var(--color-blue); font-size: 0.85rem; margin: 0.2rem 0 0.7rem; }
-  .fpd-affil-desc { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .fpd-conv-title { color: inherit; }
+  .fpd-conv-title:hover { color: var(--color-blue); }
+  .fpd-dandi { color: var(--color-blue); }
 </style>
+
+<script>
+  import { createPager } from "../../lib/pager";
+  import { createClampToggles } from "../../lib/clamp";
+
+  const grid = document.getElementById("fpd-grid");
+  if (grid) {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>(".fpd-conv"));
+    const { measure } = createClampToggles(cards);
+    createPager({
+      cards,
+      grid,
+      pager: document.getElementById("fpd-pager") as HTMLElement,
+      pages: document.getElementById("fpd-pages") as HTMLElement,
+      prev: document.getElementById("fpd-prev") as HTMLButtonElement,
+      next: document.getElementById("fpd-next") as HTMLButtonElement,
+      count: document.getElementById("fpd-count"),
+      noun: "labs",
+      match: () => true,
+    });
+    // Cards revealed by paging were invisible when last measured, so re-check.
+    document.getElementById("fpd-pager")?.addEventListener("click", () => measure());
+  }
+</script>
