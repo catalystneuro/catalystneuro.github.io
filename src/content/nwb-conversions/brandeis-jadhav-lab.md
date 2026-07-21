@@ -17,3 +17,19 @@ tags:
 funded_project: SFARI ARC Spyglass
 species: Rat
 ---
+
+The Jadhav lab has two projects funded by the SFARI Autism Rat Models Consortium that they would like converted to NWB. Both consist primarily of SpikeGadgets electrophysiology combined with behavioral video and DeepLabCut pose estimation. The lab has previous experience converting datasets to NWB after the fact, and wanted assistance making sure the converted data is compatible with Spyglass and follows the relevant best practices.
+
+## Conversion Pipelines
+
+We are writing an open-source Python package to convert each data stream from both projects into NWB, shared in the public repository [jadhav-lab-to-nwb](https://github.com/catalystneuro/jadhav-lab-to-nwb). The interfaces cover extracellular electrophysiology from SpikeGadgets, behavioral video, and pose estimation from DeepLabCut. Where appropriate, interfaces are adapted from NeuroConv or from the lab's own JLab-Analysis-Suite. Further components are developed as the project progresses, to stay compatible with the other varieties of experiment the lab performs.
+
+Both projects include multi-subject data, so we are also developing a way to represent that in NWB and to carry it into the Spyglass pipeline.
+
+## Spyglass Compatibility
+
+The conversion pipelines are adapted as necessary to comply with Spyglass-specific requirements for NWB files, so that analysis stays reliable and reproducible. We are working with the Flatiron RSE team to integrate these files as source data in a Spyglass pipeline.
+
+## Publication on DANDI
+
+Example data from each project is uploaded to DANDI in embargo mode, keeping it private until the embargo is lifted. Dandisets are annotated using DANDI best practices, and released from embargo when the corresponding papers are published.

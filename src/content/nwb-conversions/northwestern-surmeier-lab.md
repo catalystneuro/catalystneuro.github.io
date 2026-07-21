@@ -18,3 +18,19 @@ date: "2025-01"
 species: "Mouse"
 funded_project: "Aligning Science Across Parkinson's"
 ---
+
+The Surmeier lab has collected an extensive dataset combining electrophysiology, optical imaging, and behavioral data from ex-vivo brain slice experiments with optogenetics and pharmacological interventions. Our goals are to package this data at each stage of processing in the NWB format so that it can be shared within the lab and published on the DANDI Archive.
+
+## Conversion of Data Streams
+
+We built interfaces covering ABF recordings, Bruker optical sensor recordings with their metadata, electrophysiology acquired on the Bruker system, manual segmentation data in the lab's own format, behavioral annotations from a custom lab format, behavioral video, and electrical stimulation signals and metadata.
+
+Each conversion uses compression for efficient storage and chunking strategies tuned for cloud access. Documentation covers installation and usage, including scripts for the lab's several protocols: ex-vivo brain slices with optogenetics, pairing ABF recordings with optogenetic stimulus information; electrophysiology combined with optical imaging, pairing Bruker optical sensor data with electrical recordings; two-photon laser scanning microscopy with electrical stimulation, processing imaging data alongside stimulation events; and behavioral pharmacology, converting videos, tracking data, and drug administration metadata. Each protocol's conversion handles time alignment across its data streams.
+
+## Publication on DANDI
+
+We created a pipeline that uploads the specified list of converted sessions to the DANDI Archive automatically, and a Dandiset annotated according to DANDI best practices. The Dandiset links to the lab's protocols on protocols.io and incorporates the relevant manuscript data and metadata.
+
+## Demonstrating NWB Usage
+
+We created Jupyter notebooks demonstrating how to read the converted files and access each data stream. These notebooks were submitted to the [DANDI example-notebooks repository](https://github.com/dandi/example-notebooks).
