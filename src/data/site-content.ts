@@ -89,17 +89,21 @@ export const PARTNERS = {
     { name: "Kavli Foundation", src: "/images/sponsors/kavli_foundation_logo.png" },
     { name: "Michael J. Fox Foundation", src: "/images/sponsors/MJFF_logo.png" },
     { name: "Simons Foundation", src: "/images/sponsors/simons_foundation_logo.avif" },
-    { name: "MIT", src: "/images/sponsors/MIT_logo.png" },
   ],
 };
 
-const BIG_LOGOS = new Set([
-  "Mount Sinai",
-  "Allen Institute",
-  "Karolinska Institutet",
-  "Salk Institute",
-  "Baylor College of Medicine",
-]);
+// Some wordmarks are set small within their own artwork, so they read as
+// undersized next to the others at a shared cap height. The value multiplies
+// the grid's base 42px cap.
+const LOGO_SCALE: Record<string, number> = {
+  "Mount Sinai": 1.3,
+  "Allen Institute": 1.3,
+  "Karolinska Institutet": 1.3,
+  "Salk Institute": 1.3,
+  "Baylor College of Medicine": 1.3,
+  "UC Davis": 1.5,
+  "McGill": 1.5,
+};
 
 export const INSTITUTIONS = [
   ["Stanford", "stanford_logo.png"],
@@ -123,6 +127,9 @@ export const INSTITUTIONS = [
   ["University of Pittsburgh", "pitt_logo.png"],
   ["Karolinska Institutet", "karolinska_logo.png"],
   ["Baylor College of Medicine", "bcm_logo.png"],
+  ["UC Davis", "ucdavis_logo.png"],
+  ["McGill", "mcgill_logo.jpeg"],
+  ["University of Stirling", "stirling_logo.png"],
   ["Case Western Reserve", "cwru_logo.png"],
   ["Vanderbilt", "vanderbilt_logo.png"],
   ["University of Edinburgh", "edinburgh_logo.png"],
@@ -135,9 +142,7 @@ export const INSTITUTIONS = [
 ].map(([name, file]) => ({
   name,
   src: `/images/institutions/${file}`,
-  // These wordmarks are set small within their own artwork, so they read as
-  // undersized next to the others at a shared cap height.
-  big: BIG_LOGOS.has(name),
+  scale: LOGO_SCALE[name],
 }));
 
 export const FEATURED = {

@@ -96,6 +96,9 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
   @media (min-width: 960px) { .hdr-burger { display: none; } }
 
   .mobile-panel { border-top: 1px solid var(--color-line); background: var(--color-surface); padding: 0.75rem 1.5rem 1.25rem; }
+  /* Belt and braces with the resize handler: if the panel is left open and the
+     window widens past the breakpoint, it must not linger under the nav. */
+  @media (min-width: 960px) { .mobile-panel { display: none; } }
   .mobile-panel nav { display: flex; flex-direction: column; gap: 0.15rem; }
   .mobile-link { padding: 0.7rem 0.5rem; border-radius: 0.4rem; font-weight: 500; border-bottom: 1px solid var(--color-line-soft); }
   .mobile-link.is-active { color: var(--color-blue); }
@@ -105,10 +108,21 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
 <script>
   const burger = document.getElementById("burger");
   const panel = document.getElementById("mobile-panel");
-  burger?.addEventListener("click", () => {
-    const open = panel?.hasAttribute("hidden");
+
+  function setOpen(open: boolean) {
     if (open) panel?.removeAttribute("hidden");
     else panel?.setAttribute("hidden", "");
-    burger.setAttribute("aria-expanded", String(!!open));
-  });
+    burger?.setAttribute("aria-expanded", String(open));
+  }
+
+  burger?.addEventListener("click", () => setOpen(!!panel?.hasAttribute("hidden")));
+
+  // Widening past the breakpoint swaps the burger for the desktop nav, so the
+  // panel has to close: otherwise it stays open underneath, and the burger's
+  // aria-expanded stays true for the next time the window narrows.
+  const desktop = window.matchMedia("(min-width: 960px)");
+  desktop.addEventListener("change", (e) => { if (e.matches) setOpen(false); });
+
+  // Navigating within the panel should close it too.
+  panel?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
 </script>

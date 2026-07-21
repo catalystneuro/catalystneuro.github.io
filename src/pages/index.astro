@@ -137,11 +137,11 @@ const serviceIcons = ["database", "code", "spark"];
       </div>
 
       <div class="inst-head">
-        <h2 class="section-title">Working with labs at 30+ institutions</h2>
+        <h2 class="section-title">Working with labs at {uniqueInstitutions.size} institutions</h2>
       </div>
       <div class="inst-grid" id="inst-grid">
         {INSTITUTIONS.map((l, i) => (
-          <div class:list={["inst-cell", { "inst-cell--lg": l.big }]} data-extra={i >= 18 ? "true" : "false"} hidden={i >= 18}>
+          <div class="inst-cell" style={l.scale ? `--logo-scale:${l.scale}` : undefined} data-extra={i >= 18 ? "true" : "false"} hidden={i >= 18}>
             <img src={l.src} alt={l.name} title={l.name} loading="lazy" />
           </div>
         ))}
@@ -285,12 +285,15 @@ const serviceIcons = ["database", "code", "spark"];
   .logo-img:hover { filter: grayscale(0); opacity: 1; }
   .inst-head { margin-top: 4.5rem; text-align: center; }
   .inst-head .section-title { margin-inline: auto; }
-  .inst-grid { margin-top: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-line); border: 1px solid var(--color-line); border-radius: 0.7rem; overflow: hidden; }
+  /* The hairline grid is drawn by each cell outlining itself into the 1px gap,
+     rather than by a coloured container showing through. That way the empty
+     slots in a part-filled last row show the section background instead of a
+     block of --color-line. */
+  .inst-grid { margin-top: 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border-radius: 0.7rem; }
   @media (min-width: 640px) { .inst-grid { grid-template-columns: repeat(6, 1fr); } }
-  .inst-cell { background: var(--color-surface); aspect-ratio: 3/2; display: grid; place-items: center; padding: 1rem; }
-  .inst-cell img { max-height: 42px; max-width: 100%; object-fit: contain; filter: grayscale(1); opacity: 0.65; transition: all 0.2s; }
+  .inst-cell { background: var(--color-surface); outline: 1px solid var(--color-line); aspect-ratio: 3/2; display: grid; place-items: center; padding: 1rem; }
+  .inst-cell img { max-height: calc(42px * var(--logo-scale, 1)); max-width: 100%; object-fit: contain; filter: grayscale(1); opacity: 0.65; transition: all 0.2s; }
   .inst-cell img:hover { filter: grayscale(0); opacity: 1; }
-  .inst-cell--lg img { max-height: 55px; }
   .inst-toggle { margin: 1.6rem auto 0; display: flex; }
 
   /* FEATURED */
