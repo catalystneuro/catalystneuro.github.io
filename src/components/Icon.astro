@@ -25,7 +25,19 @@ const paths: Record<string, string> = {
   users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
   chart: '<path d="M3 3v18h18M7 15l3-3 3 3 5-5"/>',
   filter: '<path d="M22 3H2l8 9.5V19l4 2v-8.5z"/>',
+
+  // Brand marks. These are solid glyphs rather than line icons, so they are
+  // listed in FILLED below and render with fill instead of stroke.
+  x: '<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>',
+  bluesky: '<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/>',
+  // One path with evenodd so the "iD" is punched out of the disc and the mark
+  // stays monochrome on any background.
+  orcid: '<path fill-rule="evenodd" d="M256 128c0 70.7-57.3 128-128 128S0 198.7 0 128 57.3 0 128 0s128 57.3 128 128zM86.3 186.2H70.9V79.1h15.4v107.1zM108.9 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4zM88.7 56.8c0 5.5-4.5 10.1-10.1 10.1s-10.1-4.6-10.1-10.1c0-5.6 4.5-10.1 10.1-10.1s10.1 4.6 10.1 10.1z"/>',
 };
+
+const FILLED = new Set(["x", "bluesky", "orcid"]);
+const VIEWBOX: Record<string, string> = { orcid: "0 0 256 256" };
+const filled = FILLED.has(name);
 const inner = paths[name] ?? "";
 ---
-<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class={cls} aria-hidden="true" set:html={inner}></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox={VIEWBOX[name] ?? "0 0 24 24"} fill={filled ? "currentColor" : "none"} stroke={filled ? "none" : "currentColor"} stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class={cls} aria-hidden="true" set:html={inner}></svg>
