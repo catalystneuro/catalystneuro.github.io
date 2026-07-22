@@ -1,0 +1,101 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import teamData from "../data/team.json";
+
+interface Member {
+  name: string; isActive: boolean; role: string; description: string;
+  image?: string; github?: string; personalPage?: string; twitter?: string;
+  bluesky?: string; orcid?: string;
+}
+const members = teamData.members as Member[];
+const active = members.filter((m) => m.isActive);
+const former = members.filter((m) => !m.isActive);
+
+const socials = (m: Member) => [
+  m.github && { icon: "github", href: m.github, label: "GitHub" },
+  m.personalPage && { icon: "link", href: m.personalPage, label: "Website" },
+  m.twitter && { icon: "external", href: m.twitter, label: "Twitter" },
+  m.bluesky && { icon: "external", href: m.bluesky, label: "Bluesky" },
+  m.orcid && { icon: "doc", href: m.orcid, label: "ORCID" },
+].filter(Boolean) as { icon: string; href: string; label: string }[];
+---
+<Base title="Team" description="Meet the CatalystNeuro team — neuroscientists and software engineers building open-source tools and data standards for neurophysiology research.">
+  <PageHeader
+    eyebrow={`${active.length} scientists & engineers`}
+    title="Our team"
+    subtitle="Meet the skilled professionals behind CatalystNeuro's innovative solutions."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="team-grid">
+        {active.map((m) => (
+          <article class="card team-card">
+            <div class="team-photo">
+              {m.image ? <img src={m.image} alt={m.name} loading="lazy" /> : <span class="team-initials">{m.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}</span>}
+            </div>
+            <h3 class="team-name">{m.name}</h3>
+            <p class="team-role">{m.role}</p>
+            <p class="team-bio">{m.description}</p>
+            <div class="team-socials">
+              {socials(m).map((s) => (
+                <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><Icon name={s.icon} size={17} /></a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="former">
+        <span class="eyebrow">Alumni</span>
+        <h2 class="section-title">Previous team members</h2>
+        <div class="former-grid">
+          {former.map((m) => (
+            <article class="card former-card">
+              <h3>{m.name}</h3>
+              <p class="team-role">{m.role}</p>
+              <p class="former-bio">{m.description}</p>
+              <div class="team-socials">
+                {socials(m).map((s) => (
+                  <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><Icon name={s.icon} size={16} /></a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .team-grid { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
+  .team-card { padding: 1.8rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .team-photo {
+    width: 118px; height: 118px; border-radius: 50%; overflow: hidden; margin-bottom: 1.1rem;
+    background: linear-gradient(135deg, var(--color-blue-50), var(--color-blue-100));
+    border: 3px solid var(--color-surface); box-shadow: 0 0 0 1px var(--color-line);
+    display: grid; place-items: center;
+  }
+  .team-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .team-initials { font-family: var(--font-display); font-size: 2rem; color: var(--color-blue); font-weight: 600; }
+  .team-name { font-size: 1.2rem; }
+  .team-role { color: var(--color-blue); font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.03em; text-transform: uppercase; margin-top: 0.3rem; }
+  .team-bio { color: var(--color-ink-muted); font-size: 0.9rem; margin: 0.9rem 0 1.1rem; line-height: 1.55; text-align: left; }
+  .team-socials { display: flex; gap: 0.4rem; margin-top: auto; }
+  .team-socials a { padding: 0.45rem; border-radius: 0.4rem; color: var(--color-ink-muted); border: 1px solid var(--color-line); transition: all 0.15s; }
+  .team-socials a:hover { color: var(--color-blue); border-color: var(--color-blue); }
+
+  .former { margin-top: 4.5rem; }
+  .former .section-title { margin-top: 0.6rem; margin-bottom: 2rem; }
+  .former-grid { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .former-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .former-grid { grid-template-columns: repeat(3, 1fr); } }
+  .former-card { padding: 1.4rem; }
+  .former-card h3 { font-size: 1.05rem; }
+  .former-bio { color: var(--color-ink-muted); font-size: 0.87rem; margin: 0.7rem 0 1rem; line-height: 1.5; }
+</style>

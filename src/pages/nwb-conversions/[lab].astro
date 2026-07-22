@@ -1,0 +1,184 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import { slugify, monthYear, asArray, dandiList, repoName } from "../../lib/format";
+import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
+
+export async function getStaticPaths() {
+  const conversions = await getCollection("conversions");
+  const projects = await getCollection("fundedProjects");
+
+  // Funded-project name (title or alias) -> detail-page slug.
+  const projectSlug = new Map<string, string>();
+  for (const p of projects) {
+    const slug = slugify(p.data.title);
+    projectSlug.set(p.data.title, slug);
+    const alias = FUNDED_PROJECT_ALIASES[p.data.title];
+    if (alias) projectSlug.set(alias, slug);
+  }
+
+  return conversions.map((c) => {
+    // Other conversions worth offering next: same funded project first, then
+    // same institution, capped so the section stays a suggestion, not a list.
+    const related = conversions
+      .filter((o) => o.id !== c.id)
+      .map((o) => ({
+        o,
+        score:
+          (c.data.funded_project && o.data.funded_project === c.data.funded_project ? 2 : 0) +
+          (o.data.institution === c.data.institution ? 1 : 0),
+      }))
+      .filter((x) => x.score > 0)
+      .sort((a, b) => b.score - a.score || (a.o.data.lab < b.o.data.lab ? -1 : 1))
+      .slice(0, 4)
+      .map((x) => x.o);
+
+    return {
+      params: { lab: slugify(c.data.lab) },
+      props: { c, related, projectSlug: Object.fromEntries(projectSlug) },
+    };
+  });
+}
+
+const { c, related, projectSlug } = Astro.props;
+const d = c.data;
+
+const species = asArray(d.species);
+const tags = d.tags ?? [];
+const github = asArray(d.github);
+const dandi = dandiList(d.dandi);
+
+const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
+const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
+const methods = tags.filter((t) => methodSet.has(t.toLowerCase()));
+const areas = tags.filter((t) => areaSet.has(t.toLowerCase()));
+const other = tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has(t.toLowerCase()));
+
+const fundedHref = d.funded_project ? projectSlug[d.funded_project] : undefined;
+
+// Most conversions are frontmatter only. Where a file has a body, it holds the
+// long-form scope of work, rendered below the metadata blocks.
+const hasBody = !!c.body?.trim();
+const { Content } = await render(c);
+---
+<Base title={`${d.lab} — NWB Conversion`} description={d.description}>
+  <article>
+    <header class="post-head">
+      <div class="container-x post-head-inner">
+        <a href="/nwb-conversions" class="post-back"><Icon name="arrow" size={15} class="flip" /> All NWB conversions</a>
+        <h1>{d.lab}</h1>
+        <p class="cvd-inst">{d.institution}</p>
+        {d.date && <p class="post-meta">Project started {monthYear(d.date)}</p>}
+      </div>
+    </header>
+
+    <div class="container-x cvd-wrap">
+      <p class="cvd-lead">{d.description}</p>
+
+      {(species.length > 0 || tags.length > 0) && (
+        <section class="cvd-block">
+          <span class="eyebrow">Data and methods</span>
+          <div class="cvd-tags">
+            {species.map((s) => <span class="tag tag--species">{s}</span>)}
+            {methods.map((t) => <span class="tag tag--method">{t}</span>)}
+            {areas.map((t) => <span class="tag tag--area">{t}</span>)}
+            {other.map((t) => <span class="tag">{t}</span>)}
+          </div>
+        </section>
+      )}
+
+      {github.length > 0 && (
+        <section class="cvd-block">
+          <span class="eyebrow">Conversion code</span>
+          <div class="cvd-links">
+            {github.map((g) => (
+              <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> {repoName(g)}</a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {dandi.length > 0 && (
+        <section class="cvd-block">
+          <span class="eyebrow">Published datasets</span>
+          <ul class="cvd-dandi">
+            {dandi.map((dd) => (
+              <li>
+                <a href={dd.url} target="_blank" rel="noopener">
+                  <Icon name="database" size={15} />
+                  <span>{dd.name}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {d.funded_project && (
+        <section class="cvd-block">
+          <span class="eyebrow">Funded under</span>
+          <div class="cvd-links">
+            {fundedHref
+              ? <a href={`/funded-projects/${fundedHref}`} class="btn btn-ghost btn-sm"><Icon name="link" size={15} /> {d.funded_project}</a>
+              : <p class="cvd-plain">{d.funded_project}</p>}
+          </div>
+        </section>
+      )}
+
+      {hasBody && (
+        <section class="cvd-block cvd-sow">
+          <span class="eyebrow">Scope of work</span>
+          <div class="prose cvd-prose"><Content /></div>
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section class="cvd-related">
+          <span class="eyebrow">Related work</span>
+          <div class="pcard-grid">
+            {related.map((r) => (
+              <a href={`/nwb-conversions/${slugify(r.data.lab)}`} class="card card-hover cvd-related-card">
+                <h3>{r.data.lab}</h3>
+                <p class="cvd-related-inst">{r.data.institution}</p>
+                <p class="cvd-related-desc">{r.data.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-head { padding: 3rem 0 1.5rem; }
+  .post-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-blue); margin-bottom: 1.4rem; }
+  .post-back :global(.flip) { transform: rotate(180deg); }
+  .post-head h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); }
+  .cvd-inst { color: var(--color-blue); font-size: 1.05rem; margin-top: 0.5rem; }
+  .post-meta { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.82rem; color: var(--color-ink-muted); }
+
+  .cvd-wrap { padding-top: 1.5rem; }
+  /* The prose keeps a readable measure even though the page is full width. */
+  .cvd-lead { max-width: 48rem; font-size: 1.08rem; line-height: 1.7; color: var(--color-ink-muted); }
+  .cvd-block { margin-top: 2.4rem; }
+  .cvd-block .eyebrow { margin-bottom: 0.9rem; }
+  .cvd-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .cvd-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .cvd-plain { color: var(--color-ink-muted); font-size: 0.95rem; }
+  .cvd-dandi { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .cvd-dandi a { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-blue); font-size: 0.95rem; }
+  .cvd-dandi a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .cvd-dandi svg { flex-shrink: 0; }
+
+  .cvd-sow { margin-top: 3rem; }
+  .cvd-prose { max-width: 48rem; }
+  .cvd-prose :global(h2) { font-size: 1.25rem; margin-top: 2rem; }
+  .cvd-related { margin: 4rem 0 0; padding-top: 2.5rem; border-top: 1px solid var(--color-line); }
+  .cvd-related .eyebrow { margin-bottom: 1.4rem; }
+  .cvd-related-card { padding: 1.4rem; }
+  .cvd-related-card h3 { font-size: 1.1rem; }
+  .cvd-related-inst { color: var(--color-blue); font-size: 0.85rem; margin: 0.2rem 0 0.7rem; }
+  .cvd-related-desc { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Icon from "../../components/Icon.astro";
+import { longDate } from "../../lib/format";
+
+const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data.date ? 1 : -1));
+---
+<Base title="Blog" description="Software releases, technical writing, and news from the CatalystNeuro team on NWB, open neuroscience data, and reproducible research software.">
+  <PageHeader
+    eyebrow="Writing"
+    title="Blog"
+    subtitle="Software releases, technical writing, and news from the team."
+    count={`${posts.length} posts`}
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="blog-search">
+        <Icon name="search" size={18} />
+        <input id="blog-search" type="search" placeholder="Search posts by title, description, or keyword…" aria-label="Search posts" />
+      </div>
+
+      <div class="blog-grid" id="blog-grid">
+        {posts.map((p) => (
+          <a
+            href={`/blog/${p.id}`}
+            class="card card-hover blog-item"
+            data-search={`${p.data.title} ${p.data.description} ${(p.data.keywords ?? []).join(" ")}`.toLowerCase()}
+          >
+            {p.data.image && <div class:list={["blog-img", { "is-contain": p.data.imageFit === "contain" }]}><img src={p.data.image} alt={p.data.title} loading="lazy" /></div>}
+            <div class="blog-body">
+              <div class="blog-meta">
+                <span>{longDate(p.data.date)}</span>
+                {p.data.readTime && <span class="blog-read"><Icon name="book" size={13} /> {p.data.readTime}</span>}
+              </div>
+              <h2>{p.data.title}</h2>
+              <p>{p.data.description}</p>
+              {p.data.keywords && (
+                <div class="blog-tags">
+                  {p.data.keywords.slice(0, 3).map((k) => <span class="tag blog-tag">{k}</span>)}
+                </div>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="blog-empty" id="blog-empty" hidden>No posts match your search.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .blog-search { display: flex; align-items: center; gap: 0.6rem; max-width: 30rem; margin-bottom: 2.5rem; padding: 0.7rem 1rem; border: 1px solid var(--color-line); border-radius: 0.6rem; background: var(--color-surface); color: var(--color-ink-soft); }
+  .blog-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
+  .blog-search input { border: 0; outline: 0; flex: 1; font-size: 0.95rem; font-family: var(--font-sans); background: transparent; color: var(--color-navy); }
+  .blog-grid { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  @media (min-width: 680px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .blog-grid { grid-template-columns: repeat(3, 1fr); } }
+  .blog-item { overflow: hidden; display: flex; flex-direction: column; }
+  .blog-img { aspect-ratio: 16/9; overflow: hidden; background: var(--color-paper); }
+  .blog-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--ease-out-expo); }
+  .blog-img.is-contain img { object-fit: contain; padding: 0.5rem; }
+  .blog-item:hover .blog-img img { transform: scale(1.04); }
+  .blog-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+  .blog-meta { display: flex; gap: 0.8rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); }
+  .blog-read { display: inline-flex; align-items: center; gap: 0.25rem; }
+  .blog-body h2 { font-size: 1.2rem; line-height: 1.25; }
+  .blog-body p { font-size: 0.92rem; color: var(--color-ink-muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .blog-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.4rem; }
+  .blog-tag { background: var(--color-blue-50); color: var(--color-blue-600); }
+  .blog-empty { text-align: center; color: var(--color-ink-muted); padding: 2rem; }
+</style>
+
+<script>
+  const input = document.getElementById("blog-search") as HTMLInputElement;
+  const items = Array.from(document.querySelectorAll<HTMLElement>(".blog-item"));
+  const empty = document.getElementById("blog-empty");
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+    items.forEach((el) => {
+      const match = !q || (el.dataset.search ?? "").includes(q);
+      el.style.display = match ? "" : "none";
+      if (match) visible++;
+    });
+    if (empty) empty.hidden = visible !== 0;
+  });
+</script>

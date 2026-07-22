@@ -1,6 +1,6 @@
 ---
 lab: "Mehrdad Jazayeri"
-institution: "MIT"
+institution: "Massachusetts Institute of Technology"
 description: "Developed NWB conversion tools for the Jazayeri lab's primate neurophysiology datasets studying cognitive timing and mental navigation. The conversion pipeline handles complex neural recordings from multiple brain regions including dorsomedial frontal cortex and entorhinal cortex during sophisticated behavioral tasks."
 tags: ["electrophysiology", "behavioral tracking", "spatial navigation"]
 github: "https://github.com/catalystneuro/jazayeri-lab-to-nwb"

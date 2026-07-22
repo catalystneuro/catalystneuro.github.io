@@ -1,115 +1,68 @@
-# CatalystNeuro Website
+# CatalystNeuro Website (redesign)
 
-[![Tests](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml/badge.svg)](https://github.com/catalystneuro/catalystneuro.github.io/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/catalystneuro/catalystneuro.github.io/branch/main/graph/badge.svg)](https://codecov.io/gh/catalystneuro/catalystneuro.github.io)
+A ground-up redesign of the CatalystNeuro website. The visual identity is grounded in the
+subject matter of neurophysiology (a live electrophysiology-trace hero motif, a technical
+type system, monospace data labels) while keeping the existing logo and brand palette
+(navy `#101642`, blue `#1466A7`). All content is carried over from the previous site.
 
-Official website for CatalystNeuro, showcasing our services, funded projects, NWB conversions, team, and blog.
+See [`SPEC.md`](./SPEC.md) for the full content and structure specification.
 
-## Tech Stack
+## Stack
 
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui (based on Radix UI)
-- **Routing**: React Router
-- **Content**: Markdown with front matter
-- **Testing**: Vitest + React Testing Library
-- **Deployment**: Netlify
+- **[Astro](https://astro.build)** — static-first, content-collection driven. Replaces the
+  previous Vite + React SPA/SSG. Every route is a real pre-rendered HTML page.
+- **Tailwind CSS v4** (`@tailwindcss/vite`) with a custom design system in
+  `src/styles/global.css` (`@theme` tokens).
+- **Shiki** for build-time code syntax highlighting (no client JS).
+- **Self-hosted variable fonts** via `@fontsource-variable`: Space Grotesk (display),
+  Inter (body), JetBrains Mono (data/eyebrows/code).
+- Small islands of vanilla JS for the only interactive pieces: mobile nav, blog search,
+  conversion/funded-project filters, institution "show more", and blog galleries.
 
-## Project Structure
+## Content model
+
+Markdown content collections are defined in `src/content.config.ts`:
+
+| collection | source | pages |
+|---|---|---|
+| `blog` | `src/content/blog/*.md` | `/blog`, `/blog/[slug]` |
+| `conversions` | `src/content/nwb-conversions/*.md` | `/nwb-conversions` |
+| `software` | `src/content/software/*.md` | `/nwb-software`, `/analysis-software`, `/guides`, `/guides/[id]` |
+| `fundedProjects` | `src/content/funded-projects/*.md` | `/funded-projects`, `/funded-projects/[project]` |
+| `openings` | `src/content/openings/*.md` | `/openings`, `/openings/[id]` |
+
+Non-markdown content: `src/data/team.json` (team roster), `src/data/about.md` (About body),
+and `src/data/site-content.ts` (publications, institutions, partners, featured articles,
+testimonials, homepage copy, and the conversion filter vocabularies — all previously
+hardcoded in React components).
+
+Binary assets live in `public/images/` and are served natively (no build-time copy step).
+
+## Blog galleries
+
+Blog markdown keeps the original gallery syntax:
 
 ```
-.
-├── src/
-│   ├── components/     # React components
-│   ├── content/        # Markdown content (blog, projects, etc.)
-│   ├── pages/         # Page components
-│   ├── utils/         # Utility functions
-│   └── hooks/         # Custom React hooks
-├── public/            # Static assets
-├── scripts/          # Build and maintenance scripts
-└── netlify/          # Netlify serverless functions
+<!-- gallery-start aspect="16/9" folder="retreat-2024/lucca" -->
+<!-- gallery-end -->
 ```
 
-## Development
+`src/plugins/remark-galleries.mjs` expands these at build time — folder mode reads the image
+files from `public/images/<folder>/`; list mode reads the `- url` lines. The output is
+hydrated into an accessible carousel by `src/components/GalleryRuntime.astro`.
 
-### Prerequisites
+## Develop
 
-- Node.js (LTS version recommended)
-- npm
-
-### Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/catalystneuro/catalystneuro.github.io.git
-cd catalystneuro.github.io
-```
-
-2. Install dependencies:
-```bash
+```sh
 npm install
+npm run dev      # http://localhost:4321
+npm run build    # -> dist/
+npm run preview
 ```
 
-3. Start the development server:
-```bash
-npm run dev
-```
+## Integrations
 
-The site will be available at `http://localhost:5173`
-
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run test` - Run tests
-- `npm run test:coverage` - Run tests with coverage report
-- `npm run lint` - Run ESLint
-
-## Testing
-
-Tests are written using Vitest and React Testing Library. Run the test suite:
-
-```bash
-npm run test
-```
-
-For coverage report:
-
-```bash
-npm run test:coverage
-```
-
-## Deployment
-
-The site is automatically deployed to Netlify when changes are pushed to the main branch. The build process:
-
-1. Builds the React application
-2. Generates static HTML
-3. Deploys to Netlify CDN
-
-Manual deployment can be triggered through the Netlify dashboard or CLI.
-
-### Environment Variables
-
-Google Analytics 4 is built in (`src/components/Analytics.tsx`) and reports
-only from the live `catalystneuro.com` host, so local dev and Netlify deploy
-previews stay untracked automatically.
-
-All environment variables are optional (see `.env.example`):
-
-- `VITE_GA_MEASUREMENT_ID` - overrides the built-in GA4 Measurement ID. Only
-  needed to report to a different GA property.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and ensure they pass
-5. Submit a pull request
-
-## License
-
-Copyright © CatalystNeuro. All rights reserved.
+- **Newsletter:** Netlify Forms (`form-name: newsletter`), success page at `/success`.
+- **Consultation:** Calendly inline embed (`https://calendly.com/ben-dichter`).
+- **Video:** YouTube (About page, blog galleries).
+- **Sitemap:** `@astrojs/sitemap` → `dist/sitemap-index.xml`.

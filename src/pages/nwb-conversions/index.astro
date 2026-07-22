@@ -1,0 +1,213 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Icon from "../../components/Icon.astro";
+import { asArray, dandiList, slugify, monthYear } from "../../lib/format";
+import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
+
+// Map every name a conversion might use for its funded project (the project's
+// own title, plus any alias) onto that project's detail-page slug.
+const projects = await getCollection("fundedProjects");
+const projectSlug = new Map<string, string>();
+for (const p of projects) {
+  const slug = slugify(p.data.title);
+  projectSlug.set(p.data.title, slug);
+  const alias = FUNDED_PROJECT_ALIASES[p.data.title];
+  if (alias) projectSlug.set(alias, slug);
+}
+
+const raw = await getCollection("conversions");
+const items = raw
+  .map((c) => ({
+    lab: c.data.lab,
+    institution: c.data.institution,
+    description: c.data.description,
+    species: asArray(c.data.species),
+    date: c.data.date ?? "",
+    tags: c.data.tags ?? [],
+    github: asArray(c.data.github),
+    dandi: dandiList(c.data.dandi),
+    funded: c.data.funded_project ?? "",
+    slug: slugify(c.data.lab),
+  }))
+  .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+const institutions = [...new Set(items.map((i) => i.institution))].sort();
+const speciesList = [...new Set(items.flatMap((i) => i.species))].filter(Boolean).sort();
+const fundedList = [...new Set(items.map((i) => i.funded))].filter(Boolean).sort();
+// Lowercased so the vocabularies match tags regardless of how they are cased
+// in the frontmatter (e.g. RESEARCH_AREAS has "Parkinson's disease").
+const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
+const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
+---
+<Base title="NWB Conversions" description="Explore CatalystNeuro's neurophysiology data conversions to Neurodata Without Borders (NWB), built in collaboration with leading research institutions worldwide.">
+  <PageHeader
+    eyebrow="Portfolio"
+    title="NWB conversions"
+    subtitle="We've collaborated with leading research institutions worldwide to advance neuroscience data standardization and analysis."
+    count={`${items.length} labs`}
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="cv-controls">
+        <div class="cv-search">
+          <Icon name="search" size={17} />
+          <input id="cv-search" type="search" placeholder="Search by lab, institution, or description…" aria-label="Search conversions" />
+        </div>
+        <select id="cv-method" class="cv-select" aria-label="Method">
+          <option value="">All methods</option>
+          {METHODS.map((m) => <option value={m}>{m}</option>)}
+        </select>
+        <select id="cv-area" class="cv-select" aria-label="Research area">
+          <option value="">All research areas</option>
+          {RESEARCH_AREAS.map((a) => <option value={a}>{a}</option>)}
+        </select>
+        <select id="cv-inst" class="cv-select" aria-label="Institution">
+          <option value="">All institutions</option>
+          {institutions.map((i) => <option value={i}>{i}</option>)}
+        </select>
+        <select id="cv-species" class="cv-select" aria-label="Species">
+          <option value="">All species</option>
+          {speciesList.map((s) => <option value={s}>{s}</option>)}
+        </select>
+        <select id="cv-funded" class="cv-select" aria-label="Funded project">
+          <option value="">All projects</option>
+          {fundedList.map((f) => <option value={f}>{f}</option>)}
+        </select>
+        <button id="cv-reset" class="btn btn-ghost btn-sm cv-reset" hidden>Clear <Icon name="close" size={14} /></button>
+      </div>
+
+      <p class="cv-count" id="cv-count">{items.length} labs</p>
+
+      <div class="pcard-grid" id="cv-grid">
+        {items.map((c) => (
+          <article
+            class="card card-hover pcard cv-card"
+            data-search={`${c.lab} ${c.institution} ${c.description}`.toLowerCase()}
+            data-tags={c.tags.join("|").toLowerCase()}
+            data-inst={c.institution}
+            data-species={c.species.join("|")}
+            data-funded={c.funded}
+          >
+            <div class="pcard-head">
+              <div>
+                <h3><a href={`/nwb-conversions/${c.slug}`} class="cv-title">{c.lab}</a></h3>
+                <p class="pcard-sub">{c.institution}</p>
+              </div>
+              {c.date && <span class="pcard-stamp" title={`Project started ${monthYear(c.date)}`}>{c.date}</span>}
+            </div>
+
+            <p class="pcard-desc">{c.description}</p>
+            <button type="button" class="pcard-more" hidden>Show more</button>
+
+            <div class="pcard-tags">
+              {c.species.map((s) => <span class="tag tag--species">{s}</span>)}
+              {c.tags.filter((t) => methodSet.has(t.toLowerCase())).map((t) => <span class="tag tag--method">{t}</span>)}
+              {c.tags.filter((t) => areaSet.has(t.toLowerCase())).map((t) => <span class="tag tag--area">{t}</span>)}
+              {c.tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has(t.toLowerCase())).map((t) => <span class="tag">{t}</span>)}
+            </div>
+
+            <div class="pcard-links">
+              <a href={`/nwb-conversions/${c.slug}`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
+              {c.github.map((g, i) => (
+                <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {c.github.length > 1 ? `Repo ${i + 1}` : "GitHub"}</a>
+              ))}
+              {c.dandi.map((dd) => (
+                <a href={dd.url} target="_blank" rel="noopener" title={dd.name} class="btn btn-ghost btn-sm cv-dandi"><Icon name="database" size={14} /> DANDI {dd.url.split("/").pop()}</a>
+              ))}
+            </div>
+
+            {c.funded && (projectSlug.has(c.funded)
+              ? <a href={`/funded-projects/${projectSlug.get(c.funded)}`} class="pcard-foot"><Icon name="link" size={13} /> {c.funded}</a>
+              : <div class="pcard-foot"><Icon name="link" size={13} /> {c.funded}</div>)}
+          </article>
+        ))}
+      </div>
+      <p class="pcard-empty" id="cv-empty" hidden>No conversions match your filters.</p>
+
+      <nav class="cv-pager" id="cv-pager" aria-label="Conversions pagination" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" id="cv-prev">Previous</button>
+        <div class="cv-pages" id="cv-pages"></div>
+        <button type="button" class="btn btn-ghost btn-sm" id="cv-next">Next</button>
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cv-controls { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.2rem; }
+  .cv-search { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 18rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
+  .cv-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
+  .cv-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.92rem; color: var(--color-navy); }
+  .cv-select { padding: 0.55rem 0.8rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-navy); cursor: pointer; max-width: 12rem; }
+  .cv-select:focus { outline: none; border-color: var(--color-blue); }
+  .cv-select.is-set { border-color: var(--color-blue); background: var(--color-blue-50); color: var(--color-blue-600); font-weight: 500; }
+  .cv-reset { align-self: center; }
+  .cv-dandi { color: var(--color-blue); }
+  .cv-title { color: inherit; }
+  .cv-title:hover { color: var(--color-blue); }
+</style>
+
+<script>
+  import { createPager } from "../../lib/pager";
+  import { createClampToggles } from "../../lib/clamp";
+
+  const search = document.getElementById("cv-search") as HTMLInputElement;
+  const selects = ["cv-method", "cv-area", "cv-inst", "cv-species", "cv-funded"].map(
+    (id) => document.getElementById(id) as HTMLSelectElement
+  );
+  const [method, area, inst, species, funded] = selects;
+  const reset = document.getElementById("cv-reset") as HTMLButtonElement;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>(".cv-card"));
+
+  // Deep link from a funded project: /nwb-conversions?project=<name>
+  const preset = new URLSearchParams(location.search).get("project");
+  if (preset && [...funded.options].some((o) => o.value === preset)) funded.value = preset;
+
+  const { measure } = createClampToggles(cards);
+
+  const pager = createPager({
+    cards,
+    grid: document.getElementById("cv-grid") as HTMLElement,
+    pager: document.getElementById("cv-pager") as HTMLElement,
+    pages: document.getElementById("cv-pages") as HTMLElement,
+    prev: document.getElementById("cv-prev") as HTMLButtonElement,
+    next: document.getElementById("cv-next") as HTMLButtonElement,
+    count: document.getElementById("cv-count"),
+    empty: document.getElementById("cv-empty"),
+    noun: "labs",
+    match: (c) => {
+      const t = search.value.trim().toLowerCase();
+      const tags = c.dataset.tags ?? "";
+      const sp = c.dataset.species ?? "";
+      return (
+        (!t || (c.dataset.search ?? "").includes(t)) &&
+        (!method.value || tags.includes(method.value.toLowerCase())) &&
+        (!area.value || tags.includes(area.value.toLowerCase())) &&
+        (!inst.value || c.dataset.inst === inst.value) &&
+        (!species.value || sp.split("|").includes(species.value)) &&
+        (!funded.value || c.dataset.funded === funded.value)
+      );
+    },
+  });
+
+  function apply() {
+    let any = !!search.value.trim();
+    selects.forEach((s) => { s.classList.toggle("is-set", !!s.value); if (s.value) any = true; });
+    reset.hidden = !any;
+    pager.refresh();
+    measure();
+  }
+
+  // Cards revealed by paging were invisible when last measured, so re-check.
+  document.getElementById("cv-pager")?.addEventListener("click", () => measure());
+
+  search.addEventListener("input", apply);
+  selects.forEach((s) => s.addEventListener("change", apply));
+  reset.addEventListener("click", () => {
+    search.value = ""; selects.forEach((s) => (s.value = "")); apply();
+  });
+  apply();
+</script>

@@ -1,8 +1,9 @@
 ---
-title: SFARI ARC Spyglass
-funder: Simons Foundation
-startDate: 2024-10-23
-status: active
+title: "SFARI ARC Spyglass"
+funder: "Simons Foundation"
+status: "active"
+startDate: "2024-10-23"
+description: "Standardizing autism research data into NWB and Spyglass"
 image: "/images/sponsors/simons_foundation_logo.avif"
 ---
 

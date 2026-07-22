@@ -1,0 +1,46 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import { PUBLICATIONS } from "../data/site-content";
+---
+<Base title="Publications" description="Peer-reviewed research publications and scientific contributions from the CatalystNeuro team on neurophysiology data, NWB, and open science.">
+  <PageHeader
+    eyebrow="Peer-reviewed"
+    title="Publications"
+    subtitle="Research publications and scientific contributions from the CatalystNeuro team."
+    count={`${PUBLICATIONS.length} papers`}
+  />
+
+  <section class="section">
+    <div class="container-x pub-wrap">
+      {PUBLICATIONS.map((p) => (
+        <article class="card pub-card">
+          <div class="pub-year">{p.year}</div>
+          <div class="pub-body">
+            <span class="pub-journal">{p.journal}</span>
+            <h2>{p.title}</h2>
+            <p class="pub-authors">{p.authors}</p>
+            <p class="pub-abstract">{p.abstract}</p>
+            <div class="pub-links">
+              <a href={p.url} target="_blank" rel="noopener" class="btn btn-primary btn-sm"><Icon name="doc" size={15} /> Read paper</a>
+              {p.doi && <a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener" class="btn btn-ghost btn-sm">DOI: {p.doi}</a>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pub-wrap { display: flex; flex-direction: column; gap: 1.3rem; max-width: 52rem; }
+  .pub-card { padding: 1.8rem; display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .pub-card { grid-template-columns: 4.5rem 1fr; } }
+  .pub-year { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 500; color: var(--color-blue); border-left: 2px solid var(--color-blue); padding-left: 0.9rem; height: fit-content; }
+  .pub-journal { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-ink-soft); }
+  .pub-body h2 { font-size: 1.3rem; line-height: 1.28; margin: 0.5rem 0; }
+  .pub-authors { color: var(--color-navy); font-size: 0.9rem; font-weight: 450; }
+  .pub-abstract { color: var(--color-ink-muted); font-size: 0.95rem; line-height: 1.6; margin: 0.9rem 0 1.3rem; }
+  .pub-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+</style>

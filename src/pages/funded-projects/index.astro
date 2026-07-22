@@ -1,0 +1,117 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Icon from "../../components/Icon.astro";
+import { slugify, monthYear, statusColor } from "../../lib/format";
+
+const projects = (await getCollection("fundedProjects")).sort((a, b) =>
+  (a.data.startDate < b.data.startDate ? 1 : -1)
+);
+const funders = [...new Set(projects.map((p) => p.data.funder))].sort();
+const statuses = [...new Set(projects.map((p) => p.data.status))];
+---
+<Base title="Funded Projects" description="Grant-funded work at CatalystNeuro, supported by leading institutions committed to advancing neuroscience data standards and open-source tools.">
+  <PageHeader
+    eyebrow="Grant-funded work"
+    title="Funded projects"
+    subtitle="Our work is supported by leading institutions committed to advancing neuroscience data standards and tools."
+    count={`${projects.length} projects`}
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="fp-controls">
+        <div class="fp-search">
+          <Icon name="search" size={17} />
+          <input id="fp-search" type="search" placeholder="Search projects…" aria-label="Search projects" />
+        </div>
+        <select id="fp-status" class="fp-select" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          {statuses.map((s) => <option value={s}>{s[0].toUpperCase() + s.slice(1)}</option>)}
+        </select>
+        <select id="fp-funder" class="fp-select" aria-label="Filter by funder">
+          <option value="">All funders</option>
+          {funders.map((f) => <option value={f}>{f}</option>)}
+        </select>
+      </div>
+
+      <p class="cv-count" id="fp-count">{projects.length} projects</p>
+
+      <div class="fp-grid" id="fp-grid">
+        {projects.map((p) => (
+          <a
+            href={`/funded-projects/${slugify(p.data.title)}`}
+            class="card card-hover fp-card"
+            data-search={`${p.data.title} ${p.data.funder} ${p.data.description}`.toLowerCase()}
+            data-status={p.data.status}
+            data-funder={p.data.funder}
+          >
+            <div class="fp-card-top">
+              <span class={`badge badge--${statusColor(p.data.status)}`}>{p.data.status}</span>
+              {p.data.image && <img src={p.data.image} alt={p.data.funder} class="fp-logo" loading="lazy" />}
+            </div>
+            <h3>{p.data.title}</h3>
+            <p class="fp-funder">{p.data.funder} · Started {monthYear(p.data.startDate)}</p>
+            <p class="fp-desc">{p.data.description}</p>
+          </a>
+        ))}
+      </div>
+      <p class="fp-empty" id="fp-empty" hidden>No projects match your filters.</p>
+
+      <nav class="cv-pager" id="fp-pager" aria-label="Projects pagination" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" id="fp-prev">Previous</button>
+        <div class="cv-pages" id="fp-pages"></div>
+        <button type="button" class="btn btn-ghost btn-sm" id="fp-next">Next</button>
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .fp-controls { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.2rem; }
+  .fp-search { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 16rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
+  .fp-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
+  .fp-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.92rem; color: var(--color-navy); }
+  .fp-select { padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); font-family: var(--font-sans); font-size: 0.9rem; color: var(--color-navy); cursor: pointer; }
+  .fp-select:focus { outline: none; border-color: var(--color-blue); }
+  .fp-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .fp-grid { grid-template-columns: repeat(2, 1fr); } }
+  .fp-card { padding: 1.7rem; display: flex; flex-direction: column; }
+  .fp-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; min-height: 55px; }
+  .fp-logo { max-height: 55px; max-width: 156px; object-fit: contain; }
+  .fp-card h3 { font-size: 1.25rem; }
+  .fp-funder { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.03em; margin: 0.5rem 0 0.8rem; }
+  .fp-desc { color: var(--color-ink-muted); font-size: 0.93rem; }
+  .fp-empty { text-align: center; color: var(--color-ink-muted); padding: 2rem; }
+</style>
+
+<script>
+  import { createPager } from "../../lib/pager";
+
+  const q = document.getElementById("fp-search") as HTMLInputElement;
+  const status = document.getElementById("fp-status") as HTMLSelectElement;
+  const funder = document.getElementById("fp-funder") as HTMLSelectElement;
+
+  const pager = createPager({
+    cards: Array.from(document.querySelectorAll<HTMLElement>(".fp-card")),
+    grid: document.getElementById("fp-grid") as HTMLElement,
+    pager: document.getElementById("fp-pager") as HTMLElement,
+    pages: document.getElementById("fp-pages") as HTMLElement,
+    prev: document.getElementById("fp-prev") as HTMLButtonElement,
+    next: document.getElementById("fp-next") as HTMLButtonElement,
+    count: document.getElementById("fp-count"),
+    empty: document.getElementById("fp-empty"),
+    noun: "projects",
+    match: (c) => {
+      const t = q.value.trim().toLowerCase();
+      return (
+        (!t || (c.dataset.search ?? "").includes(t)) &&
+        (!status.value || c.dataset.status === status.value) &&
+        (!funder.value || c.dataset.funder === funder.value)
+      );
+    },
+  });
+
+  [q, status, funder].forEach((el) => el?.addEventListener("input", () => pager.refresh()));
+</script>

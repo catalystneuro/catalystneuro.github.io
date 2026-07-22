@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Icon from "../../components/Icon.astro";
+
+const openings = (await getCollection("openings")).filter((o) => o.data.enabled !== false);
+---
+<Base title="Openings" description="Join CatalystNeuro and help shape the future of neuroscience data management. See our open positions for software engineers and scientists.">
+  <PageHeader
+    eyebrow="Careers"
+    title="Open positions"
+    subtitle="Join our team and help shape the future of neuroscience data management."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      {openings.length === 0 ? (
+        <div class="card op-empty">
+          <div class="op-empty-mark"><Icon name="users" size={26} /></div>
+          <h2>No open positions right now</h2>
+          <p>We currently don't have any open positions. Please check back later, or reach out and introduce yourself.</p>
+          <a href="/contact" class="btn btn-primary">Get in touch <Icon name="arrow" size={15} /></a>
+        </div>
+      ) : (
+        <div class="op-grid">
+          {openings.map((o) => (
+            <a href={`/openings/${o.data.id}`} class="card card-hover op-card">
+              {o.data.image && <div class="op-img"><img src={o.data.image} alt={o.data.title} loading="lazy" /></div>}
+              <div class="op-body">
+                <h3>{o.data.title}</h3>
+                <p class="op-meta">{o.data.type} · {o.data.location}</p>
+                <p class="op-desc">{o.data.description}</p>
+                <span class="op-link">View position <Icon name="arrow" size={15} /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .op-empty { max-width: 34rem; margin-inline: auto; text-align: center; padding: 3rem 2rem; }
+  .op-empty-mark { width: 4rem; height: 4rem; border-radius: 1rem; background: var(--color-blue-50); color: var(--color-blue); display: grid; place-items: center; margin: 0 auto 1.4rem; }
+  .op-empty h2 { font-size: 1.5rem; }
+  .op-empty p { color: var(--color-ink-muted); margin: 0.8rem 0 1.6rem; }
+  .op-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .op-grid { grid-template-columns: repeat(2, 1fr); } }
+  .op-card { overflow: hidden; }
+  .op-img { aspect-ratio: 16/9; overflow: hidden; background: var(--color-paper); }
+  .op-img img { width: 100%; height: 100%; object-fit: cover; }
+  .op-body { padding: 1.6rem; }
+  .op-body h3 { font-size: 1.3rem; }
+  .op-meta { font-family: var(--font-mono); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-blue); margin: 0.4rem 0 0.8rem; }
+  .op-desc { color: var(--color-ink-muted); margin-bottom: 1rem; }
+  .op-link { color: var(--color-blue); font-weight: 500; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+</style>

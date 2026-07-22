@@ -1,34 +1,17 @@
 [build]
   command = "npm run build"
   publish = "dist"
-  functions = "netlify/functions"
 
-[dev]
-  command = "npm run dev"
-  port = 8888
-  targetPort = 5173
-  framework = "vite"
-  functionsPort = 9999
-
-[[redirects]]
-  from = "/success"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Form submission success redirect
-[[redirects]]
-  from = "/"
-  to = "/success"
-  status = 302
-  force = true
-  conditions = {Success = ["true"]}
+# Astro 7 requires Node 20 or newer, and this project's package.json asks for
+# 22.12. Nothing in the repository previously pinned a version, so the build
+# inherited whatever the Netlify project was configured with, which was older.
+[build.environment]
+  NODE_VERSION = "22"
 
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Astro emits real static pages for every route, so no SPA catch-all is needed.
+# A 404.html is generated automatically for unmatched paths.

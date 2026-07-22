@@ -1,0 +1,58 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import { SITE } from "../consts";
+
+const points = [
+  "Scope your NWB conversion or software project",
+  "Discuss funder and DANDI publishing requirements",
+  "Get a realistic estimate of effort and timeline",
+];
+---
+<Base title="Request a Consultation" description="Book a time to discuss your neurophysiology data project with the CatalystNeuro team, from NWB conversion to custom analysis pipelines.">
+  <PageHeader
+    eyebrow="Let's talk"
+    title="Schedule a consultation"
+    subtitle="Book a time to discuss your project with our team."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="cons-intro">
+        <span class="eyebrow">A free 30-minute call</span>
+        <ul class="cons-points">
+          {points.map((p) => <li><Icon name="check" size={16} /> <span>{p}</span></li>)}
+        </ul>
+      </div>
+
+      <div class="card cons-embed">
+        <div class="calendly-inline-widget" data-url={`${SITE.calendly}?hide_gdpr_banner=1`} style="min-width:320px;"></div>
+      </div>
+
+      <div class="card cons-alt">
+        <p>Prefer email? Reach us anytime at</p>
+        <a href={`mailto:${SITE.email}`} class="cons-mail"><Icon name="mail" size={15} /> {SITE.email}</a>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</Base>
+
+<style>
+  .cons-intro { margin-bottom: 2rem; }
+  .cons-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.2rem; }
+  @media (min-width: 800px) { .cons-points { flex-direction: row; gap: 2rem; } }
+  .cons-points li { display: flex; gap: 0.6rem; color: #3a445e; }
+  .cons-points svg { color: var(--color-blue); flex-shrink: 0; margin-top: 0.15rem; }
+  .cons-alt { padding: 1.3rem; margin-top: 2rem; }
+  .cons-alt p { color: var(--color-ink-muted); font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .cons-mail { color: var(--color-blue); font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .cons-embed { padding: 0.5rem; overflow: hidden; }
+  /* Calendly stacks its booking flow below ~900px, which is much taller than
+     the side-by-side desktop layout. Give the embed the full container width
+     so it stays in the short layout, and size the container to fit the tallest
+     step so Calendly never shows its own scrollbar. */
+  .cons-embed .calendly-inline-widget { height: 1180px; }
+  @media (min-width: 940px) { .cons-embed .calendly-inline-widget { height: 820px; } }
+</style>

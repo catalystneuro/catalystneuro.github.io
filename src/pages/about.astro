@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { Content as About } from "../data/about.md";
+---
+<Base title="About" description="CatalystNeuro's mission, vision, and approach to advancing neuroscience data standards through open-source software and expert engineering.">
+  <PageHeader
+    eyebrow="Who we are"
+    title="About CatalystNeuro"
+    subtitle="Our mission, vision, and approach to advancing neuroscience data standards."
+  />
+
+  <section class="section">
+    <div class="container-x about-wrap">
+      <article class="prose">
+        <About />
+      </article>
+
+      <div class="about-video">
+        <span class="eyebrow">Life at CatalystNeuro</span>
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/uRYOrGt1wMo"
+            title="Life at CatalystNeuro"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* The prose block sets its own reading measure; the video matches it so the
+     page keeps one column from top to bottom. */
+  .about-wrap > * { max-width: 46rem; }
+  .about-video { margin-top: 3.5rem; }
+  .about-video .eyebrow { margin-bottom: 1rem; }
+  .video-frame { position: relative; aspect-ratio: 16/9; border-radius: 0.5rem; overflow: hidden; background: var(--color-ink); }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>

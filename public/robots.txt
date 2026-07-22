@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /success/
 
-Sitemap: https://catalystneuro.com/sitemap.xml
+Sitemap: https://catalystneuro.com/sitemap-index.xml
