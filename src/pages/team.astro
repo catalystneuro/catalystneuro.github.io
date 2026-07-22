@@ -16,9 +16,9 @@ const former = members.filter((m) => !m.isActive);
 const socials = (m: Member) => [
   m.github && { icon: "github", href: m.github, label: "GitHub" },
   m.personalPage && { icon: "link", href: m.personalPage, label: "Website" },
-  m.twitter && { icon: "external", href: m.twitter, label: "Twitter" },
-  m.bluesky && { icon: "external", href: m.bluesky, label: "Bluesky" },
-  m.orcid && { icon: "doc", href: m.orcid, label: "ORCID" },
+  m.twitter && { icon: "x", href: m.twitter, label: "X" },
+  m.bluesky && { icon: "bluesky", href: m.bluesky, label: "Bluesky" },
+  m.orcid && { icon: "orcid", href: m.orcid, label: "ORCID" },
 ].filter(Boolean) as { icon: string; href: string; label: string }[];
 ---
 <Base title="Team" description="Meet the CatalystNeuro team — neuroscientists and software engineers building open-source tools and data standards for neurophysiology research.">
