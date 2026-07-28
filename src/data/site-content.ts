@@ -14,8 +14,8 @@ export const HERO = {
   ],
 };
 
-// STATS are derived from the content collections at build time — see
-// src/pages/index.astro. Only the labels live here.
+// STATS are derived from the content collections at build time (see
+// src/pages/index.astro). Only the labels live here.
 export const STAT_LABELS = {
   labs: "Research labs supported",
   projects: "Grant-funded projects",
