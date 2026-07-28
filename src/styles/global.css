@@ -33,7 +33,9 @@
   --color-line-soft: #ecf1f8;
 
   --color-ink-muted: #55607a;
-  --color-ink-soft: #7c86a0;
+  /* Tertiary text. Set for WCAG AA at the small sizes it is used at (stamps,
+     dates, counts, pagination): 4.86:1 on white, 4.56:1 on paper. */
+  --color-ink-soft: #68718b;
 
   --font-display: "Figtree Variable", Figtree, system-ui, sans-serif;
   --font-sans: "Inter Variable", Inter, system-ui, -apple-system, sans-serif;

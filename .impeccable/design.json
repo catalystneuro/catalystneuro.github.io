@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-28T00:00:00Z",
+  "title": "Design System: CatalystNeuro",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Rig Ink",
+        "canonical": "#0a0e28",
+        "tonalRamp": ["oklch(15% 0.07 275)", "oklch(26% 0.07 275)", "oklch(37% 0.07 275)", "oklch(48% 0.07 275)", "oklch(59% 0.07 275)", "oklch(70% 0.07 275)", "oklch(81% 0.07 275)", "oklch(92% 0.07 275)"]
+      },
+      "navy": {
+        "role": "neutral",
+        "displayName": "Brand Navy",
+        "canonical": "#101642",
+        "tonalRamp": ["oklch(15% 0.09 275)", "oklch(26% 0.09 275)", "oklch(37% 0.09 275)", "oklch(48% 0.09 275)", "oklch(59% 0.09 275)", "oklch(70% 0.09 275)", "oklch(81% 0.09 275)", "oklch(92% 0.09 275)"]
+      },
+      "blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "#1466a7",
+        "tonalRamp": ["oklch(15% 0.11 245)", "oklch(26% 0.11 245)", "oklch(37% 0.11 245)", "oklch(48% 0.11 245)", "oklch(59% 0.11 245)", "oklch(70% 0.11 245)", "oklch(81% 0.11 245)", "oklch(92% 0.11 245)"]
+      },
+      "blue-600": {
+        "role": "primary",
+        "displayName": "Deep Blue",
+        "canonical": "#0f5289",
+        "tonalRamp": ["oklch(15% 0.10 247)", "oklch(26% 0.10 247)", "oklch(37% 0.10 247)", "oklch(48% 0.10 247)", "oklch(59% 0.10 247)", "oklch(70% 0.10 247)", "oklch(81% 0.10 247)", "oklch(92% 0.10 247)"]
+      },
+      "blue-50": {
+        "role": "primary",
+        "displayName": "Wash Blue",
+        "canonical": "#eef6fc",
+        "tonalRamp": ["oklch(15% 0.02 240)", "oklch(26% 0.02 240)", "oklch(37% 0.02 240)", "oklch(48% 0.02 240)", "oklch(59% 0.02 240)", "oklch(70% 0.02 240)", "oklch(81% 0.02 240)", "oklch(97% 0.02 240)"]
+      },
+      "signal": {
+        "role": "secondary",
+        "displayName": "Live Cyan",
+        "canonical": "#22c7e6",
+        "tonalRamp": ["oklch(15% 0.13 210)", "oklch(26% 0.13 210)", "oklch(37% 0.13 210)", "oklch(48% 0.13 210)", "oklch(59% 0.13 210)", "oklch(70% 0.13 210)", "oklch(81% 0.13 210)", "oklch(92% 0.13 210)"]
+      },
+      "signal-soft": {
+        "role": "secondary",
+        "displayName": "Cyan Soft",
+        "canonical": "#7fe0f0",
+        "tonalRamp": ["oklch(15% 0.09 205)", "oklch(26% 0.09 205)", "oklch(37% 0.09 205)", "oklch(48% 0.09 205)", "oklch(59% 0.09 205)", "oklch(70% 0.09 205)", "oklch(81% 0.09 205)", "oklch(92% 0.09 205)"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Cool Paper",
+        "canonical": "#f5f8fc",
+        "tonalRamp": ["oklch(15% 0.006 250)", "oklch(26% 0.006 250)", "oklch(37% 0.006 250)", "oklch(48% 0.006 250)", "oklch(59% 0.006 250)", "oklch(70% 0.006 250)", "oklch(81% 0.006 250)", "oklch(97% 0.006 250)"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#dfe6f1",
+        "tonalRamp": ["oklch(15% 0.014 250)", "oklch(26% 0.014 250)", "oklch(37% 0.014 250)", "oklch(48% 0.014 250)", "oklch(59% 0.014 250)", "oklch(70% 0.014 250)", "oklch(81% 0.014 250)", "oklch(92% 0.014 250)"]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#55607a",
+        "tonalRamp": ["oklch(15% 0.035 265)", "oklch(26% 0.035 265)", "oklch(37% 0.035 265)", "oklch(48% 0.035 265)", "oklch(59% 0.035 265)", "oklch(70% 0.035 265)", "oklch(81% 0.035 265)", "oklch(92% 0.035 265)"]
+      },
+      "facet-species": {
+        "role": "tertiary",
+        "displayName": "Species Amber",
+        "canonical": "#b45309",
+        "tonalRamp": ["oklch(15% 0.13 60)", "oklch(26% 0.13 60)", "oklch(37% 0.13 60)", "oklch(48% 0.13 60)", "oklch(59% 0.13 60)", "oklch(70% 0.13 60)", "oklch(81% 0.13 60)", "oklch(92% 0.13 60)"]
+      },
+      "facet-area": {
+        "role": "tertiary",
+        "displayName": "Area Green",
+        "canonical": "#15803d",
+        "tonalRamp": ["oklch(15% 0.12 150)", "oklch(26% 0.12 150)", "oklch(37% 0.12 150)", "oklch(48% 0.12 150)", "oklch(59% 0.12 150)", "oklch(70% 0.12 150)", "oklch(81% 0.12 150)", "oklch(92% 0.12 150)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only, capped at a 16ch measure. Second line takes Live Cyan." },
+      "headline": { "displayName": "Headline", "purpose": "The h1 on every interior page, always preceded by a mono eyebrow." },
+      "title": { "displayName": "Section Title", "purpose": "Section headings, capped at a 20ch measure to force short declarative phrases." },
+      "body": { "displayName": "Body", "purpose": "Interface copy: cards, navigation, forms." },
+      "prose": { "displayName": "Prose", "purpose": "Long-form articles and guides, set in Prose Ink at a 1.75 leading." },
+      "label": { "displayName": "Eyebrow", "purpose": "The recurring mono eyebrow with a 1.6rem leading hairline dash. Opens every section." },
+      "data": { "displayName": "Data", "purpose": "Machine-produced values: tags, badges, stamps, counts, pagination, table headers." }
+    },
+    "shadows": [
+      { "name": "button-rest", "value": "0 1px 2px rgba(16,22,66,0.16)", "purpose": "The only resting shadow in the system, seating a primary button on the page." },
+      { "name": "button-hover", "value": "0 8px 24px -8px rgba(20,102,167,0.55)", "purpose": "Colored glow in the blue's own hue, paired with a 1px lift." },
+      { "name": "card-hover", "value": "0 20px 40px -28px rgba(16,22,66,0.4)", "purpose": "Long soft lift on card hover, paired with a 3px translate and a border shift toward Signal Blue." },
+      { "name": "menu-float", "value": "0 18px 40px -20px rgba(16,22,66,0.35)", "purpose": "Navigation dropdown, the one element that genuinely floats above the page." },
+      { "name": "code-block", "value": "0 18px 40px -30px rgba(10,14,40,0.9)", "purpose": "Seats a dark code surface inside light prose." },
+      { "name": "focus-halo", "value": "0 0 0 3px var(--color-blue-50)", "purpose": "Input and search focus halo, paired with a border shift to Signal Blue." },
+      { "name": "live-glow", "value": "drop-shadow(0 0 6px rgba(34,199,230,0.6))", "purpose": "Applied to the single live trace in the Signal Field. Never used elsewhere." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The system's only easing curve. Buttons, cards, menus, and image scale all use it." },
+      { "name": "duration-instant", "value": "0.15s", "purpose": "Color-only changes: nav links, footer links, inline link hover." },
+      { "name": "duration-control", "value": "0.2s", "purpose": "Button state changes and logo grayscale transitions." },
+      { "name": "duration-surface", "value": "0.25s", "purpose": "Card hover: border, shadow, and transform together." },
+      { "name": "duration-image", "value": "0.4s", "purpose": "Post card image scale to 1.04 on hover." },
+      { "name": "sweep", "value": "6s linear infinite", "purpose": "The Signal Field's live trace stroke-dashoffset sweep. Disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "cards-2up", "value": "700px" },
+      { "name": "md", "value": "780px" },
+      { "name": "lg", "value": "860px" },
+      { "name": "nav", "value": "960px" },
+      { "name": "cards-3up", "value": "1050px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single call to action on a light surface. Carries the only resting shadow in the system.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Request consultation <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); font-weight: 500; font-size: 0.95rem; padding: 0.7rem 1.35rem; border-radius: 0.55rem; border: 1px solid transparent; white-space: nowrap; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary { background: var(--color-blue, #1466a7); color: #fff; box-shadow: 0 1px 2px rgba(16,22,66,0.16); } .ds-btn-primary:hover { background: var(--color-blue-600, #0f5289); transform: translateY(-1px); box-shadow: 0 8px 24px -8px rgba(20,102,167,0.55); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-blue, #1466a7); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action on light surfaces. Hairline border, no fill, no lift.",
+      "html": "<button class=\"ds-btn ds-btn-ghost\">View all posts</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); font-weight: 500; font-size: 0.95rem; padding: 0.7rem 1.35rem; border-radius: 0.55rem; border: 1px solid transparent; white-space: nowrap; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-ghost { background: transparent; color: var(--color-navy, #101642); border-color: var(--color-line, #dfe6f1); } .ds-btn-ghost:hover { border-color: var(--color-blue, #1466a7); color: var(--color-blue, #1466a7); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--color-blue, #1466a7); outline-offset: 3px; }"
+    },
+    {
+      "name": "On-Dark Button",
+      "kind": "button",
+      "refersTo": "button-ondark",
+      "description": "The only correct secondary button on ink or navy surfaces. Inverts to solid white on hover.",
+      "html": "<div class=\"ds-ondark-stage\"><button class=\"ds-btn ds-btn-ondark\">See conversion work</button></div>",
+      "css": ".ds-ondark-stage { background: var(--color-ink, #0a0e28); padding: 1.75rem; border-radius: 0.9rem; } .ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); font-weight: 500; font-size: 0.95rem; padding: 0.7rem 1.35rem; border-radius: 0.55rem; border: 1px solid transparent; white-space: nowrap; cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-ondark { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.22); } .ds-btn-ondark:hover { background: #fff; color: var(--color-navy, #101642); } .ds-btn-ondark:focus-visible { outline: 2px solid var(--color-signal, #22c7e6); outline-offset: 3px; }"
+    },
+    {
+      "name": "Eyebrow",
+      "kind": "custom",
+      "refersTo": "eyebrow",
+      "description": "The structural drumbeat of the system: a wide-tracked mono label with a 1.6rem leading hairline dash. Opens every section and interior page header.",
+      "html": "<span class=\"ds-eyebrow\">Portfolio</span>",
+      "css": ".ds-eyebrow { font-family: var(--font-mono, 'JetBrains Mono Variable', ui-monospace, monospace); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-blue, #1466a7); display: inline-flex; align-items: center; gap: 0.6rem; } .ds-eyebrow::before { content: ''; width: 1.6rem; height: 1px; background: currentColor; opacity: 0.55; }"
+    },
+    {
+      "name": "Portfolio Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Flat at rest on a hairline border. Hover adds a long soft shadow, a 3px lift, and a border blended 45 percent toward Signal Blue.",
+      "html": "<article class=\"ds-card ds-card-hover\"><div class=\"ds-card-head\"><div><h3>Gyorgy Buzsaki</h3><div class=\"ds-card-sub\">New York University</div></div><span class=\"ds-stamp\">2024-03</span></div><p class=\"ds-card-desc\">Conversion of large-scale hippocampal recordings to NWB, published to the DANDI Archive with a reproducible pipeline.</p><div class=\"ds-card-tags\"><span class=\"ds-tag ds-tag-species\">Rat</span><span class=\"ds-tag ds-tag-method\">electrophysiology</span><span class=\"ds-tag ds-tag-area\">spatial navigation</span></div></article>",
+      "css": ".ds-card { background: var(--color-surface, #ffffff); border: 1px solid var(--color-line, #dfe6f1); border-radius: 0.9rem; padding: 1.5rem; max-width: 22rem; font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); } .ds-card-hover:hover { border-color: color-mix(in srgb, var(--color-blue, #1466a7) 45%, var(--color-line, #dfe6f1)); box-shadow: 0 20px 40px -28px rgba(16,22,66,0.4); transform: translateY(-3px); } .ds-card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.8rem; } .ds-card h3 { font-family: var(--font-display, 'Figtree Variable', Figtree, system-ui, sans-serif); font-size: 1.12rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; color: var(--color-navy, #101642); margin: 0; } .ds-card-sub { color: var(--color-blue, #1466a7); font-size: 0.82rem; margin-top: 0.25rem; } .ds-stamp { font-family: var(--font-mono, 'JetBrains Mono Variable', ui-monospace, monospace); font-size: 0.7rem; color: var(--color-ink-soft, #68718b); border: 1px solid var(--color-line, #dfe6f1); border-radius: 0.3rem; padding: 0.15rem 0.4rem; flex-shrink: 0; } .ds-card-desc { color: var(--color-ink-muted, #55607a); font-size: 0.88rem; line-height: 1.55; margin: 0.9rem 0 0; } .ds-card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.9rem; } .ds-tag { font-family: var(--font-mono, 'JetBrains Mono Variable', ui-monospace, monospace); font-size: 0.68rem; letter-spacing: 0.04em; padding: 0.2rem 0.55rem; border-radius: 0.35rem; white-space: nowrap; background: #eef1f6; color: #4b5675; } .ds-tag-species { background: color-mix(in srgb, #f59e0b 15%, white); color: #b45309; } .ds-tag-method { background: var(--color-blue-50, #eef6fc); color: var(--color-blue-600, #0f5289); } .ds-tag-area { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "A hairline shell containing a Soft Ink magnifier and a borderless input. Focus is applied to the wrapper so the icon and field read as one control.",
+      "html": "<div class=\"ds-search\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/></svg><input type=\"search\" placeholder=\"Search by lab, institution, or description…\" aria-label=\"Search conversions\" /></div>",
+      "css": ".ds-search { display: flex; align-items: center; gap: 0.5rem; width: 22rem; max-width: 100%; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line, #dfe6f1); border-radius: 0.55rem; background: var(--color-surface, #ffffff); color: var(--color-ink-soft, #68718b); transition: border-color 0.15s, box-shadow 0.15s; } .ds-search:focus-within { border-color: var(--color-blue, #1466a7); box-shadow: 0 0 0 3px var(--color-blue-50, #eef6fc); } .ds-search input { border: 0; outline: 0; flex: 1; min-width: 0; background: transparent; font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); font-size: 0.92rem; color: var(--color-navy, #101642); } .ds-search input::placeholder { color: var(--color-ink-soft, #68718b); }"
+    },
+    {
+      "name": "Filter Select",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Dropdown filter. When a value is applied it takes the set state, filling Wash Blue with a Signal Blue border, so active filters are visible without a separate chip row.",
+      "html": "<div class=\"ds-select-row\"><select class=\"ds-select\" aria-label=\"Method\"><option>All methods</option></select><select class=\"ds-select ds-select-set\" aria-label=\"Species\"><option>Rat</option></select></div>",
+      "css": ".ds-select-row { display: flex; gap: 0.7rem; flex-wrap: wrap; } .ds-select { padding: 0.55rem 0.8rem; border: 1px solid var(--color-line, #dfe6f1); border-radius: 0.55rem; background: var(--color-surface, #ffffff); font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); font-size: 0.85rem; color: var(--color-navy, #101642); cursor: pointer; max-width: 12rem; } .ds-select:hover { border-color: var(--color-blue, #1466a7); } .ds-select:focus-visible { outline: 2px solid var(--color-blue, #1466a7); outline-offset: 3px; } .ds-select-set { border-color: var(--color-blue, #1466a7); background: var(--color-blue-50, #eef6fc); color: var(--color-blue-600, #0f5289); font-weight: 500; }"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "badge-green",
+      "description": "Funded-project status. Green is active, gray is completed, amber is pending, blue is anything else. The mapping is a legend and must not be reassigned.",
+      "html": "<div class=\"ds-badge-row\"><span class=\"ds-badge ds-badge-green\">active</span><span class=\"ds-badge ds-badge-gray\">completed</span><span class=\"ds-badge ds-badge-amber\">pending</span><span class=\"ds-badge ds-badge-blue\">renewal</span></div>",
+      "css": ".ds-badge-row { display: flex; gap: 0.4rem; flex-wrap: wrap; } .ds-badge { font-family: var(--font-mono, 'JetBrains Mono Variable', ui-monospace, monospace); font-size: 0.68rem; letter-spacing: 0.04em; text-transform: capitalize; padding: 0.22rem 0.6rem; border-radius: 0.35rem; font-weight: 500; white-space: nowrap; } .ds-badge-green { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; } .ds-badge-gray { background: #eef1f6; color: #4b5675; } .ds-badge-amber { background: color-mix(in srgb, #f59e0b 16%, white); color: #b45309; } .ds-badge-blue { background: var(--color-blue-50, #eef6fc); color: var(--color-blue-600, #0f5289); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky bar at a fixed 4.25rem height with an 82 percent paper fill and a 12px backdrop blur. Hover fills Wash Blue; the active route is Signal Blue text with no fill.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary\"><a class=\"ds-nav-link ds-nav-active\" href=\"#\">Portfolio</a><a class=\"ds-nav-link\" href=\"#\">Software</a><a class=\"ds-nav-link\" href=\"#\">Blog</a><a class=\"ds-nav-link\" href=\"#\">Contact</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 0.25rem; height: 4.25rem; padding: 0 1rem; background: color-mix(in srgb, var(--color-paper, #f5f8fc) 82%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-line, #dfe6f1); } .ds-nav-link { font-family: var(--font-sans, 'Inter Variable', Inter, system-ui, sans-serif); font-size: 1.08rem; font-weight: 500; color: var(--color-navy, #101642); text-decoration: none; padding: 0.5rem 0.8rem; border-radius: 0.45rem; transition: color 0.15s, background 0.15s; } .ds-nav-link:hover { color: var(--color-blue, #1466a7); background: var(--color-blue-50, #eef6fc); } .ds-nav-active { color: var(--color-blue, #1466a7); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-blue, #1466a7); outline-offset: 3px; }"
+    },
+    {
+      "name": "Signal Field",
+      "kind": "custom",
+      "refersTo": "signal-field",
+      "description": "The signature component. Electrophysiology channels drawn as SVG traces on a dark surface, with exactly one live channel in Live Cyan carrying a 6 second sweep. Decorative and aria-hidden.",
+      "html": "<div class=\"ds-signal\" aria-hidden=\"true\"><svg viewBox=\"0 0 360 138\" preserveAspectRatio=\"none\" width=\"100%\" height=\"100%\"><defs><linearGradient id=\"ds-sig-fade\" x1=\"0\" x2=\"1\"><stop offset=\"0\" stop-color=\"var(--color-signal, #22c7e6)\" stop-opacity=\"0\"></stop><stop offset=\"0.5\" stop-color=\"var(--color-signal, #22c7e6)\" stop-opacity=\"1\"></stop><stop offset=\"1\" stop-color=\"var(--color-signal, #22c7e6)\" stop-opacity=\"0\"></stop></linearGradient></defs><line x1=\"0\" x2=\"360\" y1=\"23\" y2=\"23\" stroke=\"rgba(255,255,255,0.06)\"></line><line x1=\"0\" x2=\"360\" y1=\"69\" y2=\"69\" stroke=\"rgba(255,255,255,0.06)\"></line><line x1=\"0\" x2=\"360\" y1=\"115\" y2=\"115\" stroke=\"rgba(255,255,255,0.06)\"></line><path d=\"M0,23 L24,22 L48,24 L60,13 L72,23 L108,24 L132,22 L144,31 L168,23 L204,22 L228,24 L240,12 L264,23 L300,24 L324,22 L360,23\" fill=\"none\" stroke=\"rgba(127,224,240,0.28)\" stroke-width=\"1.25\"></path><path class=\"ds-trace-live\" d=\"M0,69 L36,68 L60,70 L72,57 L84,69 L120,70 L144,68 L156,78 L180,69 L216,68 L240,70 L252,56 L276,69 L312,70 L336,68 L360,69\" fill=\"none\" stroke=\"url(#ds-sig-fade)\" stroke-width=\"2\"></path><path d=\"M0,115 L24,114 L48,116 L72,115 L84,105 L96,115 L132,116 L156,114 L168,123 L192,115 L228,114 L252,116 L288,115 L300,104 L312,115 L360,115\" fill=\"none\" stroke=\"rgba(127,224,240,0.28)\" stroke-width=\"1.25\"></path></svg></div>",
+      "css": ".ds-signal { width: 100%; height: 138px; background: radial-gradient(120% 120% at 80% -10%, #1b2358 0%, var(--color-ink, #0a0e28) 55%); border-radius: 0.9rem; overflow: hidden; } .ds-trace-live { filter: drop-shadow(0 0 6px rgba(34,199,230,0.6)); stroke-dasharray: 70 310; animation: ds-sweep 6s linear infinite; } @keyframes ds-sweep { to { stroke-dashoffset: -380; } } @media (prefers-reduced-motion: reduce) { .ds-trace-live { animation: none; stroke-dasharray: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Live Recording",
+    "overview": "The site is built to look like a multichannel neural recording in progress, because that is what its clients spend their lives looking at. The hero is an acquisition surface: near black, with nine electrophysiology traces drawn as real SVG paths behind the headline, one of them highlighted in electric cyan and carrying a slow sweeping pulse. Every other surface in the system inherits that logic. Structure is drawn with hairlines the way a rig draws channel rules. Anything a machine produced (a date, a count, a dandiset id, a species tag, a page number) is set in monospace, the way a readout would print it. Anything a person wrote is set in a humanist sans, because it came from a person.\n\nThe result is deliberately not a SaaS marketing site, and the previous generic-SaaS visual language is the explicit anti-reference. There are no gradient mesh blobs, no floating 3D product mockups, no stock photographs of scientists pointing at monitors, and no illustration standing in for data. The subject matter supplies the imagery. When a page needs a visual, the honest answer is nearly always a real artifact: a trace, a logo grid, a photograph the team actually took, or a hairline table of facts.\n\nRestraint is what makes the one moment of energy land. The palette is overwhelmingly navy, paper, and hairline gray; the cyan appears roughly once per viewport and always on something that is genuinely live or active. Surfaces are flat at rest and earn their shadow only through interaction. The density is technical without being cramped: a 76rem measure, 5rem section rhythm, and long comfortable line lengths in prose, so a principal investigator can read a 3000-word technical post without fatigue and a program officer can scan 62 conversion cards without losing their place.",
+    "keyCharacteristics": [
+      "Dark acquisition surfaces frame the page; the interior is always paper or white.",
+      "Structure is drawn with 1px hairlines, never with resting shadow.",
+      "Monospace is a semantic signal, not a texture: it means a machine produced this fact.",
+      "One electric cyan accent, used roughly once per viewport, reserved for the live thing.",
+      "Real signal geometry instead of decorative abstraction or stock imagery.",
+      "Motion is slow, linear, and rare: a 6-second trace sweep, a 1px lift on hover."
+    ],
+    "rules": [
+      { "name": "The One Live Channel Rule", "body": "Live Cyan appears about once per viewport, and only on something that is genuinely live, active, or selected. If a second cyan element enters the same screen, one of them is decoration and should be Signal Blue or a neutral instead. The hero works because eight traces are quiet and one is not.", "section": "colors" },
+      { "name": "The Borrowed Navy Rule", "body": "Navy is simultaneously the heading color, the body color, and a surface fill. Never introduce a second dark neutral to separate text from surface; use the existing navy family (navy-700, navy-600) or opacity on white.", "section": "colors" },
+      { "name": "The Facet Color Rule", "body": "Amber means species, green means research area, blue means method. These three are a legend, not a palette. Do not reassign them, and do not use them for emphasis anywhere outside taxonomy chips and status badges.", "section": "colors" },
+      { "name": "The Machine Fact Rule", "body": "JetBrains Mono is reserved for values a machine produced or a system indexes: dates, counts, identifiers, tags, statuses, code, page numbers, and structural eyebrows. It never sets a sentence a human wrote. If you are tempted to set a human phrase in mono for texture, the answer is small-caps-weight Inter instead.", "section": "typography" },
+      { "name": "The Twenty Character Rule", "body": "Section titles are capped at a 20ch measure and hero titles at 16ch. If a title does not fit, shorten the title rather than raising the cap.", "section": "typography" },
+      { "name": "The Eyebrow Precedes Rule", "body": "Every major section and every interior page header opens with a mono eyebrow above the heading. It is the system's structural drumbeat, and skipping it makes a page read as though it belongs to a different site.", "section": "typography" },
+      { "name": "The Earned Shadow Rule", "body": "Surfaces are flat until the user does something. If an element has a resting shadow and is not a primary button or a floating menu, remove it and let the hairline do the work.", "section": "elevation" },
+      { "name": "The Long Light Rule", "body": "Every shadow in the system uses a large blur and a large negative spread (-8px to -30px). Short tight shadows read as material and break the instrument character. Match the existing offsets rather than inventing new ones.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do open every section and interior page with a mono eyebrow above the heading, with its 1.6rem leading dash intact.",
+      "Do set machine-produced values (dates, counts, ids, tags, statuses, page numbers) in JetBrains Mono, and human sentences in Inter.",
+      "Do define structure with 1px hairlines. Reach for a border before you reach for a shadow or a fill.",
+      "Do keep Live Cyan to roughly one element per viewport, on something genuinely live, active, or selected. Use Cyan Soft when the accent must carry text on dark.",
+      "Do keep dark surfaces at the frame of a page: the hero opens, a stat band or single band interrupts, the footer closes. Interior content stays on paper or white.",
+      "Do pin card action rows with margin-top: auto so cards in a row end level, and clamp variable-length descriptions rather than letting them set the card height.",
+      "Do honor prefers-reduced-motion; the global rule collapses transitions and the Signal Field drops its sweep entirely.",
+      "Do generate visuals from the subject matter (traces, real logos, real photographs, hairline data tables) when a surface needs interest."
+    ],
+    "donts": [
+      "Don't give a resting element a shadow. Only primary buttons and genuinely floating menus carry shadow at rest; everything else earns it on hover or focus.",
+      "Don't introduce a fourth typeface, or use monospace for a sentence a person wrote.",
+      "Don't reassign the facet colors. Amber is species, green is research area, blue is method, and that legend holds everywhere it appears.",
+      "Don't add gradient blobs, mesh backgrounds, floating 3D mockups, stock photographs of scientists, or illustrations standing in for data. The previous generic-SaaS look is the anti-reference, not a fallback.",
+      "Don't stack dark sections through the middle of a page, and don't put a dark band directly against the footer.",
+      "Don't exceed 0.9rem radius on any surface, or use pill-shaped buttons.",
+      "Don't widen the container past 76rem or raise the 20ch cap on section titles; shorten the title instead.",
+      "Don't use short tight shadows. Every shadow in this system has a large blur and a large negative spread."
+    ]
+  }
+}

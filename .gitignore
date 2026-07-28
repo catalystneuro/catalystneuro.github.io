@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# impeccable live-mode session journals (local recovery state, not project source)
+.impeccable/live/sessions/

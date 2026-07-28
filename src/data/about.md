@@ -32,7 +32,7 @@ We partner with individual labs to develop customized solutions, offering both v
 
 ### Software Engineering
 
-We help labs integrate their existing analysis, visualization, and data management tools with the broader open science ecosystem via NWB and DANDI. Our team professionalizes research software through proper packaging, comprehensive testing, and thorough documentation—transforming prototype code into reliable, maintainable tools. We also design reproducible workflows for data processing and analysis, ensuring that research outputs can be shared and replicated across the scientific community.
+We help labs integrate their existing analysis, visualization, and data management tools with the broader open science ecosystem via NWB and DANDI. Our team professionalizes research software through proper packaging, comprehensive testing, and thorough documentation, transforming prototype code into reliable, maintainable tools. We also design reproducible workflows for data processing and analysis, ensuring that research outputs can be shared and replicated across the scientific community.
 
 ### AI in Neuroscience
 
