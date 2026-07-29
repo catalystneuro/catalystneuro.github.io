@@ -3,12 +3,12 @@ title: "NIH R25 Award for the NeuroData AI Summer School"
 date: "2026-07-29"
 image: "/images/blog/neurodata-ai-summer-school-banner.jpg"
 description: "NINDS has awarded CatalystNeuro an R25 research education grant to support the NeuroData AI Summer School for five years, expanding the NeuroDataReHack workshop we have run at HHMI Janelia since 2022 with a longer format and new material on AI methods."
-readTime: "5 min read"
+readTime: "7 min read"
 author: "Ben Dichter"
 keywords: ["NeuroDataReHack", "NIH", "R25", "education", "NWB", "DANDI", "data reuse", "AI", "Janelia"]
 ---
 
-The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro an R25 research education grant (1R25NS149357) to support the [NeuroData AI Summer School](/funded-projects/neurodata-ai-summer-school-r25) for five years. The program is a continuation and expansion of NeuroDataReHack, the residential workshop we have run at [HHMI Janelia Research Campus](https://www.janelia.org/) since 2022. This post describes what the award funds and how the program will change.
+The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro an R25 research education grant (1R25NS149357) to support the [NeuroData AI Summer School](/funded-projects/neurodata-ai-summer-school-r25) for five years. The program is a continuation and expansion of NeuroDataReHack, the residential workshop we have run at [HHMI Janelia Research Campus](https://www.janelia.org/) since 2022. This is the first stable, multi-year funding the program has had, and it changes what we are able to plan. This post describes what the award funds and how the program will change.
 
 ## The Gap the Program Addresses
 
@@ -64,9 +64,23 @@ At the end of each installment we ask participants whether they would like to le
 >
 > Antonio Velázquez, Universidad Nacional Autónoma de México
 
+## Teaching Each Cohort
+
+Running this program is the part of my year I look forward to most. Participants arrive on Sunday with a question they care about and, frequently, no clear idea how to open the files that might answer it. By Saturday they are standing up and presenting a result. Watching that happen across a room of thirty people at once does not get old, and the final-day presentations are reliably the best hours of the week. I also get to spend six days with people who are enthusiastic about open data, which is not the ambient condition in most of the field.
+
+There is a reason I care about this beyond enjoying it. The promise of open data is not fulfilled by publishing data. It is fulfilled when someone opens a dataset they did not collect and learns something from it that the people who collected it did not know. Every argument for sharing neurophysiology data rests on an assumption that reuse will follow, and reuse does not follow automatically. It follows when enough people know how to do it, and when they have seen it done. That is what this program produces, one cohort at a time, and the participants who leave and go on to reanalyze someone else's recordings are the mechanism by which the whole case for open data stops being an argument and starts being a body of work.
+
 ## NeuroDataReHack 2027
 
 The first installment supported by this award will be held at HHMI Janelia Research Campus in Ashburn, Virginia, from Monday, July 19 through Saturday, July 24, 2027, with participants arriving the evening of Sunday, July 18. The event is free to attend, including lodging on campus and meals. We will announce the opening of applications separately, with the full eligibility criteria and application details.
+
+## What Five Years of Funding Changes
+
+Until now the program has run one year at a time. Janelia's support has been generous and consistent, but everything else was assembled annually, which meant the curriculum was largely rebuilt each spring and we could not commit to much beyond the coming summer. A five-year award changes the horizon we can plan against, and that is the part of this I am most pleased about.
+
+The most immediate difference is that teaching materials can accumulate instead of resetting. Tutorials that work can be maintained and revised across installments and published as a resource that outlasts the week they were written for. We can invite faculty further in advance, give applicants an answer earlier, and build the AI portion of the curriculum knowing it has several years to develop rather than a single slot to fill in a schedule. It also means we can follow what participants do after they leave, which is the only real measure of whether the program works and something we have never been able to do properly.
+
+Five cohorts from now I expect this program to look meaningfully different from the one we ran this July, and I am looking forward to finding out how.
 
 ## Acknowledgments
 
