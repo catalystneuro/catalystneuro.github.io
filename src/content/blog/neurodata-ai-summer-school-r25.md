@@ -42,7 +42,7 @@ Two other programs cover adjacent ground, and they are worth knowing about. [Neu
 
 Our program is specifically about reanalysis of neurophysiology data in the NWB format on the DANDI Archive, and it assumes participants arrive with a programming background and familiarity with neurophysiology. We schedule around these programs deliberately so that people who would benefit from more than one can attend more than one.
 
-## Partnership with HHMI Janelia and Its Trade-offs
+## Partnership with HHMI Janelia
 
 HHMI Janelia Research Campus has hosted and sponsored the program since 2022, providing lodging, meals, and meeting space. This is what allows us to offer the program at no cost to participants, and the residential format produces a level of sustained concentration that a distributed or virtual format does not.
 
