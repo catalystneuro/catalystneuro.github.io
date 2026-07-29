@@ -1,23 +1,24 @@
 ---
 title: "NIH R25 Award for the NeuroData AI Summer School"
 date: "2026-07-29"
+image: "/images/blog/neurodata-ai-summer-school-banner.jpg"
 description: "NINDS has awarded CatalystNeuro an R25 research education grant to support the NeuroData AI Summer School for five years, expanding the NeuroDataReHack workshop we have run at HHMI Janelia since 2022 with a longer format and new material on AI methods."
 readTime: "5 min read"
 author: "Ben Dichter"
 keywords: ["NeuroDataReHack", "NIH", "R25", "education", "NWB", "DANDI", "data reuse", "AI", "Janelia"]
 ---
 
-The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro an R25 research education grant (1R25NS149357) to support the NeuroData AI Summer School for five years. The program is a continuation and expansion of NeuroDataReHack, the residential workshop we have run at [HHMI Janelia Research Campus](https://www.janelia.org/) since 2022. This post describes what the award funds and how the program will change.
+The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro an R25 research education grant (1R25NS149357) to support the [NeuroData AI Summer School](/funded-projects/neurodata-ai-summer-school-r25) for five years. The program is a continuation and expansion of NeuroDataReHack, the residential workshop we have run at [HHMI Janelia Research Campus](https://www.janelia.org/) since 2022. This post describes what the award funds and how the program will change.
 
 ## The Gap the Program Addresses
 
 The [DANDI Archive](https://dandiarchive.org/) now holds more than 600 neurophysiology datasets, roughly 550 of them in the [Neurodata Without Borders](https://nwb.org/) format, spanning many species, brain areas, task designs, and recording modalities. Several of these are large, well-documented, and expensive to collect, including releases from [Allen Institute OpenScope](https://alleninstitute.org/division/mindscope/openscope/), the [MICrONS project](https://www.microns-explorer.org/), and the International Brain Laboratory [Brain Wide Map](https://www.internationalbrainlab.com/brainwide-map). The reuse of these datasets is growing, but it is still small relative to what they cost to collect and what they could support.
 
-Reanalysis of open neurophysiology data is plainly viable, and several prominent recent papers have been built substantially or entirely on public datasets ([Schneider et al., 2023](https://www.nature.com/articles/s41586-023-06031-6); [Burman et al., 2023](https://doi.org/10.1016/j.neuron.2023.08.005); [Pachitariu et al., 2024](https://www.nature.com/articles/s41592-024-02232-7); [Wakhloo et al., 2026](https://www.nature.com/articles/s41593-025-02183-y)). The obstacle is not that this kind of work is unwelcome. It is that the groups producing it tend to be computationally sophisticated ones that already know how to work with standardized formats and cloud-hosted archives, and that expertise is distributed unevenly. The specific and fairly narrow problem we can address is that many neuroscientists who would like to do this work have never been taught how: how standardized formats are organized, how to stream data from a cloud archive rather than downloading it, which analysis tools operate on NWB files directly, and how to evaluate whether a method developed on one lab's recordings will transfer to another's.
+Reanalysis of open neurophysiology data is plainly viable, and several prominent recent papers have been built substantially or entirely on public datasets ([Schneider et al., 2023](https://www.nature.com/articles/s41586-023-06031-6); [Burman et al., 2023](https://doi.org/10.1016/j.neuron.2023.08.005); [Pachitariu et al., 2024](https://www.nature.com/articles/s41592-024-02232-7); [Wakhloo et al., 2026](https://www.nature.com/articles/s41593-025-02183-y)). The obstacle is not that this kind of work is unwelcome. It is that the groups producing it tend to be computationally sophisticated ones that already know how to work with standardized formats and cloud-hosted archives, and that expertise is distributed unevenly. The specific problem we address is that many neuroscientists who would like to do this work have never been taught how: how standardized formats are organized, how to stream data from a cloud archive rather than downloading it, which analysis tools operate on NWB files directly, and how to evaluate whether a method developed on one lab's recordings will transfer to another's.
 
 ## Relationship to NeuroDataReHack
 
-The Summer School is the same program that has run at Janelia each summer since 2022, with an expanded curriculum and a longer format. The core structure does not change. Participants arrive with a reanalysis question they want to pursue, form teams around shared datasets and interests, receive instruction in the mornings, and spend the majority of the week on project work with faculty and dataset stewards available to them. Teams present results on the final day, and lectures and tutorials are recorded and published afterward. The 2027 installment will run under the NeuroDataReHack name.
+The Summer School builds on the program that has run at Janelia each summer since 2022, with an expanded curriculum and a longer format. The structure that makes it work is unchanged. Participants arrive with a reanalysis question they want to pursue, form teams around shared datasets and interests, receive instruction in the mornings, and spend the majority of the week on project work with faculty and dataset stewards available to them. Teams present results on the final day, and lectures and tutorials are recorded and published afterward. The 2027 installment will run under the NeuroDataReHack name.
 
 ## Curriculum
 
@@ -25,15 +26,15 @@ The foundational portion of the curriculum covers the NWB standard and the DANDI
 
 ## Addition of AI Methods
 
-The material at the intersection of machine learning and neurophysiology is what this award primarily expands: foundation models for neural data, LLM-assisted analysis workflows, dimensionality reduction and neural decoding, and transfer learning across datasets and recording sessions.
+This award primarily expands the material at the intersection of machine learning and neurophysiology: foundation models for neural data, LLM-assisted analysis workflows, dimensionality reduction and neural decoding, and transfer learning across datasets and recording sessions.
 
-This is not a new direction so much as an accelerated one. The [2026 workshop](https://nwb.org/events/hck26-2026-janelia-ndrh/) already devoted a section of the schedule to AI-assisted workflows, covering neural foundation models, development with LLMs, and coding agents. What the award funds is the expansion of that material from a handful of sessions into a substantial and well-supported portion of a longer program.
+The program has already begun moving in this direction. The [2026 workshop](https://nwb.org/events/hck26-2026-janelia-ndrh/) devoted a section of the schedule to AI-assisted workflows, covering neural foundation models, development with LLMs, and coding agents. What the award funds is the expansion of that material from a handful of sessions into a substantial and well-supported portion of a longer program.
 
 ## Comparison with Other Training Programs
 
-Two other programs cover adjacent ground, and prospective applicants should consider whether one of them is a better fit. [Neuromatch Academy](https://neuromatch.io/) provides broad instruction in computational neuroscience and, more recently, NeuroAI, at a much larger scale and with no travel requirement. [NeuroHackademy](https://neurohackademy.org/) covers scientific computing, reproducibility, and data science for neuroimaging.
+Two other programs cover adjacent ground, and they are worth knowing about. [Neuromatch Academy](https://neuromatch.io/) provides broad instruction in computational neuroscience and, more recently, NeuroAI, at a much larger scale and with no travel requirement. [NeuroHackademy](https://neurohackademy.org/) covers scientific computing, reproducibility, and data science for neuroimaging.
 
-Our program is specifically about reanalysis of neurophysiology data in the NWB format on the DANDI Archive, and it assumes participants already have some programming background and some familiarity with neurophysiology. We schedule around these programs deliberately so that people who would benefit from more than one can attend more than one.
+Our program is specifically about reanalysis of neurophysiology data in the NWB format on the DANDI Archive, and it assumes participants arrive with a programming background and familiarity with neurophysiology. We schedule around these programs deliberately so that people who would benefit from more than one can attend more than one.
 
 ## Partnership with HHMI Janelia and Its Trade-offs
 
