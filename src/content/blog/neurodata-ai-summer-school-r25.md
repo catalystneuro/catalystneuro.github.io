@@ -16,6 +16,12 @@ The [DANDI Archive](https://dandiarchive.org/) now holds more than 600 neurophys
 
 Reanalysis of open neurophysiology data is plainly viable, and several prominent recent papers have been built substantially or entirely on public datasets ([Schneider et al., 2023](https://www.nature.com/articles/s41586-023-06031-6); [Burman et al., 2023](https://doi.org/10.1016/j.neuron.2023.08.005); [Pachitariu et al., 2024](https://www.nature.com/articles/s41592-024-02232-7); [Wakhloo et al., 2026](https://www.nature.com/articles/s41593-025-02183-y)). The obstacle is not that this kind of work is unwelcome. It is that the groups producing it tend to be computationally sophisticated ones that already know how to work with standardized formats and cloud-hosted archives, and that expertise is distributed unevenly. The specific problem we address is that many neuroscientists who would like to do this work have never been taught how: how standardized formats are organized, how to stream data from a cloud archive rather than downloading it, which analysis tools operate on NWB files directly, and how to evaluate whether a method developed on one lab's recordings will transfer to another's.
 
+The exit survey from the 2026 workshop is full of that reaction. One participant summarized the week in a single sentence:
+
+> I didn't know it was so easy to get started with analysing open datasets!
+>
+> William Reith, Sainsbury Wellcome Centre
+
 ## Relationship to NeuroDataReHack
 
 The Summer School builds on the program that has run at Janelia each summer since 2022, with an expanded curriculum and a longer format. The structure that makes it work is unchanged. Participants arrive with a reanalysis question they want to pursue, form teams around shared datasets and interests, receive instruction in the mornings, and spend the majority of the week on project work with faculty and dataset stewards available to them. Teams present results on the final day, and lectures and tutorials are recorded and published afterward. The 2027 installment will run under the NeuroDataReHack name.
@@ -41,6 +47,22 @@ Our program is specifically about reanalysis of neurophysiology data in the NWB 
 HHMI Janelia Research Campus has hosted and sponsored the program since 2022, providing lodging, meals, and meeting space. This is what allows us to offer the program at no cost to participants, and the residential format produces a level of sustained concentration that a distributed or virtual format does not.
 
 A residential program at a single site caps enrollment at roughly 35 participants, requires a week away from other obligations, and requires travel to Virginia, which is a meaningful barrier for international applicants and for anyone with caregiving responsibilities. We accept that trade-off because the format works, but it does mean the program reaches a small number of people directly. We publish the recorded lectures each year, which extends the reach of the instructional material, though it does not extend the reach of the project work, and the project work is the part participants consistently rate as most valuable.
+
+## Feedback from the 2026 Workshop
+
+At the end of each installment we ask participants whether they would like to leave a comment we can publish. Three from 2026:
+
+> Getting familiarized with open data is a critical skill for anyone who wants to think through their hypothesis before diving deep into an experimental project, or who needs to replicate results on new data. This workshop is a fantastic way to understand what data is already out there, how to use open science tools, and how to contribute yourself to the open data community.
+>
+> Estrella Villanueva Pivel, LMU Munich
+
+> Collective data collection, data sharing and data reuse will be the future of neuroscience. This workshop is great for computational neuroscientists, and experimentalists who could benefit from using open data to complement their own research.
+>
+> Siyu Wang, National Institutes of Health
+
+> Why wait for the experiments? Use open data now!
+>
+> Antonio Velázquez, Universidad Nacional Autónoma de México
 
 ## NeuroDataReHack 2027
 
