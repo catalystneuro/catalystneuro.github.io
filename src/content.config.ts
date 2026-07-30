@@ -50,6 +50,7 @@ const software = defineCollection({
     image: z.string().optional(),
     github: z.string().optional(),
     docs: z.string().optional(),
+    paper: z.string().optional(),
   }),
 });
 

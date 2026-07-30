@@ -35,6 +35,7 @@ const ext = all.filter((s) => s.data.type === "extension");
             <div class="sw-links">
               {s.data.github && <a href={s.data.github} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> GitHub</a>}
               {s.data.docs && <a href={s.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="book" size={15} /> Docs</a>}
+              {s.data.paper && <a href={s.data.paper} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="doc" size={15} /> Paper</a>}
             </div>
           </article>
         ))}
