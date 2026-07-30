@@ -13,5 +13,13 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# The ASAP funded-project page was published under a slug derived from the
+# program's full name. The title, and therefore the slug, is back to
+# "ASAP NWB Adoption", so keep the old address working.
+[[redirects]]
+  from = "/funded-projects/aligning-science-across-parkinson-s"
+  to = "/funded-projects/asap-nwb-adoption"
+  status = 301
+
 # Astro emits real static pages for every route, so no SPA catch-all is needed.
 # A 404.html is generated automatically for unmatched paths.

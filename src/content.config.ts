@@ -51,6 +51,12 @@ const software = defineCollection({
     github: z.string().optional(),
     docs: z.string().optional(),
     paper: z.string().optional(),
+    // A hosted instance the reader can open and use, for entries that are web
+    // applications rather than installable packages. Distinct from `docs`,
+    // which points at prose about the software.
+    site: z.string().optional(),
+    // A demo or walkthrough recording.
+    video: z.string().optional(),
   }),
 });
 

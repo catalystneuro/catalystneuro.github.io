@@ -33,9 +33,11 @@ const ext = all.filter((s) => s.data.type === "extension");
             <h3>{s.data.name}</h3>
             <p>{s.data.description}</p>
             <div class="sw-links">
+              {s.data.site && <a href={s.data.site} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="external" size={15} /> Open app</a>}
               {s.data.github && <a href={s.data.github} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> GitHub</a>}
               {s.data.docs && <a href={s.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="book" size={15} /> Docs</a>}
               {s.data.paper && <a href={s.data.paper} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="doc" size={15} /> Paper</a>}
+              {s.data.video && <a href={s.data.video} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="play" size={15} /> Demo</a>}
             </div>
           </article>
         ))}
