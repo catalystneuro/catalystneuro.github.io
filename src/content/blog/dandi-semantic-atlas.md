@@ -21,9 +21,9 @@ Points can be colored two ways. The default colors them by topic region, which i
 
 ## How It Is Built
 
-The pipeline is a single Python script, `scripts/build_dataset.py`, and it is deliberately short. It pages through the DANDI REST API for the dataset list, then fetches each Dandiset's version metadata in a thread pool. For each record it assembles one natural-language document: the title and description first, followed by short labeled clauses for anatomy, species, approaches, techniques, keywords, and measured variables. The ordering is not arbitrary. The encoder truncates at roughly 256 tokens, so the title and abstract carry nearly all of the positional signal, while the trailing metadata mostly sharpens the topic labels described below.
+The pipeline is a single Python script, `scripts/build_dataset.py`. It pages through the DANDI REST API for the dataset list, then fetches each Dandiset's version metadata. For each record it assembles one natural-language document: the title and description first, followed by short labeled clauses for anatomy, species, approaches, techniques, keywords, and measured variables. The encoder truncates at roughly 256 tokens, so the title and abstract carry nearly all of the positional signal, while the trailing metadata mostly sharpens the topic labels described below.
 
-Those documents are embedded with `all-MiniLM-L6-v2`, a small sentence-transformer that runs comfortably on a GitHub Actions runner without a GPU. The embeddings are projected with UMAP into three dimensions, clustered with HDBSCAN, and labeled with c-TF-IDF, which is the [BERTopic](https://maartengr.github.io/BERTopic/) recipe. The minimum cluster size scales with the archive rather than being fixed, at `max(6, n // 85)`, so the number of regions stays roughly stable as DANDI grows instead of fragmenting into dozens of near-duplicate specks.
+Those documents are embedded with `all-MiniLM-L6-v2`, a small sentence-transformer that runs comfortably on a GitHub Actions runner without a GPU. The embeddings are projected with UMAP into three dimensions, clustered with HDBSCAN, and labeled with c-TF-IDF, which is the [BERTopic](https://maartengr.github.io/BERTopic/) recipe. The minimum cluster size scales with the archive, at `max(6, n // 85)`, so the number of regions stays roughly stable as DANDI grows instead of fragmenting into dozens of near-duplicate specks.
 
 ## One Projection for Both Layout and Clustering
 
@@ -49,7 +49,7 @@ The clearest example is in the species coloring. The archive contains 224 datase
 
 The atlas is an exploratory aid. It is a CatalystNeuro prototype rather than an official DANDI Archive feature, and it is not a taxonomy, a ranking, or a substitute for reading the datasets.
 
-Its specific limitations follow from the method. UMAP preserves local neighborhoods much better than global geometry, so "these two points are adjacent" is meaningful while "these two clusters are on opposite sides of the map" is mostly an artifact of the layout. The encoder's truncation means a very long abstract contributes mainly its opening. Cluster labels come from term statistics, not from a model that understands the field, so they are serviceable signposts and occasionally awkward ones. And a dataset with a two-sentence description will be placed on the strength of those two sentences, which is a fair reflection of what a reader searching the archive would have to work with.
+Its specific limitations follow from the method. UMAP preserves local neighborhoods much better than global geometry, so "these two points are adjacent" is meaningful while "these two clusters are on opposite sides of the map" is mostly an artifact of the layout. Cluster labels come from term statistics, not from a model that understands the field, so they are serviceable signposts and occasionally awkward ones. And a dataset with a two-sentence description will be placed on the strength of those two sentences, which is a fair reflection of what a reader searching the archive would have to work with.
 
 ## Running It Yourself
 
