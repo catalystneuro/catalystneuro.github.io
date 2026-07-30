@@ -4,7 +4,7 @@ date: "2026-07-30"
 description: "The DANDI Semantic Atlas places every Dandiset on a rotatable map built from sentence embeddings of its metadata, so datasets that describe similar science end up near one another. It rebuilds itself nightly from the DANDI API."
 image: "/images/blog/dandi-semantic-atlas-banner.png"
 imageFit: "contain"
-readTime: "8 min read"
+readTime: "7 min read"
 author: "Benjamin Dichter"
 keywords: ["DANDI", "NWB", "semantic search", "embeddings", "Qwen3", "UMAP", "HDBSCAN", "BERTopic", "metadata", "data discovery", "neurophysiology"]
 ---
@@ -25,14 +25,6 @@ The pipeline is a single Python script, `scripts/build_dataset.py`. It pages thr
 
 Those documents are embedded with `Qwen3-Embedding-0.6B`. The embeddings are projected with UMAP into three dimensions, clustered with HDBSCAN, and labeled with c-TF-IDF, which is the [BERTopic](https://maartengr.github.io/BERTopic/) recipe. The minimum cluster size scales with the archive, at `max(6, n // 85)`, so the number of regions stays roughly stable as DANDI grows instead of fragmenting into dozens of near-duplicate specks.
 
-## Why the Encoder Was Replaced
-
-The first version of the map used `all-MiniLM-L6-v2`, which is small, fast, and the conventional default for this kind of pipeline. Its limitation is a 256-token input cap. Measuring the actual Dandiset documents showed a median length of 151 tokens, a 95th percentile of 478, and a longest document of 1,111, so while a typical record fit, the longer abstracts were being cut off before the encoder saw the end of them, and with them the trailing anatomy, species, and technique lines that make a document specific.
-
-Replacing it with `Qwen3-Embedding-0.6B`, which accepts far longer inputs and scores considerably higher on clustering benchmarks, measurably improved the map. Under MiniLM the pipeline found 41 regions and left 99 datasets, about sixteen percent of the archive, unclustered. With the larger encoder it finds 36 regions and leaves 51, about eight percent. The regions themselves consolidated in a way that reads as more correct: hippocampal work that MiniLM had split into separate theta, sharp wave ripple, and entorhinal groups is now a single region of 71 datasets, which is closer to how the field talks about itself.
-
-The cost is runtime. The model is about a gigabyte of weights instead of 87 MB, and the nightly job now takes roughly twenty minutes on a standard GitHub-hosted runner rather than a few. Most of that is installing dependencies and encoding on CPU. The workflow installs the CPU-only build of PyTorch and caches the downloaded model between runs to keep it in that range.
-
 ## One Projection for Both Layout and Clustering
 
 The one place where we deviate from the standard recipe is worth explaining, because it is the difference between a map that reads correctly and one that looks broken.
@@ -47,7 +39,7 @@ The largest regions in the current build are recognizable at a glance: hippocamp
 
 Two results are worth reporting honestly. The first is that 51 datasets, about eight percent, are marked unclustered. HDBSCAN reports outliers rather than forcing every point into a group, and we prefer that. A dataset flagged as an outlier is not badly described. Checking the descriptions, the unclustered datasets have slightly longer abstracts than average. They are simply the ones without enough near-neighbors in the archive to form a region.
 
-The second is that the archive's own housekeeping still shows up as geography. Under MiniLM there was a 21-dataset region labeled "Dandi · Test" that collected test uploads and tutorial datasets outright. That region is gone, but the same material has not vanished from the map: it now sits in a 15-dataset region alongside simulated data, format benchmarks, and demonstration datasets. The clustering is not wrong about this. Those datasets genuinely do describe the same thing, which is infrastructure rather than neuroscience.
+The second is that the archive's own housekeeping shows up as geography. Test uploads, tutorial datasets, simulated data, and format benchmarks sit together in a region of 15 datasets. The clustering is not wrong about this. Those datasets genuinely do describe the same thing, which is infrastructure rather than neuroscience.
 
 ## The Map as a Metadata Diagnostic
 
