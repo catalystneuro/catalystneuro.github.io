@@ -50,6 +50,7 @@ const software = defineCollection({
     image: z.string().optional(),
     github: z.string().optional(),
     docs: z.string().optional(),
+    paper: z.string().optional(),
     // A hosted instance the reader can open and use, for entries that are web
     // applications rather than installable packages. Distinct from `docs`,
     // which points at prose about the software.
