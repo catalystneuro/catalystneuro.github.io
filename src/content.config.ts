@@ -54,6 +54,8 @@ const software = defineCollection({
     // applications rather than installable packages. Distinct from `docs`,
     // which points at prose about the software.
     site: z.string().optional(),
+    // A demo or walkthrough recording.
+    video: z.string().optional(),
   }),
 });
 
