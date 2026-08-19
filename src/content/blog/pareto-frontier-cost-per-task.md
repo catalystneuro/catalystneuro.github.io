@@ -15,6 +15,7 @@ keywords: ["LLM", "Pareto frontier", "cost per task", "Artificial Analysis", "In
 .pfc-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.8rem; color: var(--color-ink-muted); margin-top: 0.55rem; align-items: center; }
 .pfc-lk { display: inline-flex; align-items: center; gap: 0.4rem; }
 .pfc-swatch { width: 18px; height: 0; border-top: 2.5px solid; border-radius: 2px; display: inline-block; }
+.pfc-dot { width: 9px; height: 9px; border-radius: 50%; border: 2px solid; display: inline-block; }
 .pfc-tooltip { position: absolute; pointer-events: none; z-index: 50; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 6px; box-shadow: 0 3px 14px rgba(16,22,66,0.13); padding: 0.5rem 0.65rem; font-size: 0.78rem; line-height: 1.45; color: var(--color-ink-muted); max-width: 250px; display: none; }
 .pfc-tt-name { font-weight: 600; color: var(--color-navy); font-size: 0.82rem; }
 .pfc-tt-val { font-weight: 600; color: var(--color-navy); }
@@ -50,7 +51,7 @@ The chart below plots intelligence against measured cost per task and traces the
   <div id="pfc-frontier"></div>
   <div class="pfc-legend" id="pfc-frontier-legend"></div>
   <noscript><img src="/images/blog/pareto-frontier-bimonthly.svg" alt="Intelligence Index versus cost per task with Pareto frontier lines every two months from August 2025 to August 2026" /></noscript>
-  <figcaption>Intelligence Index against measured cost per Intelligence Index task (log scale). Gray points are all 137 measured models, including retired ones, at their last measured cost. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date; markers are the frontier models themselves. Where successive frontiers share a segment, the older line is drawn on top, so a newer line is visible only where the frontier actually moved. Models whose pages no longer carry a measured cost (o3 and GPT-5.3 Codex among them) are absent (see caveats).</figcaption>
+  <figcaption>Intelligence Index against measured cost per Intelligence Index task (log scale). Gray points are all 137 measured models at their last measured cost; hollow points, both gray and colored, are models Artificial Analysis has retired from live benchmarking. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date; markers are the frontier models themselves. Where successive frontiers share a segment, the older line is drawn on top, so a newer line is visible only where the frontier actually moved. Models whose pages no longer carry a measured cost (o3 and GPT-5.3 Codex among them) are absent (see caveats).</figcaption>
 </figure>
 
 Each successive frontier sits above and to the left of the last: more intelligence at the same cost, or the same intelligence for less. The right edge tells the capability story. The ceiling of the frontier rose from index 35.3 in August 2025 (GPT-5 at $0.26 per task) to 37.4 that October (Claude 4.5 Sonnet), 48.4 in February (Claude Sonnet 4.6), 55.0 in April (Claude Opus 4.7 at $2.23), 62.1 in June (Claude Fable 5 at $3.14), and 63.1 today (Claude Opus 5 at $2.34): twenty eight Intelligence Index points in a year. The left half shows the rising intelligence of cheap models. As of August 19, 2026, the GPT-5.6 Luna effort ladder now owns almost everything below index 52, with the level that was the August 2025 ceiling available for $0.0088 per task.
@@ -63,7 +64,7 @@ The records view tracks the cheapest measured cost per task achieved by any rele
   <div id="pfc-records"></div>
   <div class="pfc-legend" id="pfc-records-legend"></div>
   <noscript><img src="/images/blog/pareto-tier-records.svg" alt="Running minimum measured cost per task at each Intelligence Index tier, by release date" /></noscript>
-  <figcaption>Each step is a released model that set a new low for its tier. A tier's line begins when the first model with measured cost crosses that Intelligence Index threshold. Costs reflect current prices (see caveats).</figcaption>
+  <figcaption>Each step is a released model that set a new low for its tier; hollow markers are retired models. A tier's line begins when the first model with measured cost crosses that Intelligence Index threshold. Costs reflect current prices (see caveats).</figcaption>
 </figure>
 
 | Tier | First measured crossing | Cost collapse | Halving time |
