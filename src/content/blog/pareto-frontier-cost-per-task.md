@@ -2,7 +2,7 @@
 title: "The Moving Pareto Frontier of Cost per Task"
 date: "2026-08-19"
 description: "Using Artificial Analysis's measured cost per Intelligence Index task, this post traces how the Pareto frontier of cost against capability has moved over the past year: the ceiling rose twenty eight index points while each capability level's price collapsed by an order of magnitude or more."
-image: "/images/blog/pareto-frontier-banner.svg"
+image: "/images/blog/pareto-frontier-banner.png"
 imageFit: "contain"
 readTime: "8 min read"
 author: "Benjamin Dichter"
