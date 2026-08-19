@@ -37,7 +37,7 @@ The capability axis throughout this post is the Artificial Analysis Intelligence
 
 What you end up with is a single number that represents model capability, sort of like an IQ for LLMs. It isn't perfect, and two models with the same score may have different strengths, but I have found that this score does a reasonably good job of indicating a model's capability.
 
-As a reference point, Anthropic's "Claude 4.5 Sonnet (Reasoning)" was for me and many others the first time a model felt capable enough to use in an agentic harness. At the time I was using Cline, and this model provided substantial productivity gains over auto-complete and copy/paste workflows. That model had an intelligence score of 37.4 (based on today's intelligence scoring system). The top current model is Claude Opus 5 max effort, at 63.1.
+As a reference point, Anthropic's "Claude 4.5 Sonnet (Reasoning)" was for me and many others the first time a model felt capable enough to use in an agentic harness for writing code. At the time I was using Cline, and this model provided substantial productivity gains over auto-complete and copy/paste workflows. That model had an intelligence score of 37.4 (based on today's intelligence scoring system). The top current model is Claude Opus 5 max effort, at 63.1.
 
 ## Measuring Cost per Task
 
