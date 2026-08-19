@@ -1,0 +1,85 @@
+---
+title: "The Moving Pareto Frontier of Cost per Task"
+date: "2026-08-19"
+description: "Using Artificial Analysis's measured cost per Intelligence Index task, this post traces how the Pareto frontier of cost against capability has moved over the past year: the ceiling rose twenty eight index points while each capability level's price collapsed by an order of magnitude or more."
+image: "/images/blog/pareto-frontier-banner.svg"
+imageFit: "contain"
+readTime: "8 min read"
+author: "Benjamin Dichter"
+keywords: ["LLM", "Pareto frontier", "cost per task", "Artificial Analysis", "Intelligence Index", "model pricing", "AI economics"]
+---
+
+<style>
+.pfc-figure { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 10px; padding: 1.1rem 1.1rem 0.9rem; margin: 2rem 0; }
+.pfc-figure figcaption { font-size: 0.8rem; color: var(--color-ink-soft); line-height: 1.5; margin-top: 0.6rem; border-top: 1px solid var(--color-line-soft); padding-top: 0.6rem; }
+.pfc-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.8rem; color: var(--color-ink-muted); margin-top: 0.55rem; align-items: center; }
+.pfc-lk { display: inline-flex; align-items: center; gap: 0.4rem; }
+.pfc-swatch { width: 18px; height: 0; border-top: 2.5px solid; border-radius: 2px; display: inline-block; }
+.pfc-tooltip { position: absolute; pointer-events: none; z-index: 50; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 6px; box-shadow: 0 3px 14px rgba(16,22,66,0.13); padding: 0.5rem 0.65rem; font-size: 0.78rem; line-height: 1.45; color: var(--color-ink-muted); max-width: 250px; display: none; }
+.pfc-tt-name { font-weight: 600; color: var(--color-navy); font-size: 0.82rem; }
+.pfc-tt-val { font-weight: 600; color: var(--color-navy); }
+.pfc-tt-row { display: flex; align-items: center; gap: 0.45rem; }
+.pfc-tt-key { width: 12px; border-top: 2.5px solid; border-radius: 2px; flex: none; display: inline-block; }
+.pfc-figure img { width: 100%; height: auto; }
+</style>
+
+When you pick a model for an application you are trading off how capable it is against how much each call costs. Public discussion focuses almost entirely on the first axis, but for anyone shipping software the second is just as decisive, and it happens to be much easier to measure. [Artificial Analysis](https://artificialanalysis.ai/) has been benchmarking intelligence and price across hundreds of models for a couple of years, and enough of that data is accessible to reconstruct the tradeoff. I pulled it and looked at how the Pareto frontier of cost per task against intelligence has moved as new models have been released.
+
+The short version: for a fixed capability level, cost is collapsing. A task at Intelligence Index 50, a level first reached in this data by GPT-5.4 in March at $1.10 per task, could be had for $0.03 by July.
+
+## Measuring Cost per Task
+
+Cost per task is Artificial Analysis's own measured number: the average cost in USD to run one task from their Intelligence Index evaluation suite, including the input, reasoning, and answer tokens actually billed during the run. The website displays it but the free API tier does not include it, so I scraped it from the data embedded in each model's page on the site, covering both the models they currently benchmark and retired models whose pages still carry the measurement (older Claude Opus and Sonnet versions, the GPT-5.x line, and others). That yields measured cost for 137 models reaching back to DeepSeek V3 in December 2024, each paired with a release date and an Intelligence Index score on the current scale.
+
+An earlier draft of this post also tracked time per task, derived from latency benchmarks, and estimated cost from prices and timing data alone. I dropped both. Speed is only measured for currently served models, so it cannot be reconstructed for the retired models that shaped the frontier's history, and the cost estimates, while correlated with the measured values (r = 0.71 in log space), missed badly enough on individual models that the measured numbers are the only ones worth publishing.
+
+## How the Frontier Has Moved
+
+The chart below plots intelligence against measured cost per task and traces the Pareto frontier, the cheapest way to reach each intelligence level, as it stands today and as it stood at two month intervals over the past year, using each model's release date to reconstruct what was available. Hover any point for the model behind it.
+
+<figure class="pfc-figure">
+  <div id="pfc-frontier"></div>
+  <div class="pfc-legend" id="pfc-frontier-legend"></div>
+  <noscript><img src="/images/blog/pareto-frontier-bimonthly.svg" alt="Intelligence Index versus cost per task with Pareto frontier lines every two months from August 2025 to August 2026" /></noscript>
+  <figcaption>Intelligence Index against measured cost per Intelligence Index task (log scale). Gray points are all 137 measured models, including retired ones, at their last measured cost. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date; markers are the frontier models themselves. Where successive frontiers share a segment, the older line is drawn on top, so a newer line is visible only where the frontier actually moved. Models whose pages no longer carry a measured cost (o3 and GPT-5.3 Codex among them) are absent (see caveats).</figcaption>
+</figure>
+
+Each successive frontier sits above and to the left of the last: more intelligence at the same cost, or the same intelligence for less. The right edge tells the capability story. The ceiling of the frontier rose from index 35.3 in August 2025 (GPT-5 at $0.26 per task) to 37.4 that October (Claude 4.5 Sonnet), 48.4 in February (Claude Sonnet 4.6), 55.0 in April (Claude Opus 4.7 at $2.23), 62.1 in June (Claude Fable 5 at $3.14), and 63.1 today (Claude Opus 5 at $2.34): twenty eight Intelligence Index points in a year. The left edge tells the price story. Each ceiling-setter's level is then undercut, and by August the GPT-5.6 Luna effort ladder owned everything below index 52, with the level that was the August 2025 ceiling available for $0.0088 per task, a thirtieth of what GPT-5 charged for it a year earlier.
+
+The effort ladders visible in today's frontier are a structural change worth dwelling on. Reasoning effort controls mean a single model is no longer a point on this chart but a segment: the GPT-5.6 Luna ladder runs from $0.0088 at low effort to $0.047 at max and covers the whole lower half of the frontier, while Claude Opus 5 spans $0.43 at low effort to $2.34 at max and buys about ten Intelligence Index points along the way. Model selection within a provider has quietly become a continuous dial rather than a discrete choice.
+
+The records view tracks, for models at or above a given Intelligence Index tier, the cheapest measured cost per task achieved by anything released up to each date. The series reaches back to mid 2025 for the lower tiers.
+
+<figure class="pfc-figure">
+  <div id="pfc-records"></div>
+  <div class="pfc-legend" id="pfc-records-legend"></div>
+  <noscript><img src="/images/blog/pareto-tier-records.svg" alt="Running minimum measured cost per task at each Intelligence Index tier, by release date" /></noscript>
+  <figcaption>Each step is a released model that set a new low for its tier. A tier's line begins when the first model with measured cost crosses that Intelligence Index threshold. Costs reflect current prices (see caveats).</figcaption>
+</figure>
+
+| Tier | First measured crossing | Cost collapse | Halving time |
+|---|---|---|---|
+| Index &ge; 30 | Aug 2025 (GPT-5 high) | 29x | ~69 days |
+| Index &ge; 40 | Feb 2026 (Claude Sonnet 4.6) | 56x | ~24 days |
+| Index &ge; 50 | Mar 2026 (GPT-5.4 xhigh) | 35x | ~25 days |
+| Index &ge; 60 | Jun 2026 (Claude Fable 5 max) | 3.8x | ~34 days |
+
+The pattern is consistent across tiers. A capability level is first reached by a large frontier model at a premium price. Within weeks to months, cheaper models arrive at the same level, and the record steps down by an order of magnitude or more. The &ge; 40 tier opens with Claude Sonnet 4.6 in February at $1.22 per task, undercut within two days by Gemini 3.1 Pro Preview at $0.33; MiMo-V2.5-Pro, an open weights model, cut the record to $0.034 in April, and GPT-5.6 Luna on high effort holds it at $0.022 today. The &ge; 50 tier follows the same arc a month behind: GPT-5.4 crossed it in March at $1.10, GPT-5.5 and then GLM-5.2 and Grok 4.5 walked the record down through the spring, and GPT-5.6 Luna's xhigh setting reached it at $0.032 in July, a 35 fold drop in four months.
+
+The mechanism is visible in the model names that set each record. The first crossing is a maximum effort frontier model priced at launch premium, most often from Anthropic or OpenAI. What erodes the record is not that model getting cheaper but a different class of model arriving: small distilled models from the big labs (the GPT-5.6 Luna line holds three of the four current records), and open weights releases that keep the floor honest (MiMo, DeepSeek V4, GLM, Hy3). Across the tiers with enough history to measure, the records halve roughly every three to ten weeks, fastest just after a tier opens and slower as it matures.
+
+The top tier is where the premium survives. Only six models score 60 or above, and the cheapest of them, Grok 4.6, still costs $0.84 per task. But that record has fallen 3.8x since June, and if the pattern from lower tiers holds, a distilled model at this level should collapse the price within a couple of quarters.
+
+## Caveats
+
+The most important limitation is that costs are the latest measured values indexed by release date, not historical measurements taken at release. Prices get cut over a model's life, so early points reflect any cuts since launch, which biases the analysis toward understating the collapse. Coverage is the second issue. Retired models are included only when their pages still carry the measurement, which recovered 44 of 228 retired models with prices and scores; the rest, o3, GPT-5.3 Codex, and everything from the GPT-4 era among them, are invisible, so the oldest frontiers rest on fewer models than actually existed and the true opening price of the lower tiers was likely set by models this analysis cannot see.
+
+The retired models' Intelligence Index scores are on the current scale, which is what makes mixing them with live models legitimate, but the Index itself is one aggregate of many evaluations. And cost per task on an evaluation suite is a reasoning heavy workload with long prompts; a chat workload with short prompts and short answers would scale differently across models, particularly between reasoning and non-reasoning variants.
+
+## What I Take from This
+
+The motion of the frontier is more predictable than any individual release. Every capability tier so far has followed the same arc: premium debut, rapid commoditization, a settled record held by a distilled or open weights model at a few percent of the debut price. If a capability exists at any price today, the sensible planning assumption is that it will exist at commodity price within months. For system design, that argues for architectures where the model is a swappable component and the routing between capability tiers is explicit, because the tier boundaries themselves are the thing that keeps moving.
+
+*Model metadata pulled from the Artificial Analysis free API, and measured cost per task scraped from the model pages on artificialanalysis.ai, on August 19, 2026. Corrections welcome.*
+
+<script src="/js/pareto-frontier-charts.js" defer></script>
