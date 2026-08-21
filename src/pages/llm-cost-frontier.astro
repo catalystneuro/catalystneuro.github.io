@@ -18,8 +18,10 @@ import PageHeader from "../components/PageHeader.astro";
       <h2>The Pareto Frontier Over Time</h2>
       <p class="pfc-lead">Intelligence against measured cost per task, with the Pareto frontier (the cheapest model at each intelligence level) reconstructed from model release dates and observed prices as it stood on the first of every second month, and as it stands today. The chart builds up one frontier at a time and pauses on the full picture; use the button to stop it. Hover any point for the model behind it.</p>
       <figure class="pfc-figure">
-        <div id="pfc-frontier"></div>
-        <div class="pfc-legend" id="pfc-frontier-legend"></div>
+        <div class="pfc-side">
+          <div class="pfc-side-chart" id="pfc-frontier"></div>
+          <div class="pfc-legend pfc-legend-side" id="pfc-frontier-legend"></div>
+        </div>
         <figcaption>Small points are all measured models at their latest measured cost, tinted by the two month window of their release; models released before the first window are grouped with it. Hollow points are open weights models; filled points are proprietary. Each line is the Pareto frontier on the given date: the cheapest way to reach a given Intelligence Index among models released by then. The darkest line is the current frontier as of the last update. Where successive frontiers share a segment, the older line is drawn on top.</figcaption>
       </figure>
 
@@ -86,6 +88,10 @@ import PageHeader from "../components/PageHeader.astro";
   .pfc-table :global(.pfc-ev-cost) { font-family: var(--font-mono); font-weight: 600; color: var(--color-navy); }
   .pfc-table :global(.pfc-ev-model) { font-size: 0.8rem; color: var(--color-ink-soft); margin-top: 0.15rem; }
   .pfc-notes { margin-top: 2rem; }
+  .pfc-side { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .pfc-side-chart { flex: 1 1 auto; min-width: 0; max-width: 640px; }
+  .pfc-legend-side { flex: 0 0 11.5rem; flex-direction: column; align-items: flex-start; gap: 0.45rem; margin-top: 0.6rem; padding-left: 1rem; border-left: 1px solid var(--color-line-soft); }
+  @media (max-width: 700px) { .pfc-side { flex-direction: column; } .pfc-legend-side { flex-direction: row; flex-wrap: wrap; border-left: 0; padding-left: 0; flex-basis: auto; } }
 </style>
 
 <script src="/js/llm-frontier-dashboard.js" defer></script>
