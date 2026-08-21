@@ -203,6 +203,18 @@
     svg.append(svgEl('line', { x1: M.l, x2: M.l, y1: M.t, y2: H - M.b, stroke: C.axis, 'stroke-width': 1 }));
 
     var pts = [];
+    models.forEach(function (m) {
+      if (Date.parse(m.date + 'T00:00:00Z') < x0) return;
+      var x = X(m.date), y = Y(m.mcost);
+      dot(svg, x, y, 3.5, m.retired ? C.retired : C.deemph, m.retired);
+      pts.push({ x: x, y: y, rows: function () {
+        var d1 = el('div', 'pfc-tt-name'); d1.textContent = m.name;
+        var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(m.mcost);
+        d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
+        var d3 = el('div', null, m.creator + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
+        return [d1, d2, d3];
+      }});
+    });
     var endLabels = [];
     TIERS.forEach(function (tier, i) {
       var recs = DATA.tier_cost[tier];

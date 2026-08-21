@@ -68,7 +68,7 @@ The records view tracks the cheapest measured cost per task achieved by any rele
   <div id="pfc-records"></div>
   <div class="pfc-legend" id="pfc-records-legend"></div>
   <noscript><img src="/images/blog/pareto-tier-records.svg" alt="Running minimum measured cost per task at each Intelligence Index tier, by release date" /></noscript>
-  <figcaption>Each step is a released model that set a new low for its tier; hollow markers are retired models. A tier's line begins when the first model with measured cost crosses that Intelligence Index threshold. Costs reflect current prices (see caveats).</figcaption>
+  <figcaption>Gray points are all models released since July 2025 at their measured cost per task, regardless of Intelligence Index; hover for the model and its score. Each colored step is a released model that set a new low for its tier; hollow markers are retired models. A tier's line begins when the first model with measured cost crosses that Intelligence Index threshold. Costs reflect current prices (see caveats).</figcaption>
 </figure>
 
 | Tier | First measured crossing | Cost collapse | Halving time |
