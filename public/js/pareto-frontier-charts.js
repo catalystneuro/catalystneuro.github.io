@@ -232,7 +232,7 @@
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 370;
     var M = { l: 56, r: 60, t: 12, b: 40 };
     var svg = frame(box, W, H, M, 'Running minimum measured cost per task by capability tier');
-    var x0 = Date.parse('2025-07-01T00:00:00Z'), x1 = Date.parse('2026-08-19T00:00:00Z');
+    var x0 = Date.parse('2025-07-01T00:00:00Z'), x1 = Date.parse('2026-08-21T00:00:00Z');
     var yd = [0.005, 5];
     function X(dstr) { return M.l + (Date.parse(dstr + 'T00:00:00Z') - x0) / (x1 - x0) * (W - M.l - M.r); }
     function Y(v) { return H - M.b - (Math.log10(v) - Math.log10(yd[0])) / (Math.log10(yd[1]) - Math.log10(yd[0])) * (H - M.t - M.b); }
