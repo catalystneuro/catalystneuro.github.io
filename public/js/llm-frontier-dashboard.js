@@ -323,11 +323,13 @@
     var legend = document.getElementById('pfc-records-legend');
     if (legend) {
       legend.replaceChildren();
-      TIERS.forEach(function (tier, i) {
+      legend.append(el('span', 'pfc-legend-title', 'Intelligence Index'));
+      TIERS.slice().reverse().forEach(function (tier, ri) {
+        var i = TIERS.length - 1 - ri;
         var item = el('span', 'pfc-lk');
         var sw = el('span', 'pfc-swatch');
         sw.style.borderTopColor = C.ord[i];
-        item.append(sw, el('span', null, 'Intelligence Index \u2265 ' + tier));
+        item.append(sw, el('span', null, '\u2265 ' + tier));
         legend.append(item);
       });
     }
