@@ -60,7 +60,7 @@ To give a more visceral sense of what the different index levels mean, I borrowe
   <figcaption>First of three samples from each model for the prompt "Generate an SVG of a pelican riding a bicycle", generated through OpenRouter on August 20, 2026. Intelligence Index scores are from Artificial Analysis.</figcaption>
 </figure>
 
-The progression is visible: more detail, better proportions, and a pelican that is more clearly riding the bicycle rather than hovering over it. I should note that the correspondence is loose. Grok 4.6 on high effort, which scores 60.9 and is the cheapest model at that level, drew a cruder pelican than Luna on xhigh (those samples are in the repository too). The index is weighted toward agentic, coding, and scientific work, and drawing ability is a different thing that happens to correlate with it.
+The progression is visible: more detail, better proportions, and a pelican that is more clearly riding the bicycle rather than hovering over it.
 
 ## Measuring Cost per Task
 
