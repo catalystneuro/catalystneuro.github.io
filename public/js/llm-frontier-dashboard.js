@@ -348,7 +348,7 @@
     TIERS.forEach(function (t) {
       var s = DATA.tier_summary[t];
       var tr = document.createElement('tr');
-      tr.append(cell('Index \u2265 ' + t, 'pfc-td-tier'));
+      tr.append(cell('\u2265 ' + t, 'pfc-td-tier'));
       if (s) {
         tr.append(cell(event(s.first_date, s.first_model, s.first_cost)));
         tr.append(cell(event(s.last_date, s.last_model, s.last_cost)));
