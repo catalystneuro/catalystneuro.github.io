@@ -256,7 +256,7 @@
     var allRecs = []; TIERS.forEach(function (t) { (DATA.tier_cost[t] || []).forEach(function (r) { allRecs.push(r); }); });
     var firstRec = allRecs.map(function (r) { return r[0]; }).sort()[0] || DATA.updated;
     var x0d = new Date(firstRec + 'T00:00:00Z'); x0d.setUTCDate(1); x0d.setUTCMonth(x0d.getUTCMonth() - 1);
-    var x1d = new Date(DATA.updated + 'T00:00:00Z'); x1d.setUTCDate(x1d.getUTCDate() + 25);
+    var x1d = new Date(DATA.updated + 'T00:00:00Z');
     var x0 = x0d.getTime(), x1 = x1d.getTime();
     var maxRec = Math.max.apply(null, allRecs.map(function (r) { return r[1]; }));
     var yd = [0.005, Math.max(5, Math.pow(10, Math.ceil(Math.log10(maxRec))))];
