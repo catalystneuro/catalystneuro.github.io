@@ -4,9 +4,14 @@
 Any model page on artificialanalysis.ai embeds the full comparison dataset for
 every currently benchmarked model, including the measured cost per Intelligence
 Index task. This script fetches one page, parses that payload, merges it into a
-cumulative history (so models that leave the live set keep their last
-measurement and are marked retired), applies known price events, and writes the
-JSON that the dashboard page reads.
+cumulative history, applies known price events, and writes the JSON that the
+dashboard page reads.
+
+The history keeps every observed (date, cost, index) per model, appending an
+observation whenever a value changes. Snapshots and tier records use the cost in
+effect on each date, so price changes that happen after a model's release are
+dated to when they were observed instead of being back-dated to the release.
+Models that leave the live set keep their observations and are marked retired.
 
 Inputs
   src/data/llm-frontier/history.json       cumulative per-model history (committed)
@@ -33,7 +38,7 @@ OUTPUT = ROOT / "public/data/llm-frontier.json"
 # Any model page works; this one is stable and cheap to serve.
 SOURCE_PAGE = "https://artificialanalysis.ai/models/gpt-5-6-luna-xhigh"
 TIERS = [30, 40, 50, 60]
-SNAPSHOT_COUNT = 7
+SNAPSHOT_COUNT = 8
 SNAPSHOT_MONTHS = 2
 
 
@@ -114,6 +119,12 @@ def merge(history: dict, live: dict, today: str) -> dict:
     models = history["models"]
     for slug, rec in live.items():
         prev = models.get(slug, {})
+        obs = list(prev.get("observations") or [])
+        if not obs and prev.get("cost_per_task") is not None:
+            obs = [[prev.get("last_seen", today), prev["cost_per_task"], prev["intelligence_index"]]]
+        last = obs[-1] if obs else None
+        if last is None or abs(last[1] - rec["cost_per_task"]) > 1e-9 or abs(last[2] - rec["intelligence_index"]) > 0.049:
+            obs.append([today, rec["cost_per_task"], rec["intelligence_index"]])
         models[slug] = dict(
             name=rec["name"],
             creator=rec["creator"] or prev.get("creator", ""),
@@ -124,10 +135,13 @@ def merge(history: dict, live: dict, today: str) -> dict:
             retired=False,
             first_seen=prev.get("first_seen", today),
             last_seen=today,
+            observations=obs,
         )
     for slug, rec in models.items():
         if slug not in live:
             rec["retired"] = True
+            if not rec.get("observations"):
+                rec["observations"] = [[rec.get("last_seen", today), rec["cost_per_task"], rec["intelligence_index"]]]
     history["updated"] = today
     return history
 
@@ -140,24 +154,42 @@ def add_months(d: dt.date, months: int) -> dt.date:
 
 
 def snapshots(today: dt.date) -> list:
+    """Pareto frontier snapshots on the first of every second month, ending with
+    the current frontier on the update date."""
+    first = today.replace(day=1)
+    if first == today:
+        first = add_months(first, -1)
     out = []
-    for i in range(SNAPSHOT_COUNT - 1, -1, -1):
-        d = add_months(today, -SNAPSHOT_MONTHS * i)
-        label = d.strftime("%b %Y") + (" (latest)" if i == 0 else "")
-        out.append([d.isoformat(), label])
+    for i in range(SNAPSHOT_COUNT - 2, -1, -1):
+        d = add_months(first, -SNAPSHOT_MONTHS * i)
+        out.append([d.isoformat(), d.strftime("%b %-d, %Y")])
+    out.append([today.isoformat(), today.strftime("%b %-d, %Y") + " (current)"])
+    return out
+
+
+def cost_changes(slug: str, m: dict, events: list) -> list:
+    """Dated cost changes for one model: [[date, cost, note], ...], starting at release."""
+    obs = sorted(m.get("observations") or [[m.get("last_seen", m["release_date"]), m["cost_per_task"], m["intelligence_index"]]])
+    first_cost = obs[0][1]
+    out = []
+    ev = next((e for e in events if slug.startswith(e["slug_prefix"])), None)
+    if ev and m["release_date"] < ev["cut_date"]:
+        out.append([m["release_date"], first_cost * ev["multiplier_before"], "at launch price"])
+        out.append([ev["cut_date"], first_cost, f"price cut (released {m['release_date']})"])
+    else:
+        out.append([m["release_date"], first_cost, None])
+    for date, cost, _iq in obs[1:]:
+        if abs(cost - out[-1][1]) > 1e-9:
+            out.append([date, cost, f"price change observed (released {m['release_date']})"])
     return out
 
 
 def price_timeline(models: dict, events: list) -> list:
-    """Expand models into (date, cost, slug, iq) events, with pre-cut prices where known."""
+    """All dated cost changes across models as (date, cost, slug, iq, note)."""
     out = []
     for slug, m in models.items():
-        ev = next((e for e in events if slug.startswith(e["slug_prefix"])), None)
-        if ev and m["release_date"] < ev["cut_date"]:
-            out.append([m["release_date"], m["cost_per_task"] * ev["multiplier_before"], slug, m["intelligence_index"], "at launch price"])
-            out.append([ev["cut_date"], m["cost_per_task"], slug, m["intelligence_index"], f"price cut (released {m['release_date']})"])
-        else:
-            out.append([m["release_date"], m["cost_per_task"], slug, m["intelligence_index"], None])
+        for date, cost, note in cost_changes(slug, m, events):
+            out.append([date, cost, slug, m["intelligence_index"], note])
     out.sort(key=lambda e: (e[0], e[1]))
     return out
 
@@ -197,10 +229,13 @@ def tier_summary(records: dict) -> dict:
 def build_output(history: dict, events: list) -> dict:
     today = dt.date.fromisoformat(history["updated"])
     models = history["models"]
-    rows = [
-        [m["name"], m["creator"], m["release_date"], m["intelligence_index"], m["cost_per_task"], int(m["retired"]), int(m["open_weights"])]
-        for m in sorted(models.values(), key=lambda m: (m["release_date"], m["name"]))
-    ]
+    rows = []
+    for slug, m in sorted(models.items(), key=lambda kv: (kv[1]["release_date"], kv[1]["name"])):
+        changes = [[d, round(c, 6)] for d, c, _n in cost_changes(slug, m, events)]
+        row = [m["name"], m["creator"], m["release_date"], m["intelligence_index"], m["cost_per_task"], int(m["retired"]), int(m["open_weights"])]
+        if len(changes) > 1:
+            row.append(changes)
+        rows.append(row)
     records = tier_records(models, events)
     return dict(
         updated=history["updated"],

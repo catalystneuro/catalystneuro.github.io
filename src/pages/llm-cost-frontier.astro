@@ -2,25 +2,25 @@
 import Base from "../layouts/Base.astro";
 import PageHeader from "../components/PageHeader.astro";
 ---
-<Base title="LLM Cost Frontier" description="A weekly updated dashboard of the cheapest way to reach each level of LLM intelligence, built from Artificial Analysis's measured cost per task. Companion to the post What Happens When the Cost of Intelligence Drops 100x.">
+<Base title="LLM Cost Frontier" description="A nightly updated dashboard of the cheapest way to reach each level of LLM intelligence, built from Artificial Analysis's measured cost per task. Companion to the post What Happens When the Cost of Intelligence Drops 100x.">
   <PageHeader
     eyebrow="Dashboard"
     title="LLM Cost Frontier"
-    subtitle="The cheapest way to reach each level of LLM intelligence, and how fast that cost is falling. Refreshed weekly from Artificial Analysis."
+    subtitle="The cheapest way to reach each level of LLM intelligence, and how fast that cost is falling. Refreshed nightly from Artificial Analysis."
   />
 
   <section class="section">
     <div class="container-x pfc-wrap">
       <div class="prose pfc-intro">
-        <p>This page keeps the figures from <a href="/blog/cost-of-intelligence-drops-100x/">What Happens When the Cost of Intelligence Drops 100x</a> current. The data is Artificial Analysis's <a href="https://artificialanalysis.ai/">Intelligence Index</a> and their measured cost per Intelligence Index task (the average billed cost, including reasoning tokens, to run one task from their evaluation suite), pulled automatically every Monday. Models that drop out of their live benchmarking keep their last measurement here, so the history only grows. Data as of <strong class="pfc-updated">&hellip;</strong>, covering <span class="pfc-count">&hellip;</span> models.</p>
+        <p>This page keeps the figures from <a href="/blog/cost-of-intelligence-drops-100x/">What Happens When the Cost of Intelligence Drops 100x</a> current. The data is Artificial Analysis's <a href="https://artificialanalysis.ai/">Intelligence Index</a> and their measured cost per Intelligence Index task (the average billed cost, including reasoning tokens, to run one task from their evaluation suite), pulled automatically every night. Every observed price is kept, and models that drop out of their live benchmarking keep their history here, so the record only grows. Data as of <strong class="pfc-updated">&hellip;</strong>, covering <span class="pfc-count">&hellip;</span> models.</p>
       </div>
 
-      <h2>The Frontier Over Time</h2>
-      <p class="pfc-lead">Intelligence against measured cost per task, with the Pareto frontier (the cheapest model at each intelligence level) reconstructed at two month intervals from model release dates. The chart builds up one frontier at a time and pauses on the full picture; use the button to stop it. Hover any point for the model behind it.</p>
+      <h2>The Pareto Frontier Over Time</h2>
+      <p class="pfc-lead">Intelligence against measured cost per task, with the Pareto frontier (the cheapest model at each intelligence level) reconstructed from model release dates and observed prices as it stood on the first of every second month, and as it stands today. The chart builds up one frontier at a time and pauses on the full picture; use the button to stop it. Hover any point for the model behind it.</p>
       <figure class="pfc-figure">
         <div id="pfc-frontier"></div>
         <div class="pfc-legend" id="pfc-frontier-legend"></div>
-        <figcaption>Small points are all measured models at their latest measured cost, tinted by the two month window of their release; models released before the first window are grouped with it. Hollow points are open weights models; filled points are proprietary. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date. Where successive frontiers share a segment, the older line is drawn on top.</figcaption>
+        <figcaption>Small points are all measured models at their latest measured cost, tinted by the two month window of their release; models released before the first window are grouped with it. Hollow points are open weights models; filled points are proprietary. Each line is the Pareto frontier on the given date: the cheapest way to reach a given Intelligence Index among models released by then. The darkest line is the current frontier as of the last update. Where successive frontiers share a segment, the older line is drawn on top.</figcaption>
       </figure>
 
       <h2>Cost Records by Capability Tier</h2>
@@ -28,12 +28,12 @@ import PageHeader from "../components/PageHeader.astro";
       <figure class="pfc-figure">
         <div id="pfc-records"></div>
         <div class="pfc-legend" id="pfc-records-legend"></div>
-        <figcaption>Hollow markers are open weights models. Known price cuts are applied: a model is placed at its launch price from release and at its current price from the cut date (see the price events below). All other costs are current prices indexed by release date.</figcaption>
+        <figcaption>Hollow markers are open weights models. Each model is placed at the price in effect on each date: observed prices from August 2026 onward, and recorded price events before that (see the notes below).</figcaption>
       </figure>
 
       <div class="pfc-table-wrap">
         <table class="pfc-table">
-          <thead><tr><th>Tier</th><th>First crossed</th><th>At</th><th>Current record</th><th>At</th><th>Collapse</th><th>Halving time</th></tr></thead>
+          <thead><tr><th>Tier</th><th>First crossed</th><th>Current record</th><th>Collapse</th><th>Halving time</th></tr></thead>
           <tbody id="pfc-tier-table"></tbody>
         </table>
       </div>
@@ -41,7 +41,7 @@ import PageHeader from "../components/PageHeader.astro";
       <div class="prose pfc-notes">
         <h2>Notes</h2>
         <ul>
-          <li>Costs are current prices indexed by release date, not historical prices, except where a price event is recorded. Price cuts since launch therefore make older points look cheaper than they were, which understates the collapse and dates it too early. Recorded events: OpenAI cut GPT-5.6 Luna by 80% and Terra by 20% on July 30, 2026.</li>
+          <li>Prices have been recorded nightly since August 19, 2026, and every change is kept, so from that date onward each snapshot and record uses the price that was in effect at the time. Before that date the only available value is the price at first observation, indexed by release date, except where a price event is recorded by hand: OpenAI cut GPT-5.6 Luna by 80% and Terra by 20% on July 30, 2026. Earlier cuts that are not recorded make older points look cheaper than they were, which understates the collapse and dates it too early.</li>
           <li>Free or promotional endpoints with a zero measured cost are excluded.</li>
           <li>Halving time is the time for the tier's record to halve, computed from the first crossing to the current record as days / log<sub>2</sub>(collapse).</li>
           <li>The method, its limitations, and the argument for why any of this matters are in the <a href="/blog/cost-of-intelligence-drops-100x/">original post</a>. The update script and data history are in the <a href="https://github.com/catalystneuro/catalystneuro.github.io/tree/main/scripts">site repository</a>.</li>
@@ -76,11 +76,15 @@ import PageHeader from "../components/PageHeader.astro";
   .pfc-intro { margin-bottom: 1rem; }
   .pfc-lead { color: var(--color-ink-muted); font-size: 0.98rem; line-height: 1.6; margin-bottom: 1rem; }
   .pfc-table-wrap { overflow-x: auto; margin-top: 1.6rem; }
-  .pfc-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  .pfc-table th { text-align: left; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); border-bottom: 1px solid var(--color-line); padding: 0.5rem 0.7rem; }
-  .pfc-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-line-soft); vertical-align: top; }
-  .pfc-table td:nth-child(1), .pfc-table td:nth-child(3), .pfc-table td:nth-child(5), .pfc-table td:nth-child(6), .pfc-table td:nth-child(7) { white-space: nowrap; }
-  .pfc-table td:nth-child(3), .pfc-table td:nth-child(5), .pfc-table td:nth-child(6) { font-family: var(--font-mono); font-size: 0.82rem; }
+  .pfc-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .pfc-table th { text-align: left; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); border-bottom: 1px solid var(--color-line); padding: 0.5rem 0.8rem; white-space: nowrap; }
+  .pfc-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--color-line-soft); vertical-align: top; }
+  .pfc-table :global(.pfc-td-tier) { white-space: nowrap; font-weight: 600; color: var(--color-navy); }
+  .pfc-table :global(.pfc-td-num) { white-space: nowrap; font-family: var(--font-mono); font-size: 0.85rem; text-align: right; }
+  .pfc-table th:nth-child(4), .pfc-table th:nth-child(5) { text-align: right; }
+  .pfc-table :global(.pfc-ev-top) { white-space: nowrap; }
+  .pfc-table :global(.pfc-ev-cost) { font-family: var(--font-mono); font-weight: 600; color: var(--color-navy); }
+  .pfc-table :global(.pfc-ev-model) { font-size: 0.8rem; color: var(--color-ink-soft); margin-top: 0.15rem; }
   .pfc-notes { margin-top: 2rem; }
 </style>
 

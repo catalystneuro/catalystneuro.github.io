@@ -9,19 +9,26 @@
   var C = {
     surface: '#ffffff', grid: '#ecf1f8', axis: '#dfe6f1',
     ink: '#101642', ink2: '#55607a', muted: '#68718b', deemph: '#c2cbdc', retired: '#9aa4bb',
-    snap: ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#4a3aa7'],
+    snap: ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#4a3aa7', '#101642'],
     ord: ['#86b6ef', '#3987e5', '#1c5cab', '#0d366b']
   };
   var SNAPS = [];
   var TIERS = [];
 
   var models = [], retiredByName = {}, openByName = {};
+  // Cost in effect on a given date: the last recorded change at or before it.
+  function costAt(m, date) {
+    if (!m.hist) return m.mcost;
+    var c = m.hist[0][1];
+    for (var i = 0; i < m.hist.length; i++) { if (m.hist[i][0] <= date) c = m.hist[i][1]; else break; }
+    return c;
+  }
   function loadData(d) {
     DATA = d;
     SNAPS = d.snapshots.map(function (s) { return [s[0], s[1]]; });
     TIERS = d.tiers.slice();
     models = d.models.map(function (m) {
-      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6] };
+      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null };
     });
     retiredByName = {}; openByName = {};
     models.forEach(function (m) { retiredByName[m.name] = m.retired; openByName[m.name] = m.open; });
@@ -95,7 +102,7 @@
       gs.forEach(function (g) { g.setAttribute('display', i <= anim.stage ? 'inline' : 'none'); });
     });
     var cap = document.getElementById('pfc-frontier-stage');
-    if (cap) cap.textContent = 'Frontier as of ' + SNAPS[anim.stage][1];
+    if (cap) cap.textContent = 'Pareto frontier as of ' + SNAPS[anim.stage][1];
   }
   function tick() {
     clearTimeout(anim.timer);
@@ -164,7 +171,7 @@
         d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
         var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
-        d4.append(kd, 'in the ' + SNAPS[wi][1].replace(' (latest)', '') + ' window');
+        d4.append(kd, 'in the ' + SNAPS[wi][1].replace(' (current)', '') + ' window');
         return [d1, d2, d3, d4];
       }});
     });
@@ -172,7 +179,10 @@
     SNAPS.slice().reverse().forEach(function (snap, ri) {
       var i = SNAPS.length - 1 - ri;
       var snapDate = snap[0], snapLabel = snap[1];
-      var sub = models.filter(function (m) { return m.date <= snapDate; });
+      var sub = models.filter(function (m) { return m.date <= snapDate; }).map(function (m) {
+        var c = costAt(m, snapDate);
+        return { name: m.name, creator: m.creator, date: m.date, iq: m.iq, mcost: c, retired: m.retired, open: m.open, current: m.mcost };
+      });
       var fr = sub.filter(function (p) {
         return !sub.some(function (o) { return o.iq >= p.iq && o.mcost <= p.mcost && (o.iq > p.iq || o.mcost < p.mcost); });
       }).sort(function (a, b) { return a.iq - b.iq; });
@@ -195,8 +205,8 @@
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(p.mcost);
-          d2.append(kd, s, ' at Index ' + p.iq.toFixed(1));
-          var d3 = el('div', null, 'frontier as of ' + snapLabel + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
+          d2.append(kd, s, ' at Index ' + p.iq.toFixed(1) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
+          var d3 = el('div', null, 'Pareto frontier as of ' + snapLabel + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
       });
@@ -328,12 +338,25 @@
     var tb = document.getElementById('pfc-tier-table');
     if (!tb) return;
     tb.replaceChildren();
+    function cell(html, cls) { var td = document.createElement('td'); if (cls) td.className = cls; td.append(html); return td; }
+    function event(date, model, cost) {
+      var w = el('div', 'pfc-ev');
+      var a = el('div', 'pfc-ev-top'); var c = el('span', 'pfc-ev-cost'); c.textContent = fmt$(cost); a.append(c, ' \u00b7 ' + fmtDate(date));
+      var b = el('div', 'pfc-ev-model'); b.textContent = model;
+      w.append(a, b); return w;
+    }
     TIERS.forEach(function (t) {
       var s = DATA.tier_summary[t];
       var tr = document.createElement('tr');
-      var cells = s ? ['Index \u2265 ' + t, fmtDate(s.first_date) + ' (' + s.first_model + ')', fmt$(s.first_cost), fmtDate(s.last_date) + ' (' + s.last_model + ')', fmt$(s.last_cost), s.collapse + 'x', s.halving_days ? '~' + s.halving_days + ' days' : '']
-                    : ['Index \u2265 ' + t, 'not yet reached', '', '', '', '', ''];
-      cells.forEach(function (c) { var td = document.createElement('td'); td.textContent = c; tr.append(td); });
+      tr.append(cell('Index \u2265 ' + t, 'pfc-td-tier'));
+      if (s) {
+        tr.append(cell(event(s.first_date, s.first_model, s.first_cost)));
+        tr.append(cell(event(s.last_date, s.last_model, s.last_cost)));
+        tr.append(cell(s.collapse + 'x', 'pfc-td-num'));
+        tr.append(cell(s.halving_days ? '~' + s.halving_days + ' days' : '', 'pfc-td-num'));
+      } else {
+        var td = cell('not yet reached'); td.colSpan = 4; tr.append(td);
+      }
       tb.append(tr);
     });
     document.querySelectorAll('.pfc-updated').forEach(function (e) { e.textContent = fmtDate(DATA.updated); });

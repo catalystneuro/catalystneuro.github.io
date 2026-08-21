@@ -2,8 +2,8 @@ name: Update LLM cost frontier data
 
 on:
   schedule:
-    # Mondays at 13:00 UTC (09:00 US Eastern)
-    - cron: "0 13 * * 1"
+    # Nightly at 06:00 UTC (02:00 US Eastern)
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
