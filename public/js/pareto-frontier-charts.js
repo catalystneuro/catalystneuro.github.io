@@ -1,4 +1,4 @@
-/* Interactive charts for "The Moving Pareto Frontier of Cost per Task".
+/* Interactive charts for "The Falling Cost of LLM Intelligence".
    Self-contained: data, rendering, tooltips. Styled to the site palette. */
 (function () {
   'use strict';

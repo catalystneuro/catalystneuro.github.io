@@ -1,5 +1,5 @@
 ---
-title: "The Moving Pareto Frontier of Cost per Task for LLMs"
+title: "The Falling Cost of LLM Intelligence"
 date: "2026-08-19"
 description: "Progress in LLMs is usually reported as what the best model can do. This post uses Artificial Analysis's measured cost per task to trace the other direction of progress, how cheaply a given level of capability can be bought, and argues that it matters just as much: the ceiling unlocks new kinds of tasks, while the falling floor unlocks tasks that need to be done thousands of times."
 image: "/images/blog/pareto-frontier-banner.png"
