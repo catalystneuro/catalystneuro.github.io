@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Pelican riding a bicycle</title>
+  <desc>A cheerful pelican riding a blue bicycle.</desc>
+
+  <rect width="800" height="600" fill="#dff4ff"/>
+  <circle cx="680" cy="100" r="48" fill="#ffd966"/>
+  <path d="M0 470 Q180 440 360 470 T800 465" fill="none" stroke="#a7d28d" stroke-width="8"/>
+  <path d="M0 480 Q200 455 400 480 T800 475" fill="none" stroke="#79ad67" stroke-width="3"/>
+
+  <!-- Bicycle wheels -->
+  <g fill="none" stroke="#273746" stroke-width="8">
+    <circle cx="210" cy="430" r="82"/>
+    <circle cx="570" cy="430" r="82"/>
+    <path d="M210 430 L335 300 L430 430 Z"/>
+    <path d="M335 300 L570 430"/>
+    <path d="M335 300 L390 430"/>
+    <path d="M390 430 L430 430"/>
+    <path d="M335 300 L305 275"/>
+    <path d="M290 275 H325"/>
+    <path d="M570 430 L600 370"/>
+    <path d="M585 370 H625"/>
+  </g>
+
+  <!-- Wheel hubs and pedals -->
+  <g fill="#f4b183" stroke="#273746" stroke-width="5">
+    <circle cx="210" cy="430" r="9"/>
+    <circle cx="570" cy="430" r="9"/>
+    <circle cx="390" cy="430" r="13"/>
+    <circle cx="390" cy="430" r="42" fill="none"/>
+    <path d="M390 430 L420 450 M420 450 H445"/>
+  </g>
+
+  <!-- Pelican body -->
+  <path d="M315 285
+           Q285 230 320 175
+           Q352 125 421 150
+           Q477 171 486 230
+           Q493 279 450 315
+           L385 337
+           Q335 330 315 285Z"
+        fill="#f4f1e8" stroke="#34495e" stroke-width="6"/>
+
+  <!-- Wing -->
+  <path d="M355 205 Q405 180 455 220 Q423 252 365 270 Q345 248 355 205Z"
+        fill="#cbd5dc" stroke="#34495e" stroke-width="5"/>
+  <path d="M375 220 Q405 230 433 222" fill="none" stroke="#9aa8b2" stroke-width="4"/>
+
+  <!-- Pelican neck and head -->
+  <path d="M390 170 Q400 100 455 82 Q505 66 540 105
+           Q554 130 530 154 Q500 177 460 157"
+        fill="#f4f1e8" stroke="#34495e" stroke-width="6"/>
+
+  <!-- Beak -->
+  <path d="M525 108 Q626 116 674 155 Q628 195 520 158
+           Q548 140 525 108Z"
+        fill="#f5a623" stroke="#34495e" stroke-width="6"/>
+  <path d="M536 143 Q595 151 651 159" fill="none" stroke="#c77913" stroke-width="4"/>
+
+  <!-- Eye -->
+  <circle cx="493" cy="113" r="10" fill="#273746"/>
+  <circle cx="496" cy="109" r="3" fill="white"/>
+
+  <!-- Pelican legs -->
+  <path d="M365 315 L350 385 M425 310 L450 375"
+        fill="none" stroke="#e88b2d" stroke-width="10" stroke-linecap="round"/>
+  <path d="M350 385 Q375 394 395 384 M450 375 Q470 386 490 375"
+        fill="none" stroke="#e88b2d" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Feet on pedals -->
+  <path d="M350 385 L390 430 M450 375 L390 430"
+        fill="none" stroke="#34495e" stroke-width="5"/>
+
+  <!-- Pelican wing/handlebar interaction -->
+  <path d="M410 245 Q375 270 335 300" fill="none" stroke="#34495e" stroke-width="7" stroke-linecap="round"/>
+  <path d="M430 250 Q470 275 500 300 Q535 320 570 370"
+        fill="none" stroke="#34495e" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Small motion lines -->
+  <g fill="none" stroke="#73a9c2" stroke-width="5" stroke-linecap="round">
+    <path d="M115 350 H165"/>
+    <path d="M90 375 H140"/>
+    <path d="M650 330 H700"/>
+  </g>
+</svg>
