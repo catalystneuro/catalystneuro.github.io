@@ -163,7 +163,7 @@ def snapshots(today: dt.date) -> list:
     for i in range(SNAPSHOT_COUNT - 2, -1, -1):
         d = add_months(first, -SNAPSHOT_MONTHS * i)
         out.append([d.isoformat(), d.strftime("%b %-d, %Y")])
-    out.append([today.isoformat(), today.strftime("%b %-d, %Y") + " (current)"])
+    out.append([today.isoformat(), "today"])
     return out
 
 

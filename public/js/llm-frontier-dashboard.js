@@ -171,7 +171,7 @@
         d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
         var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
-        d4.append(kd, 'in the ' + SNAPS[wi][1].replace(' (current)', '') + ' window');
+        d4.append(kd, 'in the ' + SNAPS[wi][1].replace('today', 'current') + ' window');
         return [d1, d2, d3, d4];
       }});
     });
