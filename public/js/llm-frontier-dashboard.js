@@ -130,11 +130,11 @@
     var svg = frame(box, W, H, M, 'Intelligence Index versus cost per task with Pareto frontier lines every two months');
     var maxIq = Math.max.apply(null, models.map(function (m) { return m.iq; }));
     var maxCost = Math.max.apply(null, models.map(function (m) { return m.mcost; }));
-    var xd = [0.005, Math.max(5, Math.pow(10, Math.ceil(Math.log10(maxCost))))], yd = [0, Math.max(66, Math.ceil((maxIq + 3) / 10) * 10)];
+    var xd = [0.005, maxCost * 2], yd = [0, Math.max(66, Math.ceil((maxIq + 3) / 10) * 10)];
     function X(v) { return M.l + (Math.log10(v) - Math.log10(xd[0])) / (Math.log10(xd[1]) - Math.log10(xd[0])) * (W - M.l - M.r); }
     function Y(v) { return H - M.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - M.t - M.b); }
 
-    var cs = []; for (var c0 = 0.01; c0 <= xd[1] / 2; c0 *= 10) cs.push(c0);
+    var cs = []; for (var c0 = 0.01; c0 <= xd[1]; c0 *= 10) cs.push(c0);
     cs.forEach(function (c) {
       svg.append(svgEl('line', { x1: X(c), x2: X(c), y1: M.t, y2: H - M.b, stroke: C.grid, 'stroke-width': 1 }));
       var lb = svgEl('text', { x: X(c), y: H - M.b + 18, 'text-anchor': 'middle', 'font-size': 11, fill: C.muted });
