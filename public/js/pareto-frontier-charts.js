@@ -1,4 +1,4 @@
-/* Interactive charts for "The Falling Cost of LLM Intelligence".
+/* Interactive charts for "What Happens When the Cost of Intelligence Drops 100x".
    Self-contained: data, rendering, tooltips. Styled to the site palette. */
 (function () {
   'use strict';

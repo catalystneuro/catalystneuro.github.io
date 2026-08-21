@@ -1,12 +1,12 @@
 ---
-title: "The Falling Cost of LLM Intelligence"
+title: "What Happens When the Cost of Intelligence Drops 100x"
 date: "2026-08-19"
-description: "Progress in LLMs is usually reported as what the best model can do. This post uses Artificial Analysis's measured cost per task to trace the other direction of progress, how cheaply a given level of capability can be bought, and argues that it matters just as much: the ceiling unlocks new kinds of tasks, while the falling floor unlocks tasks that need to be done thousands of times."
+description: "A given level of LLM intelligence costs about a thirtieth of what it did a year ago, and the rate of decline is accelerating. Using Artificial Analysis's measured cost per task, this post traces the falling price of each capability level, explains why cheaper intelligence means more spending on it rather than less (Jevons paradox), and considers what changes when the drop reaches 100x."
 image: "/images/blog/pareto-frontier-banner.png"
 imageFit: "contain"
-readTime: "12 min read"
+readTime: "14 min read"
 author: "Benjamin Dichter"
-keywords: ["LLM", "Pareto frontier", "cost per task", "Artificial Analysis", "Intelligence Index", "model pricing", "AI economics"]
+keywords: ["LLM", "Pareto frontier", "cost per task", "Artificial Analysis", "Intelligence Index", "model pricing", "AI economics", "Jevons paradox"]
 ---
 
 <style>
@@ -42,7 +42,7 @@ When you pick a model for an application you are trading off how capable it is a
 
 [Artificial Analysis](https://artificialanalysis.ai/) has been benchmarking intelligence and price across hundreds of models for a couple of years, and enough of that data is accessible to reconstruct the tradeoff. In particular, [this plot](https://artificialanalysis.ai/#intelligence-comparison-tabs) shows the intelligence index vs. the cost per task, providing a realistic cost estimate for different levels of model capability. The top line is what they define as the "Pareto line," the most capable models at a given price point. This line describes the true frontier of LLMs. I pulled data from artificialanalysis.ai and looked at how the Pareto frontier has moved as new models have been released. I think it is worthwhile to take a beat to review this progress and make some predictions for the next few months.
 
-The short version: for a fixed capability level, cost is collapsing. A task at Intelligence Index 50, a level first reached in this data by GPT-5.4 in March at $1.10 per task, could be had for $0.03 by July.
+The short version: every level of LLM intelligence that has existed for a year now costs roughly a thirtieth of what it did, and the rate of decline is accelerating. A task at Intelligence Index 50, a level first reached in this data by GPT-5.4 in March at $1.10 per task, could be had for $0.03 by July, a 35x drop in five months. At the measured pace, a 100x drop for a given capability level takes about a year, and the question worth asking is not whether that happens but what it changes.
 
 ## The Artificial Analysis Intelligence Index
 
@@ -128,6 +128,18 @@ The motion of the frontier is more predictable than any individual release. Ever
 The two directions of progress serve different kinds of work. A higher ceiling changes what is possible at all: the tasks that no model could do last year and one model can do now. A lower floor changes what is affordable at scale: the tasks that one model could already do, but not ten thousand times. The literature scan that motivated this post is a floor problem. The model only needs to read a paper and answer a well defined question, which models well below the current frontier handle reliably, but it needs to do that for every candidate paper, and the difference between $1 and $0.02 per paper is the difference between a pilot study and a complete census. Legal discovery, systematic reviews, large scale data curation, content moderation, and customer support triage have the same shape, and all of them get cheaper by an order of magnitude roughly every few months without any change in the work itself.
 
 The practical consequence is that the set of problems worth attempting with a model is expanding from both ends at once, and the expansion at the cheap end is the one that is easy to miss. Cost-sensitive developers, particularly in economically disadvantaged regions, can now run capable coding agents at a tiny fraction of last year's cost. And any workload that was priced out a year ago is worth re-estimating now: at GPT-5.6 Luna prices, a thousand tasks cost about ten dollars.
+
+## Why Cheaper Intelligence Means More Spending on It
+
+A natural reading of these charts is that spending on LLMs should be falling. The opposite is happening, and the reason has a name. In 1865 William Stanley Jevons observed that more efficient steam engines, which needed less coal per unit of work, had increased Britain's total coal consumption rather than reducing it, because cheaper work found far more uses. The same dynamic applies when the cost of a unit of intelligence falls by 30x. The work that was already being done gets cheaper, but the much larger effect is the work that was not being done at all because it did not clear the bar. Our literature scan is a small example: at last year's prices it would have been run once on a sample, if at all, and at this year's prices we run it on the whole corpus, repeat it when the pipeline changes, and are planning to run each positive result three times to reduce noise. The cost per paper fell by more than an order of magnitude and our total spend on the project went up. Demand for intelligence at a given price appears to be highly elastic, and as long as that holds, the falling frontier translates into more tokens consumed, not fewer dollars spent.
+
+The model routers appearing on the market are a sign that this is being operationalized. OpenRouter now offers a [router](https://openrouter.ai/openrouter/pareto-code) that takes a minimum capability score and sends each request to the cheapest model on the Artificial Analysis frontier that clears it, so that the frontier moving is something a system benefits from automatically rather than something a developer has to track. Hardcoding a model name into an application has become the fastest way to overpay.
+
+## What Changes at 100x
+
+If the pace of the last year holds, the capability that cost a dollar per task at the start of 2026 will cost a cent by the end of it, and the index 60 models that cost a few dollars per task today will be under a dime within a couple of quarters. I want to be careful not to overreach from a year of data, but a few consequences seem to follow directly from the numbers rather than from speculation about them.
+
+Reading everything becomes the default. At a cent per document, a model can read every paper in a field, every record in an archive, or every message in a support queue as a matter of routine, and the question shifts from which documents to look at to which questions to ask of all of them. Projects like our reuse census stop being projects and become monitoring: the scan can run on every new publication as it appears. Multi-pass workflows become the norm, since running a task three times and taking a consensus costs less than running it once did a few months earlier, and the accuracy gains from that are large. And the capability tiers themselves stop being a meaningful way to describe a system, because a pipeline will route each step to whatever level of intelligence it needs at whatever that level costs that week. The scarce resource in that world is not intelligence but the judgment about what to point it at, the ground truth to check it against, and the systems to run it at scale. Those are the parts of the work that are not getting cheaper.
 
 *Model metadata pulled from the Artificial Analysis free API, and measured cost per task scraped from the model pages on artificialanalysis.ai, on August 19, 2026. Corrections welcome.*
 
