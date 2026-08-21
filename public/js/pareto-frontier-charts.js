@@ -232,13 +232,13 @@
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 370;
     var M = { l: 56, r: 60, t: 12, b: 40 };
     var svg = frame(box, W, H, M, 'Running minimum measured cost per task by capability tier');
-    var x0 = Date.parse('2025-07-01T00:00:00Z'), x1 = Date.parse('2026-09-15T00:00:00Z');
+    var x0 = Date.parse('2025-07-01T00:00:00Z'), x1 = Date.parse('2026-08-21T00:00:00Z');
     var yd = [0.005, 5];
     function X(dstr) { return M.l + (Date.parse(dstr + 'T00:00:00Z') - x0) / (x1 - x0) * (W - M.l - M.r); }
     function Y(v) { return H - M.b - (Math.log10(v) - Math.log10(yd[0])) / (Math.log10(yd[1]) - Math.log10(yd[0])) * (H - M.t - M.b); }
 
     [['2025-07-01', "Jul '25"], ['2025-09-01', "Sep '25"], ['2025-11-01', "Nov '25"], ['2026-01-01', "Jan '26"],
-     ['2026-03-01', "Mar '26"], ['2026-05-01', "May '26"], ['2026-07-01', "Jul '26"], ['2026-09-01', "Sep '26"]].forEach(function (t) {
+     ['2026-03-01', "Mar '26"], ['2026-05-01', "May '26"], ['2026-07-01', "Jul '26"]].forEach(function (t) {
       svg.append(svgEl('line', { x1: X(t[0]), x2: X(t[0]), y1: M.t, y2: H - M.b, stroke: C.grid, 'stroke-width': 1 }));
       var lb = svgEl('text', { x: X(t[0]), y: H - M.b + 18, 'text-anchor': 'middle', 'font-size': 11, fill: C.muted });
       lb.textContent = t[1]; svg.append(lb);
