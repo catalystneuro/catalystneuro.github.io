@@ -60,12 +60,13 @@
       var sx = svg.viewBox.baseVal.width / r.width;
       var mx = (ev.clientX - r.left) * sx, my = (ev.clientY - r.top) * sx;
       var best = null, bd = Infinity;
-      points.forEach(function (p) {
+      var visible = points.filter(function (p) { return p.snap === undefined || p.snap <= anim.stage; });
+      visible.forEach(function (p) {
         var d = Math.hypot(p.x - mx, p.y - my);
         if (d < bd) { bd = d; best = p; }
       });
       if (!best || bd > 40) { hideTip(); return; }
-      var group = points.filter(function (p) { return Math.hypot(p.x - best.x, p.y - best.y) < 3; });
+      var group = visible.filter(function (p) { return Math.hypot(p.x - best.x, p.y - best.y) < 3; });
       var rows = [];
       group.forEach(function (p) { rows = rows.concat(p.rows()); });
       showTip(box, best.x / sx, best.y / sx, rows);
@@ -80,10 +81,36 @@
   }
 
   // ---- chart 1: intelligence vs cost, frontier every two months ----
+  var anim = { stage: SNAPS.length - 1, paused: false, timer: null, groups: [] };
+  var STEP_MS = 1100, HOLD_MS = 6000;
+  function applyStage() {
+    anim.groups.forEach(function (gs, i) {
+      gs.forEach(function (g) { g.setAttribute('display', i <= anim.stage ? 'inline' : 'none'); });
+    });
+    var cap = document.getElementById('pfc-frontier-stage');
+    if (cap) cap.textContent = 'Frontier as of ' + SNAPS[anim.stage][1];
+  }
+  function tick() {
+    clearTimeout(anim.timer);
+    if (anim.paused) return;
+    anim.stage = anim.stage >= SNAPS.length - 1 ? 0 : anim.stage + 1;
+    applyStage();
+    hideTip();
+    anim.timer = setTimeout(tick, anim.stage === SNAPS.length - 1 ? HOLD_MS : STEP_MS);
+  }
+  function setPaused(p) {
+    anim.paused = p;
+    var b = document.getElementById('pfc-frontier-toggle');
+    if (b) { b.textContent = p ? 'Play' : 'Pause'; b.setAttribute('aria-pressed', p ? 'true' : 'false'); }
+    if (p) clearTimeout(anim.timer);
+    else anim.timer = setTimeout(tick, anim.stage === SNAPS.length - 1 ? HOLD_MS : STEP_MS);
+  }
+
   function renderFrontier() {
     var box = document.getElementById('pfc-frontier');
     if (!box) return;
     box.replaceChildren();
+    anim.groups = SNAPS.map(function () { return []; });
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 440;
     var M = { l: 56, r: 16, t: 12, b: 42 };
     var svg = frame(box, W, H, M, 'Intelligence Index versus cost per task with Pareto frontier lines every two months');
@@ -109,15 +136,25 @@
     yt.textContent = 'Artificial Analysis Intelligence Index'; svg.append(yt);
 
     var pts = [];
+    function windowIndex(date) {
+      for (var i = 0; i < SNAPS.length; i++) if (date <= SNAPS[i][0]) return i;
+      return SNAPS.length - 1;
+    }
     models.forEach(function (m) {
       var x = X(m.mcost), y = Y(m.iq);
-      dot(svg, x, y, 3.5, C.deemph, m.open);
-      pts.push({ x: x, y: y, rows: function () {
+      var wi = windowIndex(m.date);
+      var g = svgEl('g', { opacity: 0.45 });
+      dot(g, x, y, 3.5, C.snap[wi], m.open);
+      svg.append(g);
+      anim.groups[wi].push(g);
+      pts.push({ x: x, y: y, snap: wi, rows: function () {
         var d1 = el('div', 'pfc-tt-name'); d1.textContent = m.name;
         var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(m.mcost);
         d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
-        return [d1, d2, d3];
+        var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
+        d4.append(kd, 'in the ' + SNAPS[wi][1].replace(' (today)', '') + ' window');
+        return [d1, d2, d3, d4];
       }});
     });
 
@@ -135,11 +172,14 @@
         if (j < fr.length - 1) d += ' H ' + X(fr[j + 1].mcost) + ' V ' + Y(fr[j + 1].iq);
       });
       d += ' H ' + (W - M.r);
-      svg.append(svgEl('path', { d: d, fill: 'none', stroke: color, 'stroke-width': i === SNAPS.length - 1 ? 3 : 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+      var sg = svgEl('g', {});
+      sg.append(svgEl('path', { d: d, fill: 'none', stroke: color, 'stroke-width': i === SNAPS.length - 1 ? 3 : 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+      svg.append(sg);
+      anim.groups[i].push(sg);
       fr.forEach(function (p) {
         var x = X(p.mcost), y = Y(p.iq);
-        dot(svg, x, y, 4, color, p.open);
-        pts.push({ x: x, y: y, rows: function () {
+        dot(sg, x, y, 4, color, p.open);
+        pts.push({ x: x, y: y, snap: i, rows: function () {
           var d1 = el('div', 'pfc-tt-name'); d1.textContent = p.name;
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
@@ -152,6 +192,15 @@
     });
     box.append(svg);
     attachHover(box, svg, pts);
+    var ctl = el('div', 'pfc-controls');
+    var stageLabel = el('span', 'pfc-stage'); stageLabel.id = 'pfc-frontier-stage';
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'pfc-btn'; btn.id = 'pfc-frontier-toggle';
+    btn.addEventListener('click', function () { setPaused(!anim.paused); });
+    ctl.append(stageLabel, btn);
+    box.append(ctl);
+    applyStage();
+    setPaused(anim.paused);
 
     var legend = document.getElementById('pfc-frontier-legend');
     if (legend) {
@@ -252,6 +301,7 @@
     }
   }
 
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) anim.paused = true;
   function renderAll() { renderFrontier(); renderRecords(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll);
   else renderAll();

@@ -22,6 +22,10 @@ keywords: ["LLM", "Pareto frontier", "cost per task", "Artificial Analysis", "In
 .pfc-tt-row { display: flex; align-items: center; gap: 0.45rem; }
 .pfc-tt-key { width: 12px; border-top: 2.5px solid; border-radius: 2px; flex: none; display: inline-block; }
 .pfc-figure img { width: 100%; height: auto; }
+.pfc-controls { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.4rem; }
+.pfc-stage { font-size: 0.82rem; font-weight: 600; color: var(--color-navy); }
+.pfc-btn { font: inherit; font-size: 0.78rem; padding: 0.25rem 0.7rem; border: 1px solid var(--color-line); border-radius: 6px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; min-width: 4.2rem; }
+.pfc-btn:hover { border-color: var(--color-navy); }
 .pfc-pelicans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
 .pfc-pelicans figure { margin: 0; }
 .pfc-pelicans img { width: 100%; aspect-ratio: 4 / 3; height: auto; object-fit: contain; background: #fff; border-radius: 6px; border: 1px solid var(--color-line-soft); }
@@ -68,13 +72,13 @@ Cost per token is easily available, but different models can use a very differen
 
 ## How the Frontier Has Moved
 
-The chart below plots intelligence against measured cost per task and traces the Pareto frontier, the cheapest way to reach each intelligence level, as it stands today and as it stood at two month intervals over the past year, using each model's release date to reconstruct what was available. Hover any point for the model behind it.
+The chart below plots intelligence against measured cost per task and traces the Pareto frontier, the cheapest way to reach each intelligence level, as it stands today and as it stood at two month intervals over the past year, using each model's release date to reconstruct what was available. The chart builds up one frontier at a time, pauses on the full picture, and repeats; use the button to stop it. Hover any point for the model behind it.
 
 <figure class="pfc-figure">
   <div id="pfc-frontier"></div>
   <div class="pfc-legend" id="pfc-frontier-legend"></div>
   <noscript><img src="/images/blog/pareto-frontier-bimonthly.svg" alt="Intelligence Index versus cost per task with Pareto frontier lines every two months from August 2025 to August 2026" /></noscript>
-  <figcaption>Intelligence Index against measured cost per Intelligence Index task (log scale). Gray points are all 137 measured models at their last measured cost. Hollow points, both gray and colored, are open weights models; filled points are proprietary. Hover a point for its details, including whether Artificial Analysis has retired it from live benchmarking. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date; markers are the frontier models themselves. Where successive frontiers share a segment, the older line is drawn on top, so a newer line is visible only where the frontier actually moved. Models whose pages no longer carry a measured cost (o3 and GPT-5.3 Codex among them) are absent (see caveats).</figcaption>
+  <figcaption>Intelligence Index against measured cost per Intelligence Index task (log scale). Small points are all 137 measured models at their last measured cost, tinted by the two month window in which they were released (models from before August 2025 are grouped with the August 2025 window). Hollow points, both small and large, are open weights models; filled points are proprietary. Hover a point for its details, including whether Artificial Analysis has retired it from live benchmarking. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date; markers are the frontier models themselves. Where successive frontiers share a segment, the older line is drawn on top, so a newer line is visible only where the frontier actually moved. Models whose pages no longer carry a measured cost (o3 and GPT-5.3 Codex among them) are absent (see caveats).</figcaption>
 </figure>
 
 Each successive frontier sits above and to the left of the last: more intelligence at the same cost, or the same intelligence for less. The pace of that movement is accelerating. Through the second half of 2025 the frontier inched forward: only two small bumps between August and October, and a single one between October and December. The February and April frontiers each moved a large part of the curve, and the last two snapshots have replaced the frontier almost entirely, with ten of the eleven June frontier models new since April and fifteen of today's sixteen new since June.
