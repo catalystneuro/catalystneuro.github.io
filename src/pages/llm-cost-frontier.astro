@@ -1,0 +1,87 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+<Base title="LLM Cost Frontier" description="A weekly updated dashboard of the cheapest way to reach each level of LLM intelligence, built from Artificial Analysis's measured cost per task. Companion to the post What Happens When the Cost of Intelligence Drops 100x.">
+  <PageHeader
+    eyebrow="Dashboard"
+    title="LLM Cost Frontier"
+    subtitle="The cheapest way to reach each level of LLM intelligence, and how fast that cost is falling. Refreshed weekly from Artificial Analysis."
+  />
+
+  <section class="section">
+    <div class="container-x pfc-wrap">
+      <div class="prose pfc-intro">
+        <p>This page keeps the figures from <a href="/blog/cost-of-intelligence-drops-100x/">What Happens When the Cost of Intelligence Drops 100x</a> current. The data is Artificial Analysis's <a href="https://artificialanalysis.ai/">Intelligence Index</a> and their measured cost per Intelligence Index task (the average billed cost, including reasoning tokens, to run one task from their evaluation suite), pulled automatically every Monday. Models that drop out of their live benchmarking keep their last measurement here, so the history only grows. Data as of <strong class="pfc-updated">&hellip;</strong>, covering <span class="pfc-count">&hellip;</span> models.</p>
+      </div>
+
+      <h2>The Frontier Over Time</h2>
+      <p class="pfc-lead">Intelligence against measured cost per task, with the Pareto frontier (the cheapest model at each intelligence level) reconstructed at two month intervals from model release dates. The chart builds up one frontier at a time and pauses on the full picture; use the button to stop it. Hover any point for the model behind it.</p>
+      <figure class="pfc-figure">
+        <div id="pfc-frontier"></div>
+        <div class="pfc-legend" id="pfc-frontier-legend"></div>
+        <figcaption>Small points are all measured models at their latest measured cost, tinted by the two month window of their release; models released before the first window are grouped with it. Hollow points are open weights models; filled points are proprietary. Each line traces the cheapest way to reach a given Intelligence Index among models released by the snapshot date. Where successive frontiers share a segment, the older line is drawn on top.</figcaption>
+      </figure>
+
+      <h2>Cost Records by Capability Tier</h2>
+      <p class="pfc-lead">The cheapest measured cost per task achieved by any released model at or above each Intelligence Index tier, by release date. Each step is a model that set a new low for its tier.</p>
+      <figure class="pfc-figure">
+        <div id="pfc-records"></div>
+        <div class="pfc-legend" id="pfc-records-legend"></div>
+        <figcaption>Hollow markers are open weights models. Known price cuts are applied: a model is placed at its launch price from release and at its current price from the cut date (see the price events below). All other costs are current prices indexed by release date.</figcaption>
+      </figure>
+
+      <div class="pfc-table-wrap">
+        <table class="pfc-table">
+          <thead><tr><th>Tier</th><th>First crossed</th><th>At</th><th>Current record</th><th>At</th><th>Collapse</th><th>Halving time</th></tr></thead>
+          <tbody id="pfc-tier-table"></tbody>
+        </table>
+      </div>
+
+      <div class="prose pfc-notes">
+        <h2>Notes</h2>
+        <ul>
+          <li>Costs are current prices indexed by release date, not historical prices, except where a price event is recorded. Price cuts since launch therefore make older points look cheaper than they were, which understates the collapse and dates it too early. Recorded events: OpenAI cut GPT-5.6 Luna by 80% and Terra by 20% on July 30, 2026.</li>
+          <li>Free or promotional endpoints with a zero measured cost are excluded.</li>
+          <li>Halving time is the time for the tier's record to halve, computed from the first crossing to the current record as days / log<sub>2</sub>(collapse).</li>
+          <li>The method, its limitations, and the argument for why any of this matters are in the <a href="/blog/cost-of-intelligence-drops-100x/">original post</a>. The update script and data history are in the <a href="https://github.com/catalystneuro/catalystneuro.github.io/tree/main/scripts">site repository</a>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+.pfc-figure { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 10px; padding: 1.1rem 1.1rem 0.9rem; margin: 2rem 0; }
+.pfc-figure figcaption { font-size: 0.8rem; color: var(--color-ink-soft); line-height: 1.5; margin-top: 0.6rem; border-top: 1px solid var(--color-line-soft); padding-top: 0.6rem; }
+.pfc-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.8rem; color: var(--color-ink-muted); margin-top: 0.55rem; align-items: center; }
+.pfc-lk { display: inline-flex; align-items: center; gap: 0.4rem; }
+.pfc-swatch { width: 18px; height: 0; border-top: 2.5px solid; border-radius: 2px; display: inline-block; }
+.pfc-dot { width: 9px; height: 9px; border-radius: 50%; border: 2px solid; display: inline-block; }
+.pfc-tooltip { position: absolute; pointer-events: none; z-index: 50; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 6px; box-shadow: 0 3px 14px rgba(16,22,66,0.13); padding: 0.5rem 0.65rem; font-size: 0.78rem; line-height: 1.45; color: var(--color-ink-muted); max-width: 250px; display: none; }
+.pfc-tt-name { font-weight: 600; color: var(--color-navy); font-size: 0.82rem; }
+.pfc-tt-val { font-weight: 600; color: var(--color-navy); }
+.pfc-tt-row { display: flex; align-items: center; gap: 0.45rem; }
+.pfc-tt-key { width: 12px; border-top: 2.5px solid; border-radius: 2px; flex: none; display: inline-block; }
+.pfc-figure img { width: 100%; height: auto; }
+.pfc-controls { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.4rem; }
+.pfc-stage { font-size: 0.82rem; font-weight: 600; color: var(--color-navy); }
+.pfc-btn { font: inherit; font-size: 0.78rem; padding: 0.25rem 0.7rem; border: 1px solid var(--color-line); border-radius: 6px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; min-width: 4.2rem; }
+.pfc-btn:hover { border-color: var(--color-navy); }
+</style>
+
+<style>
+  .pfc-wrap { max-width: 58rem; }
+  .pfc-wrap h2 { font-size: 1.45rem; margin: 2.6rem 0 0.6rem; }
+  .pfc-intro { margin-bottom: 1rem; }
+  .pfc-lead { color: var(--color-ink-muted); font-size: 0.98rem; line-height: 1.6; margin-bottom: 1rem; }
+  .pfc-table-wrap { overflow-x: auto; margin-top: 1.6rem; }
+  .pfc-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .pfc-table th { text-align: left; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-ink-soft); border-bottom: 1px solid var(--color-line); padding: 0.5rem 0.7rem; }
+  .pfc-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-line-soft); vertical-align: top; }
+  .pfc-table td:nth-child(1), .pfc-table td:nth-child(3), .pfc-table td:nth-child(5), .pfc-table td:nth-child(6), .pfc-table td:nth-child(7) { white-space: nowrap; }
+  .pfc-table td:nth-child(3), .pfc-table td:nth-child(5), .pfc-table td:nth-child(6) { font-family: var(--font-mono); font-size: 0.82rem; }
+  .pfc-notes { margin-top: 2rem; }
+</style>
+
+<script src="/js/llm-frontier-dashboard.js" defer></script>
