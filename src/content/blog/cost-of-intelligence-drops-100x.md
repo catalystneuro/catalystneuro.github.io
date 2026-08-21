@@ -72,6 +72,8 @@ Cost per token is easily available, but different models can use a very differen
 
 ## How the Frontier Has Moved
 
+The charts in this section are a snapshot from August 19, 2026, the date this post was written. A [live version of both charts and the tier table](/llm-cost-frontier/), refreshed every week from the same source, is on the LLM Cost Frontier dashboard.
+
 The chart below plots intelligence against measured cost per task and traces the Pareto frontier, the cheapest way to reach each intelligence level, as it stands today and as it stood at two month intervals over the past year, using each model's release date to reconstruct what was available. The chart builds up one frontier at a time, pauses on the full picture, and repeats; use the button to stop it. Hover any point for the model behind it.
 
 <figure class="pfc-figure">
@@ -139,7 +141,7 @@ If the pace of the last year holds, the capability that cost a dollar per task a
 
 Reading everything becomes the default. At a cent per document, a model can read every paper in a field, every record in an archive, every email, or every message in a support queue as a matter of routine, and the question shifts from which documents to look at to which questions to ask of all of them. Projects like our reuse census stop being projects and become monitoring: the scan can run on every new publication as it appears. Multi-pass workflows become the norm, since running a task three times and taking a consensus costs less than running it once did a few months earlier, and the accuracy gains from that are large. And the capability tiers themselves stop being a meaningful way to describe a system, because a pipeline will route each step to whatever level of intelligence it needs at whatever that level costs that week. The scarce resource in that world is not intelligence but the judgment about what to point it at, the ground truth to check it against, and the systems to run it at scale. Those are the parts of the work that are not getting cheaper.
 
-*Model metadata pulled from the Artificial Analysis free API, and measured cost per task scraped from the model pages on artificialanalysis.ai, on August 19, 2026. Corrections welcome.*
+*Model metadata pulled from the Artificial Analysis free API, and measured cost per task scraped from the model pages on artificialanalysis.ai, on August 19, 2026. The figures are kept current on the [LLM Cost Frontier dashboard](/llm-cost-frontier/). Corrections welcome.*
 
 ## About the Author
 
