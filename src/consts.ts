@@ -30,6 +30,7 @@ export const NAV = [
       { label: "NWB Software", href: "/nwb-software" },
       { label: "Analysis Software", href: "/analysis-software" },
       { label: "Guides", href: "/guides" },
+      { label: "LLM Cost Frontier", href: "/llm-cost-frontier" },
     ],
   },
   {
@@ -62,6 +63,7 @@ export const FOOTER = [
       { label: "Funded Projects", href: "/funded-projects" },
       { label: "NWB Software", href: "/nwb-software" },
       { label: "Analysis Software", href: "/analysis-software" },
+      { label: "LLM Cost Frontier", href: "/llm-cost-frontier" },
     ],
   },
   {
