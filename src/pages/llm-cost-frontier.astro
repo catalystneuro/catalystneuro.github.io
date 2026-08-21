@@ -28,8 +28,10 @@ import PageHeader from "../components/PageHeader.astro";
       <h2>Cost Records by Capability Tier</h2>
       <p class="pfc-lead">The cheapest measured cost per task achieved by any released model at or above each Intelligence Index tier, by release date. Each step is a model that set a new low for its tier.</p>
       <figure class="pfc-figure">
-        <div id="pfc-records"></div>
-        <div class="pfc-legend" id="pfc-records-legend"></div>
+        <div class="pfc-side">
+          <div class="pfc-side-chart" id="pfc-records"></div>
+          <div class="pfc-legend pfc-legend-side" id="pfc-records-legend"></div>
+        </div>
         <figcaption>Hollow markers are open weights models. Each model is placed at the price in effect on each date: observed prices from August 2026 onward, and recorded price events before that (see the notes below).</figcaption>
       </figure>
 
@@ -90,6 +92,7 @@ import PageHeader from "../components/PageHeader.astro";
   .pfc-notes { margin-top: 2rem; }
   .pfc-side { display: flex; gap: 1.2rem; align-items: flex-start; }
   .pfc-side-chart { flex: 1 1 auto; min-width: 0; }
+  .pfc-legend-side :global(.pfc-legend-title) { font-weight: 600; color: var(--color-navy); font-size: 0.82rem; margin-bottom: 0.1rem; }
   .pfc-legend-side { flex: 0 0 9.5rem; flex-direction: column; align-items: flex-start; gap: 0.45rem; margin-top: 0.6rem; padding-left: 1rem; border-left: 1px solid var(--color-line-soft); }
   @media (max-width: 700px) { .pfc-side { flex-direction: column; } .pfc-legend-side { flex-direction: row; flex-wrap: wrap; border-left: 0; padding-left: 0; flex-basis: auto; } }
 </style>
