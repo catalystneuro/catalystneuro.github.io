@@ -81,9 +81,9 @@ Each successive frontier sits above and to the left of the last: more intelligen
 
 The right edge tells the capability story. The ceiling of the frontier rose from index 35.3 in August 2025 (GPT-5 at $0.26 per task) to 37.4 that October (Claude 4.5 Sonnet), 48.4 in February (Claude Sonnet 4.6), 55.0 in April (Claude Opus 4.7 at $2.23), 62.1 in June (Claude Fable 5 at $3.14), and 63.1 today (Claude Opus 5 at $2.34): twenty eight Intelligence Index points in a year. The left half shows the rising intelligence of cheap models. As of August 19, 2026, the GPT-5.6 Luna effort ladder now owns almost everything below index 52, with the level that was the August 2025 ceiling available for $0.0088 per task.
 
-Reasoning effort controls mean a single model is not a point on this chart but a segment: the GPT-5.6 Luna ladder runs from $0.0088 at low effort to $0.047 at max and covers the whole lower half of the frontier, while Claude Opus 5 spans $0.43 at low effort to $2.34 at max and buys about ten Intelligence Index points along the way. Effort is now a key dial in the cost/intelligence trade-off, and this dial requires that any analysis of capability must also consider cost.
+Note that a single model can cover a large part of this range through different reasoning levels: the GPT-5.6 Luna ladder runs from $0.0088 at low effort to $0.047 at max and covers the whole lower half of the frontier, while Claude Opus 5 spans $0.43 at low effort to $2.34 at max and buys about ten Intelligence Index points along the way. Effort is now a key dial in the cost/intelligence trade-off, and as a consequence, cost and intelligence are inextricably linked.
 
-The records view tracks the cheapest measured cost per task achieved by any released model at or above a given Intelligence Index tier. The series reaches back to mid 2025 for the lower tiers, and higher tiers appear when they become available.
+The records plot below tracks the cheapest measured cost per task achieved by any released model at or above a given Intelligence Index tier. The series reaches back to mid 2025 for the lower tiers, and higher tiers appear when they become available.
 
 <figure class="pfc-figure">
   <div id="pfc-records"></div>
