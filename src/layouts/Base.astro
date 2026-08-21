@@ -13,6 +13,10 @@ const { title, description = SITE.description, image = SITE.ogImage } = Astro.pr
 const pageTitle = title ? SITE.titleTemplate(title) : SITE.defaultTitle;
 const canonical = new URL(Astro.url.pathname, SITE.url).href.replace(/\/?$/, "/");
 const ogImage = new URL(image, SITE.url).href;
+// Umami Cloud site ID (a public identifier, safe to commit). Tracking is only emitted in
+// production builds so local dev and deploy previews do not count as traffic.
+const UMAMI_WEBSITE_ID = "9d260473-011d-4223-b15b-ab9d49d1e976";
+const trackTraffic = import.meta.env.PROD && process.env.CONTEXT !== "deploy-preview";
 ---
 <!doctype html>
 <html lang="en">
@@ -34,6 +38,7 @@ const ogImage = new URL(image, SITE.url).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
+    {trackTraffic && <script defer src="https://cloud.umami.is/script.js" data-website-id={UMAMI_WEBSITE_ID} is:inline></script>}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
