@@ -227,7 +227,9 @@
     var legend = document.getElementById('pfc-frontier-legend');
     if (legend) {
       legend.replaceChildren();
-      SNAPS.forEach(function (snap, i) {
+      legend.append(el('span', 'pfc-legend-title', 'Pareto frontier as of'));
+      SNAPS.slice().reverse().forEach(function (snap, ri) {
+        var i = SNAPS.length - 1 - ri;
         var item = el('span', 'pfc-lk');
         var sw = el('span', 'pfc-swatch');
         sw.style.borderTopColor = C.snap[i];
