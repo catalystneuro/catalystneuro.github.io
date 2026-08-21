@@ -21,5 +21,13 @@
   to = "/funded-projects/asap-nwb-adoption"
   status = 301
 
+# The Pareto frontier post was retitled "What Happens When the Cost of
+# Intelligence Drops 100x" and its file renamed to match. Keep the address it
+# was first published under working.
+[[redirects]]
+  from = "/blog/pareto-frontier-cost-per-task"
+  to = "/blog/cost-of-intelligence-drops-100x"
+  status = 301
+
 # Astro emits real static pages for every route, so no SPA catch-all is needed.
 # A 404.html is generated automatically for unmatched paths.
