@@ -191,7 +191,7 @@
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(p.mcost);
           d2.append(kd, s, ' at Index ' + p.iq.toFixed(1));
-          var d3 = el('div', null, 'frontier as of: ' + (labels && labels.length ? labels.join(', ') : snapLabel) + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
+          var d3 = el('div', null, 'frontier as of: ' + (labels && labels.length ? labels.join('; ') : snapLabel) + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
       });
