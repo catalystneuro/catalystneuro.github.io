@@ -372,7 +372,7 @@
   function advanceLine(a, withVariant) {
     var text = el('div', 'pfc-adv-body');
     if (withVariant && a.variant) { var v = el('span', 'pfc-adv-variant'); v.textContent = a.variant + ': '; text.append(v); }
-    var span = a.owns_to - a.owns_from < 1 ? 'index ' + a.owns_to.toFixed(1) : 'index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1);
+    var span = a.owns_to.toFixed(1) === a.owns_from.toFixed(1) ? 'index ' + a.owns_to.toFixed(1) : 'index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1);
     var s1 = a.kind === 'price change' && a.previous_cost
       ? 'price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task; now the cheapest way to reach ' + span + '. '
       : 'now the cheapest way to reach ' + span + ' at ' + fmt$(a.cost_per_task) + ' per task';

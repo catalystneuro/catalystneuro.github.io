@@ -341,7 +341,7 @@ def xml_escape(t: str) -> str:
 
 def describe(a: dict) -> str:
     cost = f"${a['cost_per_task']:.4f}" if a["cost_per_task"] < 0.01 else f"${a['cost_per_task']:.3f}" if a["cost_per_task"] < 0.1 else f"${a['cost_per_task']:.2f}"
-    if a["owns_to"] - a["owns_from"] < 1:
+    if f"{a['owns_to']:.1f}" == f"{a['owns_from']:.1f}":
         span = f"index {a['owns_to']:.1f}"
     else:
         span = f"index {a['owns_from']:.1f} to {a['owns_to']:.1f}"
