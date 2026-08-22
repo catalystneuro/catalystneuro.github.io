@@ -379,7 +379,7 @@
       head.append(el('span', 'pfc-adv-kind', a.kind));
       var text = el('div', 'pfc-adv-body');
       var s1 = (a.kind === 'price change' && a.previous_cost ? 'Price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task' : 'Entered the frontier at ' + fmt$(a.cost_per_task) + ' per task')
-             + ' at Index ' + a.intelligence_index.toFixed(1) + '; now the cheapest model for index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1) + '. ';
+             + ' at Index ' + a.intelligence_index.toFixed(1) + (a.owns_to - a.owns_from < 1 ? '; now the cheapest way to reach index ' + a.owns_to.toFixed(1) : '; now the cheapest way to reach index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1)) + '. ';
       text.append(s1);
       if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for index \u2265 ' + a.records.join(', \u2265 ') + '. '; text.append(r); }
       if (a.displaced && a.displaced.length) text.append('Displaced ' + a.displaced.join(', ') + '. ');

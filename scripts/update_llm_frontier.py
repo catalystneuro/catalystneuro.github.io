@@ -323,7 +323,11 @@ def describe(a: dict) -> str:
         head = f"{a['model']} moved onto the Pareto frontier after a price change (from ${a['previous_cost']:.3f} to {cost} per task)"
     else:
         head = f"{a['model']} entered the Pareto frontier at {cost} per task"
-    parts = [head + f", Intelligence Index {a['intelligence_index']:.1f}, now the cheapest model for index {a['owns_from']:.1f} to {a['owns_to']:.1f}."]
+    if a["owns_to"] - a["owns_from"] < 1:
+        span = f"now the cheapest way to reach index {a['owns_to']:.1f}"
+    else:
+        span = f"now the cheapest way to reach index {a['owns_from']:.1f} to {a['owns_to']:.1f}"
+    parts = [head + f", Intelligence Index {a['intelligence_index']:.1f}, {span}."]
     if a["records"]:
         parts.append("New cost record for " + ", ".join(f"index \u2265 {t}" for t in a["records"]) + ".")
     if a["displaced"]:
