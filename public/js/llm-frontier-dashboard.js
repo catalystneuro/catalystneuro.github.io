@@ -81,8 +81,14 @@
       });
       if (!best || bd > 40) { hideTip(); return; }
       var group = visible.filter(function (p) { return Math.hypot(p.x - best.x, p.y - best.y) < 3; });
-      var rows = [];
-      group.forEach(function (p) { rows = rows.concat(p.rows()); });
+      var rows = [], seen = {}, order = [];
+      group.forEach(function (p) {
+        var k = p.key || ('#' + p.x + ',' + p.y + Math.random());
+        if (!seen[k]) { seen[k] = { pt: p, labels: [] }; order.push(k); }
+        if (p.snapLabel) seen[k].labels.push(p.snapLabel);
+        if (p.snapLabel && !seen[k].pt.snapLabel) seen[k].pt = p;
+      });
+      order.forEach(function (k) { rows = rows.concat(seen[k].pt.rows(seen[k].labels)); });
       showTip(box, best.x / sx, best.y / sx, rows);
     });
     svg.addEventListener('pointerleave', hideTip);
@@ -166,7 +172,7 @@
       dot(g, x, y, 3.5, C.snap[wi], m.open);
       svg.append(g);
       anim.groups[wi].push(g);
-      pts.push({ x: x, y: y, snap: wi, rows: function () {
+      pts.push({ x: x, y: y, snap: wi, key: m.name, rows: function () {
         var d1 = el('div', 'pfc-tt-name'); d1.textContent = m.name;
         var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(m.mcost);
         d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
@@ -201,13 +207,13 @@
       fr.forEach(function (p) {
         var x = X(p.mcost), y = Y(p.iq);
         dot(sg, x, y, 4, color, p.open);
-        pts.push({ x: x, y: y, snap: i, rows: function () {
+        pts.push({ x: x, y: y, snap: i, key: p.name, snapLabel: snapLabel, rows: function (labels) {
           var d1 = el('div', 'pfc-tt-name'); d1.textContent = p.name;
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(p.mcost);
           d2.append(kd, s, ' at Index ' + p.iq.toFixed(1) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
-          var d3 = el('div', null, 'Pareto frontier as of ' + snapLabel + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
+          var d3 = el('div', null, 'Pareto frontier as of ' + (labels && labels.length ? labels.join(', ') : snapLabel) + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
       });
