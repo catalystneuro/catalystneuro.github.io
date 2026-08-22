@@ -246,6 +246,7 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
             prev = state.get(slug)
             state[slug] = (cost, iq)
             changed[slug] = ("price change" if note and ("cut" in note or "change" in note) else "new model", prev[0] if prev else None)
+        prev_front = current
         new_front = pareto(state)
         entered = [s for s in new_front if s in changed and (s not in current or (changed[s][0] == "price change" and changed[s][1] is not None and state[s][0] < changed[s][1]))]
         left = current - new_front
@@ -264,6 +265,9 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
             # index range this model now owns: from its index down to the next frontier model below it
             below = [state[o][1] for o in new_front if state[o][1] < iq]
             lower = max(below) if below else 0.0
+            # Who covered the top of this range before: the previous frontier model with the smallest index >= iq.
+            prev_cover = sorted([o for o in prev_front if o != slug and state[o][1] >= iq], key=lambda o: state[o][1])
+            taken_from = models[prev_cover[0]]["name"] if prev_cover else None
             base, variant = split_variant(models[slug]["name"])
             advances.append(dict(
                 date=date, model=models[slug]["name"], base=base, variant=variant, creator=models[slug]["creator"], slug=slug,
@@ -271,6 +275,7 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
                 kind=kind, open_weights=models[slug]["open_weights"],
                 owns_from=round(lower, 1), owns_to=round(iq, 1),
                 records=sorted(int(t) for t in tiers),
+                taken_from=taken_from,
                 displaced=sorted(models[o]["name"] for o in attribution.get(slug, [])),
             ))
         current = new_front
@@ -336,10 +341,12 @@ def describe(a: dict) -> str:
         parts = [f"{a['model']}: price moved from ${a['previous_cost']:.3f} to {cost} per task; now the cheapest way to reach {span}."]
     else:
         parts = [f"{a['model']}: now the cheapest way to reach {span} at {cost} per task."]
+    if a.get("taken_from"):
+        parts[0] = parts[0][:-1] + f", taking it from {a['taken_from']}."
     if a["records"]:
         parts.append("New cost record for " + ", ".join(f"index \u2265 {t}" for t in a["records"]) + ".")
     if a["displaced"]:
-        parts.append("Displaced: " + ", ".join(a["displaced"]) + ".")
+        parts.append(", ".join(a["displaced"]) + (" left the frontier." if len(a["displaced"]) > 1 else " left the frontier."))
     parts.append("Open weights." if a["open_weights"] else "Proprietary.")
     return " ".join(parts)
 
