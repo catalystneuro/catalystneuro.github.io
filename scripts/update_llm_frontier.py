@@ -242,6 +242,8 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
         by_date.setdefault(date, []).append((cost, slug, iq, note))
     for date in sorted(by_date):
         changed = {}
+        state_before = dict(state)
+        base_of = lambda o: split_variant(models[o]["name"])[0]
         for cost, slug, iq, note in by_date[date]:
             prev = state.get(slug)
             state[slug] = (cost, iq)
@@ -250,7 +252,6 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
         new_front = pareto(state)
         entered = [s for s in new_front if s in changed and (s not in current or (changed[s][0] == "price change" and changed[s][1] is not None and state[s][0] < changed[s][1]))]
         # A model "leaves the frontier" only when none of its reasoning variants remains on it.
-        base_of = lambda o: split_variant(models[o]["name"])[0]
         remaining_bases = {base_of(o) for o in new_front}
         left_bases = {}
         for o in current - new_front:
@@ -273,9 +274,27 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
             # index range this model now owns: from its index down to the next frontier model below it
             below = [state[o][1] for o in new_front if state[o][1] < iq]
             lower = max(below) if below else 0.0
-            # Who covered the top of this range before: the previous frontier model with the smallest index >= iq.
-            prev_cover = sorted([o for o in prev_front if o != slug and state[o][1] >= iq], key=lambda o: state[o][1])
-            taken_from = models[prev_cover[0]]["name"] if prev_cover else None
+            # Which models covered the gained range before today. On the previous frontier, a target
+            # index t was served by the member with the smallest index >= t; collect those for the range
+            # (prev_lower, iq], excluding this model's own variants.
+            my_base = base_of(slug)
+            prev_cover = []
+            prev_members = sorted([o for o in prev_front if base_of(o) != my_base], key=lambda o: -state[o][1])
+            prev_own_range_lower = None
+            if slug in prev_front:
+                pb = [state[o][1] for o in prev_front if state[o][1] < state_before.get(slug, (None, iq))[1]]
+                prev_own_range_lower = max(pb) if pb else 0.0
+            gained_lower = lower
+            gained_upper = iq if prev_own_range_lower is None else prev_own_range_lower
+            for o in prev_members:
+                o_iq = state[o][1]
+                o_below = [state[q][1] for q in prev_front if state[q][1] < o_iq]
+                o_lower = max(o_below) if o_below else 0.0
+                if o_iq > gained_lower and o_lower < gained_upper:
+                    b = base_of(o)
+                    if b not in prev_cover:
+                        prev_cover.append(b)
+            taken_from = prev_cover
             base, variant = split_variant(models[slug]["name"])
             advances.append(dict(
                 date=date, model=models[slug]["name"], base=base, variant=variant, creator=models[slug]["creator"], slug=slug,
@@ -335,6 +354,31 @@ def build_output(history: dict, events: list) -> dict:
     )
 
 
+def join_and(items: list) -> str:
+    items = list(items)
+    if len(items) <= 1:
+        return "".join(items)
+    if len(items) == 2:
+        return f"{items[0]} and {items[1]}"
+    return ", ".join(items[:-1]) + f", and {items[-1]}"
+
+
+def taken_clause(taken: list, departed: list) -> str:
+    """', taking it from A and B, both of which left the frontier' style clause."""
+    out = ""
+    if taken:
+        out += ", taking it from " + join_and(taken)
+        gone = [t for t in taken if t in departed]
+        if gone and len(gone) == len(taken):
+            out += ", which left the frontier" if len(taken) == 1 else (", both of which left the frontier" if len(taken) == 2 else ", all of which left the frontier")
+        elif gone:
+            out += "; " + join_and(gone) + (" left the frontier" if len(gone) > 1 else " left the frontier")
+    extra = [d for d in departed if d not in taken]
+    if extra:
+        out += ("; " if out else "; ") + join_and(extra) + " left the frontier"
+    return out
+
+
 def xml_escape(t: str) -> str:
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
@@ -349,12 +393,9 @@ def describe(a: dict) -> str:
         parts = [f"{a['model']}: price moved from ${a['previous_cost']:.3f} to {cost} per task; now the cheapest way to reach {span}."]
     else:
         parts = [f"{a['model']}: now the cheapest way to reach {span} at {cost} per task."]
-    if a.get("taken_from"):
-        parts[0] = parts[0][:-1] + f", taking it from {a['taken_from']}."
+    parts[0] = parts[0][:-1] + taken_clause(a.get("taken_from") or [], a.get("displaced") or []) + "."
     if a["records"]:
-        parts.append("New cost record for " + ", ".join(f"index \u2265 {t}" for t in a["records"]) + ".")
-    if a["displaced"]:
-        parts.append(", ".join(a["displaced"]) + (" left the frontier." if len(a["displaced"]) > 1 else " left the frontier."))
+        parts.append("New cost record for " + join_and([f"index \u2265 {t}" for t in a["records"]]) + ".")
     parts.append("Open weights." if a["open_weights"] else "Proprietary.")
     return " ".join(parts)
 

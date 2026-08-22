@@ -369,6 +369,23 @@
   }
   var ADV_DAYS_PER_PAGE = 10;
   var advPage = 1;
+  function joinAnd(items) {
+    if (items.length <= 1) return items.join('');
+    if (items.length === 2) return items[0] + ' and ' + items[1];
+    return items.slice(0, -1).join(', ') + ', and ' + items[items.length - 1];
+  }
+  function takenClause(taken, departed) {
+    var out = '';
+    if (taken.length) {
+      out += ', taking it from ' + joinAnd(taken);
+      var gone = taken.filter(function (t) { return departed.indexOf(t) >= 0; });
+      if (gone.length && gone.length === taken.length) out += taken.length === 1 ? ', which left the frontier' : taken.length === 2 ? ', both of which left the frontier' : ', all of which left the frontier';
+      else if (gone.length) out += '; ' + joinAnd(gone) + ' left the frontier';
+    }
+    var extra = departed.filter(function (d) { return taken.indexOf(d) < 0; });
+    if (extra.length) out += '; ' + joinAnd(extra) + ' left the frontier';
+    return out;
+  }
   function advanceLine(a, withVariant) {
     var text = el('div', 'pfc-adv-body');
     if (withVariant && a.variant) { var v = el('span', 'pfc-adv-variant'); v.textContent = a.variant + ': '; text.append(v); }
@@ -376,12 +393,10 @@
     var s1 = a.kind === 'price change' && a.previous_cost
       ? 'price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task; now the cheapest way to reach ' + span + '. '
       : 'now the cheapest way to reach ' + span + ' at ' + fmt$(a.cost_per_task) + ' per task';
-    if (a.taken_from) s1 = s1.replace(/\. $/, '') + ', taking it from ' + a.taken_from;
-    s1 += '. ';
+    s1 += takenClause(a.taken_from || [], a.displaced || []) + '. ';
     if (!(withVariant && a.variant)) s1 = s1.charAt(0).toUpperCase() + s1.slice(1);
     text.append(s1);
-    if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for index \u2265 ' + a.records.join(', \u2265 ') + '. '; text.append(r); }
-    if (a.displaced && a.displaced.length) text.append(a.displaced.join(', ') + ' left the frontier. ');
+    if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for ' + joinAnd(a.records.map(function (t) { return 'index \u2265 ' + t; })) + '. '; text.append(r); }
     return text;
   }
   function advanceGroup(list) {
