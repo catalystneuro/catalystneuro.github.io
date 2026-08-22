@@ -44,7 +44,12 @@ import PageHeader from "../components/PageHeader.astro";
 
       <h2 id="advances">Recent Frontier Advances</h2>
       <p class="pfc-lead">Each entry is a date on which a model became the cheapest way to reach some level of the Intelligence Index, through a release or a price change. Subscribe to the <a href="/llm-cost-frontier/feed.xml">Atom feed</a> to be notified of new ones.</p>
-      <ol class="pfc-advances" id="pfc-advances"></ol>
+      <div class="pfc-advances" id="pfc-advances"></div>
+      <nav class="pfc-pager" id="pfc-adv-pager" aria-label="Frontier advances pages" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" id="pfc-adv-prev">Previous</button>
+        <span class="pfc-adv-page" id="pfc-adv-page"></span>
+        <button type="button" class="btn btn-ghost btn-sm" id="pfc-adv-next">Next</button>
+      </nav>
 
       <div class="prose pfc-notes">
         <h2>Notes</h2>
@@ -94,14 +99,20 @@ import PageHeader from "../components/PageHeader.astro";
   .pfc-table :global(.pfc-ev-cost) { font-family: var(--font-mono); font-weight: 600; color: var(--color-navy); }
   .pfc-table :global(.pfc-ev-model) { font-size: 0.8rem; color: var(--color-ink-soft); margin-top: 0.15rem; }
   .pfc-notes { margin-top: 2rem; }
-  .pfc-advances { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--color-line); }
-  .pfc-advances :global(li) { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.2rem 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--color-line-soft); font-size: 0.92rem; }
-  .pfc-advances :global(.pfc-adv-date) { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-ink-soft); padding-top: 0.15rem; }
+  .pfc-advances { border-top: 1px solid var(--color-line); }
+  .pfc-advances :global(.pfc-adv-day) { display: grid; grid-template-columns: 8rem 1fr; gap: 0.2rem 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--color-line-soft); }
+  .pfc-advances :global(.pfc-adv-date) { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-ink-soft); padding-top: 0.2rem; }
+  .pfc-advances :global(.pfc-adv-item) { font-size: 0.92rem; }
+  .pfc-advances :global(.pfc-adv-item + .pfc-adv-item) { margin-top: 0.65rem; }
   .pfc-advances :global(.pfc-adv-head) { font-weight: 600; color: var(--color-navy); }
   .pfc-advances :global(.pfc-adv-kind) { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-blue-600); background: var(--color-blue-50); border-radius: 0.3rem; padding: 0.1rem 0.4rem; margin-left: 0.4rem; vertical-align: middle; }
   .pfc-advances :global(.pfc-adv-body) { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.5; }
   .pfc-advances :global(.pfc-adv-rec) { color: var(--color-navy); font-weight: 500; }
-  @media (max-width: 600px) { .pfc-advances :global(li) { grid-template-columns: 1fr; } }
+  .pfc-advances :global(.pfc-adv-variant) { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-navy); }
+  .pfc-pager { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 1.2rem; }
+  .pfc-adv-page { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-ink-soft); }
+  .pfc-pager .btn[disabled] { opacity: 0.45; cursor: default; pointer-events: none; }
+  @media (max-width: 600px) { .pfc-advances :global(.pfc-adv-day) { grid-template-columns: 1fr; } }
   .pfc-side { display: flex; gap: 1.2rem; align-items: flex-start; }
   .pfc-side-chart { flex: 1 1 auto; min-width: 0; }
   .pfc-legend-side :global(.pfc-legend-title) { font-weight: 600; color: var(--color-navy); font-size: 0.82rem; margin-bottom: 0.1rem; }

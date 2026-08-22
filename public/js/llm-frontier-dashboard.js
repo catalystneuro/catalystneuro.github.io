@@ -367,25 +367,67 @@
     document.querySelectorAll('.pfc-updated').forEach(function (e) { e.textContent = fmtDate(DATA.updated); });
     document.querySelectorAll('.pfc-count').forEach(function (e) { e.textContent = String(DATA.counts.total); });
   }
+  var ADV_DAYS_PER_PAGE = 12;
+  var advPage = 1;
+  function advanceLine(a, withVariant) {
+    var text = el('div', 'pfc-adv-body');
+    if (withVariant && a.variant) { var v = el('span', 'pfc-adv-variant'); v.textContent = a.variant + ': '; text.append(v); }
+    var s1 = (a.kind === 'price change' && a.previous_cost ? 'price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task' : 'entered the frontier at ' + fmt$(a.cost_per_task) + ' per task')
+           + ' at Index ' + a.intelligence_index.toFixed(1) + (a.owns_to - a.owns_from < 1 ? '; now the cheapest way to reach index ' + a.owns_to.toFixed(1) : '; now the cheapest way to reach index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1)) + '. ';
+    if (!(withVariant && a.variant)) s1 = s1.charAt(0).toUpperCase() + s1.slice(1);
+    text.append(s1);
+    if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for index \u2265 ' + a.records.join(', \u2265 ') + '. '; text.append(r); }
+    if (a.displaced && a.displaced.length) text.append('Displaced ' + a.displaced.join(', ') + '. ');
+    return text;
+  }
+  function advanceGroup(list) {
+    // list: advances for one base model on one day, highest index first
+    var item = el('div', 'pfc-adv-item');
+    var single = list.length === 1 && !list[0].variant;
+    var head = el('div', 'pfc-adv-head'); head.textContent = single ? list[0].model : list[0].base;
+    var kinds = []; list.forEach(function (a) { if (kinds.indexOf(a.kind) < 0) kinds.push(a.kind); });
+    kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
+    item.append(head);
+    list.forEach(function (a) { item.append(advanceLine(a, !single)); });
+    var tail = el('div', 'pfc-adv-body'); tail.textContent = list[0].open_weights ? 'Open weights.' : 'Proprietary.';
+    item.append(tail);
+    return item;
+  }
   function renderAdvances() {
-    var ol = document.getElementById('pfc-advances');
-    if (!ol || !DATA.advances) return;
-    ol.replaceChildren();
-    DATA.advances.slice(0, 20).forEach(function (a) {
-      var li = document.createElement('li');
-      var date = el('div', 'pfc-adv-date', fmtDate(a.date));
-      var body = el('div');
-      var head = el('div', 'pfc-adv-head'); head.textContent = a.model;
-      head.append(el('span', 'pfc-adv-kind', a.kind));
-      var text = el('div', 'pfc-adv-body');
-      var s1 = (a.kind === 'price change' && a.previous_cost ? 'Price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task' : 'Entered the frontier at ' + fmt$(a.cost_per_task) + ' per task')
-             + ' at Index ' + a.intelligence_index.toFixed(1) + (a.owns_to - a.owns_from < 1 ? '; now the cheapest way to reach index ' + a.owns_to.toFixed(1) : '; now the cheapest way to reach index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1)) + '. ';
-      text.append(s1);
-      if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for index \u2265 ' + a.records.join(', \u2265 ') + '. '; text.append(r); }
-      if (a.displaced && a.displaced.length) text.append('Displaced ' + a.displaced.join(', ') + '. ');
-      text.append(a.open_weights ? 'Open weights.' : 'Proprietary.');
-      body.append(head, text); li.append(date, body); ol.append(li);
+    var box = document.getElementById('pfc-advances');
+    if (!box || !DATA.advances) return;
+    var days = [], byDay = {};
+    DATA.advances.forEach(function (a) {
+      if (!byDay[a.date]) { byDay[a.date] = []; days.push(a.date); }
+      byDay[a.date].push(a);
     });
+    var total = Math.max(1, Math.ceil(days.length / ADV_DAYS_PER_PAGE));
+    advPage = Math.min(Math.max(1, advPage), total);
+    box.replaceChildren();
+    days.slice((advPage - 1) * ADV_DAYS_PER_PAGE, advPage * ADV_DAYS_PER_PAGE).forEach(function (d) {
+      var row = el('div', 'pfc-adv-day');
+      var col = el('div');
+      var groups = [], byBase = {};
+      byDay[d].forEach(function (a) {
+        var key = a.base || a.model;
+        if (!byBase[key]) { byBase[key] = []; groups.push(key); }
+        byBase[key].push(a);
+      });
+      groups.forEach(function (k) { col.append(advanceGroup(byBase[k])); });
+      row.append(el('div', 'pfc-adv-date', fmtDate(d)), col);
+      box.append(row);
+    });
+    var pager = document.getElementById('pfc-adv-pager'), prev = document.getElementById('pfc-adv-prev'), next = document.getElementById('pfc-adv-next'), lab = document.getElementById('pfc-adv-page');
+    if (pager) {
+      pager.hidden = total <= 1;
+      prev.disabled = advPage === 1; next.disabled = advPage === total;
+      lab.textContent = 'Page ' + advPage + ' of ' + total;
+      if (!pager.dataset.wired) {
+        pager.dataset.wired = '1';
+        prev.addEventListener('click', function () { advPage -= 1; renderAdvances(); document.getElementById('advances').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        next.addEventListener('click', function () { advPage += 1; renderAdvances(); document.getElementById('advances').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      }
+    }
   }
   function renderAll() { if (!DATA) return; renderFrontier(); renderRecords(); renderTable(); renderAdvances(); }
   fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {

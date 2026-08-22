@@ -211,6 +211,14 @@ def tier_records(models: dict, events: list) -> dict:
     return out
 
 
+def split_variant(name: str):
+    """'GPT-5.6 Luna (xhigh)' -> ('GPT-5.6 Luna', 'xhigh'); names without a suffix return variant None."""
+    m = re.match(r"^(.*?)\s*\(([^()]*)\)\s*$", name)
+    if not m:
+        return name, None
+    return m.group(1), m.group(2)
+
+
 def pareto(state: dict) -> set:
     """Slugs on the Pareto frontier of (max index, min cost) for the given {slug: (cost, iq)}."""
     out = set()
@@ -256,8 +264,9 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
             # index range this model now owns: from its index down to the next frontier model below it
             below = [state[o][1] for o in new_front if state[o][1] < iq]
             lower = max(below) if below else 0.0
+            base, variant = split_variant(models[slug]["name"])
             advances.append(dict(
-                date=date, model=models[slug]["name"], creator=models[slug]["creator"], slug=slug,
+                date=date, model=models[slug]["name"], base=base, variant=variant, creator=models[slug]["creator"], slug=slug,
                 intelligence_index=iq, cost_per_task=round(cost, 6), previous_cost=round(prev_cost, 6) if prev_cost else None,
                 kind=kind, open_weights=models[slug]["open_weights"],
                 owns_from=round(lower, 1), owns_to=round(iq, 1),
@@ -300,7 +309,7 @@ def build_output(history: dict, events: list) -> dict:
     records = tier_records(models, events)
     advances = frontier_advances(models, events, records)
     return dict(
-        advances=advances[:FEED_ENTRIES],
+        advances=advances,
         updated=history["updated"],
         source="Artificial Analysis (artificialanalysis.ai), measured cost per Intelligence Index task",
         snapshots=snapshots(today),
