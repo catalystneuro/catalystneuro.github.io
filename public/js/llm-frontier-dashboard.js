@@ -387,10 +387,9 @@
     var head = el('div', 'pfc-adv-head'); head.textContent = single ? list[0].model : list[0].base;
     var kinds = []; list.forEach(function (a) { if (kinds.indexOf(a.kind) < 0) kinds.push(a.kind); });
     kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
+    if (list[0].open_weights) head.append(el('span', 'pfc-adv-kind pfc-adv-open', 'open weights'));
     item.append(head);
     list.forEach(function (a) { item.append(advanceLine(a, !single)); });
-    var tail = el('div', 'pfc-adv-body'); tail.textContent = list[0].open_weights ? 'Open weights.' : 'Proprietary.';
-    item.append(tail);
     return item;
   }
   function renderAdvances() {
