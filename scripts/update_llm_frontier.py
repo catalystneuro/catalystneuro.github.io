@@ -328,15 +328,14 @@ def xml_escape(t: str) -> str:
 
 def describe(a: dict) -> str:
     cost = f"${a['cost_per_task']:.4f}" if a["cost_per_task"] < 0.01 else f"${a['cost_per_task']:.3f}" if a["cost_per_task"] < 0.1 else f"${a['cost_per_task']:.2f}"
-    if a["kind"] == "price change" and a["previous_cost"]:
-        head = f"{a['model']} moved onto the Pareto frontier after a price change (from ${a['previous_cost']:.3f} to {cost} per task)"
-    else:
-        head = f"{a['model']} entered the Pareto frontier at {cost} per task"
     if a["owns_to"] - a["owns_from"] < 1:
-        span = f"now the cheapest way to reach index {a['owns_to']:.1f}"
+        span = f"index {a['owns_to']:.1f}"
     else:
-        span = f"now the cheapest way to reach index {a['owns_from']:.1f} to {a['owns_to']:.1f}"
-    parts = [head + f", Intelligence Index {a['intelligence_index']:.1f}, {span}."]
+        span = f"index {a['owns_from']:.1f} to {a['owns_to']:.1f}"
+    if a["kind"] == "price change" and a["previous_cost"]:
+        parts = [f"{a['model']}: price moved from ${a['previous_cost']:.3f} to {cost} per task; now the cheapest way to reach {span}."]
+    else:
+        parts = [f"{a['model']}: now the cheapest way to reach {span} at {cost} per task."]
     if a["records"]:
         parts.append("New cost record for " + ", ".join(f"index \u2265 {t}" for t in a["records"]) + ".")
     if a["displaced"]:
