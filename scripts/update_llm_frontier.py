@@ -34,6 +34,9 @@ ROOT = Path(__file__).resolve().parent.parent
 HISTORY = ROOT / "src/data/llm-frontier/history.json"
 EVENTS = ROOT / "src/data/llm-frontier/price-events.json"
 OUTPUT = ROOT / "public/data/llm-frontier.json"
+FEED = ROOT / "public/llm-cost-frontier/feed.xml"
+SITE = "https://catalystneuro.com"
+FEED_ENTRIES = 60
 
 # Any model page works; this one is stable and cheap to serve.
 SOURCE_PAGE = "https://artificialanalysis.ai/models/gpt-5-6-luna-xhigh"
@@ -208,6 +211,64 @@ def tier_records(models: dict, events: list) -> dict:
     return out
 
 
+def pareto(state: dict) -> set:
+    """Slugs on the Pareto frontier of (max index, min cost) for the given {slug: (cost, iq)}."""
+    out = set()
+    items = list(state.items())
+    for slug, (cost, iq) in items:
+        dominated = any(o_iq >= iq and o_cost <= cost and (o_iq > iq or o_cost < cost) for o_slug, (o_cost, o_iq) in items if o_slug != slug)
+        if not dominated:
+            out.add(slug)
+    return out
+
+
+def frontier_advances(models: dict, events: list, records: dict) -> list:
+    """Dates on which the Pareto frontier changed, newest first."""
+    timeline = price_timeline(models, events)
+    record_keys = {(r[0], r[2]): t for t, recs in records.items() for r in recs}
+    state = {}
+    current = set()
+    advances = []
+    by_date = {}
+    for date, cost, slug, iq, note in timeline:
+        by_date.setdefault(date, []).append((cost, slug, iq, note))
+    for date in sorted(by_date):
+        changed = {}
+        for cost, slug, iq, note in by_date[date]:
+            prev = state.get(slug)
+            state[slug] = (cost, iq)
+            changed[slug] = ("price change" if note and ("cut" in note or "change" in note) else "new model", prev[0] if prev else None)
+        new_front = pareto(state)
+        entered = [s for s in new_front if s in changed and (s not in current or (changed[s][0] == "price change" and changed[s][1] is not None and state[s][0] < changed[s][1]))]
+        left = current - new_front
+        # Attribute each displaced model to the entering model just above it in index.
+        entered_sorted = sorted(entered, key=lambda s: state[s][1])
+        attribution = {}
+        for o in left:
+            above = [e for e in entered_sorted if state[e][1] >= state[o][1]]
+            owner = above[0] if above else (entered_sorted[-1] if entered_sorted else None)
+            if owner:
+                attribution.setdefault(owner, []).append(o)
+        for slug in sorted(entered, key=lambda s: -state[s][1]):
+            cost, iq = state[slug]
+            kind, prev_cost = changed[slug]
+            tiers = [t for (d, name), t in record_keys.items() if d == date and name == models[slug]["name"]]
+            # index range this model now owns: from its index down to the next frontier model below it
+            below = [state[o][1] for o in new_front if state[o][1] < iq]
+            lower = max(below) if below else 0.0
+            advances.append(dict(
+                date=date, model=models[slug]["name"], creator=models[slug]["creator"], slug=slug,
+                intelligence_index=iq, cost_per_task=round(cost, 6), previous_cost=round(prev_cost, 6) if prev_cost else None,
+                kind=kind, open_weights=models[slug]["open_weights"],
+                owns_from=round(lower, 1), owns_to=round(iq, 1),
+                records=sorted(int(t) for t in tiers),
+                displaced=sorted(models[o]["name"] for o in attribution.get(slug, [])),
+            ))
+        current = new_front
+    advances.sort(key=lambda a: (a["date"], a["intelligence_index"]), reverse=True)
+    return advances
+
+
 def tier_summary(records: dict) -> dict:
     out = {}
     for t, recs in records.items():
@@ -237,7 +298,9 @@ def build_output(history: dict, events: list) -> dict:
             row.append(changes)
         rows.append(row)
     records = tier_records(models, events)
+    advances = frontier_advances(models, events, records)
     return dict(
+        advances=advances[:FEED_ENTRIES],
         updated=history["updated"],
         source="Artificial Analysis (artificialanalysis.ai), measured cost per Intelligence Index task",
         snapshots=snapshots(today),
@@ -248,6 +311,48 @@ def build_output(history: dict, events: list) -> dict:
         price_events=events,
         counts=dict(total=len(rows), live=sum(1 for m in models.values() if not m["retired"]), retired=sum(1 for m in models.values() if m["retired"])),
     )
+
+
+def xml_escape(t: str) -> str:
+    return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
+def describe(a: dict) -> str:
+    cost = f"${a['cost_per_task']:.4f}" if a["cost_per_task"] < 0.01 else f"${a['cost_per_task']:.3f}" if a["cost_per_task"] < 0.1 else f"${a['cost_per_task']:.2f}"
+    if a["kind"] == "price change" and a["previous_cost"]:
+        head = f"{a['model']} moved onto the Pareto frontier after a price change (from ${a['previous_cost']:.3f} to {cost} per task)"
+    else:
+        head = f"{a['model']} entered the Pareto frontier at {cost} per task"
+    parts = [head + f", Intelligence Index {a['intelligence_index']:.1f}, now the cheapest model for index {a['owns_from']:.1f} to {a['owns_to']:.1f}."]
+    if a["records"]:
+        parts.append("New cost record for " + ", ".join(f"index \u2265 {t}" for t in a["records"]) + ".")
+    if a["displaced"]:
+        parts.append("Displaced: " + ", ".join(a["displaced"]) + ".")
+    parts.append("Open weights." if a["open_weights"] else "Proprietary.")
+    return " ".join(parts)
+
+
+def write_feed(out: dict) -> None:
+    entries = out["advances"][:FEED_ENTRIES]
+    updated = out["updated"] + "T06:00:00Z"
+    lines = ['<?xml version="1.0" encoding="utf-8"?>', '<feed xmlns="http://www.w3.org/2005/Atom">',
+             "  <title>LLM Cost Frontier: frontier advances</title>",
+             f'  <link href="{SITE}/llm-cost-frontier/" />',
+             f'  <link rel="self" href="{SITE}/llm-cost-frontier/feed.xml" />',
+             f"  <id>{SITE}/llm-cost-frontier/feed.xml</id>",
+             f"  <updated>{updated}</updated>",
+             "  <author><name>CatalystNeuro</name></author>",
+             "  <subtitle>Each entry is a date on which a model became the cheapest way to reach some level of the Artificial Analysis Intelligence Index, through a release or a price change.</subtitle>"]
+    for a in entries:
+        title = f"{a['date']}: {a['model']} ({'price change' if a['kind'] == 'price change' else 'new model'}, index {a['intelligence_index']:.1f})"
+        lines += ["  <entry>", f"    <title>{xml_escape(title)}</title>",
+                  f'    <link href="{SITE}/llm-cost-frontier/#advances" />',
+                  f"    <id>{SITE}/llm-cost-frontier/advance/{a['date']}/{a['slug']}</id>",
+                  f"    <updated>{a['date']}T00:00:00Z</updated>",
+                  f"    <summary>{xml_escape(describe(a))}</summary>", "  </entry>"]
+    lines.append("</feed>")
+    FEED.parent.mkdir(parents=True, exist_ok=True)
+    FEED.write_text("\n".join(lines) + "\n")
 
 
 def main(argv):
@@ -265,6 +370,7 @@ def main(argv):
         print(f"merged {len(live)} live models; history now {len(history['models'])} models")
     out = build_output(history, events)
     OUTPUT.write_text(json.dumps(out, separators=(",", ":")) + "\n")
+    write_feed(out)
     print(f"wrote {OUTPUT.relative_to(ROOT)} ({out['counts']}) as of {out['updated']}")
     for t, s in out["tier_summary"].items():
         if s:

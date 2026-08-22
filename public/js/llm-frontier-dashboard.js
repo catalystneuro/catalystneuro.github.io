@@ -367,7 +367,27 @@
     document.querySelectorAll('.pfc-updated').forEach(function (e) { e.textContent = fmtDate(DATA.updated); });
     document.querySelectorAll('.pfc-count').forEach(function (e) { e.textContent = String(DATA.counts.total); });
   }
-  function renderAll() { if (!DATA) return; renderFrontier(); renderRecords(); renderTable(); }
+  function renderAdvances() {
+    var ol = document.getElementById('pfc-advances');
+    if (!ol || !DATA.advances) return;
+    ol.replaceChildren();
+    DATA.advances.slice(0, 20).forEach(function (a) {
+      var li = document.createElement('li');
+      var date = el('div', 'pfc-adv-date', fmtDate(a.date));
+      var body = el('div');
+      var head = el('div', 'pfc-adv-head'); head.textContent = a.model;
+      head.append(el('span', 'pfc-adv-kind', a.kind));
+      var text = el('div', 'pfc-adv-body');
+      var s1 = (a.kind === 'price change' && a.previous_cost ? 'Price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task' : 'Entered the frontier at ' + fmt$(a.cost_per_task) + ' per task')
+             + ' at Index ' + a.intelligence_index.toFixed(1) + '; now the cheapest model for index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1) + '. ';
+      text.append(s1);
+      if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for index \u2265 ' + a.records.join(', \u2265 ') + '. '; text.append(r); }
+      if (a.displaced && a.displaced.length) text.append('Displaced ' + a.displaced.join(', ') + '. ');
+      text.append(a.open_weights ? 'Open weights.' : 'Proprietary.');
+      body.append(head, text); li.append(date, body); ol.append(li);
+    });
+  }
+  function renderAll() { if (!DATA) return; renderFrontier(); renderRecords(); renderTable(); renderAdvances(); }
   fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     loadData(d);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll);
