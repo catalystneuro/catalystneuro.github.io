@@ -367,7 +367,7 @@
     document.querySelectorAll('.pfc-updated').forEach(function (e) { e.textContent = fmtDate(DATA.updated); });
     document.querySelectorAll('.pfc-count').forEach(function (e) { e.textContent = String(DATA.counts.total); });
   }
-  var ADV_DAYS_PER_PAGE = 12;
+  var ADV_DAYS_PER_PAGE = 10;
   var advPage = 1;
   function advanceLine(a, withVariant) {
     var text = el('div', 'pfc-adv-body');
