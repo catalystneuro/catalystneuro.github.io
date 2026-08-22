@@ -249,15 +249,23 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
         prev_front = current
         new_front = pareto(state)
         entered = [s for s in new_front if s in changed and (s not in current or (changed[s][0] == "price change" and changed[s][1] is not None and state[s][0] < changed[s][1]))]
-        left = current - new_front
-        # Attribute each displaced model to the entering model just above it in index.
+        # A model "leaves the frontier" only when none of its reasoning variants remains on it.
+        base_of = lambda o: split_variant(models[o]["name"])[0]
+        remaining_bases = {base_of(o) for o in new_front}
+        left_bases = {}
+        for o in current - new_front:
+            b = base_of(o)
+            if b not in remaining_bases:
+                left_bases.setdefault(b, []).append(o)
+        # Attribute each departed base model to the entering model just above its highest variant in index.
         entered_sorted = sorted(entered, key=lambda s: state[s][1])
         attribution = {}
-        for o in left:
-            above = [e for e in entered_sorted if state[e][1] >= state[o][1]]
+        for b, variants in left_bases.items():
+            top_iq = max(state[o][1] for o in variants)
+            above = [e for e in entered_sorted if state[e][1] >= top_iq]
             owner = above[0] if above else (entered_sorted[-1] if entered_sorted else None)
             if owner:
-                attribution.setdefault(owner, []).append(o)
+                attribution.setdefault(owner, []).append(b)
         for slug in sorted(entered, key=lambda s: -state[s][1]):
             cost, iq = state[slug]
             kind, prev_cost = changed[slug]
@@ -276,7 +284,7 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
                 owns_from=round(lower, 1), owns_to=round(iq, 1),
                 records=sorted(int(t) for t in tiers),
                 taken_from=taken_from,
-                displaced=sorted(models[o]["name"] for o in attribution.get(slug, [])),
+                displaced=sorted(attribution.get(slug, [])),
             ))
         current = new_front
     advances.sort(key=lambda a: (a["date"], a["intelligence_index"]), reverse=True)
