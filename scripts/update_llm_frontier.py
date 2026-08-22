@@ -295,6 +295,8 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
                     if b not in prev_cover:
                         prev_cover.append(b)
             taken_from = prev_cover
+            prev_ceiling = max((state[o][1] for o in prev_front), default=None)
+            ceiling_from = round(prev_ceiling, 1) if prev_ceiling is not None and iq > prev_ceiling else None
             base, variant = split_variant(models[slug]["name"])
             advances.append(dict(
                 date=date, model=models[slug]["name"], base=base, variant=variant, creator=models[slug]["creator"], slug=slug,
@@ -303,6 +305,7 @@ def frontier_advances(models: dict, events: list, records: dict) -> list:
                 owns_from=round(lower, 1), owns_to=round(iq, 1),
                 records=sorted(int(t) for t in tiers),
                 taken_from=taken_from,
+                ceiling_from=ceiling_from,
                 displaced=sorted(attribution.get(slug, [])),
             ))
         current = new_front
@@ -391,6 +394,8 @@ def describe(a: dict) -> str:
         span = f"index {a['owns_from']:.1f} to {a['owns_to']:.1f}"
     if a["kind"] == "price change" and a["previous_cost"]:
         parts = [f"{a['model']}: price moved from ${a['previous_cost']:.3f} to {cost} per task; now the cheapest way to reach {span}."]
+    elif a.get("ceiling_from") is not None:
+        parts = [f"{a['model']}: pushed the intelligence ceiling from {a['ceiling_from']:.1f} to {a['owns_to']:.1f}, at {cost} per task."]
     else:
         parts = [f"{a['model']}: now the cheapest way to reach {span} at {cost} per task."]
     parts[0] = parts[0][:-1] + taken_clause(a.get("taken_from") or [], a.get("displaced") or []) + "."
