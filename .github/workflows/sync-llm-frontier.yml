@@ -1,0 +1,61 @@
+name: Sync LLM cost frontier data
+
+# The pipeline that produces these files lives in catalystneuro/llm-cost-frontier
+# and refreshes them nightly at 06:00 UTC. This job copies the published
+# artifacts into the site so they are served from catalystneuro.com, and the
+# commit triggers a Netlify build.
+
+on:
+  schedule:
+    # An hour after the source repository updates.
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-llm-frontier
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SOURCE: https://raw.githubusercontent.com/catalystneuro/llm-cost-frontier/main/build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch published artifacts
+        run: |
+          curl -fsSL --retry 3 "$SOURCE/llm-frontier.json" -o /tmp/llm-frontier.json
+          curl -fsSL --retry 3 "$SOURCE/feed.xml" -o /tmp/feed.xml
+
+      - name: Check them before publishing
+        run: |
+          python3 - <<'PY'
+          import json, sys, xml.etree.ElementTree as ET
+          d = json.load(open("/tmp/llm-frontier.json"))
+          if len(d.get("models", [])) < 50:
+              sys.exit(f"only {len(d.get('models', []))} models in the fetched data; refusing to sync")
+          for key in ("updated", "snapshots", "tier_cost", "tier_summary", "advances"):
+              if key not in d:
+                  sys.exit(f"fetched data is missing {key}; refusing to sync")
+          ET.parse("/tmp/feed.xml")
+          print(f"{len(d['models'])} models, updated {d['updated']}")
+          PY
+
+      - name: Commit if changed
+        run: |
+          mkdir -p public/data public/llm-cost-frontier
+          cp /tmp/llm-frontier.json public/data/llm-frontier.json
+          cp /tmp/feed.xml public/llm-cost-frontier/feed.xml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/llm-frontier.json public/llm-cost-frontier/feed.xml
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "Sync LLM cost frontier data ($(date -u +%Y-%m-%d))"
+            git push
+          fi

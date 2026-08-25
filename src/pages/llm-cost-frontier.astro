@@ -12,7 +12,7 @@ import PageHeader from "../components/PageHeader.astro";
   <section class="section">
     <div class="container-x pfc-wrap">
       <div class="prose pfc-intro">
-        <p>This page keeps the figures from <a href="/blog/cost-of-intelligence-drops-100x/">What Happens When the Cost of Intelligence Drops 100x</a> current. The data is Artificial Analysis's <a href="https://artificialanalysis.ai/">Intelligence Index</a> and their measured cost per Intelligence Index task (the average billed cost, including reasoning tokens, to run one task from their evaluation suite), pulled automatically every night. Every observed price is kept, and models that drop out of their live benchmarking keep their history here, so the record only grows. Data as of <strong class="pfc-updated">&hellip;</strong>, covering <span class="pfc-count">&hellip;</span> models.</p>
+        <p>This page keeps the figures from <a href="/blog/cost-of-intelligence-drops-100x/">What Happens When the Cost of Intelligence Drops 100x</a> current. The data is Artificial Analysis's <a href="https://artificialanalysis.ai/">Intelligence Index</a> and their measured cost per Intelligence Index task (the average billed cost, including reasoning tokens, to run one task from their evaluation suite), pulled automatically every night by the <a href="https://github.com/catalystneuro/llm-cost-frontier">llm-cost-frontier</a> pipeline. Every observed price is kept, and models that drop out of their live benchmarking keep their history here, so the record only grows. Data as of <strong class="pfc-updated">&hellip;</strong>, covering <span class="pfc-count">&hellip;</span> models.</p>
       </div>
 
       <h2>The Pareto Frontier Over Time</h2>
@@ -57,7 +57,7 @@ import PageHeader from "../components/PageHeader.astro";
           <li>Prices have been recorded nightly since August 19, 2026, and every change is kept, so from that date onward each snapshot and record uses the price that was in effect at the time. Before that date the only available value is the price at first observation, indexed by release date, except where a price event is recorded by hand: OpenAI cut GPT-5.6 Luna by 80% and Terra by 20% on July 30, 2026. Earlier cuts that are not recorded make older points look cheaper than they were, which understates the collapse and dates it too early.</li>
           <li>Free or promotional endpoints with a zero measured cost are excluded.</li>
           <li>Halving time is the time for the tier's record to halve, computed from the first crossing to the current record as days / log<sub>2</sub>(collapse).</li>
-          <li>The method, its limitations, and the argument for why any of this matters are in the <a href="/blog/cost-of-intelligence-drops-100x/">original post</a>. The update script and data history are in the <a href="https://github.com/catalystneuro/catalystneuro.github.io/tree/main/scripts">site repository</a>.</li>
+          <li>The method, its limitations, and the argument for why any of this matters are in the <a href="/blog/cost-of-intelligence-drops-100x/">original post</a>. The updater, the observation history, and this page's data are in the <a href="https://github.com/catalystneuro/llm-cost-frontier">llm-cost-frontier repository</a>.</li>
         </ul>
       </div>
     </div>
