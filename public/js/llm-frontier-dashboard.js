@@ -407,6 +407,9 @@
     if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for ' + joinAnd(a.records.map(function (t) { return 'index \u2265 ' + t; })) + '. '; text.append(r); }
     return text;
   }
+  function slugify(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
   function advanceGroup(list) {
     // list: advances for one base model on one day, highest index first
     var item = el('div', 'pfc-adv-item');
@@ -415,6 +418,15 @@
     var kinds = []; list.forEach(function (a) { if (kinds.indexOf(a.kind) < 0) kinds.push(a.kind); });
     kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
     if (list[0].open_weights) head.append(el('span', 'pfc-adv-kind pfc-adv-open', 'open weights'));
+    // The pipeline renders one shareable card image per base model per day,
+    // named by the same date and slug this derives.
+    var card = document.createElement('a');
+    card.className = 'pfc-adv-kind pfc-adv-card';
+    card.textContent = 'chart card';
+    card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
+    card.target = '_blank';
+    card.rel = 'noopener';
+    head.append(card);
     item.append(head);
     list.forEach(function (a) { item.append(advanceLine(a, !single)); });
     return item;
