@@ -121,7 +121,11 @@ import PageHeader from "../components/PageHeader.astro";
   /* Below this the side legend's fixed column squeezes the chart and sits
      mostly empty; stack it under the chart so the plot gets the full width.
      950px keeps the side layout only when the chart still gets ~700px. */
-  @media (max-width: 950px) { .pfc-side { flex-direction: column; } .pfc-legend-side { flex-direction: row; flex-wrap: wrap; border-left: 0; padding-left: 0; flex-basis: auto; } }
+  /* align-items must switch to stretch with the column direction: the base
+     rule's flex-start would size the chart div to its content, and an SVG
+     with width 100% has no intrinsic width, so the chart collapsed to the
+     300px replaced-element fallback and left the rest of the row empty. */
+  @media (max-width: 950px) { .pfc-side { flex-direction: column; align-items: stretch; } .pfc-legend-side { flex-direction: row; flex-wrap: wrap; border-left: 0; padding-left: 0; flex-basis: auto; } }
 </style>
 
 <script src="/js/llm-frontier-dashboard.js" defer></script>
