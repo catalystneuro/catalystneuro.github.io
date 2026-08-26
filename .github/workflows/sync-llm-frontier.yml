@@ -21,38 +21,44 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    env:
-      SOURCE: https://raw.githubusercontent.com/catalystneuro/llm-cost-frontier/main/build
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch published artifacts
-        run: |
-          curl -fsSL --retry 3 "$SOURCE/llm-frontier.json" -o /tmp/llm-frontier.json
-          curl -fsSL --retry 3 "$SOURCE/feed.xml" -o /tmp/feed.xml
+      # The build now includes a directory of advance card images, so a full
+      # checkout of the source repository replaces per-file downloads.
+      - uses: actions/checkout@v4
+        with:
+          repository: catalystneuro/llm-cost-frontier
+          path: source
 
-      - name: Check them before publishing
+      - name: Check the artifacts before publishing
         run: |
           python3 - <<'PY'
-          import json, sys, xml.etree.ElementTree as ET
-          d = json.load(open("/tmp/llm-frontier.json"))
+          import json, os, sys, xml.etree.ElementTree as ET
+          d = json.load(open("source/build/llm-frontier.json"))
           if len(d.get("models", [])) < 50:
               sys.exit(f"only {len(d.get('models', []))} models in the fetched data; refusing to sync")
           for key in ("updated", "snapshots", "tier_cost", "tier_summary", "advances"):
               if key not in d:
                   sys.exit(f"fetched data is missing {key}; refusing to sync")
-          ET.parse("/tmp/feed.xml")
-          print(f"{len(d['models'])} models, updated {d['updated']}")
+          ET.parse("source/build/feed.xml")
+          if not os.path.exists("source/build/images/frontier-card.png"):
+              sys.exit("frontier-card.png is missing; refusing to sync")
+          cards = len(os.listdir("source/build/images/advances"))
+          if cards < 40:
+              sys.exit(f"only {cards} advance cards; refusing to sync")
+          print(f"{len(d['models'])} models, {cards} advance cards, updated {d['updated']}")
           PY
 
       - name: Commit if changed
         run: |
           mkdir -p public/data public/llm-cost-frontier
-          cp /tmp/llm-frontier.json public/data/llm-frontier.json
-          cp /tmp/feed.xml public/llm-cost-frontier/feed.xml
+          cp source/build/llm-frontier.json public/data/llm-frontier.json
+          cp source/build/feed.xml public/llm-cost-frontier/feed.xml
+          rsync -a --delete source/build/images/ public/llm-cost-frontier/images/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/llm-frontier.json public/llm-cost-frontier/feed.xml
+          git add public/data/llm-frontier.json public/llm-cost-frontier/feed.xml public/llm-cost-frontier/images
           if git diff --cached --quiet; then
             echo "No data changes."
           else
