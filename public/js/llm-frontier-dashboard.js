@@ -108,7 +108,7 @@
   }
 
   // ---- chart 1: intelligence vs cost, frontier every two months ----
-  var anim = { stage: SNAPS.length - 1, paused: false, timer: null, groups: [] };
+  var anim = { stage: SNAPS.length - 1, paused: true, timer: null, groups: [] };
   var STEP_MS = 1100, HOLD_MS = 6000;
   function applyStage() {
     anim.groups.forEach(function (gs, i) {
@@ -419,7 +419,6 @@
     }
   }
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) anim.paused = true;
   function fmtDate(d) { var p = d.split('-'); var MON = ['January','February','March','April','May','June','July','August','September','October','November','December']; return MON[+p[1] - 1] + ' ' + (+p[2]) + ', ' + p[0]; }
   function renderTable() {
     var tb = document.getElementById('pfc-tier-table');
