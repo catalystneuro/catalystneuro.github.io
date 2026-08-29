@@ -19,20 +19,23 @@ the lab who will actually do the work.
 
 ## What the NIH Data Sharing Policy Expects
 
-NIH's Data Management and Sharing (DMS) Policy (NOT-OD-21-013) applies
-to applications submitted on or after January 25, 2023. It requires
-that labs share their data at publication, or by the end of the award
-period, whichever comes first. If your research generates scientific
-data, you submitted a two-page Data Management and Sharing Plan with
-the application. NIH's guidance on selecting a repository
-(NOT-OD-21-016) sets out desirable characteristics: persistent unique
-identifiers, long-term sustainability, rich metadata, curation and
-quality assurance, documented access and reuse terms, provenance, and a
+NIH's Data Management and Sharing (DMS) Policy
+([NOT-OD-21-013](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-21-013.html))
+applies to applications submitted on or after January 25, 2023. It
+requires that labs share their data at publication, or by the end of
+the award period, whichever comes first. If your research generates
+scientific data, you submitted a two-page Data Management and Sharing
+Plan with the application. NIH's guidance on selecting a repository
+([NOT-OD-21-016](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-21-016.html))
+sets out desirable characteristics: persistent unique identifiers,
+long-term sustainability, rich metadata, curation and quality
+assurance, documented access and reuse terms, provenance, and a
 retention policy. A lab website, a shared Google Drive, and "available
 upon reasonable request" satisfy none of these. A domain repository
 does.
 
-For neurophysiology, the domain repository is the **DANDI Archive**.
+For neurophysiology, the domain repository is the
+[**DANDI Archive**](https://dandiarchive.org).
 
 ## What NWB Is
 
@@ -223,7 +226,7 @@ it on a sample session from each conversion batch.
 The **DANDI Archive** ([dandiarchive.org](https://dandiarchive.org)) is
 a public repository for cellular neurophysiology data, funded by the
 NIH BRAIN Initiative. It is free to deposit and free to download, and
-it is designed around NWB and BIDS.
+it is designed around NWB and [BIDS](https://bids.neuroimaging.io/).
 
 A dataset on DANDI is a **Dandiset**: a collection of NWB files with
 dataset-level metadata (description, contributors, funding including
