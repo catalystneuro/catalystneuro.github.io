@@ -16,14 +16,22 @@ import PageHeader from "../components/PageHeader.astro";
       </div>
 
       <h2>The Pareto Frontier Over Time</h2>
-      <p class="pfc-lead">Intelligence against measured cost per task, with the Pareto frontier (the cheapest model at each intelligence level) reconstructed from model release dates and observed prices as it stood on the first of every second month, and as it stands today. The chart builds up one frontier at a time and pauses on the full picture; use the button to stop it. Hover any point for the model behind it.</p>
+      <div class="pfc-tabs" id="pfc-cap-tabs" role="tablist" aria-label="Capability metric"></div>
+      <p class="pfc-lead" id="pfc-frontier-lead">Intelligence against measured cost per task, with the Pareto frontier (the cheapest model at each intelligence level) reconstructed from model release dates and observed prices as it stood on the first of every second month, and as it stands today. The Intelligence Index is a broad aggregate; the tabs above switch the vertical axis to a single evaluation that maps more directly onto a kind of application. The chart builds up one frontier at a time and pauses on the full picture; use the button to stop it. Hover any point for the model behind it.</p>
       <figure class="pfc-figure">
         <div class="pfc-side">
           <div class="pfc-side-chart" id="pfc-frontier"></div>
           <div class="pfc-legend pfc-legend-side" id="pfc-frontier-legend"></div>
         </div>
-        <figcaption>Small points are all measured models at their latest measured cost, tinted by the two month window of their release; models released before the first window are grouped with it. Hollow points are open weights models; filled points are proprietary. Each line is the Pareto frontier on the given date: the cheapest way to reach a given Intelligence Index among models released by then. The darkest line is the current frontier as of the last update. Where successive frontiers share a segment, the older line is drawn on top.</figcaption>
+        <figcaption>Small points are all measured models at their latest measured cost, tinted by the two month window of their release; models released before the first window are grouped with it. Hollow points are open weights models; filled points are proprietary. Each line is the Pareto frontier on the given date: the cheapest way to reach a given level of the selected metric among models released by then. The darkest line is the current frontier as of the last update. Where successive frontiers share a segment, the older line is drawn on top. Capability scores are the latest measured values; only prices are tracked over time.</figcaption>
       </figure>
+
+      <div class="pfc-table-wrap pfc-cap-wrap" id="pfc-cap-table-wrap" hidden>
+        <table class="pfc-table pfc-cap-tablex">
+          <thead><tr><th><span id="pfc-cap-metric-name"></span></th><th>Cheapest model at or above</th><th>Cost per task</th><th>Score</th></tr></thead>
+          <tbody id="pfc-cap-table"></tbody>
+        </table>
+      </div>
 
       <h2>Cost Records by Capability Tier</h2>
       <p class="pfc-lead">The cheapest measured cost per task achieved by any released model at or above each Intelligence Index tier, by release date. Each step is a model that set a new low for its tier.</p>
@@ -81,6 +89,12 @@ import PageHeader from "../components/PageHeader.astro";
 .pfc-stage { font-size: 0.82rem; font-weight: 600; color: var(--color-navy); }
 .pfc-btn { font: inherit; font-size: 0.78rem; padding: 0.25rem 0.7rem; border: 1px solid var(--color-line); border-radius: 6px; background: var(--color-surface); color: var(--color-navy); cursor: pointer; min-width: 4.2rem; }
 .pfc-btn:hover { border-color: var(--color-navy); }
+.pfc-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.9rem; }
+.pfc-tab { font: inherit; font-size: 0.8rem; padding: 0.3rem 0.8rem; border: 1px solid var(--color-line); border-radius: 999px; background: var(--color-surface); color: var(--color-ink-muted); cursor: pointer; }
+.pfc-tab:hover { border-color: var(--color-navy); color: var(--color-navy); }
+.pfc-tab[aria-selected="true"] { background: var(--color-navy); border-color: var(--color-navy); color: #fff; }
+.pfc-cap-wrap { margin-top: 0.4rem; margin-bottom: 2rem; }
+.pfc-cap-tablex th:nth-child(3), .pfc-cap-tablex th:nth-child(4) { text-align: right; }
 </style>
 
 <style>

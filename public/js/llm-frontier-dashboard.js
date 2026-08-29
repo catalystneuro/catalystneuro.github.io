@@ -14,8 +14,14 @@
   };
   var SNAPS = [];
   var TIERS = [];
+  var CAPS = [];   // capability metric metadata from the data file
+  var CAP = -1;    // active tab: -1 = overall Intelligence Index, else index into CAPS
 
   var models = [], retiredByName = {}, openByName = {};
+  function capMeta() { return CAP >= 0 ? CAPS[CAP] : null; }
+  function score(m) { return CAP < 0 ? m.iq : (m.caps ? m.caps[CAP] : null); }
+  function fmtScore(v) { var c = capMeta(); return v.toFixed(1) + (c && c.percent ? '%' : ''); }
+  function metricName() { var c = capMeta(); return c ? c.metric : 'Index'; }
   // Cost in effect on a given date: the last recorded change at or before it.
   function costAt(m, date) {
     if (!m.hist) return m.mcost;
@@ -27,8 +33,9 @@
     DATA = d;
     SNAPS = d.snapshots.map(function (s) { return [s[0], s[1]]; });
     TIERS = d.tiers.slice();
+    CAPS = d.capabilities || [];
     models = d.models.map(function (m) {
-      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null };
+      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null, caps: m[8] || null };
     });
     retiredByName = {}; openByName = {};
     models.forEach(function (m) { retiredByName[m.name] = m.retired; openByName[m.name] = m.open; });
@@ -133,11 +140,15 @@
     anim.groups = SNAPS.map(function () { return []; });
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 440;
     var M = { l: 56, r: 16, t: 12, b: 42 };
-    var svg = frame(box, W, H, M, 'Intelligence Index versus cost per task with Pareto frontier lines every two months');
-    var maxIq = Math.max.apply(null, models.map(function (m) { return m.iq; }));
-    var maxCost = Math.max.apply(null, models.map(function (m) { return m.mcost; }));
-    var minCost = Math.min.apply(null, models.map(function (m) { return m.mcost; }));
-    var xd = [minCost * 0.66, maxCost * 1.5], yd = [0, Math.max(66, Math.ceil((maxIq + 3) / 10) * 10)];
+    var svg = frame(box, W, H, M, (CAP < 0 ? 'Intelligence Index' : metricName()) + ' versus cost per task with Pareto frontier lines every two months');
+    var ms = models.filter(function (m) { return score(m) != null; });
+    var maxS = Math.max.apply(null, ms.map(score));
+    var minS = Math.min.apply(null, ms.map(score));
+    var maxCost = Math.max.apply(null, ms.map(function (m) { return m.mcost; }));
+    var minCost = Math.min.apply(null, ms.map(function (m) { return m.mcost; }));
+    var yTop = CAP < 0 ? Math.max(66, Math.ceil((maxS + 3) / 10) * 10) : Math.min(100, Math.ceil((maxS + 3) / 10) * 10);
+    var yBot = minS < 0 ? Math.floor((minS - 3) / 10) * 10 : 0;
+    var xd = [minCost * 0.66, maxCost * 1.5], yd = [yBot, yTop];
     function X(v) { return M.l + (Math.log10(v) - Math.log10(xd[0])) / (Math.log10(xd[1]) - Math.log10(xd[0])) * (W - M.l - M.r); }
     function Y(v) { return H - M.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - M.t - M.b); }
 
@@ -147,7 +158,7 @@
       var lb = svgEl('text', { x: X(c), y: H - M.b + 18, 'text-anchor': 'middle', 'font-size': 11, fill: C.muted });
       lb.textContent = '$' + (c >= 1 ? c.toFixed(0) : c.toFixed(2)); svg.append(lb);
     });
-    var qs = []; for (var q0 = 0; q0 <= yd[1] - 5; q0 += 10) qs.push(q0);
+    var qs = []; for (var q0 = yd[0]; q0 <= yd[1] - 5; q0 += 10) qs.push(q0);
     qs.forEach(function (q) {
       svg.append(svgEl('line', { x1: M.l, x2: W - M.r, y1: Y(q), y2: Y(q), stroke: C.grid, 'stroke-width': 1 }));
       var lb = svgEl('text', { x: M.l - 8, y: Y(q) + 4, 'text-anchor': 'end', 'font-size': 11, fill: C.muted });
@@ -158,15 +169,16 @@
     var xt = svgEl('text', { x: (M.l + W - M.r) / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 11.5, fill: C.ink2 });
     xt.textContent = 'Cost per task (log)'; svg.append(xt);
     var yt = svgEl('text', { x: 14, y: (M.t + H - M.b) / 2, 'font-size': 11.5, fill: C.ink2, transform: 'rotate(-90 14 ' + ((M.t + H - M.b) / 2) + ')', 'text-anchor': 'middle' });
-    yt.textContent = 'Artificial Analysis Intelligence Index'; svg.append(yt);
+    yt.textContent = CAP < 0 ? 'Artificial Analysis Intelligence Index' : metricName(); svg.append(yt);
 
     var pts = [];
     function windowIndex(date) {
       for (var i = 0; i < SNAPS.length; i++) if (date <= SNAPS[i][0]) return i;
       return SNAPS.length - 1;
     }
-    models.forEach(function (m) {
-      var x = X(m.mcost), y = Y(m.iq);
+    ms.forEach(function (m) {
+      var sv = score(m);
+      var x = X(m.mcost), y = Y(sv);
       var wi = windowIndex(m.date);
       var g = svgEl('g', { opacity: 0.45 });
       dot(g, x, y, 3.5, C.snap[wi], m.open);
@@ -175,7 +187,7 @@
       pts.push({ x: x, y: y, snap: wi, key: m.name, rows: function () {
         var d1 = el('div', 'pfc-tt-name'); d1.textContent = m.name;
         var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(m.mcost);
-        d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
+        d2.append(s, ' per task at ' + (CAP < 0 ? 'Index ' + m.iq.toFixed(1) : metricName() + ' ' + fmtScore(sv)));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
         var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
         d4.append(kd, 'in the ' + SNAPS[wi][1].replace('today', 'current') + ' window');
@@ -186,9 +198,9 @@
     SNAPS.slice().reverse().forEach(function (snap, ri) {
       var i = SNAPS.length - 1 - ri;
       var snapDate = snap[0], snapLabel = snap[1];
-      var sub = models.filter(function (m) { return m.date <= snapDate; }).map(function (m) {
+      var sub = ms.filter(function (m) { return m.date <= snapDate; }).map(function (m) {
         var c = costAt(m, snapDate);
-        return { name: m.name, creator: m.creator, date: m.date, iq: m.iq, mcost: c, retired: m.retired, open: m.open, current: m.mcost };
+        return { name: m.name, creator: m.creator, date: m.date, iq: score(m), mcost: c, retired: m.retired, open: m.open, current: m.mcost };
       });
       var fr = sub.filter(function (p) {
         return !sub.some(function (o) { return o.iq >= p.iq && o.mcost <= p.mcost && (o.iq > p.iq || o.mcost < p.mcost); });
@@ -212,7 +224,7 @@
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(p.mcost);
-          d2.append(kd, s, ' at Index ' + p.iq.toFixed(1) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
+          d2.append(kd, s, ' at ' + (CAP < 0 ? 'Index ' + p.iq.toFixed(1) : metricName() + ' ' + fmtScore(p.iq)) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
           var d3 = el('div', null, 'Pareto frontier as of: ' + (labels && labels.length ? labels.join('; ') : snapLabel) + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
@@ -252,6 +264,70 @@
       ret.append(d2, el('span', null, 'open weights'));
       legend.append(live, ret);
     }
+  }
+
+  // ---- capability tabs ----
+  var leadDefault = null;
+  function renderTabs() {
+    var bar = document.getElementById('pfc-cap-tabs');
+    if (!bar || !CAPS.length) return;
+    bar.replaceChildren();
+    var tabs = [['Overall', -1]].concat(CAPS.map(function (c, i) { return [c.label, i]; }));
+    tabs.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'pfc-tab'; b.textContent = t[0];
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', CAP === t[1] ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        if (CAP === t[1]) return;
+        CAP = t[1];
+        hideTip();
+        renderTabs(); renderLead(); renderFrontier(); renderCapTable();
+      });
+      bar.append(b);
+    });
+  }
+  function renderLead() {
+    var p = document.getElementById('pfc-frontier-lead');
+    if (!p) return;
+    if (leadDefault === null) leadDefault = p.innerHTML;
+    var c = capMeta();
+    if (!c) { p.innerHTML = leadDefault; return; }
+    var n = models.filter(function (m) { return score(m) != null; }).length;
+    p.textContent = c.blurb + ' Measured for ' + n + ' of ' + models.length + ' tracked models. The cost axis is unchanged, the measured cost per task on the full Intelligence Index suite, so switching tabs only moves each model vertically.';
+  }
+  function renderCapTable() {
+    var wrap = document.getElementById('pfc-cap-table-wrap');
+    if (!wrap) return;
+    var c = capMeta();
+    if (!c) { wrap.hidden = true; return; }
+    wrap.hidden = false;
+    var th = document.getElementById('pfc-cap-metric-name');
+    if (th) th.textContent = c.metric;
+    var tb = document.getElementById('pfc-cap-table');
+    if (!tb) return;
+    tb.replaceChildren();
+    var live = models.filter(function (m) { return !m.retired && score(m) != null; });
+    if (!live.length) return;
+    var maxS = Math.max.apply(null, live.map(score));
+    var hi = Math.floor(maxS / 10) * 10;
+    function cell(node, cls) { var td = document.createElement('td'); if (cls) td.className = cls; td.append(node); return td; }
+    [hi, hi - 10, hi - 20, hi - 30].forEach(function (t) {
+      if (t <= 0) return;
+      var cands = live.filter(function (m) { return score(m) >= t; });
+      if (!cands.length) return;
+      var best = cands.reduce(function (a, b) { return b.mcost < a.mcost ? b : a; });
+      var tr = document.createElement('tr');
+      tr.append(cell('≥ ' + t + (c.percent ? '%' : ''), 'pfc-td-tier'));
+      var w = el('div', 'pfc-ev');
+      var a1 = el('div', 'pfc-ev-top'); a1.textContent = best.name;
+      var a2 = el('div', 'pfc-ev-model'); a2.textContent = best.creator + ' · ' + (best.open ? 'open weights' : 'proprietary');
+      w.append(a1, a2);
+      tr.append(cell(w));
+      tr.append(cell(fmt$(best.mcost), 'pfc-td-num'));
+      tr.append(cell(fmtScore(score(best)), 'pfc-td-num'));
+      tb.append(tr);
+    });
   }
 
   // ---- chart 2: cost records by tier ----
@@ -467,7 +543,7 @@
       }
     }
   }
-  function renderAll() { if (!DATA) return; renderFrontier(); renderRecords(); renderTable(); renderAdvances(); }
+  function renderAll() { if (!DATA) return; renderTabs(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances(); }
   fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     loadData(d);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll);
