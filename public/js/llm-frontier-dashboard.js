@@ -281,8 +281,9 @@
       b.addEventListener('click', function () {
         if (CAP === t[1]) return;
         CAP = t[1];
+        advPage = 1;
         hideTip();
-        renderTabs(); renderLead(); renderFrontier(); renderCapTable();
+        renderTabs(); renderLead(); renderFrontier(); renderCapTable(); renderAdvances();
       });
       bar.append(b);
     });
@@ -470,11 +471,13 @@
   function advanceLine(a, withVariant) {
     var text = el('div', 'pfc-adv-body');
     if (withVariant && a.variant) { var v = el('span', 'pfc-adv-variant'); v.textContent = a.variant + ': '; text.append(v); }
-    var span = a.owns_to.toFixed(1) === a.owns_from.toFixed(1) ? 'index ' + a.owns_to.toFixed(1) : 'index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1);
+    var term = CAP < 0 ? 'index' : metricName();
+    var span = a.owns_to.toFixed(1) === a.owns_from.toFixed(1) ? term + ' ' + fmtScore(a.owns_to) : term + ' ' + fmtScore(a.owns_from) + ' to ' + fmtScore(a.owns_to);
+    var ceiling = CAP < 0 ? 'the intelligence ceiling' : 'the ' + metricName() + ' ceiling';
     var s1 = a.kind === 'price change' && a.previous_cost
       ? 'price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task; now the cheapest way to reach ' + span
       : (a.ceiling_from !== null && a.ceiling_from !== undefined)
-        ? 'pushed the intelligence ceiling from ' + a.ceiling_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1) + ', at ' + fmt$(a.cost_per_task) + ' per task'
+        ? 'pushed ' + ceiling + ' from ' + fmtScore(a.ceiling_from) + ' to ' + fmtScore(a.owns_to) + ', at ' + fmt$(a.cost_per_task) + ' per task'
         : 'now the cheapest way to reach ' + span + ' at ' + fmt$(a.cost_per_task) + ' per task';
     s1 += takenClause(a.taken_from || [], a.displaced || []) + '. ';
     if (!(withVariant && a.variant)) s1 = s1.charAt(0).toUpperCase() + s1.slice(1);
@@ -494,29 +497,41 @@
     kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
     if (list[0].open_weights) head.append(el('span', 'pfc-adv-kind pfc-adv-open', 'open weights'));
     // The pipeline renders one shareable card image per base model per day,
-    // named by the same date and slug this derives.
-    var card = document.createElement('a');
-    card.className = 'pfc-adv-kind pfc-adv-card';
-    card.textContent = 'chart card';
-    card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
-    card.target = '_blank';
-    card.rel = 'noopener';
-    head.append(card);
+    // named by the same date and slug this derives. Cards exist only for the
+    // Intelligence Index advances, so the link is hidden on capability tabs.
+    if (CAP < 0) {
+      var card = document.createElement('a');
+      card.className = 'pfc-adv-kind pfc-adv-card';
+      card.textContent = 'chart card';
+      card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
+      card.target = '_blank';
+      card.rel = 'noopener';
+      head.append(card);
+    }
     item.append(head);
     list.forEach(function (a) { item.append(advanceLine(a, !single)); });
     return item;
   }
+  var advLeadDefault = null;
   function renderAdvances() {
     var box = document.getElementById('pfc-advances');
     if (!box || !DATA.advances) return;
+    var lead = document.getElementById('pfc-adv-lead');
+    if (lead) {
+      if (advLeadDefault === null) advLeadDefault = lead.innerHTML;
+      if (CAP < 0) lead.innerHTML = advLeadDefault;
+      else lead.textContent = 'Each entry is a date on which a model became the cheapest way to reach some level of ' + metricName() + ', through a release or a price change, derived from release dates, observed prices, and the latest measured scores. The Atom feed covers the Overall view only.';
+    }
+    var list = CAP < 0 ? DATA.advances : ((DATA.cap_advances || {})[capMeta().key] || []);
     var days = [], byDay = {};
-    DATA.advances.forEach(function (a) {
+    list.forEach(function (a) {
       if (!byDay[a.date]) { byDay[a.date] = []; days.push(a.date); }
       byDay[a.date].push(a);
     });
     var total = Math.max(1, Math.ceil(days.length / ADV_DAYS_PER_PAGE));
     advPage = Math.min(Math.max(1, advPage), total);
     box.replaceChildren();
+    if (!days.length) box.append(el('p', 'pfc-lead', 'No advances recorded for this metric.'));
     days.slice((advPage - 1) * ADV_DAYS_PER_PAGE, advPage * ADV_DAYS_PER_PAGE).forEach(function (d) {
       var row = el('div', 'pfc-adv-day');
       var col = el('div');
