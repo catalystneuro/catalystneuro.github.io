@@ -147,7 +147,7 @@
     var maxCost = Math.max.apply(null, ms.map(function (m) { return m.mcost; }));
     var minCost = Math.min.apply(null, ms.map(function (m) { return m.mcost; }));
     var yTop = CAP < 0 ? Math.max(66, Math.ceil((maxS + 3) / 10) * 10) : Math.min(100, Math.ceil((maxS + 3) / 10) * 10);
-    var yBot = minS < 0 ? Math.floor((minS - 3) / 10) * 10 : 0;
+    var yBot = Math.max(minS < 0 ? -100 : 0, Math.floor((minS - 3) / 10) * 10);
     var xd = [minCost * 0.66, maxCost * 1.5], yd = [yBot, yTop];
     function X(v) { return M.l + (Math.log10(v) - Math.log10(xd[0])) / (Math.log10(xd[1]) - Math.log10(xd[0])) * (W - M.l - M.r); }
     function Y(v) { return H - M.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - M.t - M.b); }
