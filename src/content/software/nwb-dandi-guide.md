@@ -78,8 +78,8 @@ system, the imaging clock, and the behavioral rig. You will need to
 perform alignment before writing to NWB.
 
 **The standard is extensible.** If you have a data type the core schema
-does not cover, you write a Neurodata Extension (NDX) rather than
-stuffing it into a free-text field. There is a
+does not cover, the supported route is a Neurodata Extension (NDX), not
+a free-text field. There is a
 [catalog of existing extensions](https://nwb-extensions.github.io/);
 check it before writing one.
 
@@ -89,8 +89,8 @@ check it before writing one.
 for writing NWB directly from acquisition systems, so recording
 software that adopts it can produce NWB files during the experiment
 with no conversion step at all. For most labs, conversion is a step
-that happens after acquisition, ideally soon after each session, as a
-routine part of the pipeline rather than as a project at the end.
+that happens after acquisition, ideally soon after each session, so it
+becomes a routine part of the pipeline instead of a project at the end.
 
 ## Converting Your Data: NeuroConv
 
