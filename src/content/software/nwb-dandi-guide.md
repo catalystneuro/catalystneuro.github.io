@@ -35,7 +35,9 @@ upon reasonable request" satisfy none of these. A domain repository
 does.
 
 For neurophysiology, the domain repository is the
-[**DANDI Archive**](https://dandiarchive.org).
+[**DANDI Archive**](https://dandiarchive.org), listed on NIH's own
+[Data and Knowledge Resources](https://www.nih.gov/brain/research/data-knowledge-resources)
+page as the BRAIN Initiative archive for neurophysiology data.
 
 ## What NWB Is
 
@@ -345,6 +347,14 @@ When you ask, include the acquisition system, the analysis outputs you
 need to store, and one example of the awkward part.
 
 ## FAQ
+
+**My program officer says DANDI is only for BRAIN Initiative projects.**
+It is not. DANDI accepts data from projects outside the BRAIN
+Initiative; the archive's mandate is defined by data type and modality,
+not by which initiative funded the work. If a program officer raises
+this, NIH's own
+[Data and Knowledge Resources](https://www.nih.gov/brain/research/data-knowledge-resources)
+page is the reference to point to.
 
 **Do I have to use NWB? The policy says "standard," not "NWB."**
 The policy asks you to use community standards where they exist. For
