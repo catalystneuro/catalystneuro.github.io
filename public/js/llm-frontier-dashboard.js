@@ -14,8 +14,18 @@
   };
   var SNAPS = [];
   var TIERS = [];
+  var CAPS = [];   // capability metric metadata from the data file
+  var CAP = -1;    // active tab: -1 = overall Intelligence Index, else index into CAPS
 
   var models = [], retiredByName = {}, openByName = {};
+  function capMeta() { return CAP >= 0 ? CAPS[CAP] : null; }
+  function curTiers() { return CAP < 0 ? TIERS : ((DATA.cap_tiers || {})[capMeta().key] || []); }
+  function curTierCost() { return CAP < 0 ? DATA.tier_cost : ((DATA.cap_tier_cost || {})[capMeta().key] || {}); }
+  function curTierSummary() { return CAP < 0 ? DATA.tier_summary : ((DATA.cap_tier_summary || {})[capMeta().key] || {}); }
+  function score(m) { return CAP < 0 ? m.iq : (m.caps ? m.caps[CAP] : null); }
+  function fmtScore(v) { var c = capMeta(); return v.toFixed(1) + (c && c.percent ? '%' : ''); }
+  function metricName() { var c = capMeta(); return c ? c.metric : 'Index'; }
+  function tierLabel(t) { var c = capMeta(); return '≥ ' + t + (c && c.percent ? '%' : ''); }
   // Cost in effect on a given date: the last recorded change at or before it.
   function costAt(m, date) {
     if (!m.hist) return m.mcost;
@@ -27,8 +37,9 @@
     DATA = d;
     SNAPS = d.snapshots.map(function (s) { return [s[0], s[1]]; });
     TIERS = d.tiers.slice();
+    CAPS = d.capabilities || [];
     models = d.models.map(function (m) {
-      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null };
+      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null, caps: m[8] || null };
     });
     retiredByName = {}; openByName = {};
     models.forEach(function (m) { retiredByName[m.name] = m.retired; openByName[m.name] = m.open; });
@@ -101,7 +112,7 @@
   }
 
   // ---- chart 1: intelligence vs cost, frontier every two months ----
-  var anim = { stage: SNAPS.length - 1, paused: false, timer: null, groups: [] };
+  var anim = { stage: SNAPS.length - 1, paused: true, timer: null, groups: [] };
   var STEP_MS = 1100, HOLD_MS = 6000;
   function applyStage() {
     anim.groups.forEach(function (gs, i) {
@@ -133,11 +144,15 @@
     anim.groups = SNAPS.map(function () { return []; });
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 440;
     var M = { l: 56, r: 16, t: 12, b: 42 };
-    var svg = frame(box, W, H, M, 'Intelligence Index versus cost per task with Pareto frontier lines every two months');
-    var maxIq = Math.max.apply(null, models.map(function (m) { return m.iq; }));
-    var maxCost = Math.max.apply(null, models.map(function (m) { return m.mcost; }));
-    var minCost = Math.min.apply(null, models.map(function (m) { return m.mcost; }));
-    var xd = [minCost * 0.66, maxCost * 1.5], yd = [0, Math.max(66, Math.ceil((maxIq + 3) / 10) * 10)];
+    var svg = frame(box, W, H, M, (CAP < 0 ? 'Intelligence Index' : metricName()) + ' versus cost per task with Pareto frontier lines every two months');
+    var ms = models.filter(function (m) { return score(m) != null; });
+    var maxS = Math.max.apply(null, ms.map(score));
+    var minS = Math.min.apply(null, ms.map(score));
+    var maxCost = Math.max.apply(null, ms.map(function (m) { return m.mcost; }));
+    var minCost = Math.min.apply(null, ms.map(function (m) { return m.mcost; }));
+    var yTop = CAP < 0 ? Math.max(66, Math.ceil((maxS + 3) / 10) * 10) : Math.min(100, Math.ceil((maxS + 3) / 10) * 10);
+    var yBot = Math.max(minS < 0 ? -100 : 0, Math.floor((minS - 3) / 10) * 10);
+    var xd = [minCost * 0.66, maxCost * 1.5], yd = [yBot, yTop];
     function X(v) { return M.l + (Math.log10(v) - Math.log10(xd[0])) / (Math.log10(xd[1]) - Math.log10(xd[0])) * (W - M.l - M.r); }
     function Y(v) { return H - M.b - (v - yd[0]) / (yd[1] - yd[0]) * (H - M.t - M.b); }
 
@@ -147,7 +162,7 @@
       var lb = svgEl('text', { x: X(c), y: H - M.b + 18, 'text-anchor': 'middle', 'font-size': 11, fill: C.muted });
       lb.textContent = '$' + (c >= 1 ? c.toFixed(0) : c.toFixed(2)); svg.append(lb);
     });
-    var qs = []; for (var q0 = 0; q0 <= yd[1] - 5; q0 += 10) qs.push(q0);
+    var qs = []; for (var q0 = yd[0]; q0 <= yd[1] - 5; q0 += 10) qs.push(q0);
     qs.forEach(function (q) {
       svg.append(svgEl('line', { x1: M.l, x2: W - M.r, y1: Y(q), y2: Y(q), stroke: C.grid, 'stroke-width': 1 }));
       var lb = svgEl('text', { x: M.l - 8, y: Y(q) + 4, 'text-anchor': 'end', 'font-size': 11, fill: C.muted });
@@ -158,15 +173,16 @@
     var xt = svgEl('text', { x: (M.l + W - M.r) / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 11.5, fill: C.ink2 });
     xt.textContent = 'Cost per task (log)'; svg.append(xt);
     var yt = svgEl('text', { x: 14, y: (M.t + H - M.b) / 2, 'font-size': 11.5, fill: C.ink2, transform: 'rotate(-90 14 ' + ((M.t + H - M.b) / 2) + ')', 'text-anchor': 'middle' });
-    yt.textContent = 'Artificial Analysis Intelligence Index'; svg.append(yt);
+    yt.textContent = CAP < 0 ? 'Artificial Analysis Intelligence Index' : metricName(); svg.append(yt);
 
     var pts = [];
     function windowIndex(date) {
       for (var i = 0; i < SNAPS.length; i++) if (date <= SNAPS[i][0]) return i;
       return SNAPS.length - 1;
     }
-    models.forEach(function (m) {
-      var x = X(m.mcost), y = Y(m.iq);
+    ms.forEach(function (m) {
+      var sv = score(m);
+      var x = X(m.mcost), y = Y(sv);
       var wi = windowIndex(m.date);
       var g = svgEl('g', { opacity: 0.45 });
       dot(g, x, y, 3.5, C.snap[wi], m.open);
@@ -175,7 +191,7 @@
       pts.push({ x: x, y: y, snap: wi, key: m.name, rows: function () {
         var d1 = el('div', 'pfc-tt-name'); d1.textContent = m.name;
         var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(m.mcost);
-        d2.append(s, ' per task at Index ' + m.iq.toFixed(1));
+        d2.append(s, ' per task at ' + (CAP < 0 ? 'Index ' + m.iq.toFixed(1) : metricName() + ' ' + fmtScore(sv)));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
         var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
         d4.append(kd, 'in the ' + SNAPS[wi][1].replace('today', 'current') + ' window');
@@ -186,9 +202,9 @@
     SNAPS.slice().reverse().forEach(function (snap, ri) {
       var i = SNAPS.length - 1 - ri;
       var snapDate = snap[0], snapLabel = snap[1];
-      var sub = models.filter(function (m) { return m.date <= snapDate; }).map(function (m) {
+      var sub = ms.filter(function (m) { return m.date <= snapDate; }).map(function (m) {
         var c = costAt(m, snapDate);
-        return { name: m.name, creator: m.creator, date: m.date, iq: m.iq, mcost: c, retired: m.retired, open: m.open, current: m.mcost };
+        return { name: m.name, creator: m.creator, date: m.date, iq: score(m), mcost: c, retired: m.retired, open: m.open, current: m.mcost };
       });
       var fr = sub.filter(function (p) {
         return !sub.some(function (o) { return o.iq >= p.iq && o.mcost <= p.mcost && (o.iq > p.iq || o.mcost < p.mcost); });
@@ -212,7 +228,7 @@
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(p.mcost);
-          d2.append(kd, s, ' at Index ' + p.iq.toFixed(1) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
+          d2.append(kd, s, ' at ' + (CAP < 0 ? 'Index ' + p.iq.toFixed(1) : metricName() + ' ' + fmtScore(p.iq)) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
           var d3 = el('div', null, 'Pareto frontier as of: ' + (labels && labels.length ? labels.join('; ') : snapLabel) + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
@@ -254,6 +270,71 @@
     }
   }
 
+  // ---- capability tabs ----
+  var leadDefault = null;
+  function renderTabs() {
+    var bar = document.getElementById('pfc-cap-tabs');
+    if (!bar || !CAPS.length) return;
+    bar.replaceChildren();
+    var tabs = [['Overall', -1]].concat(CAPS.map(function (c, i) { return [c.label, i]; }));
+    tabs.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'pfc-tab'; b.textContent = t[0];
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', CAP === t[1] ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        if (CAP === t[1]) return;
+        CAP = t[1];
+        advPage = 1;
+        hideTip();
+        renderTabs(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances();
+      });
+      bar.append(b);
+    });
+  }
+  function renderLead() {
+    var p = document.getElementById('pfc-frontier-lead');
+    if (!p) return;
+    if (leadDefault === null) leadDefault = p.innerHTML;
+    var c = capMeta();
+    if (!c) { p.innerHTML = leadDefault; return; }
+    var n = models.filter(function (m) { return score(m) != null; }).length;
+    p.textContent = c.blurb + ' Measured for ' + n + ' of ' + models.length + ' tracked models. The cost axis is unchanged, the measured cost per task on the full Intelligence Index suite, so switching tabs only moves each model vertically.';
+  }
+  function renderCapTable() {
+    var wrap = document.getElementById('pfc-cap-table-wrap');
+    if (!wrap) return;
+    var c = capMeta();
+    if (!c) { wrap.hidden = true; return; }
+    wrap.hidden = false;
+    var th = document.getElementById('pfc-cap-metric-name');
+    if (th) th.textContent = c.metric;
+    var tb = document.getElementById('pfc-cap-table');
+    if (!tb) return;
+    tb.replaceChildren();
+    var live = models.filter(function (m) { return !m.retired && score(m) != null; });
+    if (!live.length) return;
+    var maxS = Math.max.apply(null, live.map(score));
+    var hi = Math.floor(maxS / 10) * 10;
+    function cell(node, cls) { var td = document.createElement('td'); if (cls) td.className = cls; td.append(node); return td; }
+    [hi, hi - 10, hi - 20, hi - 30].forEach(function (t) {
+      if (t <= 0) return;
+      var cands = live.filter(function (m) { return score(m) >= t; });
+      if (!cands.length) return;
+      var best = cands.reduce(function (a, b) { return b.mcost < a.mcost ? b : a; });
+      var tr = document.createElement('tr');
+      tr.append(cell('≥ ' + t + (c.percent ? '%' : ''), 'pfc-td-tier'));
+      var w = el('div', 'pfc-ev');
+      var a1 = el('div', 'pfc-ev-top'); a1.textContent = best.name;
+      var a2 = el('div', 'pfc-ev-model'); a2.textContent = best.creator + ' · ' + (best.open ? 'open weights' : 'proprietary');
+      w.append(a1, a2);
+      tr.append(cell(w));
+      tr.append(cell(fmt$(best.mcost), 'pfc-td-num'));
+      tr.append(cell(fmtScore(score(best)), 'pfc-td-num'));
+      tb.append(tr);
+    });
+  }
+
   // ---- chart 2: cost records by tier ----
   function renderRecords() {
     var box = document.getElementById('pfc-records');
@@ -261,8 +342,13 @@
     box.replaceChildren();
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 370;
     var M = { l: 56, r: 60, t: 12, b: 40 };
+    var lead = document.getElementById('pfc-records-lead');
+    if (lead) {
+      lead.textContent = 'The cheapest measured cost per task achieved by any released model at or above each ' + (CAP < 0 ? 'Intelligence Index' : metricName()) + ' tier, by release date. Each step is a model that set a new low for its tier.';
+    }
     var svg = frame(box, W, H, M, 'Running minimum measured cost per task by capability tier');
-    var allRecs = []; TIERS.forEach(function (t) { (DATA.tier_cost[t] || []).forEach(function (r) { allRecs.push(r); }); });
+    var tiers = curTiers(), tierCost = curTierCost();
+    var allRecs = []; tiers.forEach(function (t) { (tierCost[t] || []).forEach(function (r) { allRecs.push(r); }); });
     var firstRec = allRecs.map(function (r) { return r[0]; }).sort()[0] || DATA.updated;
     var x0d = new Date(firstRec + 'T00:00:00Z'); x0d.setUTCDate(1); x0d.setUTCMonth(x0d.getUTCMonth() - 1);
     var x1d = new Date(DATA.updated + 'T00:00:00Z');
@@ -293,8 +379,8 @@
 
     var pts = [];
     var endLabels = [];
-    TIERS.forEach(function (tier, i) {
-      var recs = DATA.tier_cost[tier];
+    tiers.forEach(function (tier, i) {
+      var recs = tierCost[tier];
       if (!recs || !recs.length) return;
       var color = C.ord[i];
       var d = '';
@@ -313,15 +399,15 @@
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(r[1]);
-          d2.append(kd, s, ' new record, Index \u2265 ' + tier);
-          var d3 = el('div', null, (r[4] ? r[4] + ' \u00b7 ' : 'released ' + r[0] + ' \u00b7 ') + 'Index ' + r[3].toFixed(1) + (openByName[r[2]] ? ' \u00b7 open weights' : ' \u00b7 proprietary') + (retiredByName[r[2]] ? ' \u00b7 retired' : ''));
+          d2.append(kd, s, ' new record, ' + (CAP < 0 ? 'Index' : metricName()) + ' ' + tierLabel(tier));
+          var d3 = el('div', null, (r[4] ? r[4] + ' \u00b7 ' : 'released ' + r[0] + ' \u00b7 ') + (CAP < 0 ? 'Index ' + r[3].toFixed(1) : metricName() + ' ' + fmtScore(r[3])) + (openByName[r[2]] ? ' \u00b7 open weights' : ' \u00b7 proprietary') + (retiredByName[r[2]] ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
       });
       var endY = Y(recs[recs.length - 1][1]);
       if (!endLabels.some(function (yy) { return Math.abs(yy - endY) < 14; })) {
         var lb = svgEl('text', { x: W - M.r + 6, y: endY + 4, 'font-size': 10.5, 'font-weight': 500, fill: C.ink2 });
-        lb.textContent = '\u2265 ' + tier; svg.append(lb);
+        lb.textContent = tierLabel(tier); svg.append(lb);
         endLabels.push(endY);
       }
     });
@@ -331,19 +417,18 @@
     var legend = document.getElementById('pfc-records-legend');
     if (legend) {
       legend.replaceChildren();
-      legend.append(el('span', 'pfc-legend-title', 'Intelligence Index'));
-      TIERS.slice().reverse().forEach(function (tier, ri) {
-        var i = TIERS.length - 1 - ri;
+      legend.append(el('span', 'pfc-legend-title', CAP < 0 ? 'Intelligence Index' : metricName()));
+      tiers.slice().reverse().forEach(function (tier, ri) {
+        var i = tiers.length - 1 - ri;
         var item = el('span', 'pfc-lk');
         var sw = el('span', 'pfc-swatch');
         sw.style.borderTopColor = C.ord[i];
-        item.append(sw, el('span', null, '\u2265 ' + tier));
+        item.append(sw, el('span', null, tierLabel(tier)));
         legend.append(item);
       });
     }
   }
 
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) anim.paused = true;
   function fmtDate(d) { var p = d.split('-'); var MON = ['January','February','March','April','May','June','July','August','September','October','November','December']; return MON[+p[1] - 1] + ' ' + (+p[2]) + ', ' + p[0]; }
   function renderTable() {
     var tb = document.getElementById('pfc-tier-table');
@@ -356,10 +441,11 @@
       var b = el('div', 'pfc-ev-model'); b.textContent = model;
       w.append(a, b); return w;
     }
-    TIERS.forEach(function (t) {
-      var s = DATA.tier_summary[t];
+    var summary = curTierSummary();
+    curTiers().forEach(function (t) {
+      var s = summary[t];
       var tr = document.createElement('tr');
-      tr.append(cell('\u2265 ' + t, 'pfc-td-tier'));
+      tr.append(cell(tierLabel(t), 'pfc-td-tier'));
       if (s) {
         tr.append(cell(event(s.first_date, s.first_model, s.first_cost)));
         tr.append(cell(event(s.last_date, s.last_model, s.last_cost)));
@@ -395,16 +481,18 @@
   function advanceLine(a, withVariant) {
     var text = el('div', 'pfc-adv-body');
     if (withVariant && a.variant) { var v = el('span', 'pfc-adv-variant'); v.textContent = a.variant + ': '; text.append(v); }
-    var span = a.owns_to.toFixed(1) === a.owns_from.toFixed(1) ? 'index ' + a.owns_to.toFixed(1) : 'index ' + a.owns_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1);
+    var term = CAP < 0 ? 'index' : metricName();
+    var span = a.owns_to.toFixed(1) === a.owns_from.toFixed(1) ? term + ' ' + fmtScore(a.owns_to) : term + ' ' + fmtScore(a.owns_from) + ' to ' + fmtScore(a.owns_to);
+    var ceiling = CAP < 0 ? 'the intelligence ceiling' : 'the ' + metricName() + ' ceiling';
     var s1 = a.kind === 'price change' && a.previous_cost
       ? 'price moved from ' + fmt$(a.previous_cost) + ' to ' + fmt$(a.cost_per_task) + ' per task; now the cheapest way to reach ' + span
       : (a.ceiling_from !== null && a.ceiling_from !== undefined)
-        ? 'pushed the intelligence ceiling from ' + a.ceiling_from.toFixed(1) + ' to ' + a.owns_to.toFixed(1) + ', at ' + fmt$(a.cost_per_task) + ' per task'
+        ? 'pushed ' + ceiling + ' from ' + fmtScore(a.ceiling_from) + ' to ' + fmtScore(a.owns_to) + ', at ' + fmt$(a.cost_per_task) + ' per task'
         : 'now the cheapest way to reach ' + span + ' at ' + fmt$(a.cost_per_task) + ' per task';
     s1 += takenClause(a.taken_from || [], a.displaced || []) + '. ';
     if (!(withVariant && a.variant)) s1 = s1.charAt(0).toUpperCase() + s1.slice(1);
     text.append(s1);
-    if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for ' + joinAnd(a.records.map(function (t) { return 'index \u2265 ' + t; })) + '. '; text.append(r); }
+    if (a.records && a.records.length) { var r = el('span', 'pfc-adv-rec'); r.textContent = 'New cost record for ' + joinAnd(a.records.map(function (t) { return (CAP < 0 ? 'index' : metricName()) + ' ' + tierLabel(t); })) + '. '; text.append(r); }
     return text;
   }
   function slugify(name) {
@@ -419,29 +507,41 @@
     kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
     if (list[0].open_weights) head.append(el('span', 'pfc-adv-kind pfc-adv-open', 'open weights'));
     // The pipeline renders one shareable card image per base model per day,
-    // named by the same date and slug this derives.
-    var card = document.createElement('a');
-    card.className = 'pfc-adv-kind pfc-adv-card';
-    card.textContent = 'chart card';
-    card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
-    card.target = '_blank';
-    card.rel = 'noopener';
-    head.append(card);
+    // named by the same date and slug this derives. Cards exist only for the
+    // Intelligence Index advances, so the link is hidden on capability tabs.
+    if (CAP < 0) {
+      var card = document.createElement('a');
+      card.className = 'pfc-adv-kind pfc-adv-card';
+      card.textContent = 'chart card';
+      card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
+      card.target = '_blank';
+      card.rel = 'noopener';
+      head.append(card);
+    }
     item.append(head);
     list.forEach(function (a) { item.append(advanceLine(a, !single)); });
     return item;
   }
+  var advLeadDefault = null;
   function renderAdvances() {
     var box = document.getElementById('pfc-advances');
     if (!box || !DATA.advances) return;
+    var lead = document.getElementById('pfc-adv-lead');
+    if (lead) {
+      if (advLeadDefault === null) advLeadDefault = lead.innerHTML;
+      if (CAP < 0) lead.innerHTML = advLeadDefault;
+      else lead.textContent = 'Each entry is a date on which a model became the cheapest way to reach some level of ' + metricName() + ', through a release or a price change, derived from release dates, observed prices, and the latest measured scores. The Atom feed covers the Overall view only.';
+    }
+    var list = CAP < 0 ? DATA.advances : ((DATA.cap_advances || {})[capMeta().key] || []);
     var days = [], byDay = {};
-    DATA.advances.forEach(function (a) {
+    list.forEach(function (a) {
       if (!byDay[a.date]) { byDay[a.date] = []; days.push(a.date); }
       byDay[a.date].push(a);
     });
     var total = Math.max(1, Math.ceil(days.length / ADV_DAYS_PER_PAGE));
     advPage = Math.min(Math.max(1, advPage), total);
     box.replaceChildren();
+    if (!days.length) box.append(el('p', 'pfc-lead', 'No advances recorded for this metric.'));
     days.slice((advPage - 1) * ADV_DAYS_PER_PAGE, advPage * ADV_DAYS_PER_PAGE).forEach(function (d) {
       var row = el('div', 'pfc-adv-day');
       var col = el('div');
@@ -467,7 +567,7 @@
       }
     }
   }
-  function renderAll() { if (!DATA) return; renderFrontier(); renderRecords(); renderTable(); renderAdvances(); }
+  function renderAll() { if (!DATA) return; renderTabs(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances(); }
   fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     loadData(d);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll);
