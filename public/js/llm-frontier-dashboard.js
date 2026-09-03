@@ -349,8 +349,10 @@
     var svg = frame(box, W, H, M, 'Running minimum measured cost per task by capability tier');
     var tiers = curTiers(), tierCost = curTierCost();
     var allRecs = []; tiers.forEach(function (t) { (tierCost[t] || []).forEach(function (r) { allRecs.push(r); }); });
-    var firstRec = allRecs.map(function (r) { return r[0]; }).sort()[0] || DATA.updated;
-    var x0d = new Date(firstRec + 'T00:00:00Z'); x0d.setUTCDate(1); x0d.setUTCMonth(x0d.getUTCMonth() - 1);
+    // Fixed time origin so the axis reads the same on every tab; records set
+    // before it enter from the left edge at the value in effect on that date.
+    var X0DATE = '2025-08-01';
+    var x0d = new Date(X0DATE + 'T00:00:00Z');
     var x1d = new Date(DATA.updated + 'T00:00:00Z');
     var x0 = x0d.getTime(), x1 = x1d.getTime();
     var maxRec = Math.max.apply(null, allRecs.map(function (r) { return r[1]; }));
@@ -380,13 +382,16 @@
     var pts = [];
     var endLabels = [];
     tiers.forEach(function (tier, i) {
-      var recs = tierCost[tier];
-      if (!recs || !recs.length) return;
+      var all = tierCost[tier];
+      if (!all || !all.length) return;
+      var carry = null;
+      var recs = all.filter(function (r) { if (r[0] < X0DATE) { carry = r; return false; } return true; });
+      if (!carry && !recs.length) return;
       var color = C.ord[i];
-      var d = '';
+      var d = carry ? 'M ' + M.l + ' ' + Y(carry[1]) + ' H ' + (recs.length ? X(recs[0][0]) : W - M.r) : '';
       recs.forEach(function (r, j) {
         var x = X(r[0]), y = Y(r[1]);
-        d += (j === 0 ? 'M ' + x + ' ' + y : ' V ' + y);
+        d += (d ? ' V ' + y : 'M ' + x + ' ' + y);
         var nx = j < recs.length - 1 ? X(recs[j + 1][0]) : W - M.r;
         d += ' H ' + nx;
       });
@@ -404,7 +409,7 @@
           return [d1, d2, d3];
         }});
       });
-      var endY = Y(recs[recs.length - 1][1]);
+      var endY = Y((recs.length ? recs[recs.length - 1] : carry)[1]);
       if (!endLabels.some(function (yy) { return Math.abs(yy - endY) < 14; })) {
         var lb = svgEl('text', { x: W - M.r + 6, y: endY + 4, 'font-size': 10.5, 'font-weight': 500, fill: C.ink2 });
         lb.textContent = tierLabel(tier); svg.append(lb);
