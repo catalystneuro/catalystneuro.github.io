@@ -1,7 +1,7 @@
 name: Sync LLM cost frontier data
 
 # The pipeline that produces these files lives in catalystneuro/llm-cost-frontier
-# and refreshes them nightly at 06:00 UTC. Its update workflow dispatches this
+# and refreshes them four times a day. Its update workflow dispatches this
 # one whenever it pushes new data. This job copies the published artifacts into
 # the site so they are served from catalystneuro.com, and the commit triggers a
 # Netlify build.
