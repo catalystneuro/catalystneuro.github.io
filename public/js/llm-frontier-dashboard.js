@@ -16,6 +16,7 @@
   var TIERS = [];
   var CAPS = [];   // capability metric metadata from the data file
   var CAP = -1;    // active tab: -1 = overall Intelligence Index, else index into CAPS
+  var ERAS = [];   // index era boundaries [date, note]; scores are only comparable within an era
 
   var models = [], retiredByName = {}, openByName = {};
   function capMeta() { return CAP >= 0 ? CAPS[CAP] : null; }
@@ -33,13 +34,30 @@
     for (var i = 0; i < m.hist.length; i++) { if (m.hist[i][0] <= date) c = m.hist[i][1]; else break; }
     return c;
   }
+  // Index in effect on a given date, from the same change history.
+  function iqAt(m, date) {
+    if (!m.hist) return m.iq;
+    var v = m.hist[0].length > 2 && m.hist[0][2] != null ? m.hist[0][2] : m.iq;
+    for (var i = 0; i < m.hist.length; i++) {
+      if (m.hist[i][0] > date) break;
+      if (m.hist[i].length > 2 && m.hist[i][2] != null) v = m.hist[i][2];
+    }
+    return v;
+  }
+  function eraOfDate(date) {
+    var n = 0;
+    ERAS.forEach(function (e) { if (e[0] <= date) n++; });
+    return n;
+  }
   function loadData(d) {
     DATA = d;
     SNAPS = d.snapshots.map(function (s) { return [s[0], s[1]]; });
     TIERS = d.tiers.slice();
     CAPS = d.capabilities || [];
+    ERAS = d.eras || [];
     models = d.models.map(function (m) {
-      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null, caps: m[8] || null };
+      return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null, caps: m[8] || null,
+               era: m[9] != null ? m[9] : (d.eras || []).length };
     });
     retiredByName = {}; openByName = {};
     models.forEach(function (m) { retiredByName[m.name] = m.retired; openByName[m.name] = m.open; });
@@ -145,11 +163,24 @@
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 440;
     var M = { l: 56, r: 16, t: 12, b: 42 };
     var svg = frame(box, W, H, M, (CAP < 0 ? 'Intelligence Index' : metricName()) + ' versus cost per task with Pareto frontier lines every two months');
-    var ms = models.filter(function (m) { return score(m) != null; });
-    var maxS = Math.max.apply(null, ms.map(score));
-    var minS = Math.min.apply(null, ms.map(score));
-    var maxCost = Math.max.apply(null, ms.map(function (m) { return m.mcost; }));
-    var minCost = Math.min.apply(null, ms.map(function (m) { return m.mcost; }));
+    // Only models measured under the current index era are placed at their
+    // latest values; earlier frontiers are reconstructed from the scores in
+    // effect at the time, and models never re-scored under the current index
+    // appear only in those earlier frontiers.
+    var ms = models.filter(function (m) { return score(m) != null && m.era === ERAS.length; });
+    var allS = ms.map(score), allC = ms.map(function (m) { return m.mcost; });
+    if (CAP < 0) models.forEach(function (m) {
+      allC.push(m.mcost);
+      if (m.era < ERAS.length) allS.push(m.iq);
+      (m.hist || []).forEach(function (h) {
+        allC.push(h[1]);
+        if (h.length > 2 && h[2] != null) allS.push(h[2]);
+      });
+    });
+    var maxS = Math.max.apply(null, allS);
+    var minS = Math.min.apply(null, allS);
+    var maxCost = Math.max.apply(null, allC);
+    var minCost = Math.min.apply(null, allC);
     var yTop = CAP < 0 ? Math.max(66, Math.ceil((maxS + 3) / 10) * 10) : Math.min(100, Math.ceil((maxS + 3) / 10) * 10);
     var yBot = Math.max(minS < 0 ? -100 : 0, Math.floor((minS - 3) / 10) * 10);
     var xd = [minCost * 0.66, maxCost * 1.5], yd = [yBot, yTop];
@@ -202,9 +233,12 @@
     SNAPS.slice().reverse().forEach(function (snap, ri) {
       var i = SNAPS.length - 1 - ri;
       var snapDate = snap[0], snapLabel = snap[1];
-      var sub = ms.filter(function (m) { return m.date <= snapDate; }).map(function (m) {
+      var pool = CAP < 0 ? models : ms;
+      var sub = pool.filter(function (m) {
+        return score(m) != null && m.date <= snapDate && m.era >= eraOfDate(snapDate);
+      }).map(function (m) {
         var c = costAt(m, snapDate);
-        return { name: m.name, creator: m.creator, date: m.date, iq: score(m), mcost: c, retired: m.retired, open: m.open, current: m.mcost };
+        return { name: m.name, creator: m.creator, date: m.date, iq: CAP < 0 ? iqAt(m, snapDate) : score(m), mcost: c, retired: m.retired, open: m.open, current: m.mcost };
       });
       var fr = sub.filter(function (p) {
         return !sub.some(function (o) { return o.iq >= p.iq && o.mcost <= p.mcost && (o.iq > p.iq || o.mcost < p.mcost); });
@@ -312,7 +346,7 @@
     var tb = document.getElementById('pfc-cap-table');
     if (!tb) return;
     tb.replaceChildren();
-    var live = models.filter(function (m) { return !m.retired && score(m) != null; });
+    var live = models.filter(function (m) { return !m.retired && score(m) != null && m.era === ERAS.length; });
     if (!live.length) return;
     var maxS = Math.max.apply(null, live.map(score));
     var hi = Math.floor(maxS / 10) * 10;
@@ -381,6 +415,19 @@
 
     var pts = [];
     var endLabels = [];
+    // Era boundaries: the running minimum resets where the index was
+    // recomposed, so record lines break rather than connect across one.
+    var eraStarts = ERAS.map(function (e) { return e[0]; }).filter(function (s) { return s > X0DATE && s <= DATA.updated; });
+    function eraCapX(date) {
+      for (var k = 0; k < eraStarts.length; k++) if (eraStarts[k] > date) return X(eraStarts[k]);
+      return W - M.r;
+    }
+    eraStarts.forEach(function (s) {
+      var ex = X(s);
+      svg.append(svgEl('line', { x1: ex, x2: ex, y1: M.t, y2: H - M.b, stroke: C.ink2, 'stroke-width': 1, 'stroke-dasharray': '4 3' }));
+      var lb = svgEl('text', { x: ex - 5, y: M.t + 11, 'text-anchor': 'end', 'font-size': 10, fill: C.ink2 });
+      lb.textContent = 'index recomposed'; svg.append(lb);
+    });
     tiers.forEach(function (tier, i) {
       var all = tierCost[tier];
       if (!all || !all.length) return;
@@ -388,12 +435,19 @@
       var recs = all.filter(function (r) { if (r[0] < X0DATE) { carry = r; return false; } return true; });
       if (!carry && !recs.length) return;
       var color = C.ord[i];
-      var d = carry ? 'M ' + M.l + ' ' + Y(carry[1]) + ' H ' + (recs.length ? X(recs[0][0]) : W - M.r) : '';
+      var d = '', prevEra = null;
+      if (carry) {
+        var sameEra = recs.length && eraOfDate(recs[0][0]) === eraOfDate(X0DATE);
+        d = 'M ' + M.l + ' ' + Y(carry[1]) + ' H ' + (sameEra ? X(recs[0][0]) : eraCapX(X0DATE));
+        prevEra = eraOfDate(X0DATE);
+      }
       recs.forEach(function (r, j) {
         var x = X(r[0]), y = Y(r[1]);
-        d += (d ? ' V ' + y : 'M ' + x + ' ' + y);
-        var nx = j < recs.length - 1 ? X(recs[j + 1][0]) : W - M.r;
-        d += ' H ' + nx;
+        var e = eraOfDate(r[0]);
+        d += (d && e === prevEra ? ' V ' + y : ' M ' + x + ' ' + y);
+        var next = j < recs.length - 1 ? recs[j + 1] : null;
+        d += ' H ' + (next && eraOfDate(next[0]) === e ? X(next[0]) : eraCapX(r[0]));
+        prevEra = e;
       });
       svg.append(svgEl('path', { d: d, fill: 'none', stroke: color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
       recs.forEach(function (r) {
