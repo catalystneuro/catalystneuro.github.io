@@ -17,6 +17,7 @@
   var CAPS = [];   // capability metric metadata from the data file
   var CAP = -1;    // active tab: -1 = overall Intelligence Index, else index into CAPS
   var ERAS = [];   // index era boundaries [date, note]; scores are only comparable within an era
+  var ERA_VIEW = 0; // which era the Overall frontier chart shows; defaults to the current era
 
   var models = [], retiredByName = {}, openByName = {};
   function capMeta() { return CAP >= 0 ? CAPS[CAP] : null; }
@@ -55,6 +56,7 @@
     TIERS = d.tiers.slice();
     CAPS = d.capabilities || [];
     ERAS = d.eras || [];
+    ERA_VIEW = ERAS.length;
     models = d.models.map(function (m) {
       return { name: m[0], creator: m[1], date: m[2], iq: m[3], mcost: m[4], retired: !!m[5], open: !!m[6], hist: m[7] || null, caps: m[8] || null,
                era: m[9] != null ? m[9] : (d.eras || []).length };
@@ -159,20 +161,30 @@
     var box = document.getElementById('pfc-frontier');
     if (!box) return;
     box.replaceChildren();
+    // The Overall chart shows one index era at a time (scores are only
+    // comparable within an era); the era toggle above the figure picks which.
+    // Every value in the selected view is the value in effect at the era's
+    // last day, so an old era is a frozen picture of how it ended.
+    var eraView = CAP < 0 && DATA.era_snapshots ? ERA_VIEW : ERAS.length;
+    SNAPS = (CAP < 0 && DATA.era_snapshots ? DATA.era_snapshots[eraView] : DATA.snapshots).map(function (s) { return [s[0], s[1]]; });
+    if (anim.stage >= SNAPS.length) anim.stage = SNAPS.length - 1;
     anim.groups = SNAPS.map(function () { return []; });
+    var viewEnd = SNAPS[SNAPS.length - 1][0];
+    function viewScore(m) { return CAP < 0 ? iqAt(m, viewEnd) : score(m); }
+    function viewCost(m) { return CAP < 0 ? costAt(m, viewEnd) : m.mcost; }
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 440;
     var M = { l: 56, r: 16, t: 12, b: 42 };
     var svg = frame(box, W, H, M, (CAP < 0 ? 'Intelligence Index' : metricName()) + ' versus cost per task with Pareto frontier lines every two months');
-    // Only models measured under the current index era are placed at their
-    // latest values; earlier frontiers are reconstructed from the scores in
-    // effect at the time, and models never re-scored under the current index
-    // appear only in those earlier frontiers.
-    var ms = models.filter(function (m) { return score(m) != null && m.era === ERAS.length; });
-    var allS = ms.map(score), allC = ms.map(function (m) { return m.mcost; });
-    if (CAP < 0) models.forEach(function (m) {
-      allC.push(m.mcost);
-      if (m.era < ERAS.length) allS.push(m.iq);
+    // Models appear in an era's view only if they were measured in that era
+    // (or later, for old views: their scores then are in the change history).
+    var ms = models.filter(function (m) {
+      if (CAP < 0) return m.era >= eraView && m.date <= viewEnd;
+      return score(m) != null && m.era === ERAS.length;
+    });
+    var allS = ms.map(viewScore), allC = ms.map(viewCost);
+    if (CAP < 0) ms.forEach(function (m) {
       (m.hist || []).forEach(function (h) {
+        if (h[0] > viewEnd || eraOfDate(h[0]) !== eraView) return;
         allC.push(h[1]);
         if (h.length > 2 && h[2] != null) allS.push(h[2]);
       });
@@ -212,8 +224,8 @@
       return SNAPS.length - 1;
     }
     ms.forEach(function (m) {
-      var sv = score(m);
-      var x = X(m.mcost), y = Y(sv);
+      var sv = viewScore(m), cv = viewCost(m);
+      var x = X(cv), y = Y(sv);
       var wi = windowIndex(m.date);
       var g = svgEl('g', { opacity: 0.45 });
       dot(g, x, y, 3.5, C.snap[wi], m.open);
@@ -221,8 +233,8 @@
       anim.groups[wi].push(g);
       pts.push({ x: x, y: y, snap: wi, key: m.name, rows: function () {
         var d1 = el('div', 'pfc-tt-name'); d1.textContent = m.name;
-        var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(m.mcost);
-        d2.append(s, ' per task at ' + (CAP < 0 ? 'Index ' + m.iq.toFixed(1) : metricName() + ' ' + fmtScore(sv)));
+        var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(cv);
+        d2.append(s, ' per task at ' + (CAP < 0 ? 'Index ' + sv.toFixed(1) : metricName() + ' ' + fmtScore(sv)));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
         var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
         d4.append(kd, 'in the ' + SNAPS[wi][1].replace('today', 'current') + ' window');
@@ -233,12 +245,11 @@
     SNAPS.slice().reverse().forEach(function (snap, ri) {
       var i = SNAPS.length - 1 - ri;
       var snapDate = snap[0], snapLabel = snap[1];
-      var pool = CAP < 0 ? models : ms;
-      var sub = pool.filter(function (m) {
-        return score(m) != null && m.date <= snapDate && m.era >= eraOfDate(snapDate);
+      var sub = ms.filter(function (m) {
+        return m.date <= snapDate;
       }).map(function (m) {
         var c = costAt(m, snapDate);
-        return { name: m.name, creator: m.creator, date: m.date, iq: CAP < 0 ? iqAt(m, snapDate) : score(m), mcost: c, retired: m.retired, open: m.open, current: m.mcost };
+        return { name: m.name, creator: m.creator, date: m.date, iq: CAP < 0 ? iqAt(m, snapDate) : score(m), mcost: c, retired: m.retired, open: m.open, current: viewCost(m) };
       });
       var fr = sub.filter(function (p) {
         return !sub.some(function (o) { return o.iq >= p.iq && o.mcost <= p.mcost && (o.iq > p.iq || o.mcost < p.mcost); });
@@ -262,7 +273,7 @@
           var d2 = el('div', 'pfc-tt-row');
           var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = color;
           var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(p.mcost);
-          d2.append(kd, s, ' at ' + (CAP < 0 ? 'Index ' + p.iq.toFixed(1) : metricName() + ' ' + fmtScore(p.iq)) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + ' now)' : ''));
+          d2.append(kd, s, ' at ' + (CAP < 0 ? 'Index ' + p.iq.toFixed(1) : metricName() + ' ' + fmtScore(p.iq)) + (Math.abs(p.current - p.mcost) > 1e-9 ? ' (price then; ' + fmt$(p.current) + (viewEnd === DATA.updated ? ' now)' : ' at era end)') : ''));
           var d3 = el('div', null, 'Pareto frontier as of: ' + (labels && labels.length ? labels.join('; ') : snapLabel) + ' \u00b7 ' + (p.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + p.date + (p.retired ? ' \u00b7 retired' : ''));
           return [d1, d2, d3];
         }});
@@ -275,6 +286,7 @@
     var btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'pfc-btn'; btn.id = 'pfc-frontier-toggle';
     btn.addEventListener('click', function () { setPaused(!anim.paused); });
+    btn.hidden = SNAPS.length < 2;  // a single-frontier era has nothing to animate
     ctl.append(stageLabel, btn);
     box.append(ctl);
     applyStage();
@@ -304,6 +316,31 @@
     }
   }
 
+  // ---- era views for the Overall frontier chart ----
+  function renderEraNav() {
+    var nav = document.getElementById('pfc-era-nav');
+    if (!nav) return;
+    var show = CAP < 0 && ERAS.length > 0 && DATA.era_snapshots;
+    nav.hidden = !show;
+    if (!show) return;
+    nav.replaceChildren();
+    for (var i = 0; i <= ERAS.length; i++) (function (i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      var end = DATA.era_snapshots[i][DATA.era_snapshots[i].length - 1][0];
+      b.textContent = i === ERAS.length ? 'Current index' : 'Index through ' + fmtDate(end);
+      b.setAttribute('aria-pressed', ERA_VIEW === i ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        if (ERA_VIEW === i) return;
+        ERA_VIEW = i;
+        hideTip();
+        anim.stage = 1e9;  // renderFrontier clamps to the view's last stage
+        renderEraNav(); renderFrontier();
+      });
+      nav.append(b);
+    })(i);
+  }
+
   // ---- capability tabs ----
   var leadDefault = null;
   function renderTabs() {
@@ -320,8 +357,10 @@
         if (CAP === t[1]) return;
         CAP = t[1];
         advPage = 1;
+        ERA_VIEW = ERAS.length;
         hideTip();
-        renderTabs(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances();
+        anim.stage = 1e9;
+        renderTabs(); renderEraNav(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances();
       });
       bar.append(b);
     });
@@ -626,7 +665,7 @@
       }
     }
   }
-  function renderAll() { if (!DATA) return; renderTabs(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances(); }
+  function renderAll() { if (!DATA) return; renderTabs(); renderEraNav(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances(); }
   fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     loadData(d);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll);
