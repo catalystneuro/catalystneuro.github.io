@@ -1,2 +1,5 @@
 # Netlify redirects
 /blog/pareto-frontier-cost-per-task  /blog/cost-of-intelligence-drops-100x  301
+/llm-cost-frontier/* https://llm-cost-frontier.catalystneuro.com/:splat 301!
+/llm-cost-frontier https://llm-cost-frontier.catalystneuro.com/ 301!
+/data/llm-frontier.json https://llm-cost-frontier.catalystneuro.com/data/llm-frontier.json 301!
