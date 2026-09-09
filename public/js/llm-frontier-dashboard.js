@@ -670,17 +670,15 @@
     kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
     if (list[0].open_weights) head.append(el('span', 'pfc-adv-kind pfc-adv-open', 'open weights'));
     // The pipeline renders one shareable card image per base model per day,
-    // named by the same date and slug this derives. Cards exist only for the
-    // Intelligence Index advances, so the link is hidden on capability tabs.
-    if (CAP < 0) {
-      var card = document.createElement('a');
-      card.className = 'pfc-adv-kind pfc-adv-card';
-      card.textContent = 'chart card';
-      card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
-      card.target = '_blank';
-      card.rel = 'noopener';
-      head.append(card);
-    }
+    // named by the same date and slug this derives; capability advances get
+    // their cards under a per-metric subdirectory.
+    var card = document.createElement('a');
+    card.className = 'pfc-adv-kind pfc-adv-card';
+    card.textContent = 'chart card';
+    card.href = '/llm-cost-frontier/images/advances/' + (CAP < 0 ? '' : capMeta().key + '/') + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
+    card.target = '_blank';
+    card.rel = 'noopener';
+    head.append(card);
     item.append(head);
     list.forEach(function (a) { item.append(advanceLine(a, !single)); });
     return item;
