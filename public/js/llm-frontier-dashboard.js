@@ -50,6 +50,22 @@
     ERAS.forEach(function (e) { if (e[0] <= date) n++; });
     return n;
   }
+  // Short display label for an era's index composition, from eras.json.
+  function eraShortLabel(view) {
+    if (!ERAS.length) return '';
+    if (view >= ERAS.length) return ERAS[ERAS.length - 1][2] || '';
+    return view === 0 ? (ERAS[0][3] || '') : (ERAS[view - 1][2] || '');
+  }
+  // Whether a model had been measured under the era of snapDate by that date;
+  // a model dropped at a boundary and re-measured later must not appear at
+  // its old score in between.
+  function measuredBy(m, snapDate) {
+    var e = eraOfDate(snapDate);
+    if (e === 0) return m.date <= snapDate;
+    if (!m.hist) return m.date <= snapDate && eraOfDate(m.date) === e;
+    for (var i = 0; i < m.hist.length; i++) if (m.hist[i][0] <= snapDate && eraOfDate(m.hist[i][0]) === e) return true;
+    return false;
+  }
   function loadData(d) {
     DATA = d;
     SNAPS = d.snapshots.map(function (s) { return [s[0], s[1]]; });
@@ -161,32 +177,38 @@
     var box = document.getElementById('pfc-frontier');
     if (!box) return;
     box.replaceChildren();
-    // The Overall chart shows one index era at a time (scores are only
-    // comparable within an era); the era toggle above the figure picks which.
+    // The chart shows one index era at a time on every tab; the era toggle
+    // above the figure picks which. Scores are only comparable within an era
+    // on the Overall tab, and measured costs are only comparable within an
+    // era on every tab, since a recomposition changes the evaluation suite.
     // Every value in the selected view is the value in effect at the era's
     // last day, so an old era is a frozen picture of how it ended.
-    var eraView = CAP < 0 && DATA.era_snapshots ? ERA_VIEW : ERAS.length;
-    SNAPS = (CAP < 0 && DATA.era_snapshots ? DATA.era_snapshots[eraView] : DATA.snapshots).map(function (s) { return [s[0], s[1]]; });
+    var eraView = DATA.era_snapshots ? ERA_VIEW : ERAS.length;
+    SNAPS = (DATA.era_snapshots ? DATA.era_snapshots[eraView] : DATA.snapshots).map(function (s) { return [s[0], s[1]]; });
     if (anim.stage >= SNAPS.length) anim.stage = SNAPS.length - 1;
     anim.groups = SNAPS.map(function () { return []; });
     var viewEnd = SNAPS[SNAPS.length - 1][0];
     function viewScore(m) { return CAP < 0 ? iqAt(m, viewEnd) : score(m); }
-    function viewCost(m) { return CAP < 0 ? costAt(m, viewEnd) : m.mcost; }
+    function viewCost(m) { return costAt(m, viewEnd); }
     var W = Math.max(320, Math.min(880, box.clientWidth)), H = 440;
     var M = { l: 56, r: 16, t: 12, b: 42 };
     var svg = frame(box, W, H, M, (CAP < 0 ? 'Intelligence Index' : metricName()) + ' versus cost per task with Pareto frontier lines every two months');
     // Models appear in an era's view only if they were measured in that era
     // (or later, for old views: their scores then are in the change history).
     var ms = models.filter(function (m) {
-      if (CAP < 0) return m.era >= eraView && m.date <= viewEnd;
-      return score(m) != null && m.era === ERAS.length;
+      if (CAP >= 0 && score(m) == null) return false;
+      return m.era >= eraView && measuredBy(m, viewEnd);
     });
+    if (!ms.length) {
+      box.append(el('p', 'pfc-lead', 'No current-era measurements for this metric yet.'));
+      return;
+    }
     var allS = ms.map(viewScore), allC = ms.map(viewCost);
-    if (CAP < 0) ms.forEach(function (m) {
+    ms.forEach(function (m) {
       (m.hist || []).forEach(function (h) {
         if (h[0] > viewEnd || eraOfDate(h[0]) !== eraView) return;
         allC.push(h[1]);
-        if (h.length > 2 && h[2] != null) allS.push(h[2]);
+        if (CAP < 0 && h.length > 2 && h[2] != null) allS.push(h[2]);
       });
     });
     var maxS = Math.max.apply(null, allS);
@@ -216,19 +238,24 @@
     var xt = svgEl('text', { x: (M.l + W - M.r) / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 11.5, fill: C.ink2 });
     xt.textContent = 'Cost per task (log)'; svg.append(xt);
     var yt = svgEl('text', { x: 14, y: (M.t + H - M.b) / 2, 'font-size': 11.5, fill: C.ink2, transform: 'rotate(-90 14 ' + ((M.t + H - M.b) / 2) + ')', 'text-anchor': 'middle' });
-    yt.textContent = CAP < 0 ? 'Artificial Analysis Intelligence Index' : metricName(); svg.append(yt);
+    var verLbl = CAP < 0 ? eraShortLabel(eraView) : '';
+    yt.textContent = CAP < 0 ? 'Artificial Analysis Intelligence Index' + (verLbl ? ' (' + verLbl + ')' : '') : metricName(); svg.append(yt);
 
     var pts = [];
     function windowIndex(date) {
       for (var i = 0; i < SNAPS.length; i++) if (date <= SNAPS[i][0]) return i;
       return SNAPS.length - 1;
     }
+    // Colors count back from the dark end of the ramp so the newest frontier
+    // is always the darkest, however few snapshots the era has.
+    var cOff = Math.max(0, C.snap.length - SNAPS.length);
+    function snapColor(i) { return C.snap[Math.min(C.snap.length - 1, i + cOff)]; }
     ms.forEach(function (m) {
       var sv = viewScore(m), cv = viewCost(m);
       var x = X(cv), y = Y(sv);
       var wi = windowIndex(m.date);
       var g = svgEl('g', { opacity: 0.45 });
-      dot(g, x, y, 3.5, C.snap[wi], m.open);
+      dot(g, x, y, 3.5, snapColor(wi), m.open);
       svg.append(g);
       anim.groups[wi].push(g);
       pts.push({ x: x, y: y, snap: wi, key: m.name, rows: function () {
@@ -236,7 +263,7 @@
         var d2 = el('div'); var s = el('span', 'pfc-tt-val'); s.textContent = fmt$(cv);
         d2.append(s, ' per task at ' + (CAP < 0 ? 'Index ' + sv.toFixed(1) : metricName() + ' ' + fmtScore(sv)));
         var d3 = el('div', null, m.creator + ' \u00b7 ' + (m.open ? 'open weights' : 'proprietary') + ' \u00b7 released ' + m.date + (m.retired ? ' \u00b7 retired' : ''));
-        var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = C.snap[wi];
+        var d4 = el('div', 'pfc-tt-row'); var kd = el('span', 'pfc-tt-key'); kd.style.borderTopColor = snapColor(wi);
         d4.append(kd, 'in the ' + SNAPS[wi][1].replace('today', 'current') + ' window');
         return [d1, d2, d3, d4];
       }});
@@ -246,7 +273,7 @@
       var i = SNAPS.length - 1 - ri;
       var snapDate = snap[0], snapLabel = snap[1];
       var sub = ms.filter(function (m) {
-        return m.date <= snapDate;
+        return measuredBy(m, snapDate);
       }).map(function (m) {
         var c = costAt(m, snapDate);
         return { name: m.name, creator: m.creator, date: m.date, iq: CAP < 0 ? iqAt(m, snapDate) : score(m), mcost: c, retired: m.retired, open: m.open, current: viewCost(m) };
@@ -255,7 +282,7 @@
         return !sub.some(function (o) { return o.iq >= p.iq && o.mcost <= p.mcost && (o.iq > p.iq || o.mcost < p.mcost); });
       }).sort(function (a, b) { return a.iq - b.iq; });
       if (!fr.length) return;
-      var color = C.snap[i];
+      var color = snapColor(i);
       var d = 'M ' + X(fr[0].mcost) + ' ' + Y(fr[0].iq);
       fr.forEach(function (p, j) {
         if (j < fr.length - 1) d += ' H ' + X(fr[j + 1].mcost) + ' V ' + Y(fr[j + 1].iq);
@@ -300,7 +327,7 @@
         var i = SNAPS.length - 1 - ri;
         var item = el('span', 'pfc-lk');
         var sw = el('span', 'pfc-swatch');
-        sw.style.borderTopColor = C.snap[i];
+        sw.style.borderTopColor = snapColor(i);
         item.append(sw, el('span', null, snap[1]));
         legend.append(item);
       });
@@ -313,6 +340,39 @@
       d2.style.background = C.surface; d2.style.borderColor = C.deemph;
       ret.append(d2, el('span', null, 'open weights'));
       legend.append(live, ret);
+      if (verLbl) legend.append(el('span', 'pfc-legend-ver', 'AA Intelligence Index ' + verLbl));
+    }
+  }
+
+  // ---- shareable view state in the URL hash ----
+  function hashFor() {
+    var key = CAP >= 0 ? CAPS[CAP].key : 'index';
+    if (ERAS.length && ERA_VIEW < ERAS.length && DATA.era_snapshots) {
+      var snaps = DATA.era_snapshots[ERA_VIEW];
+      return '#' + key + '-through-' + snaps[snaps.length - 1][0];
+    }
+    return CAP >= 0 ? '#' + key : '';
+  }
+  function syncHash() {
+    var h = hashFor();
+    if ((location.hash || '') === h) return;
+    history.replaceState(null, '', h || location.pathname + location.search);
+  }
+  function applyHash() {
+    var h = (location.hash || '').replace(/^#/, '');
+    if (!h || h === 'advances') return;
+    for (var i = 0; i < CAPS.length; i++) if (CAPS[i].key === h) { CAP = i; return; }
+    var m = h.match(/^([a-z]+)-through-(\d{4}-\d{2}-\d{2})$/);
+    if (m && DATA.era_snapshots) {
+      var cap = -1;
+      if (m[1] !== 'index') {
+        for (var k = 0; k < CAPS.length; k++) if (CAPS[k].key === m[1]) cap = k;
+        if (cap === -1) return;
+      }
+      for (var e = 0; e < ERAS.length; e++) {
+        var snaps = DATA.era_snapshots[e];
+        if (snaps[snaps.length - 1][0] === m[2]) { CAP = cap; ERA_VIEW = e; return; }
+      }
     }
   }
 
@@ -320,7 +380,7 @@
   function renderEraNav() {
     var nav = document.getElementById('pfc-era-nav');
     if (!nav) return;
-    var show = CAP < 0 && ERAS.length > 0 && DATA.era_snapshots;
+    var show = ERAS.length > 0 && DATA.era_snapshots;
     nav.hidden = !show;
     if (!show) return;
     nav.replaceChildren();
@@ -328,13 +388,17 @@
       var b = document.createElement('button');
       b.type = 'button';
       var end = DATA.era_snapshots[i][DATA.era_snapshots[i].length - 1][0];
-      b.textContent = i === ERAS.length ? 'Current index' : 'Index through ' + fmtDate(end);
+      var lbl = eraShortLabel(i);
+      b.textContent = i === ERAS.length
+        ? 'Index ' + (lbl || 'current') + (lbl ? ' (current)' : '')
+        : 'Index ' + (lbl ? lbl + ' ' : '') + '(through ' + fmtDate(end) + ')';
       b.setAttribute('aria-pressed', ERA_VIEW === i ? 'true' : 'false');
       b.addEventListener('click', function () {
         if (ERA_VIEW === i) return;
         ERA_VIEW = i;
         hideTip();
         anim.stage = 1e9;  // renderFrontier clamps to the view's last stage
+        syncHash();
         renderEraNav(); renderFrontier();
       });
       nav.append(b);
@@ -360,6 +424,7 @@
         ERA_VIEW = ERAS.length;
         hideTip();
         anim.stage = 1e9;
+        syncHash();
         renderTabs(); renderEraNav(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances();
       });
       bar.append(b);
@@ -605,17 +670,15 @@
     kinds.forEach(function (k) { head.append(el('span', 'pfc-adv-kind', k)); });
     if (list[0].open_weights) head.append(el('span', 'pfc-adv-kind pfc-adv-open', 'open weights'));
     // The pipeline renders one shareable card image per base model per day,
-    // named by the same date and slug this derives. Cards exist only for the
-    // Intelligence Index advances, so the link is hidden on capability tabs.
-    if (CAP < 0) {
-      var card = document.createElement('a');
-      card.className = 'pfc-adv-kind pfc-adv-card';
-      card.textContent = 'chart card';
-      card.href = '/llm-cost-frontier/images/advances/' + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
-      card.target = '_blank';
-      card.rel = 'noopener';
-      head.append(card);
-    }
+    // named by the same date and slug this derives; capability advances get
+    // their cards under a per-metric subdirectory.
+    var card = document.createElement('a');
+    card.className = 'pfc-adv-kind pfc-adv-card';
+    card.textContent = 'chart card';
+    card.href = '/llm-cost-frontier/images/advances/' + (CAP < 0 ? '' : capMeta().key + '/') + list[0].date + '-' + slugify(list[0].base || list[0].model) + '.png';
+    card.target = '_blank';
+    card.rel = 'noopener';
+    head.append(card);
     item.append(head);
     list.forEach(function (a) { item.append(advanceLine(a, !single)); });
     return item;
@@ -668,6 +731,7 @@
   function renderAll() { if (!DATA) return; renderTabs(); renderEraNav(); renderLead(); renderFrontier(); renderCapTable(); renderRecords(); renderTable(); renderAdvances(); }
   fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
     loadData(d);
+    applyHash();
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll);
     else renderAll();
   }).catch(function (err) {
