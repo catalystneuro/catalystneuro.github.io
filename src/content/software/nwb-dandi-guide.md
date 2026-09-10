@@ -367,11 +367,14 @@ Yes: upload under embargo. The data are stored and versioned privately
 and become public when you release them.
 
 **How long does a conversion take?**
-The first session of a given data type is the expensive one: days to
-weeks depending on how unusual your setup is and how good your metadata
-records are. Every session after that is a script run. Labs that
-underestimate this are usually underestimating the metadata and clock
-alignment, not the file writing.
+The first session of a given data type is the expensive one, and the
+time does not go into running NeuroConv, which takes minutes. It goes
+into gathering the relevant metadata, learning the tools, and writing
+and debugging the first conversion script: days to weeks depending on
+how unusual your setup is and how good your metadata records are.
+Every session after that is a script run. Labs that underestimate this
+are usually underestimating the metadata and clock alignment, not the
+file writing.
 
 **Can I convert at the end of the project instead?**
 You can, and it will cost you several times more. Sessions from four
