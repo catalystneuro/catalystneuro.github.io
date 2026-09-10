@@ -1,0 +1,24 @@
+---
+// /nwb-dandi-guide is the canonical short URL printed in outreach
+// emails and config. The page itself lives in the guides collection at
+// /guides/nwb-dandi-guide; forward there, preserving UTM query
+// parameters so analytics on the destination page see the campaign.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sharing Neurophysiology Data: NWB and DANDI</title>
+    <link rel="canonical" href="https://catalystneuro.com/guides/nwb-dandi-guide" />
+    <script>
+      location.replace("/guides/nwb-dandi-guide" + location.search);
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/guides/nwb-dandi-guide" />
+    </noscript>
+  </head>
+  <body>
+    <p><a href="/guides/nwb-dandi-guide">Sharing Neurophysiology Data: NWB and DANDI</a></p>
+  </body>
+</html>
