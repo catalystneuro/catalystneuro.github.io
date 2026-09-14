@@ -10,7 +10,7 @@ keywords: ["NeuroData AI Summer School", "NeuroDataReHack", "NIH", "R25", "educa
 
 The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro a five-year R25 research education grant (1R25NS149357) for the [NeuroData AI Summer School](https://neurodata-ai.org), and I am thrilled. This is the program we have run as NeuroDataReHack at [HHMI's Janelia Research Campus](https://www.janelia.org/) every summer since 2022, and for the first time it has stable, multi-year funding behind it. We can stop rebuilding it every spring and start building it properly.
 
-The school now has its own website, [neurodata-ai.org](https://neurodata-ai.org), which carries the [program announcement](https://neurodata-ai.org/blog/announcing-the-neurodata-ai-summer-school/), the faculty and advisory committee, the archive of recordings and projects from every NeuroDataReHack, and the [application for 2027](https://neurodata-ai.org/apply/), which is open until January 29, 2027. CatalystNeuro's [funded project page](/funded-projects/neurodata-ai-summer-school) has the short version.
+The school now has its own website, [neurodata-ai.org](https://neurodata-ai.org), which carries the [program announcement](https://neurodata-ai.org/blog/announcing-the-neurodata-ai-summer-school/), the faculty and advisory committee, the archive of recordings and projects from every NeuroDataReHack, and the [application for 2027](https://neurodata-ai.org/apply/), which is open until January 29, 2027.
 
 This post covers what the award funds, how the program grows, and what I think the next five years look like.
 
