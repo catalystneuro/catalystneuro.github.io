@@ -1,7 +1,7 @@
 ---
 title: "NIH R25 Award for the NeuroData AI Summer School"
 date: "2026-09-14"
-image: "/images/blog/neurodata-ai-summer-school-banner.jpg"
+image: "/images/blog/neurodata-ai-summer-school-banner.png"
 description: "NINDS has awarded us a five-year R25 grant for the NeuroData AI Summer School. After running NeuroDataReHack at HHMI-Janelia on year-to-year funding since 2022, we can finally plan for the long term. The program continues as the NeuroData AI Summer School, with its own site at neurodata-ai.org and applications for 2027 open now."
 readTime: "7 min read"
 author: "Ben Dichter"
