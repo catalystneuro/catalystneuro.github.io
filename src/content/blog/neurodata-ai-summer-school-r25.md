@@ -42,7 +42,7 @@ The Summer School is the program we have run at HHMI-Janelia every summer since 
 
 The foundation is the NWB standard and the DANDI Archive: file structure, validation, programmatic access, and search. From there participants get their hands on the analysis ecosystem that has grown up around the standard, including [SpikeInterface](https://github.com/SpikeInterface/spikeinterface) and [Kilosort](https://github.com/MouseLand/Kilosort) for spike sorting, [Pynapple](https://github.com/pynapple-org/pynapple) for time series analysis, [NeMoS](https://github.com/flatironinstitute/nemos) for fitting generalized linear models to spiking data, [Neurosift](https://neurosift.app/) for interactive visualization of remote NWB files, and imaging and behavior tools including [suite2p](https://github.com/MouseLand/suite2p) and [Facemap](https://github.com/MouseLand/facemap). Several of these tools are taught by the people who wrote them, which participants tell us every year is one of the best parts of the week.
 
-Throughout, we work with real files rather than tidy prepared examples, and that is deliberate. Nearly all the difficulty in reanalysis lives in the parts of a dataset that do not match your expectations, and you cannot learn to handle that from a sanitized notebook.
+Throughout, we work with real files rather than tidy prepared examples. Nearly all the difficulty in reanalysis lives in the parts of a dataset that do not match your expectations, and you cannot learn to handle that from a sanitized notebook.
 
 ## The AI Expansion
 
