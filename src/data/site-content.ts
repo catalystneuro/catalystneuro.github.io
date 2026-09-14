@@ -255,10 +255,9 @@ export const RESEARCH_AREAS = [
 ];
 
 // Reconcile funded-project titles with conversion `funded_project` values,
-// for the few projects whose conversions reference a shorter name. (The ASAP
-// project uses its full name "Aligning Science Across Parkinson's" on both
-// sides, so it needs no alias.)
+// for the few projects whose conversions reference a different name.
 export const FUNDED_PROJECT_ALIASES: Record<string, string> = {
   "NYU Librarians NWB Adoption": "NYU Librarians",
   "Ripple U19 NWB Adoption": "Ripple U19",
+  "ASAP NWB Adoption": "Aligning Science Across Parkinson's",
 };

@@ -5,5 +5,6 @@ status: "Released"
 type: "core"
 image: "/images/software/neuroconv_logo.png"
 github: "https://github.com/catalystneuro/neuroconv"
+paper: "https://proceedings.scipy.org/articles/cehj4257"
 docs: "https://neuroconv.readthedocs.io/"
 ---

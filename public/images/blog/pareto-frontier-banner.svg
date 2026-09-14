@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Stylized Pareto frontier lines stepping up and to the left over time">
+  <rect width="1200" height="630" fill="#101642"/>
+  <g stroke="#1b2358" stroke-width="1">
+    <line x1="0" y1="126" x2="1200" y2="126"/><line x1="0" y1="252" x2="1200" y2="252"/>
+    <line x1="0" y1="378" x2="1200" y2="378"/><line x1="0" y1="504" x2="1200" y2="504"/>
+    <line x1="240" y1="0" x2="240" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/>
+    <line x1="720" y1="0" x2="720" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/>
+  </g>
+  <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M 995 560 H 1075 V 470 H 1130 V 430 H 1200" stroke="#3f8cca" stroke-width="7" opacity="0.55"/>
+    <path d="M 760 520 H 860 V 420 H 950 V 330 H 1050 V 300 H 1200" stroke="#3f8cca" stroke-width="7" opacity="0.7"/>
+    <path d="M 500 470 H 620 V 350 H 740 V 260 H 900 V 215 H 1200" stroke="#1466a7" stroke-width="7" opacity="0.85"/>
+    <path d="M 290 400 H 430 V 280 H 590 V 190 H 800 V 150 H 1200" stroke="#7fe0f0" stroke-width="7"/>
+    <path d="M 130 330 H 300 V 210 H 500 V 130 H 760 V 88 H 1200" stroke="#22c7e6" stroke-width="9"/>
+  </g>
+  <g fill="#22c7e6">
+    <circle cx="130" cy="330" r="10"/><circle cx="300" cy="210" r="10"/>
+    <circle cx="500" cy="130" r="10"/><circle cx="760" cy="88" r="10"/>
+  </g>
+</svg>

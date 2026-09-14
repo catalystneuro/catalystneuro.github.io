@@ -47,6 +47,11 @@ const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data
         ))}
       </div>
       <p class="blog-empty" id="blog-empty" hidden>No posts match your search.</p>
+      <nav class="blog-pager" id="blog-pager" aria-label="Blog pages" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" id="blog-prev">Previous</button>
+        <div class="blog-pages" id="blog-pages"></div>
+        <button type="button" class="btn btn-ghost btn-sm" id="blog-next">Next</button>
+      </nav>
     </div>
   </section>
 </Base>
@@ -71,20 +76,69 @@ const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data
   .blog-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 0.4rem; }
   .blog-tag { background: var(--color-blue-50); color: var(--color-blue-600); }
   .blog-empty { text-align: center; color: var(--color-ink-muted); padding: 2rem; }
+  .blog-pager { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-top: 2.5rem; flex-wrap: wrap; }
+  .blog-pages { display: flex; gap: 0.35rem; }
+  .blog-pager :global(.blog-page) { min-width: 2.2rem; height: 2.2rem; padding: 0 0.5rem; border-radius: 0.5rem; border: 1px solid var(--color-line); background: var(--color-surface); color: var(--color-navy); font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer; }
+  .blog-pager :global(.blog-page:hover) { border-color: var(--color-blue); color: var(--color-blue); }
+  .blog-pager :global(.blog-page[aria-current="page"]) { background: var(--color-blue); border-color: var(--color-blue); color: #fff; }
+  .blog-pager .btn[disabled] { opacity: 0.45; cursor: default; pointer-events: none; }
 </style>
 
 <script>
+  const PAGE_SIZE = 12;
   const input = document.getElementById("blog-search") as HTMLInputElement;
   const items = Array.from(document.querySelectorAll<HTMLElement>(".blog-item"));
   const empty = document.getElementById("blog-empty");
-  input?.addEventListener("input", () => {
-    const q = input.value.trim().toLowerCase();
-    let visible = 0;
-    items.forEach((el) => {
-      const match = !q || (el.dataset.search ?? "").includes(q);
-      el.style.display = match ? "" : "none";
-      if (match) visible++;
-    });
-    if (empty) empty.hidden = visible !== 0;
-  });
+  const pager = document.getElementById("blog-pager");
+  const pages = document.getElementById("blog-pages");
+  const prev = document.getElementById("blog-prev") as HTMLButtonElement | null;
+  const next = document.getElementById("blog-next") as HTMLButtonElement | null;
+
+  let page = Math.max(1, parseInt(new URLSearchParams(location.search).get("page") ?? "1", 10) || 1);
+
+  function render(pushUrl = true) {
+    const q = input?.value.trim().toLowerCase() ?? "";
+    const matches = items.filter((el) => !q || (el.dataset.search ?? "").includes(q));
+    const total = Math.max(1, Math.ceil(matches.length / PAGE_SIZE));
+    page = Math.min(Math.max(1, page), total);
+    const start = (page - 1) * PAGE_SIZE;
+    const shown = new Set(matches.slice(start, start + PAGE_SIZE));
+    items.forEach((el) => { el.style.display = shown.has(el) ? "" : "none"; });
+    if (empty) empty.hidden = matches.length !== 0;
+
+    if (pager && pages && prev && next) {
+      pager.hidden = total <= 1;
+      prev.disabled = page === 1;
+      next.disabled = page === total;
+      pages.replaceChildren(
+        ...Array.from({ length: total }, (_, i) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.className = "blog-page";
+          b.textContent = String(i + 1);
+          b.setAttribute("aria-label", `Page ${i + 1}`);
+          if (i + 1 === page) b.setAttribute("aria-current", "page");
+          b.addEventListener("click", () => go(i + 1));
+          return b;
+        })
+      );
+    }
+
+    if (pushUrl) {
+      const url = new URL(location.href);
+      if (page > 1) url.searchParams.set("page", String(page)); else url.searchParams.delete("page");
+      history.replaceState(null, "", url);
+    }
+  }
+
+  function go(n: number) {
+    page = n;
+    render();
+    document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  input?.addEventListener("input", () => { page = 1; render(); });
+  prev?.addEventListener("click", () => go(page - 1));
+  next?.addEventListener("click", () => go(page + 1));
+  render(false);
 </script>

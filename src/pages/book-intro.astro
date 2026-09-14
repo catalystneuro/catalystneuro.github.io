@@ -1,0 +1,26 @@
+---
+// Site-owned booking redirect: the guide's CTA and other stable links
+// point here so the scheduling destination is a one-line edit in this
+// file, never a change to published content. When more than one person
+// takes intro calls, replace the single target with a small client-side
+// rotation across their personal scheduling links.
+const target = "https://calendly.com/ben-dichter/30min";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Book an intro call - CatalystNeuro</title>
+    <meta name="robots" content="noindex" />
+    <script define:vars={{ target }}>
+      location.replace(target);
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${target}`} />
+    </noscript>
+  </head>
+  <body>
+    <p><a href={target}>Book a 30-minute intro call</a></p>
+  </body>
+</html>
