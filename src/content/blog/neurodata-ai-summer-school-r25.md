@@ -62,7 +62,7 @@ HHMI's Janelia Research Campus has hosted and sponsored the program since 2022, 
 
 HHMI-Janelia sponsoring all of this is what lets us offer the program at no cost to participants. It also produces a level of sustained concentration that no distributed or virtual format I have seen comes close to. For six days, the people who can answer your question are in the building.
 
-There is one real cost to a residential program on a single campus. It caps enrollment at roughly 35 people, it asks for a week away from everything else, and it requires travel to Virginia, which is a genuine barrier for international applicants and for anyone with caregiving responsibilities. We publish the recorded lectures every year, and those carry the instruction much further than the room does. They do not carry the project work, and the project work is what participants rate as most valuable. I would far rather run an outstanding week for 35 people than a diluted one for 300, but I will not pretend the trade is free.
+There is one real cost to a residential program on a single campus. It caps enrollment at roughly 35 people, it asks for a week away from everything else, and it requires travel to Virginia, which is a genuine barrier for international applicants and for anyone with caregiving responsibilities. We publish the recorded lectures every year, so anyone in the world can benefit from this material for free.
 
 ## What Participants Said
 
