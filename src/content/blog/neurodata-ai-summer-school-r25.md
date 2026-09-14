@@ -84,13 +84,6 @@ At the end of every installment we ask participants whether they would like to l
 
 The first installment supported by this award will be held at HHMI's Janelia Research Campus in Ashburn, Virginia, from Monday, July 19 through Saturday, July 24, 2027, with participants arriving the evening of Sunday, July 18. The school is free to attend, including lodging on campus and meals. [Applications are open](https://neurodata-ai.org/apply/) until Friday, January 29, 2027 and are reviewed on a rolling basis; the application page describes who should apply, what the form asks for, and how applications are reviewed. I would encourage anyone who has been thinking about reanalyzing open data to apply.
 
-## What Five Years Lets Us Build
-
-Until now the program has run one year at a time. HHMI-Janelia's support has been generous and unwavering, but everything else was assembled annually, which meant the curriculum was largely rebuilt each spring and we could not commit to much beyond the coming summer. A five-year award changes the horizon we get to plan against, and honestly that is the part of this I am most excited about.
-
-The most immediate difference is that teaching materials can accumulate instead of resetting. Tutorials that work can be maintained and revised across installments and published as a resource that outlasts the week they were written for. We can invite faculty further in advance, give applicants an answer earlier, and build the AI strand knowing it has years to develop rather than a single slot to fill in a schedule. We can also follow what participants do after they leave, which is the only real measure of whether any of this works and something we have never been able to do properly.
-
-Five cohorts from now I expect this program to look meaningfully different from the one we ran this July, and I cannot wait to find out how.
 
 ## Acknowledgments
 
