@@ -82,7 +82,7 @@ At the end of every installment we ask participants whether they would like to l
 
 ## NeuroData AI Summer School 2027
 
-The first installment supported by this award will be held at HHMI's Janelia Research Campus in Ashburn, Virginia, from Monday, July 19 through Saturday, July 24, 2027, with participants arriving the evening of Sunday, July 18. The school is free to attend, including lodging on campus and meals. [Applications are open](https://neurodata-ai.org/apply/) until Friday, January 29, 2027 and are reviewed on a rolling basis; the application page describes who should apply, what the form asks for, and how applications are reviewed. I would encourage anyone who has been thinking about reanalyzing open data to apply.
+The first installment supported by this award will be held at HHMI's Janelia Research Campus in Ashburn, Virginia, from Monday, July 19 through Saturday, July 24, 2027, with participants arriving the evening of Sunday, July 18. The school is free to attend, including lodging on campus and meals. [Applications are open](https://neurodata-ai.org/apply/) until Friday, January 29, 2027 and are reviewed on a rolling basis; the application page describes who should apply and what the form asks for. I would encourage anyone who has been thinking about reanalyzing open data to apply.
 
 
 ## Acknowledgments
