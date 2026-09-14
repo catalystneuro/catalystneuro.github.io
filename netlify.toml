@@ -23,3 +23,10 @@
 
 # Astro emits real static pages for every route, so no SPA catch-all is needed.
 # A 404.html is generated automatically for unmatched paths.
+
+# The August 2026 announcement draft linked the NeuroData AI funded-project page
+# under a slug with the grant mechanism appended.
+[[redirects]]
+  from = "/funded-projects/neurodata-ai-summer-school-r25"
+  to = "/funded-projects/neurodata-ai-summer-school"
+  status = 301
