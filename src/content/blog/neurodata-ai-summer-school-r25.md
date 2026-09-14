@@ -54,7 +54,7 @@ We are not starting from zero here. The [2026 workshop](https://nwb.org/events/h
 
 Two other programs cover adjacent ground and both are excellent. [Neuromatch Academy](https://neuromatch.io/) teaches computational neuroscience and, more recently, NeuroAI, at a far larger scale and with no travel required. [NeuroHackademy](https://neurohackademy.org/) covers scientific computing, reproducibility, and data science for neuroimaging.
 
-We do something narrower: reanalysis of neurophysiology data in the NWB format on the DANDI Archive, for people who arrive already having a programming background and some neurophysiology behind them. We schedule around these programs on purpose, so that anyone who would benefit from more than one can attend more than one.
+We do something specific: reanalysis of neurophysiology data in the NWB format on the DANDI Archive, for people who arrive already having a programming background and some neurophysiology behind them. We schedule around these programs on purpose, so that anyone who would benefit from more than one can attend more than one.
 
 ## Partnership with HHMI-Janelia
 
