@@ -21,7 +21,7 @@ const showToc = toc.length >= 2;
 <Base title={g.data.name} description={g.data.description}>
   <article class="post">
     <header class="post-head">
-      <div class="container-x post-head-inner">
+      <div class:list={["container-x", "post-head-inner", { "has-toc": showToc }]}>
         <a href="/guides" class="post-back"><Icon name="arrow" size={15} class="flip" /> All guides</a>
         <span class="eyebrow">Guide</span>
         <h1>{g.data.name}</h1>
@@ -102,7 +102,7 @@ const showToc = toc.length >= 2;
 <style>
   .post-head { padding: 3rem 0 1.5rem; }
   .post-head-inner { max-width: 46rem; margin-inline: auto; }
-  .post-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-blue); margin-bottom: 1.4rem; }
+  .post-back { display: flex; width: fit-content; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-blue); margin-bottom: 1.4rem; }
   .post-back :global(.flip) { transform: rotate(180deg); }
   .post-head .eyebrow { margin-bottom: 0.8rem; }
   .post-head h1 { font-size: clamp(2rem, 4.5vw, 2.8rem); }
@@ -137,6 +137,15 @@ const showToc = toc.length >= 2;
       justify-content: center;
       column-gap: 3.5rem;
     }
+    /* The title block uses the same two-column grid so its left edge
+       lines up with the article column below it. */
+    .post-head-inner.has-toc {
+      max-width: none; display: grid;
+      grid-template-columns: minmax(0, 46rem) 14rem;
+      justify-content: center; column-gap: 3.5rem;
+    }
+    .post-head-inner.has-toc > * { grid-column: 1; }
+    .post-head-inner.has-toc .post-doc { justify-self: start; }
     .toc-inline { display: none; }
     .post-prose { margin-inline: 0; }
     .toc-side { display: block; }
