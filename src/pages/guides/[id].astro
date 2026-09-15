@@ -10,7 +10,13 @@ export async function getStaticPaths() {
 }
 
 const { g } = Astro.props;
-const { Content } = await render(g);
+const { Content, headings } = await render(g);
+
+// The table of contents lists the section headings (h2) and their
+// subsections (h3). Deeper levels are too fine-grained to navigate by,
+// and a lone heading is not worth a table of contents.
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const showToc = toc.length >= 2;
 ---
 <Base title={g.data.name} description={g.data.description}>
   <article class="post">
@@ -24,14 +30,74 @@ const { Content } = await render(g);
       </div>
     </header>
 
-    <div class="container-x post-wrap">
+    <div class:list={["container-x", "post-wrap", { "has-toc": showToc }]}>
+      {showToc && (
+        <details class="toc-inline">
+          <summary><span class="eyebrow eyebrow--plain">On this page</span></summary>
+          <ol class="toc-list">
+            {toc.map((h) => (
+              <li class={`toc-d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ol>
+        </details>
+      )}
+
       <div class="prose post-prose">
         <Content />
       </div>
+
+      {showToc && (
+        <aside class="toc-side" aria-label="Table of contents">
+          <nav class="toc-side-inner">
+            <span class="eyebrow eyebrow--plain">On this page</span>
+            <ol class="toc-list">
+              {toc.map((h) => (
+                <li class={`toc-d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+      )}
     </div>
   </article>
   <GalleryRuntime />
 </Base>
+
+<script>
+  // Highlight the sidebar entry for the section currently in view. The
+  // "current" section is the last heading that has scrolled past the
+  // top of the viewport (allowing for the sticky site header).
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".toc-side a[href^='#']"));
+  if (links.length) {
+    const targets = links
+      .map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+      .filter((el): el is HTMLElement => el !== null);
+    const offset = 96; // matches html { scroll-padding-top: 6rem }
+    let current: HTMLAnchorElement | null = null;
+
+    const update = () => {
+      let active = targets[0];
+      for (const el of targets) {
+        if (el.getBoundingClientRect().top - offset <= 1) active = el;
+        else break;
+      }
+      const link = links.find((a) => decodeURIComponent(a.hash.slice(1)) === active?.id) ?? null;
+      if (link === current) return;
+      current?.removeAttribute("aria-current");
+      link?.setAttribute("aria-current", "true");
+      current = link;
+    };
+
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+</script>
 
 <style>
   .post-head { padding: 3rem 0 1.5rem; }
@@ -44,4 +110,50 @@ const { Content } = await render(g);
   .post-doc { margin-top: 1.4rem; }
   .post-wrap { padding-top: 2rem; }
   .post-prose { max-width: 46rem; margin-inline: auto; }
+
+  /* Table of contents: shared list styling. */
+  .toc-list { list-style: none; margin: 0; padding: 0; font-size: 0.88rem; line-height: 1.4; }
+  .toc-list li + li { margin-top: 0.45rem; }
+  .toc-list .toc-d3 { padding-left: 0.9rem; }
+  .toc-list a { color: var(--color-ink-muted); text-decoration: none; display: block; }
+  .toc-list a:hover { color: var(--color-blue); }
+
+  /* Narrow screens: a collapsible list above the article. */
+  .toc-inline { max-width: 46rem; margin: 0 auto 2rem; padding: 0.9rem 1.2rem; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 0.7rem; }
+  .toc-inline summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  .toc-inline summary::-webkit-details-marker { display: none; }
+  .toc-inline summary::after { content: "+"; font-family: var(--font-mono); color: var(--color-blue); }
+  .toc-inline[open] summary::after { content: "\2212"; }
+  .toc-inline summary .eyebrow { margin: 0; }
+  .toc-inline .toc-list { margin-top: 0.9rem; }
+
+  /* Wide screens: the article keeps its centered 46rem column and the
+     table of contents sits in the margin to its right, following the
+     reader down the page. */
+  .toc-side { display: none; }
+  @media (min-width: 1100px) {
+    .post-wrap.has-toc {
+      display: grid;
+      grid-template-columns: minmax(0, 46rem) 14rem;
+      justify-content: center;
+      column-gap: 3.5rem;
+    }
+    .toc-inline { display: none; }
+    .post-prose { margin-inline: 0; }
+    .toc-side { display: block; }
+    .toc-side-inner {
+      position: sticky; top: 6rem;
+      max-height: calc(100vh - 7rem); overflow-y: auto;
+      padding-left: 1rem; border-left: 1px solid var(--color-line);
+    }
+    .toc-side .eyebrow { margin-bottom: 0.9rem; }
+    .toc-side .toc-list a { position: relative; padding-left: 0; transition: color 0.15s ease; }
+    .toc-side .toc-list a::before {
+      content: ""; position: absolute; left: calc(-1rem - 1px); top: 0.2em; bottom: 0.2em;
+      width: 2px; background: var(--color-blue); opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .toc-side .toc-list a[aria-current="true"] { color: var(--color-navy); font-weight: 500; }
+    .toc-side .toc-list a[aria-current="true"]::before { opacity: 1; }
+  }
 </style>
