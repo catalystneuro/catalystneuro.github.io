@@ -4,7 +4,7 @@ funder: "Michael J. Fox Foundation"
 status: "active"
 startDate: "2025-08-01"
 description: "Turning GuPPy, the Lerner Lab's fiber photometry analysis tool, into a sustainable platform for Parkinson's disease research"
-image: "/images/software/guppy_logo.png"
+image: "https://raw.githubusercontent.com/LernerLab/GuPPy/main/assets/GuppyLogo.png"
 github:
   - "https://github.com/LernerLab/GuPPy"
 ---
