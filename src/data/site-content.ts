@@ -1,7 +1,6 @@
 // Content that lived hardcoded in the old site's components, externalized here.
 
 export const HERO = {
-  eyebrow: "Open-source neurophysiology tools",
   titleTop: "Empowering neurophysiology data",
   titleAccent: "for open science",
   body: "We help research labs standardize, share, and publish their neurophysiology data through custom software solutions and expert consulting.",
