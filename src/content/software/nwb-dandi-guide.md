@@ -405,11 +405,6 @@ Check the extension catalog first; someone has often had the same
 problem. If not, an extension is the supported route, and the help desk
 will point you at examples.
 
-**Who in my lab should do this?**
-Whoever runs the pipeline, not the newest rotation student. It is a
-software task with a data-provenance component, and it needs someone
-who knows the rig.
-
 ## Talk It Through
 
 If you would rather work through this with us, we offer a free
