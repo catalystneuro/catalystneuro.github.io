@@ -293,12 +293,6 @@ them. The Dandiset becomes public when you un-embargo it, which you do
 at publication, or by the end of the award period, per NIH's
 expectation.
 
-Embargo is the mechanism that lets you comply and still control the
-timing of your first paper. Use it. The failure mode we see is not labs
-that share too early; it is labs that plan to share "when the paper is
-out," never set anything up, and then face a conversion of four years
-of heterogeneous data under deadline.
-
 ### What to Write in Your DMS Plan
 
 If you are still drafting or revising a plan, the paragraph that
