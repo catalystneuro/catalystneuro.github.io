@@ -309,8 +309,7 @@ lab looks roughly like this:
 > the resulting publications. Conversion and analysis code will be
 > released in a public repository under an open license.
 
-Adapt it to what you will actually do. A plan you do not follow is
-worse than a modest plan you do.
+Adapt it to what you will actually do.
 
 ## Where to Get Help
 
