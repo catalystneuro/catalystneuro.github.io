@@ -39,7 +39,7 @@ For neurophysiology, the domain repository is the
 [Data and Knowledge Resources](https://www.nih.gov/brain/research/data-knowledge-resources)
 page as the BRAIN Initiative archive for neurophysiology data.
 
-## What NWB Is
+## The Neurodata Without Borders (NWB) Data Standard for Neurophysiology
 
 **Neurodata Without Borders (NWB)** is a data standard for
 cellular-level neurophysiology. It is the standard NIH BRAIN Initiative
