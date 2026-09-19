@@ -369,9 +369,11 @@ are usually underestimating the metadata and clock alignment, not the
 file writing.
 
 **Can I convert at the end of the project instead?**
-You can, and it will cost you several times more. Sessions from four
-years ago come with missing notes, departed personnel, and formats from
-two acquisition-software versions ago.
+You can, but this is usually harder. It would be best to at least
+convert a session of data at the start so you understand the process.
+It's even better if you convert all of your data and then write your
+analysis based on the NWB files. Then you can share your analysis tools
+and they may be useful for other NWB data.
 
 **What about human subjects data?**
 DANDI does not support HIPAA-compliant data sharing. All human data
