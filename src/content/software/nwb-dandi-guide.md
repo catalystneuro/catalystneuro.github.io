@@ -8,14 +8,14 @@ docs: "https://docs.dandiarchive.org/"
 You have a new NIH award, and in the application you committed to
 sharing the data it produces. This page explains our recommendations
 for sharing neurophysiology data: extracellular electrophysiology,
-intracellular recording, patch clamp recordings, calcium imaging, fiber
+intracellular and patch clamp recordings, calcium imaging, fiber
 photometry, and the behavioral data that accompanies them. It covers
 what NIH expects, what the Neurodata Without Borders (NWB) format is,
 how to convert your data with NeuroConv, how to check the result, and
 how to publish it on the DANDI Archive.
 
 It is written for the PI who has to make a plan and for the person in
-the lab who will actually do the work.
+the lab who will do the work.
 
 ## What the NIH Data Sharing Policy Expects
 
@@ -30,18 +30,18 @@ Plan with the application. NIH's guidance on selecting a repository
 sets out desirable characteristics: persistent unique identifiers,
 long-term sustainability, rich metadata, curation and quality
 assurance, documented access and reuse terms, provenance, and a
-retention policy. A lab website, a shared Google Drive, and "available
-upon reasonable request" satisfy none of these. A domain repository
-does.
+retention policy. A lab website, a shared Google Drive, or "available
+upon reasonable request" meets none of these criteria, and a domain
+repository meets all of them.
 
 For neurophysiology, the domain repository is the
-[**DANDI Archive**](https://dandiarchive.org), listed on NIH's own
+[DANDI Archive](https://dandiarchive.org), listed on NIH's own
 [Data and Knowledge Resources](https://www.nih.gov/brain/research/data-knowledge-resources)
 page as the BRAIN Initiative archive for neurophysiology data.
 
-## What NWB Is
+## The Neurodata Without Borders (NWB) Data Standard for Neurophysiology
 
-**Neurodata Without Borders (NWB)** is a data standard for
+Neurodata Without Borders (NWB) is a data standard for
 cellular-level neurophysiology. It is the standard NIH BRAIN Initiative
 projects use and the one DANDI is built around.
 
@@ -57,8 +57,10 @@ you will care about:
 
 - **Acquisition**: raw acquired signals, such as `ElectricalSeries` for
   extracellular voltage traces, `PatchClampSeries` and its subclasses
-  for intracellular recording, and `ImageSeries` / `TwoPhotonSeries`
-  for imaging.
+  for intracellular recording, `ImageSeries` / `TwoPhotonSeries`
+  for imaging, and `FiberPhotometryResponseSeries` (from the
+  [ndx-fiber-photometry](https://github.com/catalystneuro/ndx-fiber-photometry)
+  extension) for photometry.
 - **Stimulus**: what you presented and when.
 - **Processing modules**: derived results in conventional locations. An
   `ecephys` module holds spike sorting output, an `ophys` module holds
@@ -74,7 +76,7 @@ you will care about:
   identifier, session start time with timezone, experimenter,
   description, and related publications.
 
-**Time alignment is explicit.** Data streams do not need to be
+Time alignment in NWB is explicit. Data streams do not need to be
 resampled to a common sampling rate, but they do need to be expressed
 in relation to a common timebase, either as a start time plus a
 sampling rate or as an explicit timestamps array. Much of the real work
@@ -82,13 +84,13 @@ in a conversion is establishing that alignment between the acquisition
 system, the imaging clock, and the behavioral rig. You will need to
 perform alignment before writing to NWB.
 
-**The standard is extensible.** If you have a data type the core schema
+The standard is extensible. If you have a data type the core schema
 does not cover, the supported route is a Neurodata Extension (NDX), not
 a free-text field. There is a
 [catalog of existing extensions](https://nwb-extensions.github.io/);
 check it before writing one.
 
-### Acquisition
+### Writing NWB During Acquisition
 
 [AqNWB](https://github.com/NeurodataWithoutBorders/aqnwb) is a C++ API
 for writing NWB directly from acquisition systems, so recording
@@ -99,11 +101,12 @@ becomes a routine part of the pipeline instead of a project at the end.
 
 ## Converting Your Data: NeuroConv
 
-[**NeuroConv**](https://neuroconv.readthedocs.io/) is an open-source
+[NeuroConv](https://neuroconv.readthedocs.io/) is an open-source
 Python library that simplifies conversion from common neurophysiology
 formats. It supports automatic conversion from a long list of
-proprietary and open acquisition formats into NWB (currently 62 as of
-this writing). See the
+proprietary and open formats into NWB (about 70 as of September 2026),
+covering acquisition systems, spike sorters, segmentation tools, pose
+estimation, and behavioral software. See the
 [Conversion Gallery](https://neuroconv.readthedocs.io/en/stable/conversion_examples_gallery/index.html)
 for a full list of supported formats and example code for how to
 install and use them.
@@ -127,15 +130,21 @@ The workflow is the same regardless of the sources:
    others to it; do not assume two systems that started "at the same
    time" agree.
 5. **Run it once per session.** The conversion script becomes part of
-   your pipeline, and each new session costs you nothing.
+   your pipeline, and each new session is a script run.
 
 The [NWB Assistant](https://nwb-assistant.neurosift.app/chat) is a
 chatbot that has access to all the NeuroConv docs and can help with
-your conversion. Just ask it a question like "How do I convert SpikeGLX
+your conversion. Ask it a question like "How do I convert SpikeGLX
 data to NWB" and it will guide you through the process. Or you can work
 through the
 [User Guide](https://neuroconv.readthedocs.io/en/stable/user_guide/index.html)
 yourself.
+
+If no one in the lab writes Python,
+[NWB GUIDE](https://nwb-guide.readthedocs.io/) is a desktop application
+built on NeuroConv that walks you through the same steps in a graphical
+interface, from selecting formats and entering metadata through
+inspection and upload to DANDI.
 
 ### Custom Data
 
@@ -159,17 +168,13 @@ to the file using [PyNWB](https://pynwb.readthedocs.io/) or
 - **Do not throw away the raw files** when you convert. NWB is the
   shareable representation, not a replacement for your archive.
 
-## Checking Your Files: Validation, NWB Inspector, and Your Own Eyes
+## Checking Your Files
 
-There are three distinct checks, and you want all of them: schema
-validation, best-practice review, and actually looking at the data.
-
-**Schema validation** answers "is this a structurally valid NWB file?"
-It is built into PyNWB and it is a hard pass/fail.
-
-**NWB Inspector** is a library of checks that scans NWB files for
-common issues. The goal is to automatically inspect NWB files for
-inconsistent or missing metadata.
+Schema validation answers "is this a structurally valid NWB file?" It
+is built into PyNWB and it is a hard pass/fail. NWB Inspector goes
+further: it scans files for missing or inconsistent metadata and for
+departures from NWB best practices, and it runs schema validation as
+part of the same pass.
 
 Inspector findings are graded by importance, from critical problems
 down to suggestions. Run it on your first converted session, fix what
@@ -223,28 +228,33 @@ can assemble the notebook by copying the snippets for the objects you
 care about. Keep the notebook next to the conversion script and rerun
 it on a sample session from each conversion batch.
 
+Once the data are public, the same notebook is a useful starting point
+for anyone reusing them. You can contribute it to
+[DANDI Notebooks](https://notebooks.dandiarchive.org), which indexes
+example notebooks alongside the dandisets they analyze.
+
 ## Publishing on DANDI
 
-The **DANDI Archive** ([dandiarchive.org](https://dandiarchive.org)) is
+The DANDI Archive ([dandiarchive.org](https://dandiarchive.org)) is
 a public repository for cellular neurophysiology data, funded by the
 NIH BRAIN Initiative. It is free to deposit and free to download, and
 it is designed around NWB and [BIDS](https://bids.neuroimaging.io/).
 
-A dataset on DANDI is a **Dandiset**: a collection of NWB files with
+A dataset on DANDI is a Dandiset: a collection of NWB files with
 dataset-level metadata (description, contributors, funding including
 your award number, species, techniques, license). It has a persistent
 identifier from the moment you create it.
 
-The [DANDI documentation](https://docs.dandiarchive.org/) is good, and
-we will not duplicate it. What follows is the map: what the steps are,
-which ones deserve strategy, and where the manual for each one lives.
+The [DANDI documentation](https://docs.dandiarchive.org/) covers each
+step in detail, and each step below links to the relevant page.
 
 ### The Deposit Workflow
 
 1. **Create an account**
    ([docs](https://docs.dandiarchive.org/getting-started/creating-account/)).
-   DANDI accounts are created through GitHub; you get an API key from
-   your DANDI profile page.
+   You sign in to DANDI with GitHub, and new accounts are reviewed,
+   usually within a day. Once you are approved, your API key is on
+   dandiarchive.org under your initials in the upper right.
 2. **Create a Dandiset**
    ([docs](https://docs.dandiarchive.org/user-guide-sharing/creating-dandiset/))
    through the web interface. Do this early: you can cite the
@@ -256,8 +266,8 @@ which ones deserve strategy, and where the manual for each one lives.
    `dandi validate` catches problems before you spend bandwidth.
 4. **Upload**
    ([docs](https://docs.dandiarchive.org/user-guide-sharing/uploading-data/))
-   with `dandi upload`. Large uploads resume; you are not going to lose
-   a week to a dropped connection.
+   with `dandi upload`. If an upload is interrupted, running the command
+   again skips the files that already finished.
 5. **Complete the dandiset metadata**
    ([docs](https://docs.dandiarchive.org/user-guide-sharing/dandiset-metadata/)).
    After upload, go back to the web interface and fill in the
@@ -271,9 +281,9 @@ which ones deserve strategy, and where the manual for each one lives.
 
 ### Draft Versus Published Versions, and DOIs
 
-A Dandiset has a mutable **draft** version that you keep editing, and
-immutable **published versions** that you create when you want a fixed,
-citable snapshot. Publishing a version mints a **DOI** for that
+A Dandiset has a mutable draft version that you keep editing, and
+immutable published versions that you create when you want a fixed,
+citable snapshot. Publishing a version mints a DOI for that
 version. That DOI is what goes in your paper, your RPPR, and your data
 availability statement. Because versions are immutable, a reader who
 follows the DOI in your 2027 paper sees exactly the data you analyzed,
@@ -285,7 +295,7 @@ DMS Plan, and it is the evidence of compliance you will be asked for.
 ### Embargo
 
 You do not have to make data public the day you upload it. DANDI
-supports **embargoed Dandisets** (chosen when you
+supports embargoed Dandisets (chosen when you
 [create the dandiset](https://docs.dandiarchive.org/user-guide-sharing/creating-dandiset/)):
 you supply the NIH award number, the data are uploaded and stored
 privately, and only you and collaborators you grant access can see
@@ -309,13 +319,13 @@ lab looks roughly like this:
 > the resulting publications. Conversion and analysis code will be
 > released in a public repository under an open license.
 
-Adapt it to what you will actually do. A plan you do not follow is
-worse than a modest plan you do.
+Adapt it to the data types and timeline of your project, and commit
+only to what the lab will do.
 
 ## Where to Get Help
 
-All of this is open source with an active community, and asking is
-usually faster than reading.
+All of these tools are open source, and their developers answer
+questions in public forums.
 
 - [**NWB Overview documentation**](https://nwb-overview.readthedocs.io/):
   the entry point for the format, the Python and MATLAB APIs, and
@@ -351,7 +361,7 @@ staff, and anyone reusing your data will notice the difference.
 Ultimately, the requirements and expectations for your grant will be
 determined by your NIH program officer.
 
-**When do I actually have to share?**
+**When do I have to share?**
 No later than the time of the associated publication or the end of the
 award period, whichever comes first, unless your funding opportunity or
 Notice of Award says something stricter, which BRAIN awards often do.
@@ -371,13 +381,12 @@ are usually underestimating the metadata and clock alignment, not the
 file writing.
 
 **Can I convert at the end of the project instead?**
-You can, and it will cost you several times more. Sessions from four
-years ago come with missing notes, departed personnel, and formats from
+You can, but it takes much longer. Sessions from four years ago come with missing notes, departed personnel, and formats from
 two acquisition-software versions ago.
 
 **What about human subjects data?**
 DANDI does not support HIPAA-compliant data sharing. All human data
-must be de-identified before upload. In practice that means removing
+must be de-identified before upload. That means removing
 all HIPAA identifiers before conversion: no names or medical record
 numbers anywhere in the file (including free-text descriptions and file
 names), ages instead of birth dates, and session dates shifted or
@@ -406,16 +415,15 @@ problem. If not, an extension is the supported route, and the help desk
 will point you at examples.
 
 **Who in my lab should do this?**
-Whoever runs the pipeline, not the newest rotation student. It is a
-software task with a data-provenance component, and it needs someone
-who knows the rig.
+The person who runs the lab's data pipeline and knows the rig. It is a
+software task with a data-provenance component, so it goes poorly when
+handed to someone new to the lab.
 
 ## Talk It Through
 
-If you would rather work through this with us, we offer a free
+If you want to work through this with us, we offer a free
 30-minute call for newly funded labs. It is educational: what the
-sharing requirements mean for the data types you are actually
-collecting, what a conversion would involve for your rig, and what the
+sharing requirements mean for the data types you are collecting, what a conversion would involve for your rig, and what the
 shortest path to a deposit looks like. No obligation and no preparation
 needed.
 
