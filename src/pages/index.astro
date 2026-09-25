@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import SignalField from "../components/SignalField.astro";
 import Newsletter from "../components/Newsletter.astro";
+import { longDate } from "../lib/format";
 import {
   HERO, STAT_LABELS, WHY, SERVICES, PARTNERS, INSTITUTIONS, FEATURED, TESTIMONIALS,
 } from "../data/site-content";
@@ -131,7 +132,7 @@ const serviceIcons = ["database", "code", "spark"];
       </div>
       <div class="logo-row">
         {PARTNERS.logos.map((l) => (
-          <img src={l.src} alt={l.name} title={l.name} class="logo-img" loading="lazy" />
+          <img src={l.src} alt={l.name} title={l.name} class="logo-img" style={`height:${l.height}px`} loading="lazy" />
         ))}
       </div>
 
@@ -171,7 +172,7 @@ const serviceIcons = ["database", "code", "spark"];
     <div class="container-x">
       {TESTIMONIALS.map((t) => (
         <figure class="quote">
-          <div class="quote-mark" aria-hidden="true">"</div>
+          <div class="quote-mark" aria-hidden="true">&ldquo;</div>
           <blockquote>{t.quote}</blockquote>
           <figcaption>
             <span class="quote-name">{t.name}</span>
@@ -197,7 +198,7 @@ const serviceIcons = ["database", "code", "spark"];
           <a href={`/blog/${p.id}`} class="card card-hover post-card">
             {p.data.image && <div class="post-img"><img src={p.data.image} alt={p.data.title} loading="lazy" /></div>}
             <div class="post-body">
-              <span class="post-date">{p.data.date}{p.data.readTime ? ` · ${p.data.readTime}` : ""}</span>
+              <span class="post-date">{longDate(p.data.date)}{p.data.readTime ? ` · ${p.data.readTime}` : ""}</span>
               <h3>{p.data.title}</h3>
               <p>{p.data.description}</p>
             </div>
@@ -248,9 +249,6 @@ const serviceIcons = ["database", "code", "spark"];
 
   /* Section scaffolding */
   .section { padding: 5rem 0; }
-  .section--alt { background: var(--color-surface); border-block: 1px solid var(--color-line); }
-  .section-title { font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-top: 0.8rem; max-width: 20ch; }
-  .section-lead { margin-top: 1rem; max-width: 42rem; color: var(--color-ink-muted); font-size: 1.08rem; line-height: 1.6; }
 
   /* WHY */
   .why-grid { margin-top: 3rem; display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
@@ -278,9 +276,8 @@ const serviceIcons = ["database", "code", "spark"];
 
   /* LOGOS */
   .logos-head { text-align: center; }
-  .logo-row { margin-top: 1.6rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2.5rem 3rem; }
-  .logo-img { height: 42px; width: auto; max-width: 130px; object-fit: contain; filter: grayscale(1); opacity: 0.6; transition: all 0.2s; }
-  .logo-img:hover { filter: grayscale(0); opacity: 1; }
+  .logo-row { margin-top: 2rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem 3.5rem; }
+  .logo-img { width: auto; max-width: 170px; object-fit: contain; opacity: 0.8; }
   .inst-head { margin-top: 4.5rem; text-align: center; }
   .inst-head .section-title { margin-inline: auto; }
   /* The hairline grid is drawn by each cell outlining itself into the 1px gap,
@@ -328,6 +325,7 @@ const serviceIcons = ["database", "code", "spark"];
   /* CTA */
   .cta-band { display: grid; gap: 2.5rem; grid-template-columns: 1fr; align-items: center; }
   @media (min-width: 860px) { .cta-band { grid-template-columns: 1.2fr 1fr; } }
+  .cta-copy .btn { margin-top: 1.8rem; }
   .cta-news { padding: 2rem; }
 </style>
 

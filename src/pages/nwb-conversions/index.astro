@@ -76,10 +76,12 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
           <option value="">All projects</option>
           {fundedList.map((f) => <option value={f}>{f}</option>)}
         </select>
-        <button id="cv-reset" class="btn btn-ghost btn-sm cv-reset" hidden>Clear <Icon name="close" size={14} /></button>
       </div>
 
-      <p class="cv-count" id="cv-count">{items.length} labs</p>
+      <div class="cv-status">
+        <p class="cv-count" id="cv-count">{items.length} labs</p>
+        <button id="cv-reset" class="btn btn-ghost btn-sm cv-reset" hidden>Clear filters <Icon name="close" size={14} /></button>
+      </div>
 
       <div class="pcard-grid" id="cv-grid">
         {items.map((c) => (
@@ -137,14 +139,19 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
 </Base>
 
 <style>
-  .cv-controls { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.2rem; }
-  .cv-search { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 18rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
+  /* Search takes the full first row; the five facet filters share the second
+     as equal columns, so no single select is left wrapping onto a row alone. */
+  .cv-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; margin-bottom: 1.4rem; }
+  @media (max-width: 759px) { .cv-select:last-of-type { grid-column: 1 / -1; } }
+  @media (min-width: 760px) { .cv-controls { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .cv-status { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.1rem; margin-bottom: 1.2rem; }
+  .cv-status .cv-count { margin-bottom: 0; }
+  .cv-search { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
   .cv-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
   .cv-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.92rem; color: var(--color-navy); }
-  .cv-select { padding: 0.55rem 0.8rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-navy); cursor: pointer; max-width: 12rem; }
+  .cv-select { padding: 0.55rem 0.8rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background-color: var(--color-surface); font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-navy); cursor: pointer; width: 100%; min-width: 0; }
   .cv-select:focus { outline: none; border-color: var(--color-blue); }
-  .cv-select.is-set { border-color: var(--color-blue); background: var(--color-blue-50); color: var(--color-blue-600); font-weight: 500; }
-  .cv-reset { align-self: center; }
+  .cv-select.is-set { border-color: var(--color-blue); background-color: var(--color-blue-50); color: var(--color-blue-600); font-weight: 500; }
   .cv-dandi { color: var(--color-blue); }
   .cv-title { color: inherit; }
   .cv-title:hover { color: var(--color-blue); }
