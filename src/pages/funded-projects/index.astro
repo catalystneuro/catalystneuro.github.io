@@ -52,7 +52,7 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
               {p.data.image && <img src={p.data.image} alt={p.data.funder} class="fp-logo" loading="lazy" />}
             </div>
             <h3>{p.data.title}</h3>
-            <p class="fp-funder">{p.data.funder} · Started {monthYear(p.data.startDate)}</p>
+            <p class="fp-funder">{p.data.funder} <span class="fp-date">· Started {monthYear(p.data.startDate)}</span></p>
             <p class="fp-desc">{p.data.description}</p>
           </a>
         ))}
@@ -69,11 +69,11 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
 </Base>
 
 <style>
-  .fp-controls { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.2rem; }
+  .fp-controls { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.4rem; }
   .fp-search { display: flex; align-items: center; gap: 0.5rem; flex: 1 1 16rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
   .fp-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
   .fp-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.92rem; color: var(--color-navy); }
-  .fp-select { padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); font-family: var(--font-sans); font-size: 0.9rem; color: var(--color-navy); cursor: pointer; }
+  .fp-select { padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background-color: var(--color-surface); font-family: var(--font-sans); font-size: 0.9rem; color: var(--color-navy); cursor: pointer; max-width: 20rem; }
   .fp-select:focus { outline: none; border-color: var(--color-blue); }
   .fp-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
   @media (min-width: 720px) { .fp-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -81,7 +81,8 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
   .fp-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; min-height: 55px; }
   .fp-logo { max-height: 55px; max-width: 156px; object-fit: contain; }
   .fp-card h3 { font-size: 1.25rem; }
-  .fp-funder { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.03em; margin: 0.5rem 0 0.8rem; }
+  .fp-funder { font-size: 0.85rem; color: var(--color-blue); margin: 0.35rem 0 0.8rem; }
+  .fp-date { color: var(--color-ink-soft); }
   .fp-desc { color: var(--color-ink-muted); font-size: 0.93rem; }
   .fp-empty { text-align: center; color: var(--color-ink-muted); padding: 2rem; }
 </style>
