@@ -3,8 +3,10 @@ title: "NWB Community Liaison"
 funder: "Kavli Foundation"
 status: "completed"
 startDate: "2022-01-01"
-description: "Supporting NWB community engagement and adoption through dedicated liaison role"
+description: "Kavli Foundation support through Lawrence Berkeley National Laboratory for Ben Dichter's role as the NWB community liaison"
 image: "/images/sponsors/kavli_foundation_logo.png"
 ---
 
-The Kavli Foundation supported Ben Dichter's role as the NWB Community Liaison, facilitating communication and collaboration between neuroscience laboratories, tool developers, and the broader NWB community. This position was central to driving the adoption of standardized data practices in neuroscience research.
+The Kavli Foundation, which launched Neurodata Without Borders in 2014, has supported community engagement, outreach, and software development for NWB at Lawrence Berkeley National Laboratory since 2019, in a program led by Oliver Rübel. Through that program it supports Ben Dichter, the founder of CatalystNeuro, as the NWB community liaison, the person who connects the NWB developers with the labs that adopt the standard and the tool builders who work on top of it.
+
+Much of the role is carried out through the NWB team's training events, which Ben has described as the way the team gets the feedback it needs to improve NWB and builds a community of neuroscientists interested in open science. These include the annual NWB User Days, which train researchers to convert their data to NWB and publish it on the DANDI Archive, and the annual Developer Days for tool builders and research software engineers. Ben was the main NWB organizer of NeuroDataReHack 2023 in Granada, a hackathon on secondary analysis of existing neurophysiology data, after which participants could apply for Kavli Foundation Neurodata Discovery Awards to fund reanalysis projects. The Kavli Foundation also sponsors NWB GUIDE, a desktop application for converting data to NWB without writing code, which Ryan Ly at Berkeley Lab leads with CatalystNeuro.
