@@ -427,7 +427,7 @@ sharing requirements mean for the data types you are collecting, what a conversi
 shortest path to a deposit looks like. No obligation and no preparation
 needed.
 
-**[Book a 30-minute intro call](/book-intro)**
+**[Book a 30-minute intro call](/book-intro/)**
 
 CatalystNeuro builds data conversion pipelines for neurophysiology labs
 and maintains NeuroConv and much of the NWB conversion tooling

@@ -20,12 +20,12 @@ const openings = (await getCollection("openings")).filter((o) => o.data.enabled 
           <div class="op-empty-mark"><Icon name="users" size={26} /></div>
           <h2>No open positions right now</h2>
           <p>We currently don't have any open positions. Please check back later, or reach out and introduce yourself.</p>
-          <a href="/contact" class="btn btn-primary">Get in touch <Icon name="arrow" size={15} /></a>
+          <a href="/contact/" class="btn btn-primary">Get in touch <Icon name="arrow" size={15} /></a>
         </div>
       ) : (
         <div class="op-grid">
           {openings.map((o) => (
-            <a href={`/openings/${o.data.id}`} class="card card-hover op-card">
+            <a href={`/openings/${o.data.id}/`} class="card card-hover op-card">
               {o.data.image && <div class="op-img"><img src={o.data.image} alt={o.data.title} loading="lazy" /></div>}
               <div class="op-body">
                 <h3>{o.data.title}</h3>

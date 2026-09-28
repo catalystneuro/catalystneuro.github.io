@@ -6,7 +6,7 @@ type: "guide"
 
 Welcome to your NWB adoption engagement with CatalystNeuro!
 
-CatalystNeuro is an international neuro-data science team that specializes in helping neurophysiology labs develop custom software pipelines that convert data from their particular data streams and file formats to the Neurodata Without Borders (NWB) data standard. We have built data standardization solutions for [over 60 labs](/nwb-conversions) from more than 30 research institutions, and have developed software and expertise in understanding and transforming large and varied neurophysiology data.
+CatalystNeuro is an international neuro-data science team that specializes in helping neurophysiology labs develop custom software pipelines that convert data from their particular data streams and file formats to the Neurodata Without Borders (NWB) data standard. We have built data standardization solutions for [over 60 labs](/nwb-conversions/) from more than 30 research institutions, and have developed software and expertise in understanding and transforming large and varied neurophysiology data.
 
 Our pipelines use core software to handle large data volumes from multiple simultaneous data streams, packaging this data into NWB files that are compatible with the [DANDI Archive](https://dandiarchive.org) and optimized for cloud computing. These pipelines are released as open source GitHub repositories that the labs are able to copy, modify, and run. We can also help labs upload this data to the [DANDI Archive](https://dandiarchive.org), either in embargo mode or as released public data.
 
@@ -43,7 +43,7 @@ The lab point-person is a key role for a good lab engagement. This person is res
 
 We set up a data transfer so we can get our hands on the data in its current format.
 
-We usually suggest using Globus Connect to transfer data, as it is fast, reliable and can handle TBs of data. Here are some [step-by-step instructions](/guides/globus-guide) for how to utilize Globus to upload your data to our size-unrestricted Google Drive folder. We are also able to access data in other ways. When possible, it is better to store the data as they come out of the acquisition system (raw data) and the output of the preprocessing pipeline.
+We usually suggest using Globus Connect to transfer data, as it is fast, reliable and can handle TBs of data. Here are some [step-by-step instructions](/guides/globus-guide/) for how to utilize Globus to upload your data to our size-unrestricted Google Drive folder. We are also able to access data in other ways. When possible, it is better to store the data as they come out of the acquisition system (raw data) and the output of the preprocessing pipeline.
 
 ## Information on the Dataset
 

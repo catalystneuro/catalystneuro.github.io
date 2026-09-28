@@ -22,7 +22,7 @@ const showToc = toc.length >= 2;
   <article class="post">
     <header class="post-head">
       <div class:list={["container-x", "post-head-inner", { "has-toc": showToc }]}>
-        <a href="/guides" class="post-back"><Icon name="arrow" size={15} class="flip" /> All guides</a>
+        <a href="/guides/" class="post-back"><Icon name="arrow" size={15} class="flip" /> All guides</a>
         <h1>{g.data.name}</h1>
         <p class="post-meta">{g.data.description}</p>
         {g.data.docs && <a href={g.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm post-doc"><Icon name="external" size={15} /> External documentation</a>}
