@@ -146,7 +146,7 @@ Reading everything becomes the default. At a cent per document, a model can read
 ## About the Author
 
 <div style="display: flex; align-items: flex-start; gap: 20px; margin-top: 20px;">
-<img src="/images/team/benjamin_dichter.png" alt="Ben Dichter" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;" />
+<img src="/images/team/benjamin_dichter.jpg" alt="Ben Dichter" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;" />
 <div>
 
 **Ben Dichter, PhD** is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.

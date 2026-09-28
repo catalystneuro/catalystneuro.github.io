@@ -2,7 +2,7 @@
 title: "A Semantic Map of the DANDI Archive"
 date: "2026-07-30"
 description: "The DANDI Semantic Atlas places every Dandiset on a rotatable map built from sentence embeddings of its metadata, so datasets that describe similar science end up near one another. It rebuilds itself nightly from the DANDI API."
-image: "/images/blog/dandi-semantic-atlas-banner.png"
+image: "/images/blog/dandi-semantic-atlas-banner.jpg"
 imageFit: "contain"
 readTime: "7 min read"
 author: "Benjamin Dichter"

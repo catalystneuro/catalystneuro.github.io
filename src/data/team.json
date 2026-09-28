@@ -5,7 +5,7 @@
       "isActive": true,
       "role": "Founder",
       "description": "Ben Dichter is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.",
-      "image": "/images/team/benjamin_dichter.png",
+      "image": "/images/team/benjamin_dichter.jpg",
       "github": "https://github.com/bendichter",
       "personalPage": "http://bendichter.com",
       "twitter": "https://twitter.com/bendichter",
@@ -72,7 +72,7 @@
       "isActive": true,
       "role": "Research Software Engineer",
       "description": "Eivind Hennestad received an MSc from the University of Oslo, where he studied the vestibular system and gained expertise in diverse neurophysiology data modalities. He is a talented MATLAB developer, and the lead developer for the MatNWB library.",
-      "image": "/images/team/eivind_hennestad.png",
+      "image": "/images/team/eivind_hennestad.jpg",
       "github": "https://github.com/ehennestad",
       "orcid": "https://orcid.org/0000-0002-8297-1753"
     },
