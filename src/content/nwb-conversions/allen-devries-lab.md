@@ -5,8 +5,6 @@ description: "Developed NWB conversion tools for large-scale two-photon calcium 
 tags: ["calcium imaging", "two-photon microscopy", "behavioral tracking", "visual processing"]
 github: "https://github.com/catalystneuro/visual-coding-to-nwb-v2"
 dandi:
-  - url: "https://dandiarchive.org/dandiset/000039"
-    name: "000039: Allen Institute – Contrast tuning in mouse visual cortex with calcium imaging"
   - url: "https://dandiarchive.org/dandiset/000728"
     name: "000728: Allen Institute - Visual Coding - Optical Physiology"
 date: "2023-10"
