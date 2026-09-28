@@ -85,6 +85,8 @@ const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data
 </style>
 
 <script>
+  import { scrollBehavior } from "../../lib/pager";
+
   const PAGE_SIZE = 12;
   const input = document.getElementById("blog-search") as HTMLInputElement;
   const items = Array.from(document.querySelectorAll<HTMLElement>(".blog-item"));
@@ -134,7 +136,8 @@ const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data
   function go(n: number) {
     page = n;
     render();
-    document.getElementById("blog-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    pages?.querySelector<HTMLElement>('[aria-current="page"]')?.focus({ preventScroll: true });
+    document.getElementById("blog-grid")?.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
   }
 
   input?.addEventListener("input", () => { page = 1; render(); });

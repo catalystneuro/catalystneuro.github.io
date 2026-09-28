@@ -14,13 +14,13 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
       {NAV.map((item) =>
         item.children ? (
           <div class="nav-group">
-            <button class:list={["nav-link", "nav-trigger", item.children.some((c) => isActive(c.href)) && "is-active"]} aria-haspopup="true" aria-expanded="false">
+            <button class:list={["nav-link", "nav-trigger", item.children.some((c) => isActive(c.href)) && "is-active"]} aria-expanded="false">
               {item.label}
               <Icon name="chevron" size={14} />
             </button>
-            <div class="nav-menu" role="menu">
+            <div class="nav-menu">
               {item.children.map((c) => (
-                <a href={c.href} role="menuitem" class:list={["nav-menu-link", isActive(c.href) && "is-active"]}>{c.label}</a>
+                <a href={c.href} class:list={["nav-menu-link", isActive(c.href) && "is-active"]}>{c.label}</a>
               ))}
             </div>
           </div>
@@ -35,7 +35,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
         <Icon name="github" size={20} />
       </a>
       <a href="/consultation" class="btn btn-primary btn-sm hdr-cta">Request consultation</a>
-      <button class="hdr-burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <button class="hdr-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-panel">
         <Icon name="menu" size={22} />
       </button>
     </div>
@@ -49,6 +49,15 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
       <a href="/consultation" class="btn btn-primary mobile-cta">Request consultation</a>
     </nav>
   </div>
+  <noscript>
+    <style is:inline>
+      /* Without JS the burger cannot open the panel, so show the links instead. */
+      @media (max-width: 959.98px) {
+        .mobile-panel[hidden] { display: block !important; }
+        .hdr-burger { display: none !important; }
+      }
+    </style>
+  </noscript>
 </header>
 
 <style>
@@ -82,6 +91,8 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
     opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all 0.16s var(--ease-out-expo);
   }
   .nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  /* Escape dismisses a menu that hover or focus would otherwise hold open. */
+  .nav-group.is-dismissed .nav-menu { opacity: 0; visibility: hidden; transform: translateY(-4px); }
   .nav-menu-link { display: block; padding: 0.5rem 0.7rem; border-radius: 0.4rem; font-size: 1.06rem; color: var(--color-navy); }
   .nav-menu-link:hover { background: var(--color-blue-50); color: var(--color-blue); }
   .nav-menu-link.is-active { color: var(--color-blue); }
@@ -125,4 +136,33 @@ const isActive = (href: string) => path === href || path.startsWith(href + "/");
 
   // Navigating within the panel should close it too.
   panel?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+
+  // The desktop dropdowns open on hover and focus in CSS. Keep each trigger's
+  // aria-expanded in step with that, and let Escape close the open menu.
+  document.querySelectorAll<HTMLElement>(".nav-group").forEach((group) => {
+    const trigger = group.querySelector<HTMLButtonElement>(".nav-trigger");
+    const sync = () => {
+      const open = !group.classList.contains("is-dismissed") && (group.matches(":hover") || group.contains(document.activeElement));
+      trigger?.setAttribute("aria-expanded", String(open));
+    };
+    const reset = () => { group.classList.remove("is-dismissed"); sync(); };
+    group.addEventListener("mouseenter", reset);
+    group.addEventListener("mouseleave", reset);
+    group.addEventListener("focusin", sync);
+    trigger?.addEventListener("click", reset);
+    group.addEventListener("focusout", () => requestAnimationFrame(reset));
+    group.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      group.classList.add("is-dismissed");
+      trigger?.focus();
+      sync();
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && burger?.getAttribute("aria-expanded") === "true") {
+      setOpen(false);
+      burger.focus();
+    }
+  });
 </script>

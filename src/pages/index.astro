@@ -145,7 +145,13 @@ const serviceIcons = ["database", "code", "spark"];
           </div>
         ))}
       </div>
-      <button class="btn btn-ghost btn-sm inst-toggle" id="inst-toggle">Show all institutions <Icon name="chevron" size={15} /></button>
+      <button class="btn btn-ghost btn-sm inst-toggle" id="inst-toggle" aria-expanded="false" aria-controls="inst-grid">Show all institutions <Icon name="chevron" size={15} /></button>
+      <noscript>
+        <style is:inline>
+          .inst-cell[hidden] { display: grid !important; }
+          .inst-toggle { display: none !important; }
+        </style>
+      </noscript>
     </div>
   </section>
 
@@ -341,5 +347,6 @@ const serviceIcons = ["database", "code", "spark"];
       if (open) el.removeAttribute("hidden"); else el.setAttribute("hidden", "");
     });
     toggle.firstChild!.textContent = open ? "Show fewer institutions " : "Show all institutions ";
+    toggle.setAttribute("aria-expanded", String(open));
   });
 </script>

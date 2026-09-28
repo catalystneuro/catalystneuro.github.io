@@ -24,6 +24,10 @@ export interface PagerOptions extends PagerElements {
   perPage?: number;
 }
 
+/** Smooth scrolling unless the visitor has asked for reduced motion. */
+export const scrollBehavior = (): ScrollBehavior =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
 export function createPager(o: PagerOptions) {
   const perPage = o.perPage ?? 12;
   let matched: HTMLElement[] = o.cards;
@@ -82,7 +86,10 @@ export function createPager(o: PagerOptions) {
   function goTo(p: number) {
     page = p;
     render();
-    o.grid.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Rendering replaces the page buttons, so the one just pressed is gone and
+    // focus would fall back to <body>. Put it on the current page instead.
+    o.pages.querySelector<HTMLElement>('[aria-current="page"]')?.focus({ preventScroll: true });
+    o.grid.scrollIntoView({ behavior: scrollBehavior(), block: "start" });
   }
 
   /** Re-run the filter and return to page 1. Call whenever a control changes. */

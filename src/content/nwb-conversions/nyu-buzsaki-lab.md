@@ -1,5 +1,5 @@
 ---
-lab: "Gyorgy Buzsaki"
+lab: "György Buzsáki"
 institution: "New York University"
 description: "Developed NWB conversion tools for the Buzsáki lab's extensive neurophysiology datasets, handling terabyte-scale data including Neuroscope recordings, LFP signals, and behavioral measurements. The conversion pipeline features specialized interfaces for various data types and supports parallel processing for large-scale conversions, with datasets publicly available through DANDI."
 tags: ["electrophysiology", "behavioral tracking", "spatial navigation"]

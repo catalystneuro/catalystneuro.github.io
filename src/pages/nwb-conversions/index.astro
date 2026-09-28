@@ -79,7 +79,7 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
         <button id="cv-reset" class="btn btn-ghost btn-sm cv-reset" hidden>Clear <Icon name="close" size={14} /></button>
       </div>
 
-      <p class="cv-count" id="cv-count">{items.length} labs</p>
+      <p class="cv-count" id="cv-count" role="status">{items.length} labs</p>
 
       <div class="pcard-grid" id="cv-grid">
         {items.map((c) => (
@@ -180,7 +180,7 @@ const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
     noun: "labs",
     match: (c) => {
       const t = search.value.trim().toLowerCase();
-      const tags = c.dataset.tags ?? "";
+      const tags = (c.dataset.tags ?? "").split("|");
       const sp = c.dataset.species ?? "";
       return (
         (!t || (c.dataset.search ?? "").includes(t)) &&
