@@ -80,14 +80,17 @@ export const SERVICES = {
   capabilities: ["Cloud integration", "Team training", "Data analytics", "Open source"],
 };
 
+// Single-colour versions built by scripts/mono-logos.mjs. `height` is the
+// display height in px, set per logo so that marks with very different aspect
+// ratios carry roughly the same visual weight in the row.
 export const PARTNERS = {
   title: "Backed and trusted by",
   logos: [
-    { name: "NIH", src: "/images/sponsors/nih_logo.png" },
-    { name: "Allen Institute", src: "/images/sponsors/allen_institute_logo.jpeg" },
-    { name: "Kavli Foundation", src: "/images/sponsors/kavli_foundation_logo.png" },
-    { name: "Michael J. Fox Foundation", src: "/images/sponsors/MJFF_logo.png" },
-    { name: "Simons Foundation", src: "/images/sponsors/simons_foundation_logo.avif" },
+    { name: "National Institutes of Health", src: "/images/sponsors/mono/nih.png", height: 52 },
+    { name: "Allen Institute", src: "/images/sponsors/mono/allen.png", height: 40 },
+    { name: "The Kavli Foundation", src: "/images/sponsors/mono/kavli.png", height: 42 },
+    { name: "The Michael J. Fox Foundation", src: "/images/sponsors/mono/mjff.png", height: 50 },
+    { name: "Simons Foundation", src: "/images/sponsors/mono/simons.png", height: 34 },
   ],
 };
 
