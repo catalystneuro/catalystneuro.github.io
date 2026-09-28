@@ -149,7 +149,7 @@ Reading everything becomes the default. At a cent per document, a model can read
 <img src="/images/team/benjamin_dichter.png" alt="Ben Dichter" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;" />
 <div>
 
-**Ben Dichter, PhD** is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering. He is now a data scientist consultant for neuroscience labs, focusing on enabling collaboration by building systems for sharing of data and analyses.
+**Ben Dichter, PhD** is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.
 
 [GitHub](https://github.com/bendichter) • [Twitter](https://twitter.com/bendichter) • [Website](http://bendichter.com) • [ORCID](https://orcid.org/0000-0001-5725-6910)
 

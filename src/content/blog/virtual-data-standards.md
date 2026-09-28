@@ -230,7 +230,7 @@ I would like to thank Ryan Ly, Oliver Ruebel, and Jeremy Magland, who have all b
 <img src="/images/team/benjamin_dichter.png" alt="Ben Dichter" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;" />
 <div>
 
-**Ben Dichter, PhD** is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He is now a data scientist consultant for neuroscience labs, focusing on building systems for sharing of data and analyses.
+**Ben Dichter, PhD** is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.
 
 [GitHub](https://github.com/bendichter) • [Twitter](https://twitter.com/bendichter) • [Website](http://bendichter.com) • [ORCID](https://orcid.org/0000-0001-5725-6910)
 

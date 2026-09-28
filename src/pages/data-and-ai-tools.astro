@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+
+const all = await getCollection("software");
+const sections = [
+  {
+    eyebrow: "Data engineering",
+    title: "Cloud data access",
+    lead: "General-purpose libraries for reading and writing large scientific arrays in the cloud, which grew out of our NWB work but are not specific to it.",
+    icon: "database",
+    items: all.filter((s) => s.data.type === "data-engineering"),
+  },
+  {
+    eyebrow: "AI tooling",
+    title: "Language models",
+    lead: "Tools we built to understand the models we use in our own work.",
+    icon: "chart",
+    items: all.filter((s) => s.data.type === "ai"),
+  },
+];
+---
+<Base title="Data Engineering and AI Tools" description="General-purpose open-source software from CatalystNeuro for cloud data access, including zarr-matlab and remfile-cpp, and tools for tracking language model cost and capability.">
+  <PageHeader
+    eyebrow="Open-source tools"
+    title="Data engineering and AI tools"
+    subtitle="Software we have built outside the NWB toolchain, for working with cloud-hosted data and for tracking language models."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      {sections.map((sec, i) => (
+        <div class:list={["de-section", i > 0 && "de-section--gap"]}>
+          <div class="de-head">
+            <span class="eyebrow">{sec.eyebrow}</span>
+            <h2 class="section-title">{sec.title}</h2>
+            <p class="section-lead">{sec.lead}</p>
+          </div>
+          <div class="de-grid">
+            {sec.items.map((s) => (
+              <article class="card card-hover de-card">
+                <div class="de-top">
+                  {s.data.image
+                    ? <div class="de-logo"><img src={s.data.image} alt={s.data.name} loading="lazy" /></div>
+                    : <div class="de-logo de-logo--mono"><Icon name={sec.icon} size={22} /></div>}
+                  {s.data.status && <span class="tag de-status">{s.data.status}</span>}
+                </div>
+                <h3>{s.data.name}</h3>
+                <p>{s.data.description}</p>
+                <div class="de-links">
+                  {s.data.site && <a href={s.data.site} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="external" size={15} /> Open app</a>}
+                  {s.data.github && <a href={s.data.github} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={15} /> GitHub</a>}
+                  {s.data.docs && <a href={s.data.docs} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="book" size={15} /> Docs</a>}
+                  {s.data.paper && <a href={s.data.paper} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="doc" size={15} /> Paper</a>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .de-section--gap { margin-top: 4.5rem; }
+  .de-head { margin-bottom: 2rem; }
+  .de-head .section-title { margin-top: 0.6rem; }
+  .de-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .de-grid { grid-template-columns: repeat(2, 1fr); } }
+  .de-card { padding: 1.7rem; display: flex; flex-direction: column; }
+  .de-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+  .de-logo { height: 46px; max-width: 150px; display: flex; align-items: center; }
+  .de-logo img { max-height: 46px; max-width: 150px; object-fit: contain; }
+  .de-logo--mono { width: 46px; background: var(--color-blue-50); color: var(--color-blue); border-radius: 0.6rem; justify-content: center; }
+  .de-status { background: color-mix(in srgb, #16a34a 12%, white); color: #166534; align-self: flex-start; }
+  .de-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .de-card p { color: var(--color-ink-muted); font-size: 0.93rem; flex: 1; margin-bottom: 1.2rem; }
+  .de-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+</style>

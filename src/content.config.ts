@@ -46,7 +46,7 @@ const software = defineCollection({
     name: z.string(),
     description: z.string(),
     status: z.string().optional(),
-    type: z.enum(["core", "extension", "analysis", "guide"]),
+    type: z.enum(["core", "extension", "analysis", "data-engineering", "ai", "guide"]),
     image: z.string().optional(),
     github: z.string().optional(),
     docs: z.string().optional(),

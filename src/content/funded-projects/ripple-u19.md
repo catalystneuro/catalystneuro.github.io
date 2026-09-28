@@ -2,7 +2,7 @@
 title: "Ripple U19 NWB Adoption"
 funder: "National Institutes of Health"
 status: "completed"
-startDate: "2020-01-01"
+startDate: "2019-11-01"
 description: "Supporting NWB adoption for the Ripple U19 consortium"
 image: "/images/sponsors/nih_logo.png"
 ---

@@ -104,7 +104,7 @@ becomes a routine part of the pipeline instead of a project at the end.
 [NeuroConv](https://neuroconv.readthedocs.io/) is an open-source
 Python library that simplifies conversion from common neurophysiology
 formats. It supports automatic conversion from a long list of
-proprietary and open formats into NWB (about 70 as of September 2026),
+proprietary and open formats into NWB (64 as of NeuroConv 0.10.0),
 covering acquisition systems, spike sorters, segmentation tools, pose
 estimation, and behavioral software. See the
 [Conversion Gallery](https://neuroconv.readthedocs.io/en/stable/conversion_examples_gallery/index.html)
