@@ -5,7 +5,7 @@ description: "The DANDI Semantic Atlas places every Dandiset on a rotatable map 
 image: "/images/blog/dandi-semantic-atlas-banner.jpg"
 imageFit: "contain"
 readTime: "7 min read"
-author: "Benjamin Dichter"
+author: "Ben Dichter"
 keywords: ["DANDI", "NWB", "semantic search", "embeddings", "Qwen3", "UMAP", "HDBSCAN", "BERTopic", "metadata", "data discovery", "neurophysiology"]
 ---
 

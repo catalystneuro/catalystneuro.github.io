@@ -5,7 +5,7 @@ description: "A given level of LLM intelligence costs about a thirtieth of what 
 image: "/images/blog/pareto-frontier-banner.png"
 imageFit: "contain"
 readTime: "14 min read"
-author: "Benjamin Dichter"
+author: "Ben Dichter"
 keywords: ["LLM", "Pareto frontier", "cost per task", "Artificial Analysis", "Intelligence Index", "model pricing", "AI economics", "Jevons paradox"]
 ---
 

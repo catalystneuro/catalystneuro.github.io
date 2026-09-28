@@ -4,7 +4,7 @@ date: "2026-07-14"
 description: "A new HDF5 virtual file driver that streams remote NWB files over HTTP with adaptive caching. It opens files several times faster than ROS3, works with any HDF5 build, and is now integrated into AqNWB."
 image: "/images/blog/remfile-cpp-banner.jpg"
 readTime: "8 min read"
-author: "Benjamin Dichter"
+author: "Ben Dichter"
 keywords: ["NWB", "HDF5", "C++", "remfile", "AqNWB", "DANDI", "cloud computing", "ROS3", "streaming", "neurophysiology"]
 ---
 
