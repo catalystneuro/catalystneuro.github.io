@@ -71,7 +71,7 @@
       "name": "Eivind Hennestad",
       "isActive": true,
       "role": "Research Software Engineer",
-      "description": "Eivind Hennestad received an MSc from the Univeristy of Oslo, where he studied the vestibular system and gained expertise in diverse neurophysiology data modalities. He is a talented MATLAB developer, and the lead developer for the MatNWB library.",
+      "description": "Eivind Hennestad received an MSc from the University of Oslo, where he studied the vestibular system and gained expertise in diverse neurophysiology data modalities. He is a talented MATLAB developer, and the lead developer for the MatNWB library.",
       "image": "/images/team/eivind_hennestad.png",
       "github": "https://github.com/ehennestad",
       "orcid": "https://orcid.org/0000-0002-8297-1753"
@@ -96,8 +96,7 @@
       "name": "Vincent Provosto",
       "isActive": false,
       "role": "Former Research Software Engineer",
-      "description": "Vincent Provosto contributed to CatalystNeuro's software development and data conversion projects.",
-      "github": "https://github.com/vprovosto"
+      "description": "Vincent Provosto contributed to CatalystNeuro's software development and data conversion projects."
     },
     {
       "name": "Garrett Flynn",
@@ -112,7 +111,6 @@
       "isActive": false,
       "role": "Former Research Software Engineer",
       "description": "Felix Pei contributed to CatalystNeuro's data standardization and conversion tools.",
-      "github": "https://github.com/fpei-ibm",
       "orcid": "https://orcid.org/0009-0001-3193-5541"
     },
     {

@@ -2,13 +2,13 @@
 title: "NIH R25 Award for the NeuroData AI Summer School"
 date: "2026-09-14"
 image: "/images/blog/neurodata-ai-summer-school-banner.png"
-description: "NINDS has awarded us a five-year R25 grant for the NeuroData AI Summer School. After running NeuroDataReHack at HHMI-Janelia on year-to-year funding since 2022, we can finally plan for the long term. The program continues as the NeuroData AI Summer School, with its own site at neurodata-ai.org and applications for 2027 open now."
+description: "NINDS has awarded us a five-year R25 grant for the NeuroData AI Summer School. After running NeuroDataReHack on year-to-year funding since 2022, we can finally plan for the long term. The program continues as the NeuroData AI Summer School, with its own site at neurodata-ai.org and applications for 2027 open now."
 readTime: "7 min read"
 author: "Ben Dichter"
 keywords: ["NeuroData AI Summer School", "NeuroDataReHack", "NIH", "R25", "education", "NWB", "DANDI", "data reuse", "AI", "HHMI-Janelia"]
 ---
 
-The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro a five-year R25 research education grant (1R25NS149357) for the [NeuroData AI Summer School](https://neurodata-ai.org), and I am thrilled. This is the program we have run as NeuroDataReHack at [HHMI's Janelia Research Campus](https://www.janelia.org/) every summer since 2022, and for the first time it has stable, multi-year funding behind it. We can stop rebuilding it every spring and start building it properly.
+The National Institute of Neurological Disorders and Stroke has awarded CatalystNeuro a five-year R25 research education grant (1R25NS149357) for the [NeuroData AI Summer School](https://neurodata-ai.org), and I am thrilled. This is the program we have run as NeuroDataReHack every summer since 2022, at [HHMI's Janelia Research Campus](https://www.janelia.org/) since 2024, and for the first time it has stable, multi-year funding behind it. We can stop rebuilding it every spring and start building it properly.
 
 The school now has its own website, [neurodata-ai.org](https://neurodata-ai.org), which carries the [program announcement](https://neurodata-ai.org/blog/announcing-the-neurodata-ai-summer-school/), the faculty and advisory committee, the archive of recordings and projects from every NeuroDataReHack, and the [application for 2027](https://neurodata-ai.org/apply/), which is open until January 29, 2027.
 
@@ -36,7 +36,7 @@ None of that is hard to learn. It is just rarely taught. Which is why my favorit
 
 ## The Same Program, Growing
 
-The Summer School is the program we have run at HHMI-Janelia every summer since 2022, with a bigger curriculum and a longer week. The structure that makes it work is not changing, because it works. Participants arrive with a reanalysis question they want to pursue, form teams around shared datasets and interests, take instruction in the mornings, and spend most of the week deep in project work with faculty and dataset stewards on hand. Teams present on the final day. Lectures and tutorials are recorded and published afterward. From 2027 the program runs under the NeuroData AI Summer School name; NeuroDataReHack remains the name of the 2022 to 2026 installments, and their materials live on at [neurodata-ai.org](https://neurodata-ai.org/events/).
+The Summer School is the program we have run every summer since 2022, with a bigger curriculum and a longer week. The structure that makes it work is not changing, because it works. Participants arrive with a reanalysis question they want to pursue, form teams around shared datasets and interests, take instruction in the mornings, and spend most of the week deep in project work with faculty and dataset stewards on hand. Teams present on the final day. Lectures and tutorials are recorded and published afterward. From 2027 the program runs under the NeuroData AI Summer School name; NeuroDataReHack remains the name of the 2022 to 2026 installments, and their materials live on at [neurodata-ai.org](https://neurodata-ai.org/events/).
 
 ## Curriculum
 
@@ -58,7 +58,7 @@ We do something specific: reanalysis of neurophysiology data in the NWB format o
 
 ## Partnership with HHMI-Janelia
 
-HHMI's Janelia Research Campus has hosted and sponsored the program since 2022, and the campus is a huge part of why the week works as well as it does. Participants stay in private rooms on campus, a few minutes' walk from the rooms where the sessions run, so nobody is booking hotels, arranging transport, or arriving late because of traffic. Meals are provided throughout, and the kitchen cheerfully handles the full range of dietary requirements that thirty-odd people from a dozen countries turn up with, which sounds like a small thing until you have watched a workshop elsewhere lose an hour a day to people hunting for lunch. The meeting spaces are genuinely built for this kind of work, with room for teams to spread out, break off, and come back together, and with staff on hand who have done this many times and are wonderful at it. In the evenings the campus pub is open to the group, and a good deal of the best conversation of the week happens there rather than in any scheduled session.
+HHMI's Janelia Research Campus has hosted and sponsored the program since 2024, and the campus is a huge part of why the week works as well as it does. Participants stay in private rooms on campus, a few minutes' walk from the rooms where the sessions run, so nobody is booking hotels, arranging transport, or arriving late because of traffic. Meals are provided throughout, and the kitchen cheerfully handles the full range of dietary requirements that thirty-odd people from a dozen countries turn up with, which sounds like a small thing until you have watched a workshop elsewhere lose an hour a day to people hunting for lunch. The meeting spaces are genuinely built for this kind of work, with room for teams to spread out, break off, and come back together, and with staff on hand who have done this many times and are wonderful at it. In the evenings the campus pub is open to the group, and a good deal of the best conversation of the week happens there rather than in any scheduled session.
 
 HHMI-Janelia sponsoring all of this is what lets us offer the program at no cost to participants. It also produces a level of sustained concentration that no distributed or virtual format I have seen comes close to. For six days, the people who can answer your question are in the building.
 

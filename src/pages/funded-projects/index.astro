@@ -36,7 +36,7 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
         </select>
       </div>
 
-      <p class="cv-count" id="fp-count">{projects.length} projects</p>
+      <p class="cv-count" id="fp-count" role="status">{projects.length} projects</p>
 
       <div class="fp-grid" id="fp-grid">
         {projects.map((p) => (

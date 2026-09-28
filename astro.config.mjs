@@ -8,7 +8,11 @@ import remarkGalleries from './src/plugins/remark-galleries.mjs';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://catalystneuro.com',
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    // Leave out the newsletter thank-you page and the two redirect pages.
+    sitemap({ filter: (url) => !/\/(success|book-intro|nwb-dandi-guide)\/?$/.test(url) }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

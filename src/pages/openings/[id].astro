@@ -5,7 +5,8 @@ import Icon from "../../components/Icon.astro";
 import { SITE } from "../../consts";
 
 export async function getStaticPaths() {
-  const openings = await getCollection("openings");
+  // Disabled openings are drafts or filled positions; don't publish them.
+  const openings = await getCollection("openings", (o) => o.data.enabled !== false);
   return openings.map((o) => ({ params: { id: o.data.id }, props: { o } }));
 }
 const { o } = Astro.props;

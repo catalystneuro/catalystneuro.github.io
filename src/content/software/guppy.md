@@ -5,5 +5,5 @@ status: Active
 type: analysis
 image: https://raw.githubusercontent.com/LernerLab/GuPPy/main/assets/GuppyLogo.png
 github: https://github.com/LernerLab/GuPPy
-docs: https://github.com/LernerLab/GuPPy/wiki
+docs: https://guppy.readthedocs.io/
 ---

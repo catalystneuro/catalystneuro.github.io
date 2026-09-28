@@ -7,8 +7,6 @@ readTime: "7 min read"
 keywords: ["neuroscience", "education", "Africa", "ABDS", "open science", "data science"]
 ---
 
-# Teaching Open Neuroscience at the African Brain Data Science Academy
-
 Last month, I had the privilege of participating as an instructor at the African Brain Data Science (ABDS) Academy, an innovative initiative sponsored by the Kavli Foundation. This groundbreaking program, organized by Damian Eke and Eberechi Wogu from the African Brain Data Network (ABDN), brought together talented African researchers in data science and neuroscience to explore cutting-edge open data practices and analysis techniques.
 
 ## Bridging the Gap in Neuroscience Data Science

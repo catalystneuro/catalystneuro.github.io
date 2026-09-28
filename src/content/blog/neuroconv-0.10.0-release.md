@@ -7,8 +7,6 @@ readTime: "9 min read"
 keywords: ["NeuroConv", "NWB", "neurophysiology", "data conversion", "fiber photometry", "events", "NWBEP001", "optical physiology", "metadata", "release"]
 ---
 
-# NeuroConv 0.10.0 Release
-
 We are pleased to announce the release of [NeuroConv 0.10.0](https://pypi.org/project/neuroconv/), the largest release the project has had. It covers everything since [v0.9.0](https://github.com/catalystneuro/neuroconv/releases/tag/v0.9.0), the last release we wrote about here, including the v0.9.1, v0.9.2 and v0.9.3 patches. Fiber photometry and discrete events are first-class modalities now: new interfaces for five photometry formats and six event sources, metadata templates to assist the annotation of the datasets, and improved documentation and how-to guides for making sense of them. Intracellular electrophysiology was rebuilt around one interface per electrode and the NWB sweep tables. NeuroConv now converts 64 formats, thirteen of them added in this stretch. Test it today:
 
 ```bash

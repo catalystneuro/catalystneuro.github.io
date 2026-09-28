@@ -1,5 +1,5 @@
 ---
-lab: "Bence Olveczky"
+lab: "Bence Ölveczky"
 institution: "Harvard University"
 description: "Developing NWB conversion tools for the Olveczky lab's behavioral and electrophysiological datasets studying learned and natural behaviors. The pipeline standardizes 256-channel flexible probe and Neuropixels recordings, continuous tetrode data, six-camera video with sDANNCE pose estimation, and trial structure, and adapts the resulting files for ingestion into a Spyglass pipeline."
 tags:

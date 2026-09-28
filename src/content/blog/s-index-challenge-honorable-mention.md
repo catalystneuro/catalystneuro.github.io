@@ -8,9 +8,7 @@ keywords: ["S-index", "NIH", "data sharing", "FAIR", "open science", "NWB", "dat
 author: "Ben Dichter"
 ---
 
-# Honorable Mention in the NIH S-Index Challenge
-
-We are proud to share that a team led by CatalystNeuro earned an **honorable mention** in the [NIH Data Sharing Index (S-index) Challenge](https://www.freelancer.com/contest/NIH-Data-Sharing-Index-Sindex-Challenge-2470942/details). The challenge, led by the National Eye Institute with support from institutes and offices across the NIH, called on the community to design a quantitative metric for measuring how effectively researchers share data in ways that benefit future studies.
+We are proud to share that a team led by CatalystNeuro earned an **honorable mention** in the [NIH Data Sharing Index (S-index) Challenge](https://www.nih.gov/challenges/nih-data-sharing-index-s-index-challenge). The challenge, led by the National Eye Institute with support from institutes and offices across the NIH, called on the community to design a quantitative metric for measuring how effectively researchers share data in ways that benefit future studies.
 
 You can read our full submission here:
 

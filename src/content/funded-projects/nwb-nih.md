@@ -7,4 +7,4 @@ description: "Development and maintenance of the Neurodata Without Borders (NWB)
 image: "/images/funded-projects/nwb_logo.png"
 ---
 
-The NIH has provided funding to support the development and maintenance of the Neurodata Without Borders (NWB) ecosystem. This grant enables us to enhance the NWB data standard, improve tools for data conversion and validation, and support the neuroscience community in adopting standardized data practices.
+The NIH provided funding to support the development and maintenance of the Neurodata Without Borders (NWB) ecosystem. This grant enabled us to enhance the NWB data standard, improve tools for data conversion and validation, and support the neuroscience community in adopting standardized data practices.

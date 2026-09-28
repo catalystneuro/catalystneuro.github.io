@@ -1,13 +1,15 @@
-export const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+// Accents are stripped first so "Ölveczky" gives "olveczky", not "lveczky".
+export const slugify = (s: string) =>
+  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-/** "2021-09-01" or "2021-09" -> "September 2021" */
+/** "2021-09-01" or "2021-09" -> "September 2021"; a bare "2021" stays "2021". */
 export function monthYear(date?: string): string {
   if (!date) return "";
   const [y, m] = date.split("-");
-  const mi = parseInt(m ?? "1", 10) - 1;
-  return `${MONTHS[mi] ?? ""} ${y}`.trim();
+  if (!m) return y;
+  return `${MONTHS[parseInt(m, 10) - 1] ?? ""} ${y}`.trim();
 }
 
 /** "2025-12-19" -> "December 19, 2025" */

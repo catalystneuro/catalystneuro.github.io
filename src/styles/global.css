@@ -162,18 +162,18 @@
     background: #eef1f6; color: #4b5675;
   }
   /* Tag colour encodes the facet: species, method, research area. */
-  .tag--species { background: color-mix(in srgb, #f59e0b 15%, white); color: #b45309; }
+  .tag--species { background: color-mix(in srgb, #f59e0b 15%, white); color: #92400e; }
   .tag--method { background: var(--color-blue-50); color: var(--color-blue-600); }
-  .tag--area { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; }
+  .tag--area { background: color-mix(in srgb, #16a34a 12%, white); color: #166534; }
   .rule { height: 1px; background: var(--color-line); border: 0; }
 
   .badge {
     font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.04em; text-transform: capitalize;
     padding: 0.22rem 0.6rem; border-radius: 0.35rem; font-weight: 500; white-space: nowrap;
   }
-  .badge--green { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; }
+  .badge--green { background: color-mix(in srgb, #16a34a 12%, white); color: #166534; }
   .badge--gray  { background: #eef1f6; color: #4b5675; }
-  .badge--amber { background: color-mix(in srgb, #f59e0b 16%, white); color: #b45309; }
+  .badge--amber { background: color-mix(in srgb, #f59e0b 16%, white); color: #92400e; }
   .badge--blue  { background: var(--color-blue-50); color: var(--color-blue-600); }
 }
 

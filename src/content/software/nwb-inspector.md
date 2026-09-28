@@ -4,6 +4,6 @@ description: "A comprehensive tool that scans NWB files for potential errors and
 status: "Released"
 type: "core"
 image: "/images/software/nwb_inspector.png"
-github: "https://github.com/catalystneuro/nwb-inspector"
-docs: "https://nwb-inspector.readthedocs.io/"
+github: "https://github.com/NeurodataWithoutBorders/nwbinspector"
+docs: "https://nwbinspector.readthedocs.io/"
 ---

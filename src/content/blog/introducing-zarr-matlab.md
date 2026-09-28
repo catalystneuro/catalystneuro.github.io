@@ -7,8 +7,6 @@ readTime: "5 min read"
 keywords: ["zarr-matlab", "Zarr", "MATLAB", "NWB", "cloud computing", "scientific data", "open source", "hdmf-zarr", "matzarr"]
 ---
 
-# Introducing zarr-matlab: Zarr v3, Natively in MATLAB
-
 Modern scientific data lives in the cloud, and the format it increasingly lives in is [Zarr](https://zarr.dev): chunked, compressed N-dimensional arrays designed so you can read the piece you need instead of downloading the file you don't. Zarr has first-class implementations in Python, Rust, C++, Julia, and JavaScript. MATLAB — still the daily driver for a huge share of working scientists — has been the conspicuous gap: MathWorks' built-in support covers only the older v2 format.
 
 Today we're releasing **[zarr-matlab](https://github.com/catalystneuro/zarr-matlab)**, a free, open-source, pure-MATLAB implementation of the Zarr v3 specification.
