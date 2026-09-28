@@ -6,7 +6,7 @@ const { compact = false } = Astro.props;
   <span class="eyebrow eyebrow--plain">Newsletter</span>
   <h3>Stay updated</h3>
   <p>Subscribe for the latest news, releases, and open-neuroscience updates.</p>
-  <form name="newsletter" method="POST" data-netlify="true" action="/success" class="news-form" netlify-honeypot="bot-field">
+  <form name="newsletter" method="POST" data-netlify="true" action="/success/" class="news-form" netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="newsletter" />
     <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
     <input type="email" name="email" required placeholder="you@lab.edu" aria-label="Email address" />

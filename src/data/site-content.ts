@@ -4,8 +4,8 @@ export const HERO = {
   titleTop: "Empowering neurophysiology data",
   titleAccent: "for open science",
   body: "We help research labs standardize, share, and publish their neurophysiology data through custom software solutions and expert consulting.",
-  primary: { label: "Request a consultation", href: "/consultation" },
-  secondary: { label: "See conversion work", href: "/nwb-conversions" },
+  primary: { label: "Request a consultation", href: "/consultation/" },
+  secondary: { label: "See conversion work", href: "/nwb-conversions/" },
   pipeline: [
     { step: "01", title: "Standardize", copy: "Convert complex lab formats to NWB" },
     { step: "02", title: "Validate", copy: "Build tested, documented data pipelines" },
@@ -49,7 +49,7 @@ export const SERVICES = {
     {
       title: "Open data management",
       copy: "Convert your data to Neurodata Without Borders (NWB) and publish on the DANDI Archive.",
-      link: { label: "View our work", href: "/nwb-conversions" },
+      link: { label: "View our work", href: "/nwb-conversions/" },
       features: [
         "Open-source conversion pipeline",
         "Compliance with government and foundation funders",
@@ -60,7 +60,7 @@ export const SERVICES = {
     {
       title: "Software engineering",
       copy: "Integrate existing analysis, visualization, and data management tools with open data via NWB and DANDI.",
-      link: { label: "View our work", href: "/analysis-software" },
+      link: { label: "View our work", href: "/analysis-software/" },
       features: [
         "Professionalize software through packaging, testing, and documentation",
         "Create reproducible workflows for data processing and analysis",
@@ -69,7 +69,7 @@ export const SERVICES = {
     {
       title: "AI in neuroscience",
       copy: "Leverage AI and machine learning to accelerate neuroscience research.",
-      link: { label: "Get started", href: "/contact" },
+      link: { label: "Get started", href: "/contact/" },
       features: [
         "Develop agents to automate processing steps",
         "Data curation for building neural foundation models",

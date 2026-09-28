@@ -209,11 +209,11 @@ const serviceIcons = ["database", "code", "spark"];
           <span class="eyebrow">Latest</span>
           <h2 class="section-title">Releases, writing, and events</h2>
         </div>
-        <a href="/blog" class="btn btn-ghost btn-sm">View all posts <Icon name="arrow" size={15} /></a>
+        <a href="/blog/" class="btn btn-ghost btn-sm">View all posts <Icon name="arrow" size={15} /></a>
       </div>
       <div class="posts-grid">
         {posts.map((p) => (
-          <a href={`/blog/${p.id}`} class="card card-hover post-card">
+          <a href={`/blog/${p.id}/`} class="card card-hover post-card">
             {p.data.image && <div class="post-img"><img src={p.data.image} alt={p.data.title} loading="lazy" /></div>}
             <div class="post-body">
               <span class="post-date">{longDate(p.data.date)}{p.data.readTime ? ` · ${p.data.readTime}` : ""}</span>
@@ -232,7 +232,7 @@ const serviceIcons = ["database", "code", "spark"];
       <div class="cta-copy">
         <h2 class="section-title">Have a dataset or tool that needs a home?</h2>
         <p class="section-lead">Book a free 30-minute call and we'll map out the fastest path to standardized, shareable, reusable data.</p>
-        <a href="/consultation" class="btn btn-primary">Request a consultation <Icon name="arrow" size={16} /></a>
+        <a href="/consultation/" class="btn btn-primary">Request a consultation <Icon name="arrow" size={16} /></a>
       </div>
       <div class="card cta-news"><Newsletter /></div>
     </div>

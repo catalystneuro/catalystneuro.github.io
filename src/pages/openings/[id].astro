@@ -17,7 +17,7 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent("Application: 
   <article>
     {d.image && <div class="job-hero"><img src={d.image} alt={d.title} /><div class="job-hero-fade"></div></div>}
     <div class="container-x job-wrap">
-      <a href="/openings" class="post-back"><Icon name="arrow" size={15} class="flip" /> All positions</a>
+      <a href="/openings/" class="post-back"><Icon name="arrow" size={15} class="flip" /> All positions</a>
       <h1>{d.title}</h1>
       <p class="job-meta">{d.type} · {d.location}</p>
       <p class="job-desc">{d.description}</p>

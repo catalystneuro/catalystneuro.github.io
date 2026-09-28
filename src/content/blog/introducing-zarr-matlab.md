@@ -51,4 +51,4 @@ If you work with array data in MATLAB — neurophysiology, imaging, climate, any
 - **Docs**: [catalystneuro.github.io/zarr-matlab](https://catalystneuro.github.io/zarr-matlab/)
 - **Issues and interop reports**: [github.com/catalystneuro/zarr-matlab](https://github.com/catalystneuro/zarr-matlab)
 
-*CatalystNeuro builds open-source software for neuroscience data standardization and reuse. If your lab needs help adopting cloud-native data workflows — in Python or MATLAB — [get in touch](https://catalystneuro.com/contact).*
+*CatalystNeuro builds open-source software for neuroscience data standardization and reuse. If your lab needs help adopting cloud-native data workflows — in Python or MATLAB — [get in touch](https://catalystneuro.com/contact/).*

@@ -42,7 +42,7 @@ const convs = affiliated
   <article>
     <header class="post-head">
       <div class="container-x post-head-inner">
-        <a href="/funded-projects" class="post-back"><Icon name="arrow" size={15} class="flip" /> All funded projects</a>
+        <a href="/funded-projects/" class="post-back"><Icon name="arrow" size={15} class="flip" /> All funded projects</a>
         <div class="fpd-top">
           <span class={`badge badge--${statusColor(d.status)}`}>{d.status}</span>
           {d.image && <img src={d.image} alt={d.funder} class="fpd-logo" />}
@@ -81,7 +81,7 @@ const convs = affiliated
               <article class="card card-hover pcard fpd-conv">
                 <div class="pcard-head">
                   <div>
-                    <h3><a href={`/nwb-conversions/${c.slug}`} class="fpd-conv-title">{c.lab}</a></h3>
+                    <h3><a href={`/nwb-conversions/${c.slug}/`} class="fpd-conv-title">{c.lab}</a></h3>
                     <p class="pcard-sub">{c.institution}</p>
                   </div>
                   {c.date && <span class="pcard-stamp" title={`Project started ${monthYear(c.date)}`}>{c.date}</span>}
@@ -98,7 +98,7 @@ const convs = affiliated
                 </div>
 
                 <div class="pcard-links">
-                  <a href={`/nwb-conversions/${c.slug}`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
+                  <a href={`/nwb-conversions/${c.slug}/`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
                   {c.github.map((g, i) => (
                     <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {c.github.length > 1 ? `Repo ${i + 1}` : "GitHub"}</a>
                   ))}

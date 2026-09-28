@@ -66,7 +66,7 @@ const { Content } = await render(c);
   <article>
     <header class="post-head">
       <div class="container-x post-head-inner">
-        <a href="/nwb-conversions" class="post-back"><Icon name="arrow" size={15} class="flip" /> All NWB conversions</a>
+        <a href="/nwb-conversions/" class="post-back"><Icon name="arrow" size={15} class="flip" /> All NWB conversions</a>
         <h1>{d.lab}</h1>
         <p class="cvd-inst">{d.institution}</p>
         {d.date && <p class="post-meta">Project started {monthYear(d.date)}</p>}
@@ -120,7 +120,7 @@ const { Content } = await render(c);
           <span class="eyebrow">Funded under</span>
           <div class="cvd-links">
             {fundedHref
-              ? <a href={`/funded-projects/${fundedHref}`} class="btn btn-ghost btn-sm"><Icon name="link" size={15} /> {d.funded_project}</a>
+              ? <a href={`/funded-projects/${fundedHref}/`} class="btn btn-ghost btn-sm"><Icon name="link" size={15} /> {d.funded_project}</a>
               : <p class="cvd-plain">{d.funded_project}</p>}
           </div>
         </section>
@@ -138,7 +138,7 @@ const { Content } = await render(c);
           <span class="eyebrow">Related work</span>
           <div class="pcard-grid">
             {related.map((r) => (
-              <a href={`/nwb-conversions/${slugify(r.data.lab)}`} class="card card-hover cvd-related-card">
+              <a href={`/nwb-conversions/${slugify(r.data.lab)}/`} class="card card-hover cvd-related-card">
                 <h3>{r.data.lab}</h3>
                 <p class="cvd-related-inst">{r.data.institution}</p>
                 <p class="cvd-related-desc">{r.data.description}</p>

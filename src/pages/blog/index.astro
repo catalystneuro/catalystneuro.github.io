@@ -25,7 +25,7 @@ const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data
       <div class="blog-grid" id="blog-grid">
         {posts.map((p) => (
           <a
-            href={`/blog/${p.id}`}
+            href={`/blog/${p.id}/`}
             class="card card-hover blog-item"
             data-search={`${p.data.title} ${p.data.description} ${(p.data.keywords ?? []).join(" ")}`.toLowerCase()}
           >

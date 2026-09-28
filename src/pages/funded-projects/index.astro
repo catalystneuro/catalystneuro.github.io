@@ -41,7 +41,7 @@ const statuses = [...new Set(projects.map((p) => p.data.status))];
       <div class="fp-grid" id="fp-grid">
         {projects.map((p) => (
           <a
-            href={`/funded-projects/${slugify(p.data.title)}`}
+            href={`/funded-projects/${slugify(p.data.title)}/`}
             class="card card-hover fp-card"
             data-search={`${p.data.title} ${p.data.funder} ${p.data.description}`.toLowerCase()}
             data-status={p.data.status}

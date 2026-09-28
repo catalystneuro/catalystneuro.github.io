@@ -16,56 +16,56 @@ export const SITE = {
 export const NAV = [
   {
     label: "About",
-    href: "/about",
+    href: "/about/",
     children: [
-      { label: "About", href: "/about" },
-      { label: "Team", href: "/team" },
-      { label: "Openings", href: "/openings" },
+      { label: "About", href: "/about/" },
+      { label: "Team", href: "/team/" },
+      { label: "Openings", href: "/openings/" },
     ],
   },
   {
     label: "Software",
-    href: "/nwb-software",
+    href: "/nwb-software/",
     children: [
-      { label: "NWB Software", href: "/nwb-software" },
-      { label: "Analysis Software", href: "/analysis-software" },
-      { label: "Data & AI Tools", href: "/data-and-ai-tools" },
-      { label: "Guides", href: "/guides" },
-      { label: "LLM Cost Frontier", href: "/llm-cost-frontier" },
+      { label: "NWB Software", href: "/nwb-software/" },
+      { label: "Analysis Software", href: "/analysis-software/" },
+      { label: "Data & AI Tools", href: "/data-and-ai-tools/" },
+      { label: "Guides", href: "/guides/" },
+      { label: "LLM Cost Frontier", href: "https://llm-frontier.catalystneuro.com/" },
     ],
   },
   {
     label: "Portfolio",
-    href: "/nwb-conversions",
+    href: "/nwb-conversions/",
     children: [
-      { label: "NWB Conversions", href: "/nwb-conversions" },
-      { label: "Funded Projects", href: "/funded-projects" },
-      { label: "Publications", href: "/publications" },
+      { label: "NWB Conversions", href: "/nwb-conversions/" },
+      { label: "Funded Projects", href: "/funded-projects/" },
+      { label: "Publications", href: "/publications/" },
     ],
   },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { label: "Blog", href: "/blog/" },
+  { label: "Contact", href: "/contact/" },
 ];
 
 export const FOOTER = [
   {
     title: "Company",
     links: [
-      { label: "About", href: "/about" },
-      { label: "Team", href: "/team" },
-      { label: "Careers", href: "/openings" },
-      { label: "Contact", href: "/contact" },
+      { label: "About", href: "/about/" },
+      { label: "Team", href: "/team/" },
+      { label: "Careers", href: "/openings/" },
+      { label: "Contact", href: "/contact/" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { label: "Blog", href: "/blog" },
-      { label: "Funded Projects", href: "/funded-projects" },
-      { label: "NWB Software", href: "/nwb-software" },
-      { label: "Analysis Software", href: "/analysis-software" },
-      { label: "Data & AI Tools", href: "/data-and-ai-tools" },
-      { label: "LLM Cost Frontier", href: "/llm-cost-frontier" },
+      { label: "Blog", href: "/blog/" },
+      { label: "Funded Projects", href: "/funded-projects/" },
+      { label: "NWB Software", href: "/nwb-software/" },
+      { label: "Analysis Software", href: "/analysis-software/" },
+      { label: "Data & AI Tools", href: "/data-and-ai-tools/" },
+      { label: "LLM Cost Frontier", href: "https://llm-frontier.catalystneuro.com/", external: true },
     ],
   },
   {

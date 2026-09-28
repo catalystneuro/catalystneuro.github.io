@@ -17,7 +17,7 @@ const guides = (await getCollection("software")).filter((s) => s.data.type === "
     <div class="container-x">
       <div class="gd-grid">
         {guides.map((g) => (
-          <a href={`/guides/${g.id}`} class="card card-hover gd-card">
+          <a href={`/guides/${g.id}/`} class="card card-hover gd-card">
             <div class="gd-icon"><Icon name="book" size={20} /></div>
             <div class="gd-body">
               <h3>{g.data.name}</h3>
