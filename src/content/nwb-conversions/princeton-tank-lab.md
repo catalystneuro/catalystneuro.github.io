@@ -1,26 +1,24 @@
 ---
 lab: "David Tank"
 institution: "Princeton University"
-description: "Developed comprehensive NWB conversion tools for the Tank lab's behavioral and electrophysiology datasets. Created a custom NWB extension (ndx-tank-metadata) for storing experiment-specific metadata including maze configurations and rig parameters. The conversion pipeline integrates Neuropixels recordings with VirMen behavioral data, including detailed trial structure, behavioral metrics, and synchronized TTL events. The tools support extensive metadata handling and include specialized visualization widgets for behavioral analysis."
-tags: ["spatial navigation", "electrophysiology", "behavioral tracking"]
+description: "Developed NWB conversion tools for the Tank lab's behavioral and electrophysiology datasets. Created a custom NWB extension (ndx-tank-metadata) for storing experiment-specific metadata including maze configurations and rig parameters. The conversion pipeline integrates Neuropixels recordings with VirMen behavioral data, including detailed trial structure, behavioral metrics, and synchronized TTL events. The tools support extensive metadata handling and include specialized visualization widgets for behavioral analysis."
+tags: ["spatial navigation", "electrophysiology", "behavioral tracking", "decision-making"]
 github: "https://github.com/catalystneuro/tank-lab-to-nwb"
 date: "2020-10"
 funded_project: "SCGB NWB Adoption"
 species: Mouse
 ---
 
-The Tank and Brody labs were beginning to collect Neuropixels data, and our goal in this Simons Collaboration on the Global Brain project is to help them standardize around modern processing pipelines for electrophysiology.
+The Tank lab at Princeton University records neural activity during the towers task, which runs in virtual mazes built with ViRMEn. When the lab began collecting Neuropixels data, our goal in this Simons Collaboration on the Global Brain project was to help them adopt a modern processing pipeline for electrophysiology and to convert the recordings and task data to NWB.
 
-## Conversion of Electrophysiology
+## Processing of Electrophysiology
 
-We ingest SpikeGLX Neuropixels data into SpikeInterface, demonstrating preprocessing of extracellular recordings, running the popular semi-automatic spike sorters such as Kilosort2 and Ironclust, post-processing of sorted datasets, comparison and benchmarking of sorter outputs, validation and curation including through Phy, visualization of recordings and sorting results, and export to NWB. The pipeline aims to keep the choice of motion correction algorithm flexible.
-
-The work starts from Brody lab Neuropixels data, which had already been collected, and extends to the Tank lab's data once their acquisition system is producing it. Time permitting, tetrode recordings from the Brody lab are folded into the same pipeline.
+We wrote a SpikeInterface notebook for the lab's SpikeGLX Neuropixels recordings. It loaded the AP and LFP streams and the TTL signals, synchronized the recording with the task, and then walked through preprocessing, running several spike sorters such as Kilosort2, Ironclust, and SpyKING CIRCUS, computing waveforms and quality metrics, curation in Phy, comparing sorters to build an ensemble, automatic curation, and writing the sorted spikes to NWB.
 
 ## Conversion of Task Data
 
-We ingest high-level ViRMEn data from a T-maze decision-making task and write it into the same NWB file, synchronized with the electrophysiology through either TTL pulses or I2C. The conversion is reachable through a web interface, a tailored Python API, and a tailored command line interface. Time permitting, the Brody lab's auditory task and its associated behavioral responses are converted as well.
+The converter, built on nwb-conversion-tools, combined the SpikeGLX recording and LFP interfaces with a custom interface for the ViRMEn behavior files. For synchronization, the first TTL pulse recorded on the NIDQ board marked the start of the task, and the electrophysiology was trimmed to begin there. The ViRMEn interface wrote position, view angle, velocity, and collisions as time series, an epoch for each maze block, and a trials table with the choice, trial type, and the onset, offset, and position of left and right cues. Rig configuration and maze parameters were stored with a custom extension, ndx-tank-metadata.
 
 ## Interactive Visualizations
 
-We create interactive visualizations of NWB data that combine behavior with the neural response, such as PSTH and place field analyses. These validate that the files converted correctly, give lab members a quick way to run simple analyses, and serve as example code for working with NWB data.
+We added custom widgets for NWB Widgets, including a place field widget adapted to the towers task and a trace viewer for the behavioral time series, with a notebook that displays a converted file.

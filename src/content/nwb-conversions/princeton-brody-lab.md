@@ -1,26 +1,20 @@
 ---
 lab: "Carlos Brody"
 institution: "Princeton University"
-description: "Developed NWB conversion tools for the Brody lab's neurophysiology datasets focused on decision-making and neural circuits. The project includes custom processing pipelines and utility code for converting experimental data to the standardized NWB format, with specialized Python-based conversion tools."
-tags: ["electrophysiology", "behavioral tracking"]
+description: "Developed spike sorting pipelines and NWB conversion tools for the Brody lab's rat electrophysiology. SpikeInterface notebooks cover SpikeGLX Neuropixels, SpikeGadgets wireless tetrode, and Neuralynx tetrode recordings, and three converters combine these recordings with the lab's trial data and sorted units, including sessions from the Poisson clicks task."
+tags: ["electrophysiology", "behavioral tracking", "decision-making"]
 github: "https://github.com/catalystneuro/brody-lab-to-nwb"
 date: "2021-03"
 funded_project: "SCGB NWB Adoption"
 species: Rat
 ---
 
-The Brody lab collects SpikeGLX, SpikeGadgets, and Neuralynx data, with OpenEphys to follow. Our goals, as part of the Simons Collaboration on the Global Brain data standardization effort, are to improve the efficiency of their existing processing pipelines through semi-automated curation in SpikeInterface, and in doing so make conversion to NWB convenient for publication and sharing.
+The Brody lab at Princeton University records from rats with Neuropixels probes through SpikeGLX, wireless tetrodes through SpikeGadgets, and tetrodes through Neuralynx. As part of the Simons Collaboration on the Global Brain data standardization effort, our goals were to bring these recordings into a common spike sorting pipeline in SpikeInterface and to make conversion to NWB straightforward for publication and sharing.
 
-## Processing and Conversion of Electrophysiology
+## Processing of Electrophysiology
 
-We develop and integrate motion correction algorithms alongside the spike sorting algorithms in SpikeInterface, then ingest SpikeGLX, SpikeGadgets, and Neuralynx data into the same pipeline. The pipeline demonstrates preprocessing of extracellular recordings, running spike sorters such as Kilosort2 and Ironclust, comparison and benchmarking of their outputs, validation and curation including through Phy, visualization of recordings and sorting results, and export to NWB.
-
-Prototyping starts from the SpikeGLX, SpikeGadgets, and Neuralynx data the lab has already collected. Time and availability permitting, the work extends to their upcoming OpenEphys setup.
+We wrote a SpikeInterface notebook for each acquisition system. Each one walked through filtering and common referencing, running several spike sorters such as Kilosort2, Ironclust, and SpyKING CIRCUS, computing waveforms, templates, and quality metrics, exporting to Phy for manual curation, comparing sorters to build an ensemble, applying automatic curation thresholds, and writing the sorted spikes to NWB. The SpikeGadgets notebook added a grid search over sorter parameters, and a later notebook updated the pipeline for Neuropixels 2.0 recordings with a newer SpikeInterface release, including plots of drift over time. We also added probe files for the lab's 32-, 64-, and 128-channel tetrode configurations.
 
 ## Conversion of Behavioral Task Data
 
-We ingest high-level data from the lab's behavioral recording systems, covering events, states, and DeepLabCut output, and write it either into the same NWB file as the electrophysiology or into behavior-only files. The conversion is reachable through a tailored Python API.
-
-## Interactive Visualizations
-
-We create interactive visualizations of NWB data that combine behavior with the neural response, such as PSTH and place field analyses. These validate that the files converted correctly, give lab members a quick way to run simple analyses, and serve as example code for working with NWB data.
+We wrote three converters with nwb-conversion-tools. For chronic Neuropixels sessions from the Poisson clicks task, the SpikeGLX raw and LFP interfaces were combined with a custom interface for the processed trial data. For Neuralynx tetrode sessions, custom interfaces read trials and sorted units from the lab's Msorted MATLAB files, adding columns for pharmacological and laser manipulations when a session had them. For wireless tetrode sessions, the SpikeGadgets recording interface was combined with custom interfaces for the trial data in protocol_info files and for units curated in Phy, with their single- or multi-unit labels and mean waveforms.
