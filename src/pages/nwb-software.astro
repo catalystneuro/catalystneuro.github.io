@@ -5,7 +5,12 @@ import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
 
 const all = await getCollection("software");
-const core = all.filter((s) => s.data.type === "core");
+// The conversion and validation tools lead; anything unlisted follows alphabetically.
+const CORE_ORDER = ["NeuroConv", "NWB GUIDE", "NWB Inspector", "MatNWB"];
+const rank = (name: string) => (CORE_ORDER.includes(name) ? CORE_ORDER.indexOf(name) : CORE_ORDER.length);
+const core = all
+  .filter((s) => s.data.type === "core")
+  .sort((a, b) => rank(a.data.name) - rank(b.data.name) || a.data.name.localeCompare(b.data.name));
 const ext = all.filter((s) => s.data.type === "extension");
 ---
 <Base title="NWB Software" description="Open-source tools from CatalystNeuro that make neurophysiology data management and standardization with Neurodata Without Borders accessible to all researchers.">
@@ -62,7 +67,7 @@ const ext = all.filter((s) => s.data.type === "extension");
       <div class="card sw-guide-cta">
         <div>
           <h3>Documentation & guides</h3>
-          <p>Step-by-step guides for sharing data with us and working through an NWB adoption engagement.</p>
+          <p>Guides to sharing neurophysiology data with NWB and DANDI, sending data to us, and working through an NWB adoption engagement.</p>
         </div>
         <a href="/guides" class="btn btn-primary">See all guides <Icon name="arrow" size={15} /></a>
       </div>
@@ -86,7 +91,7 @@ const ext = all.filter((s) => s.data.type === "extension");
   .sw-logo { height: 52px; max-width: 170px; display: flex; align-items: center; }
   .sw-logo img { max-height: 52px; max-width: 170px; object-fit: contain; }
   .sw-logo--mono { width: 52px; background: var(--color-blue-50); color: var(--color-blue); border-radius: 0.6rem; justify-content: center; }
-  .sw-status { background: color-mix(in srgb, #16a34a 12%, white); color: #15803d; align-self: flex-start; }
+  .sw-status { background: color-mix(in srgb, #16a34a 12%, white); color: #166534; align-self: flex-start; }
   .sw-card--sm h3 { font-size: 1.05rem; }
   .sw-card--sm p { font-size: 0.88rem; }
   .sw-ndx-mark { width: 40px; height: 40px; border-radius: 0.5rem; background: var(--color-blue-50); color: var(--color-blue); display: grid; place-items: center; margin-bottom: 1rem; }

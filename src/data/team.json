@@ -4,7 +4,7 @@
       "name": "Ben Dichter, PhD",
       "isActive": true,
       "role": "Founder",
-      "description": "Ben Dichter is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He is now a data scientist consultant for neuroscience labs, focusing on building systems for sharing of data and analyses.",
+      "description": "Ben Dichter is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.",
       "image": "/images/team/benjamin_dichter.png",
       "github": "https://github.com/bendichter",
       "personalPage": "http://bendichter.com",
@@ -16,7 +16,7 @@
       "name": "Luiz Tauffer",
       "isActive": true,
       "role": "Lead Neurodata Scientist",
-      "description": "Luiz has a BSc in Electrical Engineering, MSc in Biomedical Engineering and am currently at the late stages of his PhD in Computational Neuroscience. His research work has been focused on mathematical modelling of biological systems and behaviour, i.e. machine learning and data science applied to the life sciences. He is currently expanding my work to cover for more general machine learning / data science consultancy and software development.",
+      "description": "Luiz Tauffer has a BSc in Electrical Engineering and an MSc in Biomedical Engineering, and did doctoral research in computational neuroscience. His research focused on mathematical modeling of biological systems and behavior, applying machine learning and data science to the life sciences. At CatalystNeuro he builds data conversion pipelines and software tools for neurophysiology labs.",
       "image": "/images/team/luiz-tauffer.jpg",
       "github": "https://github.com/luiztauffer",
       "personalPage": "https://luiztauffer.github.io/guacamole-data-science/",
@@ -26,7 +26,7 @@
       "name": "Alessio Buccino, PhD",
       "isActive": true,
       "role": "Lead Neurodata Scientist",
-      "description": "Alessio Buccino has a BSc and MSc in biomedical engineering and an MSc in computer science. During his PhD at the University of Oslo, he explored the use of advanced modeling techniques and engineering solution to improve the state-of-the-art methods in extracellular electrophysiology for high-density neural probes, from spike sorting to selective electrical stimulation. Alessio is the lead architect of the SpikeInterface platform. He is currently an Electrophysiology Pipeline Development Engineer at the Allen Institute for Neural Dynamics, where he builds standardized and efficient pipelines for the analysis of large-scale electrophysiology data.",
+      "description": "Alessio Buccino has a BSc and MSc in biomedical engineering and an MSc in computer science. During his PhD at the University of Oslo, he explored the use of advanced modeling techniques and engineering solution to improve the state-of-the-art methods in extracellular electrophysiology for high-density neural probes, from spike sorting to selective electrical stimulation. Alessio is the lead architect of the SpikeInterface platform. He is primarily based at the Allen Institute for Neural Dynamics, where he builds standardized pipelines for the analysis of large-scale electrophysiology data, and works with CatalystNeuro on SpikeInterface and electrophysiology projects.",
       "image": "/images/team/alessio_buccino.jpg",
       "github": "https://github.com/alejoe91",
       "orcid": "https://orcid.org/0000-0003-3661-527X"
@@ -111,6 +111,7 @@
       "isActive": false,
       "role": "Former Research Software Engineer",
       "description": "Felix Pei contributed to CatalystNeuro's data standardization and conversion tools.",
+      "github": "https://github.com/felixp8",
       "orcid": "https://orcid.org/0009-0001-3193-5541"
     },
     {
