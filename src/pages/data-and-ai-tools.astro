@@ -15,18 +15,18 @@ const sections = [
   },
   {
     eyebrow: "AI tooling",
-    title: "Language models",
-    lead: "Tools we built to understand the models we use in our own work.",
+    title: "Language models and embeddings",
+    lead: "Tools that apply language models to finding neuroscience data, and that track the cost and capability of the models themselves.",
     icon: "chart",
     items: all.filter((s) => s.data.type === "ai"),
   },
 ];
 ---
-<Base title="Data Engineering and AI Tools" description="General-purpose open-source software from CatalystNeuro for cloud data access, including zarr-matlab and remfile-cpp, and tools for tracking language model cost and capability.">
+<Base title="Data Engineering and AI Tools" description="Open-source software from CatalystNeuro for cloud data access, including zarr-matlab and remfile-cpp, and AI tools including the DANDI Semantic Atlas and the LLM Cost Frontier.">
   <PageHeader
     eyebrow="Open-source tools"
     title="Data engineering and AI tools"
-    subtitle="Software we have built outside the NWB toolchain, for working with cloud-hosted data and for tracking language models."
+    subtitle="Software we have built outside the NWB toolchain, for working with cloud-hosted data and for applying and tracking language models."
   />
 
   <section class="section">

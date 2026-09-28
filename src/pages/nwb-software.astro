@@ -6,7 +6,7 @@ import Icon from "../components/Icon.astro";
 
 const all = await getCollection("software");
 // The conversion and validation tools lead; anything unlisted follows alphabetically.
-const CORE_ORDER = ["NeuroConv", "NWB GUIDE", "NWB Inspector", "MatNWB", "DANDI Semantic Atlas"];
+const CORE_ORDER = ["NeuroConv", "NWB GUIDE", "NWB Inspector", "MatNWB"];
 const rank = (name: string) => (CORE_ORDER.includes(name) ? CORE_ORDER.indexOf(name) : CORE_ORDER.length);
 const core = all
   .filter((s) => s.data.type === "core")
