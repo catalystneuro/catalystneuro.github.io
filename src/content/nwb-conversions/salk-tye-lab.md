@@ -5,8 +5,6 @@ description: "Developed NWB conversion tools for the Tye lab's valence experimen
 tags: ["behavioral tracking", "electrophysiology", "calcium imaging", "fiber photometry", "pose estimation", "video"]
 github: "https://github.com/catalystneuro/tye-lab-to-nwb"
 dandi:
-  - url: "https://dandiarchive.org/dandiset/001195"
-    name: "001195: Separable Dorsal Raphe Dopamine Projections Mediate the Facets of Loneliness-like State"
   - url: "https://dandiarchive.org/dandiset/000689"
     name: "000689: Data supporting Neurotensin orchestrates valence assignment in the amygdala"
   - url: "https://dandiarchive.org/dandiset/001203"

@@ -7,3 +7,10 @@
 # An old guide linked the Globus instructions by their Markdown source path.
 /guides/globus-guide.md /guides/globus-guide/ 301
 /data/llm-frontier.json https://llm-frontier.catalystneuro.com/data/llm-frontier.json 301!
+# Conversion pages removed in September 2026 because no source ties the work to CatalystNeuro or the source is private.
+/nwb-conversions/attila-losonczy /nwb-conversions/ 301
+/nwb-conversions/attila-losonczy/ /nwb-conversions/ 301
+/nwb-conversions/dayu-lin /nwb-conversions/ 301
+/nwb-conversions/dayu-lin/ /nwb-conversions/ 301
+/nwb-conversions/blackrock-neurotech /nwb-conversions/ 301
+/nwb-conversions/blackrock-neurotech/ /nwb-conversions/ 301
