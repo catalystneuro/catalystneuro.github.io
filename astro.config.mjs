@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import remarkGalleries from './src/plugins/remark-galleries.mjs';
+import rehypeImageSize from './src/plugins/rehype-image-size.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkGalleries],
+    rehypePlugins: [rehypeImageSize],
     shikiConfig: {
       theme: 'github-dark',
       wrap: false,

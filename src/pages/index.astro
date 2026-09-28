@@ -8,6 +8,18 @@ import { longDate } from "../lib/format";
 import {
   HERO, STAT_LABELS, WHY, SERVICES, PARTNERS, INSTITUTIONS, FEATURED, TESTIMONIALS,
 } from "../data/site-content";
+import { SITE } from "../consts";
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE.name,
+  url: SITE.url,
+  logo: new URL("/images/logo.png", SITE.url).href,
+  description: SITE.description,
+  email: SITE.email,
+  sameAs: [SITE.github, SITE.linkedin],
+};
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => (a.data.date < b.data.date ? 1 : -1))
@@ -30,7 +42,7 @@ const STATS = [
 const capIcons = ["cloud", "users", "chart", "code"];
 const serviceIcons = ["database", "code", "spark"];
 ---
-<Base>
+<Base jsonLd={organizationLd}>
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"><SignalField channels={9} /></div>

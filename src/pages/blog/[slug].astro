@@ -4,6 +4,7 @@ import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import GalleryRuntime from "../../components/GalleryRuntime.astro";
 import { longDate } from "../../lib/format";
+import { SITE } from "../../consts";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -14,8 +15,24 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const d = post.data;
 const meta = [longDate(d.date), d.readTime, d.author && `By ${d.author}`].filter(Boolean).join(" · ");
+const url = new URL(`/blog/${post.id}/`, SITE.url).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: d.title,
+  description: d.description,
+  datePublished: d.date,
+  url,
+  mainEntityOfPage: url,
+  ...(d.image && { image: new URL(d.image, SITE.url).href }),
+  ...(d.keywords && { keywords: d.keywords.join(", ") }),
+  author: d.author
+    ? { "@type": "Person", name: d.author }
+    : { "@type": "Organization", name: SITE.name, url: SITE.url },
+  publisher: { "@type": "Organization", name: SITE.name, url: SITE.url, logo: { "@type": "ImageObject", url: new URL("/images/logo.png", SITE.url).href } },
+};
 ---
-<Base title={d.title} description={d.description} image={d.image}>
+<Base title={d.title} description={d.description} image={d.image} article={{ published: d.date, author: d.author }} jsonLd={jsonLd}>
   <article class="post">
     <header class="post-head">
       <div class="container-x post-head-inner">
