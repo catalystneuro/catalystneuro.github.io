@@ -2,7 +2,7 @@
 title: "Virtual Data Standards: A New Path Forward for Scientific Data"
 date: "2025-12-19"
 description: "Scientific data standardization is at a crossroads. This article presents virtual datasets as a third way to make data accessible across programming languages and computing environments while preserving original files."
-image: "/images/blog/virtual-data-standards-new.jpg"
+image: "/images/blog/virtual-data-standards.jpg"
 readTime: "15 min read"
 author: "Benjamin Dichter"
 keywords: ["NWB", "Zarr", "data standardization", "virtual datasets", "Kerchunk", "LINDI", "neurophysiology", "cloud computing"]
@@ -227,7 +227,7 @@ I would like to thank Ryan Ly, Oliver Ruebel, and Jeremy Magland, who have all b
 ## About the Author
 
 <div style="display: flex; align-items: flex-start; gap: 20px; margin-top: 20px;">
-<img src="/images/team/benjamin_dichter.png" alt="Ben Dichter" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;" />
+<img src="/images/team/benjamin_dichter.jpg" alt="Ben Dichter" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;" />
 <div>
 
 **Ben Dichter, PhD** is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.
