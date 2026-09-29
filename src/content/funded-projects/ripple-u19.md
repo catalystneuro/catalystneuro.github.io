@@ -2,7 +2,7 @@
 title: "Ripple U19 NWB Adoption"
 funder: "National Institutes of Health"
 status: "completed"
-startDate: "2019-11-01"
+startDate: "2019-06-01"
 description: "A BRAIN Initiative U19 on hippocampal sharp-wave ripples that funded our NWB conversions, extensions, and ROIExtractors work"
 image: "/images/sponsors/nih_logo.png"
 github:
