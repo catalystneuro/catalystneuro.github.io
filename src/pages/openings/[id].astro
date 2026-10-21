@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import { SITE } from "../../consts";
@@ -11,6 +11,9 @@ export async function getStaticPaths() {
 }
 const { o } = Astro.props;
 const d = o.data;
+// The markdown body holds any further sections, such as how to apply.
+const { Content } = await render(o);
+const hasBody = Boolean(o.body?.trim());
 const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent("Application: " + d.title)}`;
 ---
 <Base title={d.title} description={d.description}>
@@ -35,6 +38,8 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent("Application: 
         </section>
       )}
 
+      {hasBody && <div class="prose job-body"><Content /></div>}
+
       <a href={mailto} class="btn btn-primary job-apply"><Icon name="mail" size={16} /> Apply now</a>
     </div>
   </article>
@@ -55,5 +60,7 @@ const mailto = `mailto:${SITE.email}?subject=${encodeURIComponent("Application: 
   .job-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
   .job-list li { display: flex; gap: 0.6rem; color: #3a445e; }
   .job-list svg { color: var(--color-blue); flex-shrink: 0; margin-top: 0.15rem; }
+  .job-body { margin-top: 2.5rem; }
+  .job-body :global(h2) { font-size: 1.4rem; }
   .job-apply { margin-top: 2.5rem; }
 </style>

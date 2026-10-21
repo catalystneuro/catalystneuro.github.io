@@ -24,3 +24,15 @@ requirements:
   - "Ability to work independently in a remote team and overlap several hours a day with European working hours"
   - "Experience with NWB, DANDI, SpikeInterface, or related tools is a plus but not required"
 ---
+
+## How to Apply
+
+Please email info@catalystneuro.com with the subject line "Application: Research Software Engineer" (the button below fills this in for you), and include:
+
+- Your CV
+- A link to your GitHub profile or another code sample
+- A short note, a few paragraphs at most, answering two questions:
+  1. Describe a dataset you have worked with and what made it difficult to handle.
+  2. Describe how you have used coding agents in your work, including a time an agent got something wrong and how you caught it.
+
+We will begin reviewing applications on November 10, 2026, and will continue until the position is filled.
