@@ -1,7 +1,7 @@
 ---
 id: "research-software-engineer"
 title: "Research Software Engineer"
-type: "Contract, 25+ hours per week"
+type: "Contract (25+ hrs/week) or full-time"
 location: "Remote"
 enabled: true
 description: "We are looking for a Research Software Engineer to help neuroscience labs convert their data to Neurodata Without Borders (NWB) and publish it on the DANDI Archive. Each project starts with a lab's own acquisition systems, file formats, and analysis outputs, and ends with a standardized, well-documented dataset that others can reuse. The work is roughly evenly split between building conversion pipelines for specific labs and improving the open-source tools those pipelines are built on, including NeuroConv, PyNWB, and the NWB Inspector. We rely heavily on agentic LLM-based development in this work, using coding agents such as Claude Code to read unfamiliar formats, draft conversion code, and run tests, with engineers directing the agents and reviewing what they produce. You would join a small, fully remote team that works closely with each other and with the research groups we support. This is a contract position paid hourly, at $60 to $75 per hour depending on experience. We are open to anything from 25 hours per week up to full time. For candidates based in the United States, we are also open to a full-time salaried position with benefits, at $95,000 to $120,000 per year depending on experience."
