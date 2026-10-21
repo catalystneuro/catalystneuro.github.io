@@ -62,7 +62,7 @@
       "name": "Alessandra Trapani, Ph.D.",
       "isActive": true,
       "role": "Research Software Engineer",
-      "description": "Dr. Alessandra Trapani received her Ph.D. from Politecnico di Milano, in the NearLAB. Her thesis project aimed at modeling cerebellar motor functions in a large-scale spiking neural network (CerebNEST project).",
+      "description": "Dr. Alessandra Trapani holds an MSc in Biomedical Engineering and a Ph.D. in Bioengineering from Politecnico di Milano. Her doctoral research combined computational modeling of nitric oxide diffusion in the cerebellum with calcium imaging experiments. She joined CatalystNeuro in 2023 and helps labs convert optical physiology data to NWB and share it on DANDI, including two-photon and miniscope imaging and fiber photometry. She leads development of the NWB extensions ndx-microscopy and ndx-ophys-devices and contributes to NeuroConv and ROIExtractors. For Alessandra, this work is a practical way to advocate for open science and to engage with the neuroscience community from outside academia, working alongside many labs to make their data easier to find, understand, and reuse. When she is not standardizing data, she is watching movies or building something out of wood.",
       "image": "/images/team/alessandra_trapani.jpg",
       "github": "https://github.com/alessandratrapani",
       "orcid": "https://orcid.org/0000-0001-5182-0541"
