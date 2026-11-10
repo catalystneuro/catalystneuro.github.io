@@ -2,7 +2,22 @@
 import Base from "../layouts/Base.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { itemList } from "../lib/schema";
 import { PUBLICATIONS } from "../data/site-content";
+
+const pubsLd = itemList(
+  "CatalystNeuro publications",
+  PUBLICATIONS.map((p) => ({
+    "@type": "ScholarlyArticle",
+    headline: p.title,
+    author: p.authors.split(/,\s*/).map((name) => ({ "@type": "Person", name })),
+    datePublished: String(p.year),
+    isPartOf: { "@type": "Periodical", name: p.journal },
+    url: p.url,
+    ...(p.doi && { sameAs: `https://doi.org/${p.doi}`, identifier: { "@type": "PropertyValue", propertyID: "DOI", value: p.doi } }),
+  }))
+);
 ---
 <Base title="Publications" description="Peer-reviewed research publications and scientific contributions from the CatalystNeuro team on neurophysiology data, NWB, and open science.">
   <PageHeader
@@ -11,6 +26,8 @@ import { PUBLICATIONS } from "../data/site-content";
     subtitle="Research publications and scientific contributions from the CatalystNeuro team."
     count={`${PUBLICATIONS.length} papers`}
   />
+
+  <JsonLd data={pubsLd} />
 
   <section class="section">
     <div class="container-x pub-wrap">

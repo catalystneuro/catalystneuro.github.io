@@ -9,7 +9,9 @@ export const SITE = {
   email: "info@catalystneuro.com",
   github: "https://github.com/catalystneuro",
   linkedin: "https://www.linkedin.com/company/catalyst-neuro",
-  calendly: "https://calendly.com/ben-dichter",
+  // The 30-minute event itself, not the scheduling profile, which lists every
+  // meeting length. /book-intro redirects to the same event.
+  calendly: "https://calendly.com/ben-dichter/30min",
   address: ["CatalystNeuro", "150 E B St Lbby #1810 SMB#45673", "Casper, WY 82601"],
 };
 
@@ -30,6 +32,7 @@ export const NAV = [
       { label: "NWB Software", href: "/nwb-software/" },
       { label: "Analysis Software", href: "/analysis-software/" },
       { label: "Data & AI Tools", href: "/data-and-ai-tools/" },
+      { label: "AI in Neuroscience", href: "/ai-in-neuroscience/" },
       { label: "Guides", href: "/guides/" },
       { label: "LLM Cost Frontier", href: "https://llm-frontier.catalystneuro.com/" },
     ],
@@ -73,6 +76,7 @@ export const FOOTER = [
     links: [
       { label: "GitHub", href: "https://github.com/catalystneuro", external: true },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/catalyst-neuro", external: true },
+      { label: "Blog RSS", href: "/rss.xml" },
     ],
   },
 ];

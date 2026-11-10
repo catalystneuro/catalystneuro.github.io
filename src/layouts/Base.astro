@@ -60,9 +60,22 @@ const trackTraffic = import.meta.env.PROD && process.env.CONTEXT !== "deploy-pre
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} blog`} href="/rss.xml" />
     <meta name="generator" content={Astro.generator} />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     {trackTraffic && <script defer src="https://cloud.umami.is/script.js" data-website-id={UMAMI_WEBSITE_ID} is:inline></script>}
+    {trackTraffic && (
+      <script is:inline>
+        // Visitors leave to check a repository, a dandiset, or a paper before
+        // they come back (see PRODUCT.md, Operating Context). Record which
+        // artifact they went to. Only the destination host and path are sent.
+        document.addEventListener("click", function (e) {
+          var a = e.target && e.target.closest ? e.target.closest("a[href^='http']") : null;
+          if (!a || a.host === location.host || !window.umami) return;
+          window.umami.track("outbound-link", { url: a.host + a.pathname });
+        });
+      </script>
+    )}
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

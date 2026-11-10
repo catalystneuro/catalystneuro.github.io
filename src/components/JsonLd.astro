@@ -1,0 +1,9 @@
+---
+// Emits one schema.org JSON-LD block. Search engines read JSON-LD anywhere in
+// the document, so a page can drop this beside its content instead of
+// threading the object through the layout.
+interface Props { data: Record<string, unknown> | Record<string, unknown>[] }
+const { data } = Astro.props;
+const graph = Array.isArray(data) ? { "@context": "https://schema.org", "@graph": data } : { "@context": "https://schema.org", ...data };
+---
+<script type="application/ld+json" is:inline set:html={JSON.stringify(graph).replace(/</g, "\\u003c")} />

@@ -2,6 +2,8 @@
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { breadcrumbs } from "../../lib/schema";
 import { slugify, monthYear, asArray, dandiList, repoName } from "../../lib/format";
 import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
 
@@ -18,16 +20,25 @@ export async function getStaticPaths() {
     if (alias) projectSlug.set(alias, slug);
   }
 
+  const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
+  const methodsOf = (tags: string[] | undefined) =>
+    new Set((tags ?? []).map((t) => t.toLowerCase()).filter((t) => methodSet.has(t)));
+
   return conversions.map((c) => {
     // Other conversions worth offering next: same funded project first, then
-    // same institution, capped so the section stays a suggestion, not a list.
+    // same institution, then shared recording methods, capped so the section
+    // stays a suggestion, not a list. Shared methods count for less than
+    // either of the others (at most 0.9 in total), so they only break ties
+    // and fill the section for labs with no project or institution in common.
+    const mine = methodsOf(c.data.tags);
     const related = conversions
       .filter((o) => o.id !== c.id)
       .map((o) => ({
         o,
         score:
           (c.data.funded_project && o.data.funded_project === c.data.funded_project ? 2 : 0) +
-          (o.data.institution === c.data.institution ? 1 : 0),
+          (o.data.institution === c.data.institution ? 1 : 0) +
+          Math.min(0.9, 0.3 * [...methodsOf(o.data.tags)].filter((m) => mine.has(m)).length),
       }))
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score || (a.o.data.lab < b.o.data.lab ? -1 : 1))
@@ -57,12 +68,19 @@ const other = tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has
 
 const fundedHref = d.funded_project ? projectSlug[d.funded_project] : undefined;
 
+// The closing prompt names the kinds of data on this page, so a reader with
+// the same kind recognizes their own case. "a, b, or c".
+const orList = (xs: string[]) =>
+  xs.length <= 1 ? xs.join("") : xs.length === 2 ? xs.join(" or ") : `${xs.slice(0, -1).join(", ")}, or ${xs[xs.length - 1]}`;
+const promptMethods = methods.slice(0, 3).map((m) => m.toLowerCase());
+
 // Most conversions are frontmatter only. Where a file has a body, it holds the
 // long-form scope of work, rendered below the metadata blocks.
 const hasBody = !!c.body?.trim();
 const { Content } = await render(c);
 ---
 <Base title={`${d.lab} — NWB Conversion`} description={d.description}>
+  <JsonLd data={breadcrumbs([["Home", "/"], ["NWB Conversions", "/nwb-conversions/"], [d.lab, `/nwb-conversions/${slugify(d.lab)}/`]])} />
   <article>
     <header class="post-head">
       <div class="container-x post-head-inner">
@@ -147,6 +165,23 @@ const { Content } = await render(c);
           </div>
         </section>
       )}
+
+      <aside class="card cvd-next">
+        <div class="cvd-next-copy">
+          <span class="eyebrow">Your data</span>
+          <h2>Planning a conversion of your own?</h2>
+          <p>
+            {promptMethods.length > 0
+              ? `If your lab works with ${orList(promptMethods)} data, a free 30-minute call is enough to scope the work.`
+              : "A free 30-minute call is enough to scope the work."}
+            {github.length > 0 && " The code for this project is public, so you can read it first."}
+          </p>
+        </div>
+        <div class="cvd-next-actions">
+          <a href="/consultation/" class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="conversion-page">Request a consultation <Icon name="arrow" size={16} /></a>
+          <a href="/guides/nwb-dandi-guide/" class="btn btn-ghost">Read the NWB and DANDI guide</a>
+        </div>
+      </aside>
     </div>
   </article>
 </Base>
@@ -180,5 +215,10 @@ const { Content } = await render(c);
   .cvd-related-card { padding: 1.4rem; }
   .cvd-related-card h3 { font-size: 1.1rem; }
   .cvd-related-inst { color: var(--color-blue); font-size: 0.85rem; margin: 0.2rem 0 0.7rem; }
+  .cvd-next { margin-top: 3.5rem; padding: 2rem; display: grid; gap: 1.5rem; align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .cvd-next { grid-template-columns: 1.5fr auto; } }
+  .cvd-next h2 { font-size: 1.4rem; margin-top: 0.8rem; }
+  .cvd-next p { color: var(--color-ink-muted); margin-top: 0.5rem; max-width: 40rem; }
+  .cvd-next-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
   .cvd-related-desc { color: var(--color-ink-muted); font-size: 0.88rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
