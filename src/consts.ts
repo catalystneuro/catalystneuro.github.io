@@ -30,6 +30,7 @@ export const NAV = [
       { label: "NWB Software", href: "/nwb-software/" },
       { label: "Analysis Software", href: "/analysis-software/" },
       { label: "Data & AI Tools", href: "/data-and-ai-tools/" },
+      { label: "AI in Neuroscience", href: "/ai-in-neuroscience/" },
       { label: "Guides", href: "/guides/" },
       { label: "LLM Cost Frontier", href: "https://llm-frontier.catalystneuro.com/" },
     ],
