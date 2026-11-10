@@ -35,7 +35,7 @@ const isActive = (href: string) => href.startsWith("/") && path.replace(/\/?$/, 
       <a href={SITE.github} class="hdr-icon" aria-label="GitHub" target="_blank" rel="noopener">
         <Icon name="github" size={20} />
       </a>
-      <a href="/consultation/" class="btn btn-primary btn-sm hdr-cta">Request consultation</a>
+      <a href="/consultation/" class="btn btn-primary btn-sm hdr-cta" data-umami-event="consultation-cta" data-umami-event-location="header">Request consultation</a>
       <button class="hdr-burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-panel">
         <Icon name="menu" size={22} />
       </button>
@@ -47,7 +47,7 @@ const isActive = (href: string) => href.startsWith("/") && path.replace(/\/?$/, 
       {NAV.flatMap((item) => (item.children ? item.children : [item])).map((c) => (
         <a href={c.href} class:list={["mobile-link", isActive(c.href) && "is-active"]}>{c.label}</a>
       ))}
-      <a href="/consultation/" class="btn btn-primary mobile-cta">Request consultation</a>
+      <a href="/consultation/" class="btn btn-primary mobile-cta" data-umami-event="consultation-cta" data-umami-event-location="mobile-menu">Request consultation</a>
     </nav>
   </div>
   <noscript>

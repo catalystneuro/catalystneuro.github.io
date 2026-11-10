@@ -37,6 +37,20 @@ const points = [
     </div>
   </section>
   <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <script is:inline>
+    // Calendly reports progress through the booking flow to the parent page.
+    // Record the two steps that matter as Umami events: a time was picked, and
+    // the booking was confirmed. No booking details are read or sent.
+    window.addEventListener("message", function (e) {
+      if (e.origin !== "https://calendly.com" || !e.data || typeof e.data.event !== "string") return;
+      var names = {
+        "calendly.date_and_time_selected": "consultation-time-selected",
+        "calendly.event_scheduled": "consultation-booked",
+      };
+      var name = names[e.data.event];
+      if (name && window.umami) window.umami.track(name);
+    });
+  </script>
 </Base>
 
 <style>

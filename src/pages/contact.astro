@@ -28,7 +28,7 @@ const methods = [
               <h3>{m.title}</h3>
               {m.href ? <a href={m.href} class="contact-link">{m.body}</a> : <p class="contact-body">{m.body}</p>}
               {m.note && <p class="contact-note">{m.note}</p>}
-              {m.cta && <a href={m.cta.href} class="btn btn-ghost btn-sm contact-cta">{m.cta.label} <Icon name="arrow" size={14} /></a>}
+              {m.cta && <a href={m.cta.href} class="btn btn-ghost btn-sm contact-cta" data-umami-event="consultation-cta" data-umami-event-location="contact">{m.cta.label} <Icon name="arrow" size={14} /></a>}
             </div>
           </div>
         ))}
