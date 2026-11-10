@@ -12,8 +12,13 @@ export default defineConfig({
   site: 'https://catalystneuro.com',
   integrations: [
     mdx(),
-    // Leave out the newsletter thank-you page and the two redirect pages.
-    sitemap({ filter: (url) => !/\/(success|book-intro|nwb-dandi-guide)\/?$/.test(url) }),
+    // Leave out the newsletter thank-you page, the two redirect pages, and the
+    // noindex legal pages. The pattern is anchored to the site root so that
+    // /nwb-dandi-guide/ (the redirect) is dropped while the real guide at
+    // /guides/nwb-dandi-guide/ stays in.
+    sitemap({
+      filter: (url) => !/^\/(success|book-intro|nwb-dandi-guide|legal\/.*)\/?$/.test(new URL(url).pathname),
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],
