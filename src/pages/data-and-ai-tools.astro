@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { itemList, software } from "../lib/schema";
 
 const all = await getCollection("software");
 const sections = [
@@ -21,6 +23,10 @@ const sections = [
     items: all.filter((s) => s.data.type === "ai"),
   },
 ];
+const softwareLd = itemList(
+  "Data engineering and AI tools from CatalystNeuro",
+  sections.flatMap((sec) => sec.items).map((s) => software(s.data))
+);
 ---
 <Base title="Data Engineering and AI Tools" description="Open-source software from CatalystNeuro for cloud data access, including zarr-matlab and remfile-cpp, and AI tools including the DANDI Semantic Atlas and the LLM Cost Frontier.">
   <PageHeader
@@ -28,6 +34,8 @@ const sections = [
     title="Data engineering and AI tools"
     subtitle="Software we have built outside the NWB toolchain, for working with cloud-hosted data and for applying and tracking language models."
   />
+
+  <JsonLd data={softwareLd} />
 
   <section class="section">
     <div class="container-x">
