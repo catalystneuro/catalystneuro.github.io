@@ -1,6 +1,6 @@
 ---
 name: "NWB Inspector"
-description: "A comprehensive tool that scans NWB files for potential errors and areas of improvement. It performs automated validation checks, generates detailed reports, and provides suggestions for optimizing your neurophysiology data files."
+description: "A command-line tool and Python library that checks NWB files against the NWB best practices. It reports missing or inconsistent metadata, graded by importance, runs schema validation in the same pass, and includes the configuration the DANDI Archive applies on upload."
 status: "Released"
 type: "core"
 image: "/images/software/nwb_inspector.png"

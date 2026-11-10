@@ -1,6 +1,6 @@
 ---
 name: "NWB GUIDE"
-description: "A user-friendly graphical interface that offers a code-free solution for converting neurophysiology data to NWB format. Perfect for researchers who prefer a visual approach to data conversion and management."
+description: "A desktop application for converting neurophysiology data to NWB without writing code. Built on NeuroConv, it walks through selecting formats, entering metadata, inspecting the result, and uploading to the DANDI Archive."
 status: "Released"
 type: "core"
 image: "/images/software/nwb_guide_logo.webp"
