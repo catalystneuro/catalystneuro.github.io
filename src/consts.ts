@@ -4,7 +4,7 @@ export const SITE = {
   defaultTitle: "CatalystNeuro — Neurophysiology Data & Software Solutions",
   titleTemplate: (t: string) => `${t} — CatalystNeuro`,
   description:
-    "CatalystNeuro empowers neuroscience labs with data standardization, NWB conversions, spike sorting pipelines, and open-source software tools for neurophysiology research.",
+    "CatalystNeuro is a team of research software engineers for neuroscience. We convert lab data to NWB, publish it on DANDI, and build open-source software.",
   ogImage: "/social-card.png",
   email: "info@catalystneuro.com",
   github: "https://github.com/catalystneuro",

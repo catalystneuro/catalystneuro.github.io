@@ -21,11 +21,11 @@ const socials = (m: Member) => [
   m.orcid && { icon: "orcid", href: m.orcid, label: "ORCID" },
 ].filter(Boolean) as { icon: string; href: string; label: string }[];
 ---
-<Base title="Team" description="Meet the CatalystNeuro team — neuroscientists and software engineers building open-source tools and data standards for neurophysiology research.">
+<Base title="Team" description="Meet the CatalystNeuro team: neuroscientists and software engineers building open-source tools and data standards for neurophysiology research.">
   <PageHeader
     eyebrow={`${active.length} scientists & engineers`}
     title="Our team"
-    subtitle="Meet the skilled professionals behind CatalystNeuro's innovative solutions."
+    subtitle="The neuroscientists and research software engineers who build CatalystNeuro's conversion pipelines and open-source tools."
   />
 
   <section class="section">

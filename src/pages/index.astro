@@ -39,6 +39,9 @@ const STATS = [
   { value: String(uniqueInstitutions.size), label: STAT_LABELS.institutions },
 ];
 
+// Service features may quote the portfolio size; fill it from the same count.
+const fill = (s: string) => s.replace("{labs}", String(conversions.length));
+
 const capIcons = ["cloud", "users", "chart", "code"];
 const serviceIcons = ["database", "code", "spark"];
 ---
@@ -120,7 +123,7 @@ const serviceIcons = ["database", "code", "spark"];
             <p class="svc-copy">{s.copy}</p>
             <ul class="svc-features">
               {s.features.map((f) => (
-                <li><Icon name="check" size={15} /> <span>{f}</span></li>
+                <li><Icon name="check" size={15} /> <span>{fill(f)}</span></li>
               ))}
             </ul>
             <a href={s.link.href} class="svc-link">{s.link.label} <Icon name="arrow" size={15} /></a>

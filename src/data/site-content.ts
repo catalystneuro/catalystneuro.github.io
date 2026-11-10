@@ -54,7 +54,9 @@ export const SERVICES = {
         "Open-source conversion pipeline",
         "Compliance with government and foundation funders",
         "Includes notebooks demonstrating data use",
-        "Experience with 60+ labs",
+        // {labs} is filled in from the conversions collection in index.astro, so
+        // this line cannot drift from the stat band above it.
+        "Conversion pipelines built for {labs} labs",
       ],
     },
     {
