@@ -23,8 +23,8 @@ export const STAT_LABELS = {
 };
 
 export const WHY = {
-  eyebrow: "Why CatalystNeuro",
-  title: "What sets the team apart",
+  eyebrow: "Approach",
+  title: "Scientists who write production software",
   body: "We bridge the gap between academic research and professional software engineering. Our team combines deep neuroscience domain expertise with production-grade development practices, delivering solutions that are both scientifically rigorous and built to last.",
   cards: [
     {
@@ -43,7 +43,7 @@ export const WHY = {
 };
 
 export const SERVICES = {
-  eyebrow: "What we do",
+  eyebrow: "Capabilities",
   title: "Our services",
   body: "CatalystNeuro has worked successfully with diverse scientific research groups in a variety of capacities. All work we do is open source, so our team can fit seamlessly with research groups without worry of expensive licensing fees or vendor lock-in.",
   items: [

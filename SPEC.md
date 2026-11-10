@@ -250,7 +250,7 @@ Routes and their content sources. All inner pages share a header (`h1` + subtitl
 soft top gradient.
 
 ### 3.1 `/` Home
-Section order: **Hero → Why Us → Services → Partners → Institutions → Featured In →
+Section order: **Hero → Approach → Services → Partners → Institutions → Featured In →
 Testimonials → Latest Posts → Newsletter**. All copy in §4.1. Latest Posts pulls the 3
 newest `blog/` entries.
 
@@ -334,8 +334,8 @@ labs supported". Three steps: **Standardize** — "Convert complex lab formats t
 **Validate** — "Build tested, documented data pipelines"; **Publish** — "Prepare datasets
 for DANDI and reuse".
 
-**Why Us.** Stats: **60+** Research Labs, **14** Funded Projects, **25+** Partner
-Institutions. H2: "What sets the team apart" (the hero now carries
+**Approach.** Stats: **60+** Research Labs, **14** Funded Projects, **25+** Partner
+Institutions. H2: "Scientists who write production software" (the hero now carries
 "Research software engineers for neuroscience"). Para: "We bridge the gap
 between academic research and professional software engineering. Our team combines deep
 neuroscience domain expertise with production-grade development practices — delivering
