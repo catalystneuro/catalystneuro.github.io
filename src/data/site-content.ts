@@ -1,9 +1,10 @@
 // Content that lived hardcoded in the old site's components, externalized here.
 
 export const HERO = {
-  titleTop: "Empowering neurophysiology data",
-  titleAccent: "for open science",
-  body: "We help research labs standardize, share, and publish their neurophysiology data through custom software solutions and expert consulting.",
+  // PRODUCT.md names this the leading claim, the one line for a hero.
+  titleTop: "Research software engineers",
+  titleAccent: "for neuroscience",
+  body: "We convert lab data to NWB and publish it on the DANDI Archive, so that funder data sharing requirements are met with files other researchers can reuse. We also maintain the tools the standard depends on: NeuroConv, NWB Inspector, and NWB GUIDE.",
   primary: { label: "Request a consultation", href: "/consultation/" },
   secondary: { label: "See conversion work", href: "/nwb-conversions/" },
   pipeline: [
@@ -23,7 +24,7 @@ export const STAT_LABELS = {
 
 export const WHY = {
   eyebrow: "Why CatalystNeuro",
-  title: "Research software engineers for neuroscience",
+  title: "What sets the team apart",
   body: "We bridge the gap between academic research and professional software engineering. Our team combines deep neuroscience domain expertise with production-grade development practices, delivering solutions that are both scientifically rigorous and built to last.",
   cards: [
     {
