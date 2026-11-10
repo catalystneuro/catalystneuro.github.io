@@ -19,6 +19,7 @@ export const NAV = [
     href: "/about/",
     children: [
       { label: "About", href: "/about/" },
+      { label: "Work With Us", href: "/work-with-us/" },
       { label: "Team", href: "/team/" },
       { label: "Openings", href: "/openings/" },
     ],
@@ -52,6 +53,7 @@ export const FOOTER = [
     title: "Company",
     links: [
       { label: "About", href: "/about/" },
+      { label: "Work With Us", href: "/work-with-us/" },
       { label: "Team", href: "/team/" },
       { label: "Careers", href: "/openings/" },
       { label: "Contact", href: "/contact/" },
