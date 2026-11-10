@@ -9,7 +9,9 @@ export const SITE = {
   email: "info@catalystneuro.com",
   github: "https://github.com/catalystneuro",
   linkedin: "https://www.linkedin.com/company/catalyst-neuro",
-  calendly: "https://calendly.com/ben-dichter",
+  // The 30-minute event itself, not the scheduling profile, which lists every
+  // meeting length. /book-intro redirects to the same event.
+  calendly: "https://calendly.com/ben-dichter/30min",
   address: ["CatalystNeuro", "150 E B St Lbby #1810 SMB#45673", "Casper, WY 82601"],
 };
 
