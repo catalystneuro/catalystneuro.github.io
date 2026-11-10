@@ -1,12 +1,22 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { webPage, breadcrumbs, itemList, abs, orgRef } from "../../lib/schema";
 import PageHeader from "../../components/PageHeader.astro";
 import Icon from "../../components/Icon.astro";
 
 const guides = (await getCollection("software")).filter((s) => s.data.type === "guide");
+
+const pageLd = [
+  webPage("CollectionPage", "Guides", "Step-by-step guides for working with CatalystNeuro and the NWB ecosystem.", "/guides/", {
+    mainEntity: itemList("Guides", guides.map((g) => ({ "@type": "TechArticle", headline: g.data.name, description: g.data.description, url: abs(`/guides/${g.id}/`), author: orgRef }))),
+  }),
+  breadcrumbs([["Home", "/"], ["Guides", "/guides/"]]),
+];
 ---
 <Base title="Documentation & Guides" description="Step-by-step guides and reference documentation for working with CatalystNeuro tools and the Neurodata Without Borders (NWB) ecosystem.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Documentation"
     title="Guides"

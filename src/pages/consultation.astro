@@ -1,5 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { webPage, service, breadcrumbs } from "../lib/schema";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
 import { SITE } from "../consts";
@@ -9,8 +11,19 @@ const points = [
   "Discuss funder and DANDI publishing requirements",
   "Get a realistic estimate of effort and timeline",
 ];
+
+const pageLd = [
+  webPage("WebPage", "Request a consultation", "Book a free 30-minute call to scope an NWB conversion or software project with CatalystNeuro.", "/consultation/", {
+    mainEntity: {
+      ...service("Free project consultation", "A free 30-minute call to scope an NWB conversion or software project, discuss funder and DANDI publishing requirements, and estimate effort and timeline.", "/consultation/", ["Consultation"]),
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD", url: SITE.calendly },
+    },
+  }),
+  breadcrumbs([["Home", "/"], ["Request a consultation", "/consultation/"]]),
+];
 ---
 <Base title="Request a Consultation" description="Book a time to discuss your neurophysiology data project with the CatalystNeuro team, from NWB conversion to custom analysis pipelines.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Let's talk"
     title="Schedule a consultation"

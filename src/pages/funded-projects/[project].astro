@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import JsonLd from "../../components/JsonLd.astro";
-import { breadcrumbs } from "../../lib/schema";
+import { breadcrumbs, orgRef, abs } from "../../lib/schema";
 import { slugify, monthYear, statusColor, repoName, asArray, dandiList } from "../../lib/format";
 import { FUNDED_PROJECT_ALIASES, METHODS, RESEARCH_AREAS } from "../../data/site-content";
 
@@ -41,7 +41,17 @@ const convs = affiliated
   .sort((a, b) => (a.date < b.date ? 1 : -1));
 ---
 <Base title={d.title} description={d.description}>
-  <JsonLd data={breadcrumbs([["Home", "/"], ["Funded Projects", "/funded-projects/"], [d.title, `/funded-projects/${slugify(d.title)}/`]])} />
+  <JsonLd data={[
+    {
+      "@type": "MonetaryGrant",
+      name: d.title,
+      ...(d.description && { description: d.description }),
+      url: abs(`/funded-projects/${slugify(p.data.title)}/`),
+      funder: { "@type": "Organization", name: d.funder },
+      fundedItem: orgRef,
+    },
+    breadcrumbs([["Home", "/"], ["Funded Projects", "/funded-projects/"], [d.title, `/funded-projects/${slugify(d.title)}/`]]),
+  ]} />
   <article>
     <header class="post-head">
       <div class="container-x post-head-inner">

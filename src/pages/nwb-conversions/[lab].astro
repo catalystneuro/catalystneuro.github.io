@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import JsonLd from "../../components/JsonLd.astro";
-import { breadcrumbs } from "../../lib/schema";
+import { breadcrumbs, orgRef, abs } from "../../lib/schema";
 import { slugify, monthYear, asArray, dandiList, repoName } from "../../lib/format";
 import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
 
@@ -68,6 +68,37 @@ const other = tags.filter((t) => !methodSet.has(t.toLowerCase()) && !areaSet.has
 
 const fundedHref = d.funded_project ? projectSlug[d.funded_project] : undefined;
 
+// The engagement as a research project, with its public code and the
+// dandisets it produced. The datasets' canonical pages are on DANDI, so
+// they are referenced by URL, not described here.
+const pagePath = `/nwb-conversions/${slugify(d.lab)}/`;
+const projectLd = {
+  "@type": "ResearchProject",
+  name: `NWB conversion for the ${d.lab} lab`,
+  description: d.description,
+  url: abs(pagePath),
+  member: [orgRef, { "@type": "Organization", name: `${d.lab} lab`, parentOrganization: { "@type": "Organization", name: d.institution } }],
+  ...(d.date && { foundingDate: d.date }),
+  ...(d.funded_project && {
+    funding: { "@type": "Grant", name: d.funded_project, ...(fundedHref && { url: abs(`/funded-projects/${fundedHref}/`) }) },
+  }),
+  ...(tags.length > 0 && { knowsAbout: tags }),
+  ...((github.length > 0 || dandi.length > 0) && {
+    subjectOf: [
+      ...github.map((g) => ({ "@type": "SoftwareSourceCode", name: repoName(g), codeRepository: g, url: g })),
+      ...dandi.map((dd) => ({
+        // Typed as CreativeWork so search engines do not treat this page as a
+        // second Dataset listing competing with the dandiset's own page.
+        "@type": "CreativeWork",
+        additionalType: "https://schema.org/Dataset",
+        name: dd.name,
+        url: dd.url,
+        includedInDataCatalog: { "@type": "DataCatalog", name: "DANDI Archive", url: "https://dandiarchive.org" },
+      })),
+    ],
+  }),
+};
+
 // The closing prompt names the kinds of data on this page, so a reader with
 // the same kind recognizes their own case. "a, b, or c".
 const orList = (xs: string[]) =>
@@ -80,7 +111,7 @@ const hasBody = !!c.body?.trim();
 const { Content } = await render(c);
 ---
 <Base title={`${d.lab} — NWB Conversion`} description={d.description}>
-  <JsonLd data={breadcrumbs([["Home", "/"], ["NWB Conversions", "/nwb-conversions/"], [d.lab, `/nwb-conversions/${slugify(d.lab)}/`]])} />
+  <JsonLd data={[projectLd, breadcrumbs([["Home", "/"], ["NWB Conversions", "/nwb-conversions/"], [d.lab, pagePath]])]} />
   <article>
     <header class="post-head">
       <div class="container-x post-head-inner">

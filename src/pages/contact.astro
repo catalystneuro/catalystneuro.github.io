@@ -1,5 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { webPage, orgRef, breadcrumbs } from "../lib/schema";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
 import Newsletter from "../components/Newsletter.astro";
@@ -10,8 +12,20 @@ const methods = [
   { icon: "calendar", title: "Schedule a consultation", body: "Book a free 30-minute call to discuss your project.", cta: { label: "Book a call", href: "/consultation/" } },
   { icon: "map", title: "Mailing address", body: SITE.address.join(", ") },
 ];
+
+const pageLd = [
+  webPage("ContactPage", "Contact CatalystNeuro", "Email CatalystNeuro or book a call about a dataset, a software project, or a grant application.", "/contact/", {
+    mainEntity: {
+      ...orgRef,
+      email: SITE.email,
+      contactPoint: { "@type": "ContactPoint", contactType: "sales", email: SITE.email, url: new URL("/consultation/", SITE.url).href, availableLanguage: "English" },
+    },
+  }),
+  breadcrumbs([["Home", "/"], ["Contact", "/contact/"]]),
+];
 ---
 <Base title="Contact" description="Get in touch with CatalystNeuro to discuss NWB conversions, data standardization, and open-source software for your neuroscience lab.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Get in touch"
     title="Contact us"

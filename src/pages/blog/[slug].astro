@@ -5,6 +5,8 @@ import Icon from "../../components/Icon.astro";
 import GalleryRuntime from "../../components/GalleryRuntime.astro";
 import { longDate } from "../../lib/format";
 import { SITE } from "../../consts";
+import JsonLd from "../../components/JsonLd.astro";
+import { breadcrumbs } from "../../lib/schema";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -33,6 +35,7 @@ const jsonLd = {
 };
 ---
 <Base title={d.title} description={d.description} image={d.image} article={{ published: d.date, author: d.author }} jsonLd={jsonLd}>
+  <JsonLd data={breadcrumbs([["Home", "/"], ["Blog", "/blog/"], [d.title, `/blog/${post.id}/`]])} />
   <article class="post">
     <header class="post-head">
       <div class="container-x post-head-inner">
