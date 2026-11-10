@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
 import Newsletter from "../components/Newsletter.astro";
+import InquiryForm from "../components/InquiryForm.astro";
 import { SITE } from "../consts";
 
 const methods = [
@@ -20,6 +21,13 @@ const methods = [
 
   <section class="section">
     <div class="container-x contact-grid">
+      <div class="card contact-form" id="inquiry">
+        <span class="eyebrow">Project inquiry</span>
+        <h2>Tell us about your project</h2>
+        <p class="contact-form-lead">A few details let us come to the first conversation prepared. Only your name, email, and a description are required.</p>
+        <InquiryForm />
+      </div>
+
       <div class="contact-methods">
         {methods.map((m) => (
           <div class="card contact-card">
@@ -42,9 +50,8 @@ const methods = [
             </div>
           </div>
         </div>
+        <aside class="card contact-news"><Newsletter /></aside>
       </div>
-
-      <aside class="card contact-news"><Newsletter /></aside>
     </div>
   </section>
 </Base>
@@ -61,5 +68,8 @@ const methods = [
   .contact-note { color: var(--color-ink-muted); font-size: 0.88rem; margin-top: 0.3rem; }
   .contact-cta { margin-top: 0.9rem; }
   .contact-socials { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.3rem; }
-  .contact-news { padding: 2rem; }
+  .contact-news { padding: 1.5rem; }
+  .contact-form { padding: 2rem; scroll-margin-top: 6rem; }
+  .contact-form h2 { font-size: 1.5rem; margin-top: 0.8rem; }
+  .contact-form-lead { color: var(--color-ink-muted); margin: 0.5rem 0 1.6rem; max-width: 36rem; }
 </style>

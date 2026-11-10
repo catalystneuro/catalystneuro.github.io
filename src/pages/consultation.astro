@@ -31,7 +31,7 @@ const points = [
       </div>
 
       <div class="card cons-alt">
-        <p>Prefer email? Reach us anytime at</p>
+        <p>Not ready for a call? <a href="/contact/#inquiry" class="cons-inline">Send us the project details</a> and we will reply by email, or write to us directly at</p>
         <a href={`mailto:${SITE.email}`} class="cons-mail"><Icon name="mail" size={15} /> {SITE.email}</a>
       </div>
     </div>
@@ -47,6 +47,7 @@ const points = [
   .cons-points svg { color: var(--color-blue); flex-shrink: 0; margin-top: 0.15rem; }
   .cons-alt { padding: 1.3rem; margin-top: 2rem; }
   .cons-alt p { color: var(--color-ink-muted); font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .cons-inline { color: var(--color-blue); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
   .cons-mail { color: var(--color-blue); font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; }
   .cons-embed { padding: 0.5rem; overflow: hidden; }
   /* Calendly stacks its booking flow below ~900px, which is much taller than

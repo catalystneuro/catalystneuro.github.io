@@ -1,0 +1,100 @@
+---
+// Project inquiry form, handled by Netlify Forms like the newsletter form.
+// Netlify finds it in the built HTML through data-netlify, so every field a
+// submission should carry has to be present in this markup.
+const needs = [
+  "NWB conversion and DANDI",
+  "Software engineering",
+  "AI in neuroscience",
+  "Training or a workshop",
+  "Something else",
+];
+const dataTypes = [
+  "Extracellular electrophysiology",
+  "Intracellular electrophysiology",
+  "Optical physiology",
+  "Fiber photometry",
+  "Behavior, video, or pose estimation",
+  "Other",
+];
+---
+<form name="project-inquiry" method="POST" data-netlify="true" action="/contact/success/" class="inq" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="project-inquiry" />
+  <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+  <div class="inq-row">
+    <div class="inq-field">
+      <label for="inq-name">Name</label>
+      <input id="inq-name" type="text" name="name" required autocomplete="name" />
+    </div>
+    <div class="inq-field">
+      <label for="inq-email">Email</label>
+      <input id="inq-email" type="email" name="email" required autocomplete="email" placeholder="you@lab.edu" />
+    </div>
+  </div>
+
+  <div class="inq-row">
+    <div class="inq-field">
+      <label for="inq-org">Lab and institution <span class="inq-opt">optional</span></label>
+      <input id="inq-org" type="text" name="organization" autocomplete="organization" />
+    </div>
+    <div class="inq-field">
+      <label for="inq-need">What do you need help with? <span class="inq-opt">optional</span></label>
+      <select id="inq-need" name="need">
+        <option value="">Select one</option>
+        {needs.map((n) => <option value={n}>{n}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <fieldset class="inq-set">
+    <legend>Data involved <span class="inq-opt">optional, choose any</span></legend>
+    <div class="inq-checks">
+      {dataTypes.map((t) => (
+        <label class="inq-check"><input type="checkbox" name="data-types[]" value={t} /> <span>{t}</span></label>
+      ))}
+    </div>
+  </fieldset>
+
+  <div class="inq-field">
+    <label for="inq-funding">Funder and deadline <span class="inq-opt">optional</span></label>
+    <input id="inq-funding" type="text" name="funder-and-deadline" placeholder="For example: NIH R01, data due at publication" />
+  </div>
+
+  <div class="inq-field">
+    <label for="inq-message">About the project</label>
+    <textarea id="inq-message" name="message" rows="6" required placeholder="What the data or software is, roughly how much of it there is, and what you would like to have at the end."></textarea>
+  </div>
+
+  <div class="inq-foot">
+    <button type="submit" class="btn btn-primary" data-umami-event="inquiry-submit">Send inquiry</button>
+    <p class="inq-note">We typically respond within 1–2 business days.</p>
+  </div>
+</form>
+
+<style>
+  .inq { display: flex; flex-direction: column; gap: 1.1rem; }
+  .inq-row { display: grid; gap: 1.1rem; grid-template-columns: 1fr; }
+  @media (min-width: 620px) { .inq-row { grid-template-columns: 1fr 1fr; } }
+  .inq-field { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+  .inq label, .inq legend { font-size: 0.88rem; font-weight: 500; color: var(--color-navy); }
+  .inq-opt { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-ink-soft); margin-left: 0.35rem; }
+  .inq input[type="text"], .inq input[type="email"], .inq select, .inq textarea {
+    width: 100%; padding: 0.7rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem;
+    font-family: var(--font-sans); font-size: 0.95rem; color: var(--color-navy); background-color: var(--color-surface);
+  }
+  .inq textarea { resize: vertical; min-height: 8rem; line-height: 1.55; }
+  .inq input[type="text"]:focus, .inq input[type="email"]:focus, .inq select:focus, .inq textarea:focus {
+    outline: none; border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50);
+  }
+  .inq ::placeholder { color: var(--color-ink-soft); }
+  .inq-set { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .inq-set legend { padding: 0; margin-bottom: 0.6rem; }
+  .inq-checks { display: grid; gap: 0.5rem 1.2rem; grid-template-columns: 1fr; }
+  @media (min-width: 620px) { .inq-checks { grid-template-columns: 1fr 1fr; } }
+  .inq-check { display: flex; align-items: flex-start; gap: 0.55rem; font-weight: 400 !important; color: #3a445e !important; font-size: 0.92rem !important; cursor: pointer; }
+  .inq-check input { margin-top: 0.2rem; width: 1rem; height: 1rem; accent-color: var(--color-blue); flex-shrink: 0; }
+  .inq-foot { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.3rem; }
+  .inq-note { color: var(--color-ink-muted); font-size: 0.88rem; }
+  .hidden-field { display: none; }
+</style>
