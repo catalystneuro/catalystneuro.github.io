@@ -2,6 +2,9 @@
 import Base from "../layouts/Base.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { ORG_ID, abs } from "../lib/schema";
+import { SITE } from "../consts";
 import teamData from "../data/team.json";
 
 interface Member {
@@ -20,6 +23,29 @@ const socials = (m: Member) => [
   m.bluesky && { icon: "bluesky", href: m.bluesky, label: "Bluesky" },
   m.orcid && { icon: "orcid", href: m.orcid, label: "ORCID" },
 ].filter(Boolean) as { icon: string; href: string; label: string }[];
+
+// Current members as schema.org Person nodes attached to the organization.
+// The name drops a trailing degree ("Ben Dichter, PhD" -> "Ben Dichter"),
+// which is carried as honorificSuffix instead.
+const teamLd = {
+  "@type": "Organization",
+  "@id": ORG_ID,
+  name: SITE.name,
+  url: SITE.url,
+  employee: active.map((m) => {
+    const [name, suffix] = m.name.split(/,\s*/);
+    const sameAs = [m.github, m.personalPage, m.twitter, m.bluesky, m.orcid].filter(Boolean);
+    return {
+      "@type": "Person",
+      name,
+      ...(suffix && { honorificSuffix: suffix }),
+      jobTitle: m.role,
+      worksFor: { "@id": ORG_ID },
+      ...(m.image && { image: abs(m.image) }),
+      ...(sameAs.length > 0 && { sameAs }),
+    };
+  }),
+};
 ---
 <Base title="Team" description="Meet the CatalystNeuro team — neuroscientists and software engineers building open-source tools and data standards for neurophysiology research.">
   <PageHeader
@@ -27,6 +53,8 @@ const socials = (m: Member) => [
     title="Our team"
     subtitle="Meet the skilled professionals behind CatalystNeuro's innovative solutions."
   />
+
+  <JsonLd data={teamLd} />
 
   <section class="section">
     <div class="container-x">

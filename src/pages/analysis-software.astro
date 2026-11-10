@@ -3,8 +3,11 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { itemList, software } from "../lib/schema";
 
 const items = (await getCollection("software")).filter((s) => s.data.type === "analysis");
+const softwareLd = itemList("Analysis software CatalystNeuro contributes to", items.map((s) => software(s.data)));
 ---
 <Base title="Analysis Software" description="Open-source neuroscience analysis packages CatalystNeuro develops and contributes to, including spike sorting, imaging, and behavior pipelines.">
   <PageHeader
@@ -12,6 +15,8 @@ const items = (await getCollection("software")).filter((s) => s.data.type === "a
     title="Analysis software"
     subtitle="We contribute to and collaborate with several open-source analysis packages in the neuroscience community."
   />
+
+  <JsonLd data={softwareLd} />
 
   <section class="section">
     <div class="container-x">

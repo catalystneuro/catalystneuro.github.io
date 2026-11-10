@@ -3,6 +3,8 @@ import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
 import GalleryRuntime from "../../components/GalleryRuntime.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { breadcrumbs, orgRef, abs } from "../../lib/schema";
 
 export async function getStaticPaths() {
   const guides = (await getCollection("software")).filter((s) => s.data.type === "guide");
@@ -17,8 +19,23 @@ const { Content, headings } = await render(g);
 // not worth a table of contents.
 const toc = headings.filter((h) => h.depth === 2);
 const showToc = toc.length >= 2;
+
+const guideUrl = abs(`/guides/${g.id}/`);
+const guideLd = [
+  {
+    "@type": "TechArticle",
+    headline: g.data.name,
+    description: g.data.description,
+    url: guideUrl,
+    mainEntityOfPage: guideUrl,
+    author: orgRef,
+    publisher: orgRef,
+  },
+  breadcrumbs([["Home", "/"], ["Guides", "/guides/"], [g.data.name, `/guides/${g.id}/`]]),
+];
 ---
 <Base title={g.data.name} description={g.data.description}>
+  <JsonLd data={guideLd} />
   <article class="post">
     <header class="post-head">
       <div class:list={["container-x", "post-head-inner", { "has-toc": showToc }]}>

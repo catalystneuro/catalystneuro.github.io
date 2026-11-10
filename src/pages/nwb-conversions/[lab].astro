@@ -2,6 +2,8 @@
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Icon from "../../components/Icon.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { breadcrumbs } from "../../lib/schema";
 import { slugify, monthYear, asArray, dandiList, repoName } from "../../lib/format";
 import { METHODS, RESEARCH_AREAS, FUNDED_PROJECT_ALIASES } from "../../data/site-content";
 
@@ -63,6 +65,7 @@ const hasBody = !!c.body?.trim();
 const { Content } = await render(c);
 ---
 <Base title={`${d.lab} — NWB Conversion`} description={d.description}>
+  <JsonLd data={breadcrumbs([["Home", "/"], ["NWB Conversions", "/nwb-conversions/"], [d.lab, `/nwb-conversions/${slugify(d.lab)}/`]])} />
   <article>
     <header class="post-head">
       <div class="container-x post-head-inner">

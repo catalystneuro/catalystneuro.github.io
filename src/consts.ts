@@ -73,6 +73,7 @@ export const FOOTER = [
     links: [
       { label: "GitHub", href: "https://github.com/catalystneuro", external: true },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/catalyst-neuro", external: true },
+      { label: "Blog RSS", href: "/rss.xml" },
     ],
   },
 ];
