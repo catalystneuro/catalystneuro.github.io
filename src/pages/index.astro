@@ -9,6 +9,8 @@ import {
   HERO, STAT_LABELS, WHY, SERVICES, PARTNERS, INSTITUTIONS, FEATURED, TESTIMONIALS,
 } from "../data/site-content";
 import { SITE } from "../consts";
+import JsonLd from "../components/JsonLd.astro";
+import { orgRef } from "../lib/schema";
 
 const organizationLd = {
   "@context": "https://schema.org",
@@ -47,6 +49,7 @@ const capIcons = ["cloud", "users", "chart", "code"];
 const serviceIcons = ["database", "code", "spark"];
 ---
 <Base jsonLd={organizationLd}>
+  <JsonLd data={{ "@type": "WebSite", "@id": `${SITE.url}/#website`, name: SITE.name, url: SITE.url, publisher: orgRef, inLanguage: "en" }} />
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"><SignalField channels={9} /></div>

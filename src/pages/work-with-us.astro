@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { webPage, service, breadcrumbs } from "../lib/schema";
 import PageHeader from "../components/PageHeader.astro";
 import Icon from "../components/Icon.astro";
 
@@ -39,8 +41,21 @@ const labProvides = [
   "A paper, preprint, or methods description if one exists",
   "Where the session metadata lives: subjects, sexes, ages, start times",
 ];
+
+const pageLd = [
+  webPage("WebPage", "Work with CatalystNeuro", "How an engagement with CatalystNeuro runs, from the first call to data published on DANDI.", "/work-with-us/", {
+    mainEntity: service(
+      "NWB conversion and DANDI publication",
+      "Open-source pipelines that convert a lab's neurophysiology data to Neurodata Without Borders (NWB), publication on the DANDI Archive, example notebooks, and training for the lab.",
+      "/work-with-us/",
+      ["Data standardization", "NWB conversion", "Data publication", "Research software engineering"],
+    ),
+  }),
+  breadcrumbs([["Home", "/"], ["Work With Us", "/work-with-us/"]]),
+];
 ---
 <Base title="Work With Us" description="How an engagement with CatalystNeuro runs, from the first call to data published on DANDI, and what to have ready when you write us into a grant application.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Engagements"
     title="Work with us"

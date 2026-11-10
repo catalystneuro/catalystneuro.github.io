@@ -47,3 +47,36 @@ export function itemList(name: string, items: Record<string, unknown>[]) {
 }
 
 export { abs };
+
+/** A page node: WebPage, AboutPage, ContactPage, CollectionPage, and so on.
+ *  `extra` adds type-specific properties such as mainEntity. */
+export function webPage(type: string, name: string, description: string, path: string, extra: Record<string, unknown> = {}) {
+  return {
+    "@type": type,
+    "@id": `${abs(path)}#webpage`,
+    name,
+    description,
+    url: abs(path),
+    isPartOf: { "@type": "WebSite", "@id": `${SITE.url}/#website`, name: SITE.name, url: SITE.url },
+    publisher: orgRef,
+    ...extra,
+  };
+}
+
+/** A service CatalystNeuro offers. */
+export function service(name: string, description: string, path: string, serviceType: string[]) {
+  return {
+    "@type": "Service",
+    name,
+    description,
+    url: abs(path),
+    serviceType,
+    provider: orgRef,
+    areaServed: "Worldwide",
+  };
+}
+
+/** A list of site pages, each [name, site-relative path], for collection pages. */
+export function pageList(name: string, pages: [string, string][]) {
+  return itemList(name, pages.map(([n, p]) => ({ "@type": "WebPage", name: n, url: abs(p) })));
+}

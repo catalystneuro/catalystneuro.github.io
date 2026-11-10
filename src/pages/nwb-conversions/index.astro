@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { webPage, breadcrumbs, pageList } from "../../lib/schema";
 import PageHeader from "../../components/PageHeader.astro";
 import Icon from "../../components/Icon.astro";
 import { asArray, dandiList, slugify, monthYear } from "../../lib/format";
@@ -40,8 +42,17 @@ const fundedList = [...new Set(items.map((i) => i.funded))].filter(Boolean).sort
 // in the frontmatter (e.g. RESEARCH_AREAS has "Parkinson's disease").
 const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
 const areaSet = new Set(RESEARCH_AREAS.map((a) => a.toLowerCase()));
+
+const ldConversions = await getCollection("conversions");
+const pageLd = [
+  webPage("CollectionPage", "NWB conversions", "Neurophysiology data conversions to Neurodata Without Borders (NWB) built by CatalystNeuro, with public code and DANDI datasets.", "/nwb-conversions/", {
+    mainEntity: pageList("NWB conversions", ldConversions.map((c) => [`${c.data.lab}, ${c.data.institution}`, `/nwb-conversions/${slugify(c.data.lab)}/`])),
+  }),
+  breadcrumbs([["Home", "/"], ["NWB Conversions", "/nwb-conversions/"]]),
+];
 ---
 <Base title="NWB Conversions" description="Explore CatalystNeuro's neurophysiology data conversions to Neurodata Without Borders (NWB), built in collaboration with leading research institutions worldwide.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Portfolio"
     title="NWB conversions"

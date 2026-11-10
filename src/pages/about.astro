@@ -1,9 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
+import JsonLd from "../components/JsonLd.astro";
+import { webPage, orgRef, breadcrumbs } from "../lib/schema";
 import PageHeader from "../components/PageHeader.astro";
 import { Content as About } from "../data/about.md";
+
+const pageLd = [
+  webPage("AboutPage", "About CatalystNeuro", "CatalystNeuro's mission, vision, and approach to advancing neuroscience data standards through open-source software and expert engineering.", "/about/", { about: orgRef, mainEntity: orgRef }),
+  breadcrumbs([["Home", "/"], ["About", "/about/"]]),
+];
 ---
 <Base title="About" description="CatalystNeuro's mission, vision, and approach to advancing neuroscience data standards through open-source software and expert engineering.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Who we are"
     title="About CatalystNeuro"

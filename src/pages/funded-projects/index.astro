@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { webPage, breadcrumbs, pageList } from "../../lib/schema";
 import PageHeader from "../../components/PageHeader.astro";
 import Icon from "../../components/Icon.astro";
 import { slugify, monthYear, statusColor } from "../../lib/format";
@@ -10,8 +12,16 @@ const projects = (await getCollection("fundedProjects")).sort((a, b) =>
 );
 const funders = [...new Set(projects.map((p) => p.data.funder))].sort();
 const statuses = [...new Set(projects.map((p) => p.data.status))];
+
+const pageLd = [
+  webPage("CollectionPage", "Funded projects", "Grant-funded work at CatalystNeuro.", "/funded-projects/", {
+    mainEntity: pageList("Funded projects", projects.map((p) => [p.data.title, `/funded-projects/${slugify(p.data.title)}/`])),
+  }),
+  breadcrumbs([["Home", "/"], ["Funded Projects", "/funded-projects/"]]),
+];
 ---
 <Base title="Funded Projects" description="Grant-funded work at CatalystNeuro, supported by leading institutions committed to advancing neuroscience data standards and open-source tools.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Grant-funded work"
     title="Funded projects"

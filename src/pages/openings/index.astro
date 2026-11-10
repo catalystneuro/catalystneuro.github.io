@@ -1,12 +1,22 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import JsonLd from "../../components/JsonLd.astro";
+import { webPage, breadcrumbs, pageList } from "../../lib/schema";
 import PageHeader from "../../components/PageHeader.astro";
 import Icon from "../../components/Icon.astro";
 
 const openings = (await getCollection("openings")).filter((o) => o.data.enabled !== false);
+
+const pageLd = [
+  webPage("CollectionPage", "Openings at CatalystNeuro", "Open positions at CatalystNeuro.", "/openings/", {
+    mainEntity: pageList("Open positions", openings.map((o) => [o.data.title, `/openings/${o.data.id}/`])),
+  }),
+  breadcrumbs([["Home", "/"], ["Openings", "/openings/"]]),
+];
 ---
 <Base title="Openings" description="Join CatalystNeuro and help shape the future of neuroscience data management. See our open positions for software engineers and scientists.">
+  <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Careers"
     title="Open positions"
