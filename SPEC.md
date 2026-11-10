@@ -323,9 +323,11 @@ Detail: image, title, `{type} • {location}`, description, Responsibilities, Re
 ### 4.1 Homepage
 
 **Hero.** Eyebrow pill (→ `/analysis-software`): `New` + "Open source neurophysiology tools
-for researchers". H1: "Empowering Neurophysiology Data" / "for Open Science" (second line in
-blue). Sub: "We help research labs standardize, share, and publish their neurophysiology
-data through custom software solutions and expert consulting." CTAs: "Request Consultation"
+for researchers". H1: "Research software engineers" / "for neuroscience" (second line in
+blue), the leading claim from PRODUCT.md. Sub: "We convert lab data to NWB and publish it
+on the DANDI Archive, so that funder data sharing requirements are met with files other
+researchers can reuse. We also maintain the tools the standard depends on: NeuroConv, NWB
+Inspector, and NWB GUIDE." CTAs: "Request Consultation"
 (→ `/consultation`), "See Conversion Work" (→ `/nwb-conversions`). Visual card badges:
 "Neural data pipeline" / "NWB-ready outputs for sharing and analysis"; "60+" / "research
 labs supported". Three steps: **Standardize** — "Convert complex lab formats to NWB";
@@ -333,7 +335,8 @@ labs supported". Three steps: **Standardize** — "Convert complex lab formats t
 for DANDI and reuse".
 
 **Why Us.** Stats: **60+** Research Labs, **14** Funded Projects, **25+** Partner
-Institutions. H2: "Research Software Engineers for Neuroscience". Para: "We bridge the gap
+Institutions. H2: "What sets the team apart" (the hero now carries
+"Research software engineers for neuroscience"). Para: "We bridge the gap
 between academic research and professional software engineering. Our team combines deep
 neuroscience domain expertise with production-grade development practices — delivering
 solutions that are both scientifically rigorous and built to last." Cards: **Domain
