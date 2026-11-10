@@ -50,7 +50,7 @@ const labProvides = [
   <section class="section">
     <div class="container-x wwu">
       <div class="wwu-main prose">
-        <h2>How a project runs</h2>
+        <h2>Project process</h2>
         <p>Most of our work is converting a lab's data to Neurodata Without Borders (NWB) and publishing it on the DANDI Archive. We have built conversion pipelines for <a href="/nwb-conversions/">{conversions.length} labs</a>, {withDandi} of them with published dandisets, and the code for each is public. Software engineering and AI projects follow the same pattern with a different deliverable.</p>
       </div>
 
@@ -68,21 +68,21 @@ const labProvides = [
 
       <div class="wwu-cols">
         <div class="wwu-main prose">
-          <h2>What the lab provides</h2>
+          <h2>Lab responsibilities</h2>
           <ul>{labProvides.map((x) => <li>{x}</li>)}</ul>
           <p>The point person does not need to write code. The <a href="/guides/nwb-engagement-guide/">engagement guide</a> lists the questions we ask at the start, and the <a href="/guides/globus-guide/">Globus guide</a> covers the transfer.</p>
 
-          <h2>Including us in a grant application</h2>
+          <h2>Grant applications</h2>
           <p>Our work has been funded through {projects.length} grants and contracts from {funders} funders, including the NIH, the Simons Foundation, the Michael J. Fox Foundation, and the Kavli Foundation (<a href="/funded-projects/">funded projects</a>). If you are writing a data management and sharing plan or a budget that includes data standardization, contact us before the deadline and we will help you describe the work and estimate its size.</p>
           <p>For the policy side of the plan, the <a href="/guides/nwb-dandi-guide/">NWB and DANDI guide</a> explains what the NIH Data Management and Sharing Policy expects and why DANDI meets the repository criteria.</p>
 
-          <h2>What you keep</h2>
+          <h2>Ownership and licensing</h2>
           <p>Everything we write for a lab is released as open-source software under a permissive license, so there are no licensing fees and nothing to renew. The lab can copy, modify, and run the pipeline without us.</p>
         </div>
 
         <aside class="card wwu-cta">
           <span class="eyebrow">Next step</span>
-          <h2>Talk through your project</h2>
+          <h2>Free consultation</h2>
           <p>A free 30-minute call is enough to tell whether the work is a fit and roughly how large it is.</p>
           <a href="/consultation/" class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="work-with-us">Request a consultation <Icon name="arrow" size={16} /></a>
           <a href="/contact/" class="btn btn-ghost">Or write to us</a>
