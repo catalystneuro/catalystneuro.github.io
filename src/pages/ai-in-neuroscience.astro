@@ -1,0 +1,126 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Icon from "../components/Icon.astro";
+import { PUBLICATIONS, FEATURED } from "../data/site-content";
+
+// The evidence on this page is limited to what PRODUCT.md allows for the AI
+// line: published work, tools the team built, and teaching. It must not imply
+// client AI engagements that do not exist.
+const software = await getCollection("software");
+const aiTools = software.filter((s) => s.data.type === "ai");
+const torchBrain = software.find((s) => s.data.name === "torch_brain");
+const paper = PUBLICATIONS.find((p) => p.doi === "10.1038/s41597-025-06285-x");
+const vibe = FEATURED.articles.find((a) => a.url.includes("vibe-code"));
+
+const offers = [
+  {
+    title: "Agents for processing steps",
+    copy: "Language-model agents that carry out repetitive, well-specified steps in a lab's pipeline, such as drafting conversion code for a new format, checking metadata, or generating analysis notebooks, with a person reviewing the result.",
+  },
+  {
+    title: "Data curation for foundation models",
+    copy: "Assembling standardized, well-annotated neurophysiology data from many labs into training sets, which is the same NWB and DANDI work we do for data sharing, aimed at a different consumer.",
+  },
+  {
+    title: "Training in agentic code generation",
+    copy: "Hands-on training for lab members in using coding agents on scientific software: where they save time, where they fail, and how to check their output.",
+  },
+];
+---
+<Base title="AI in Neuroscience" description="How CatalystNeuro applies language models and AI to neurophysiology data: agents for processing steps, data curation for foundation models, and training, with the published work and tools behind it.">
+  <PageHeader
+    eyebrow="Service line"
+    title="AI in neuroscience"
+    subtitle="Applying language models and machine learning to neurophysiology data, built on the same open standards as the rest of our work."
+  />
+
+  <section class="section">
+    <div class="container-x">
+      <div class="ai-lead prose">
+        <p>Standardized data is what makes AI useful in neuroscience. An agent can only write an analysis for a dataset it can read, and a model can only be trained across labs whose data shares a format. Our AI work builds on NWB and the DANDI Archive, and like everything else we write, it is open source.</p>
+      </div>
+
+      <span class="eyebrow ai-eyebrow">What we offer</span>
+      <div class="ai-grid">
+        {offers.map((o) => (
+          <div class="card ai-card">
+            <h3>{o.title}</h3>
+            <p>{o.copy}</p>
+          </div>
+        ))}
+      </div>
+
+      <span class="eyebrow ai-eyebrow">Published work and tools</span>
+      <div class="ai-evidence">
+        {paper && (
+          <a href={paper.url} target="_blank" rel="noopener" class="card card-hover ai-ev">
+            <span class="ai-ev-kind">{paper.journal} · {paper.year}</span>
+            <h3>{paper.title}</h3>
+            <p>An agentic chat assistant and a notebook generation pipeline for exploring DANDI datasets with large language models.</p>
+            <span class="ai-ev-link">Read the paper <Icon name="arrow-up-right" size={15} /></span>
+          </a>
+        )}
+        {aiTools.map((t) => (
+          <a href={t.data.site ?? t.data.github} target="_blank" rel="noopener" class="card card-hover ai-ev">
+            <span class="ai-ev-kind">Open-source tool</span>
+            <h3>{t.data.name}</h3>
+            <p class="ai-clamp">{t.data.description}</p>
+            <span class="ai-ev-link">Open <Icon name="arrow-up-right" size={15} /></span>
+          </a>
+        ))}
+        {torchBrain && (
+          <a href={torchBrain.data.github} target="_blank" rel="noopener" class="card card-hover ai-ev">
+            <span class="ai-ev-kind">Contribution</span>
+            <h3>{torchBrain.data.name}</h3>
+            <p class="ai-clamp">{torchBrain.data.description}</p>
+            <span class="ai-ev-link">GitHub <Icon name="arrow-up-right" size={15} /></span>
+          </a>
+        )}
+        <a href="/funded-projects/neurodata-ai-summer-school/" class="card card-hover ai-ev">
+          <span class="ai-ev-kind">Teaching · NIH R25</span>
+          <h3>NeuroData AI Summer School</h3>
+          <p>A five-year NIH-funded residential summer school on reanalysis of open neurophysiology data and AI methods for neural data.</p>
+          <span class="ai-ev-link">Funded project <Icon name="arrow" size={15} /></span>
+        </a>
+        {vibe && (
+          <a href={vibe.url} target="_blank" rel="noopener" class="card card-hover ai-ev">
+            <span class="ai-ev-kind">{vibe.publication}</span>
+            <h3>{vibe.title}</h3>
+            <p>{vibe.description}</p>
+            <span class="ai-ev-link">Read <Icon name="arrow-up-right" size={15} /></span>
+          </a>
+        )}
+      </div>
+
+      <div class="card ai-cta">
+        <div>
+          <h2>Considering an AI project?</h2>
+          <p>Tell us what the lab does by hand today and what data it has. A free 30-minute call is enough to tell whether an agent or a model would help.</p>
+        </div>
+        <a href="/consultation/" class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="ai-page">Request a consultation <Icon name="arrow" size={16} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ai-lead { max-width: 46rem; font-size: 1.08rem; }
+  .ai-eyebrow { margin-top: 3rem; margin-bottom: 1.4rem; }
+  .ai-grid, .ai-evidence { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .ai-grid, .ai-evidence { grid-template-columns: repeat(3, 1fr); } }
+  .ai-card { padding: 1.8rem; }
+  .ai-card h3 { font-size: 1.2rem; }
+  .ai-card p { color: var(--color-ink-muted); margin-top: 0.6rem; font-size: 0.95rem; line-height: 1.6; }
+  .ai-ev { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .ai-ev-kind { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-blue); }
+  .ai-ev h3 { font-size: 1.1rem; line-height: 1.3; }
+  .ai-ev p { color: var(--color-ink-muted); font-size: 0.9rem; line-height: 1.55; }
+  .ai-clamp { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .ai-ev-link { margin-top: auto; color: var(--color-blue); font-weight: 500; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+  .ai-cta { margin-top: 3.5rem; padding: 2rem; display: grid; gap: 1.4rem; align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 860px) { .ai-cta { grid-template-columns: 1fr auto; } }
+  .ai-cta h2 { font-size: 1.4rem; }
+  .ai-cta p { color: var(--color-ink-muted); margin-top: 0.5rem; max-width: 40rem; }
+</style>

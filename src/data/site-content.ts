@@ -68,8 +68,8 @@ export const SERVICES = {
     },
     {
       title: "AI in neuroscience",
-      copy: "Leverage AI and machine learning to accelerate neuroscience research.",
-      link: { label: "Get started", href: "/contact/" },
+      copy: "Apply language models and machine learning to neurophysiology data, built on the same open standards.",
+      link: { label: "Learn more", href: "/ai-in-neuroscience/" },
       features: [
         "Develop agents to automate processing steps",
         "Data curation for building neural foundation models",
