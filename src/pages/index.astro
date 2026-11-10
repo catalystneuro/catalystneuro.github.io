@@ -52,7 +52,7 @@ const serviceIcons = ["database", "code", "spark"];
       </h1>
       <p class="hero-body">{HERO.body}</p>
       <div class="hero-cta">
-        <a href={HERO.primary.href} class="btn btn-primary">{HERO.primary.label} <Icon name="arrow" size={16} /></a>
+        <a href={HERO.primary.href} class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="home-hero">{HERO.primary.label} <Icon name="arrow" size={16} /></a>
         <a href={HERO.secondary.href} class="btn btn-ondark">{HERO.secondary.label}</a>
       </div>
 
@@ -232,7 +232,7 @@ const serviceIcons = ["database", "code", "spark"];
       <div class="cta-copy">
         <h2 class="section-title">Have a dataset or tool that needs a home?</h2>
         <p class="section-lead">Book a free 30-minute call and we'll map out the fastest path to standardized, shareable, reusable data.</p>
-        <a href="/consultation/" class="btn btn-primary">Request a consultation <Icon name="arrow" size={16} /></a>
+        <a href="/consultation/" class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="home-closing">Request a consultation <Icon name="arrow" size={16} /></a>
       </div>
       <div class="card cta-news"><Newsletter /></div>
     </div>
