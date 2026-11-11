@@ -5,6 +5,14 @@ import Icon from "../components/Icon.astro";
 import JsonLd from "../components/JsonLd.astro";
 import { itemList } from "../lib/schema";
 import { PUBLICATIONS } from "../data/site-content";
+import datasetPapers from "../data/dataset-papers.json";
+import { slugify } from "../lib/format";
+
+interface DatasetPaper { doi: string | null; url: string; title: string; venue: string | null; year: number | null; dandisets: string[]; labs: string[] }
+const papers = datasetPapers as DatasetPaper[];
+const paperLabs = new Set(papers.flatMap((p) => p.labs));
+// "Kay Tye" -> "Kay Tye lab"; names that are already an organization stay as they are.
+const labLabel = (lab: string) => (/\b(lab|institute|laboratory)\b/i.test(lab) ? lab : `${lab} lab`);
 
 const pubsLd = itemList(
   "CatalystNeuro publications",
@@ -21,10 +29,10 @@ const pubsLd = itemList(
 ---
 <Base title="Publications" description="Peer-reviewed research publications and scientific contributions from the CatalystNeuro team on neurophysiology data, NWB, and open science.">
   <PageHeader
-    eyebrow="Peer-reviewed"
+    eyebrow="Research"
     title="Publications"
-    subtitle="Research publications and scientific contributions from the CatalystNeuro team."
-    count={`${PUBLICATIONS.length} papers`}
+    subtitle="Papers by the CatalystNeuro team, and the published research whose data we converted to NWB and shared on the DANDI Archive."
+    count={`${PUBLICATIONS.length + papers.length} papers`}
   />
 
   <JsonLd data={pubsLd} />
@@ -48,6 +56,31 @@ const pubsLd = itemList(
       ))}
     </div>
   </section>
+
+  <section class="section section--alt">
+    <div class="container-x">
+      <span class="eyebrow">Converted datasets</span>
+      <h2 class="section-title">Research behind our conversions</h2>
+      <p class="section-lead">
+        {papers.length} papers from {paperLabs.size} labs whose data we converted to NWB. Each is listed on DANDI as describing a dandiset linked from our <a href="/nwb-conversions/" class="dp-inline">conversion pages</a>, so the data behind every result here can be downloaded and reanalyzed.
+      </p>
+      <ol class="dp-list">
+        {papers.map((p) => (
+          <li class="dp-item">
+            <span class="dp-year">{p.year}</span>
+            <div class="dp-body">
+              <a href={p.url} target="_blank" rel="noopener" class="dp-title">{p.title}</a>
+              <p class="dp-meta">
+                {p.venue && <span class="dp-venue">{p.venue}</span>}
+                {p.labs.map((lab) => <a href={`/nwb-conversions/${slugify(lab)}/`} class="dp-lab">{labLabel(lab)}</a>)}
+                {p.dandisets.map((d) => <a href={`https://dandiarchive.org/dandiset/${d}`} target="_blank" rel="noopener" class="dp-dandi">Dandiset {d}</a>)}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 </Base>
 
 <style>
@@ -60,4 +93,16 @@ const pubsLd = itemList(
   .pub-authors { color: var(--color-navy); font-size: 0.9rem; font-weight: 450; }
   .pub-abstract { color: var(--color-ink-muted); font-size: 0.95rem; line-height: 1.6; margin: 0.9rem 0 1.3rem; }
   .pub-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+  .dp-inline { color: var(--color-blue); text-decoration: underline; text-underline-offset: 3px; }
+  .dp-list { list-style: none; margin: 2.2rem 0 0; padding: 0; max-width: 52rem; border-top: 1px solid var(--color-line); }
+  .dp-item { display: grid; grid-template-columns: 3.6rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--color-line); }
+  .dp-year { font-family: var(--font-mono); font-size: 0.85rem; color: var(--color-blue); padding-top: 0.15rem; }
+  .dp-title { color: var(--color-navy); font-weight: 500; line-height: 1.4; }
+  .dp-title:hover { color: var(--color-blue); text-decoration: underline; text-underline-offset: 3px; }
+  .dp-meta { margin-top: 0.35rem; display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; font-size: 0.82rem; }
+  .dp-venue { color: var(--color-ink-muted); font-style: italic; }
+  .dp-lab, .dp-dandi { color: var(--color-blue); }
+  .dp-dandi { font-family: var(--font-mono); font-size: 0.75rem; padding-top: 0.08rem; }
+  .dp-lab:hover, .dp-dandi:hover { text-decoration: underline; text-underline-offset: 3px; }
 </style>
