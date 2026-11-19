@@ -312,5 +312,5 @@ A session is usually more than its Open Ephys files: there is often
 behavioral and stimulus data from a custom rig as well. CatalystNeuro
 builds conversion pipelines for labs. Our
 [conversion portfolio](/nwb-conversions/) is public, and you can
-[request a consultation](/consultation/) if you would like help with
+[book a free consultation](/consultation/) if you would like help with
 yours.

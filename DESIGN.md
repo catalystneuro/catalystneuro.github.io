@@ -55,13 +55,13 @@ typography:
     letterSpacing: "normal"
   label:
     fontFamily: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
-    fontSize: "0.72rem"
+    fontSize: "0.7rem"
     fontWeight: 500
     lineHeight: 1.4
     letterSpacing: "0.22em"
   data:
     fontFamily: "JetBrains Mono Variable, JetBrains Mono, ui-monospace, monospace"
-    fontSize: "0.68rem"
+    fontSize: "0.7rem"
     fontWeight: 500
     lineHeight: 1.4
     letterSpacing: "0.04em"
@@ -287,12 +287,19 @@ its wide `0.22em` tracking on eyebrows turns a label into a piece of instrument 
 - **Prose** (400, 1.075rem, line-height 1.75, Prose Ink): long-form articles and guides.
   Paragraph rhythm comes from `.prose > * + *` at 1.3em, and `h2` earns a hairline rule
   above it at 2.4em, so a long post visibly separates into chapters.
-- **Label** (mono, 500, 0.72rem, `0.22em` tracking, uppercase, Signal Blue): the eyebrow.
+- **Label** (mono, 500, 0.7rem, `0.22em` tracking, uppercase, Signal Blue): the eyebrow.
   It carries a 1.6rem hairline dash before the text at 55% opacity, which is the single
   most recognizable device in the system. `.eyebrow--plain` removes the dash when the
   eyebrow sits inside a card that already has enough structure.
-- **Data** (mono, 0.68rem to 0.8rem, `0.04em` tracking): tags, badges, date stamps, result
+- **Data** (mono, 0.7rem to 0.8125rem, `0.04em` tracking): tags, badges, date stamps, result
   counts, pagination, table headers, footer column headings, and pipeline step numbers.
+
+### Small Text Scale
+
+Text below 1rem uses six sizes and no others: 0.7rem, 0.75rem, 0.8125rem, 0.875rem,
+0.9375rem, and 1rem. The two smallest are for mono labels and data, 0.8125rem serves both
+mono data and the smallest sans captions, and the remaining three are sans interface copy.
+Pick the nearest step instead of adding a size in between.
 
 ### Named Rules
 
@@ -312,7 +319,9 @@ it makes a page read as though it belongs to a different site.
 
 A single centered measure of 76rem with a 1.5rem gutter (`.container-x`) governs every
 page; nothing bleeds full-width except dark bands, the institution grid, and the hero
-background. Vertical rhythm is a 5rem section pad, with alternating sections marked by a
+background. The home page breaks its run of light sections once, with the testimonial on a
+Brand Navy band; paper and white alone are too close in value to mark a new section.
+Vertical rhythm is a 5rem section pad, with alternating sections marked by a
 white fill plus hairline borders on both edges (`.section--alt`) rather than by a change in
 spacing. The page header block sits at 3.5rem top, 2.5rem bottom, closed with a hairline
 and backed by a 44px hairline grid that is masked to a radial fade from the top right, so
@@ -321,8 +330,8 @@ the technical texture is present without becoming a pattern.
 Grids resolve at a small number of honest breakpoints rather than a formal scale: 640px
 (institution grid to six columns, footer columns to four), 700px and 1050px (portfolio card
 grid to two then three columns), 780px (three-up feature grids, hero pipeline arrows),
-860px (services, footer split, CTA band), and 960px (the navigation swap from burger to
-full nav). Card grids use a consistent 1.2rem gap. Density is comfortable rather than
+860px (services, footer split, CTA band), and 1200px (the navigation swap from burger to
+full nav, set by the width of six nav items plus the consultation button). Card grids use a consistent 1.2rem gap. Density is comfortable rather than
 tight: cards carry 1.8rem of internal padding, portfolio cards 1.5rem, and prose runs at
 its natural measure inside the 76rem container.
 
@@ -395,7 +404,7 @@ the same world as the hero.
 ### Buttons
 - **Shape:** compact rounding (`{rounded.md}`, 0.55rem), 0.7rem by 1.35rem padding, 1px
   transparent border so all variants share a box model. `.btn-sm` reduces to 0.45rem by
-  0.85rem at 0.82rem type.
+  0.85rem at 0.8125rem type.
 - **Primary:** Signal Blue fill, white text, seated with the button-rest shadow. Hover
   moves to Deep Blue, lifts 1px, and adds the blue glow over 0.2s on `--ease-out-expo`.
 - **Ghost:** transparent with a hairline border and Brand Navy text; hover shifts both
@@ -409,7 +418,7 @@ the same world as the hero.
   reads as the arrow stepping forward.
 
 ### Chips
-- **Taxonomy tags:** mono at 0.68rem, `{rounded.sm}`, 0.2rem by 0.55rem padding, tinted
+- **Taxonomy tags:** mono at 0.7rem, `{rounded.sm}`, 0.2rem by 0.55rem padding, tinted
   background with a matching darker text color. Three fixed facets: species (amber), method
   (blue), research area (green). Neutral gray is the untyped default.
 - **Status badges:** the same shape and type, capitalized, with green for active, gray for
@@ -451,9 +460,12 @@ the same world as the hero.
   colors the text Signal Blue; the active route is Signal Blue text with no fill.
 - Dropdowns open on hover and focus-within, sliding up 4px into place over 0.16s with the
   floating-menu shadow at `{rounded.lg}`.
-- Below 960px the nav collapses to a burger opening a Surface White panel of flattened
-  links, each separated by a soft hairline, closing on navigation and on any resize back
-  past the breakpoint.
+- Below 1200px the nav collapses to a burger opening a Surface White panel. The
+  consultation button is pinned at the top, and the links keep their desktop groups, each
+  under a mono heading and separated by a soft hairline. The panel scrolls inside the
+  viewport, and closes on navigation and on any resize back past the breakpoint.
+- The consultation button uses `CTA.label` from `consts.ts` everywhere it appears. Do not
+  write the label by hand.
 - A skip link sits above everything, hidden off-canvas at `left: -999px` until focused.
 
 ### The Signal Field (signature component)
@@ -466,7 +478,10 @@ a horizontal gradient that fades to transparent at both edges, glowing at 6px, a
 with a `stroke-dasharray` sweep of 6 seconds linear infinite that switches off entirely
 under `prefers-reduced-motion`.
 
-In the hero it sits at 55% opacity behind the content, masked so it fades out from the left
+Below 780px the full field is replaced by a three-channel strip above the headline, so the
+live pulse never crosses the text.
+
+In the hero at 780px and wider it sits at 55% opacity behind the content, masked so it fades out from the left
 40% of the viewport and leaves the headline on clean ink. It is decorative and correctly
 marked `aria-hidden`. This component is the system's thesis: when a surface needs visual
 interest, generate it from the subject matter rather than importing it.
