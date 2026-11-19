@@ -4,8 +4,8 @@ export const HERO = {
   // PRODUCT.md names this the leading claim, the one line for a hero.
   titleTop: "Research software engineers",
   titleAccent: "for neuroscience",
-  body: "We convert lab data to NWB and publish it on the DANDI Archive, so that funder data sharing requirements are met with files other researchers can reuse. We also maintain the tools the standard depends on: NeuroConv, NWB Inspector, and NWB GUIDE.",
-  primary: { label: "Request a consultation", href: "/consultation/" },
+  body: "We convert lab data to NWB and publish it on the DANDI Archive, so your data meets funder sharing requirements and other researchers can reuse it.",
+  primary: { label: "Book a free consultation", href: "/consultation/" },
   secondary: { label: "See conversion work", href: "/nwb-conversions/" },
   pipeline: [
     { step: "01", title: "Standardize", copy: "Convert complex lab formats to NWB" },
@@ -25,7 +25,8 @@ export const STAT_LABELS = {
 export const WHY = {
   eyebrow: "Approach",
   title: "Scientists who write production software",
-  body: "We bridge the gap between academic research and professional software engineering. Our team combines deep neuroscience domain expertise with production-grade development practices, delivering solutions that are both scientifically rigorous and built to last.",
+  body: "Our engineers trained as neuroscientists. Every pipeline we write is public, tested, and documented, so the lab can run it without us.",
+  proofTitle: "Recently published on DANDI",
   cards: [
     {
       title: "Domain experts",
@@ -89,11 +90,11 @@ export const SERVICES = {
 export const PARTNERS = {
   title: "Backed and trusted by",
   logos: [
-    { name: "National Institutes of Health", src: "/images/sponsors/mono/nih.png", height: 52 },
-    { name: "Allen Institute", src: "/images/sponsors/mono/allen.png", height: 40 },
-    { name: "The Kavli Foundation", src: "/images/sponsors/mono/kavli.png", height: 42 },
-    { name: "The Michael J. Fox Foundation", src: "/images/sponsors/mono/mjff.png", height: 50 },
-    { name: "Simons Foundation", src: "/images/sponsors/mono/simons.png", height: 34 },
+    { name: "National Institutes of Health", src: "/images/sponsors/mono/nih.png", height: 68 },
+    { name: "Allen Institute", src: "/images/sponsors/mono/allen.png", height: 52 },
+    { name: "The Kavli Foundation", src: "/images/sponsors/mono/kavli.png", height: 56 },
+    { name: "The Michael J. Fox Foundation", src: "/images/sponsors/mono/mjff.png", height: 64 },
+    { name: "Simons Foundation", src: "/images/sponsors/mono/simons.png", height: 44 },
   ],
 };
 
@@ -150,8 +151,10 @@ export const INSTITUTIONS = [
   scale: LOGO_SCALE[name],
 }));
 
+// Articles by the team in outside publications. Shown as a list under the
+// latest posts on the home page.
 export const FEATURED = {
-  title: "Featured in",
+  title: "Elsewhere",
   articles: [
     {
       title: "Neuroscience's open data revolution is just getting started",
@@ -177,6 +180,9 @@ export const TESTIMONIALS = [
     name: "Dr. Thomas Clandinin",
     title: "Professor",
     institution: "Stanford University",
+    // The work the quote is about, so a reader can check it.
+    conversion: "/nwb-conversions/thomas-clandinin/",
+    dandi: "https://dandiarchive.org/dandiset/000727",
   },
 ];
 

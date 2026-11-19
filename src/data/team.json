@@ -4,7 +4,7 @@
       "name": "Ben Dichter, PhD",
       "isActive": true,
       "role": "Founder",
-      "description": "Ben Dichter is the Founder of CatalystNeuro. He received his Ph.D. in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.",
+      "description": "Ben Dichter is the Founder of CatalystNeuro. He received his PhD in Bioengineering from the UC Berkeley – UCSF Joint Program in Bioengineering, in Dr. Edward Chang's lab. There he used electrocorticography (ECoG) to study the neural control of speech in humans. Much of this work focused on how we control the pitch of our voice when we speak and sing. He leads CatalystNeuro's work on data standards and data sharing for neurophysiology, including the NWB standard, the DANDI Archive, and the open-source software around them.",
       "image": "/images/team/benjamin_dichter.jpg",
       "github": "https://github.com/bendichter",
       "personalPage": "http://bendichter.com",
@@ -35,7 +35,7 @@
       "name": "Heberto Mayorquin, PhD",
       "isActive": true,
       "role": "Sr. Research Software Engineer",
-      "description": "Ramón Heberto Martinez Mayorquin holds a B.Sc. in Physics, an M.Sc. in Complexity Science, and a Ph.D. in Computational Neuroscience. His doctoral research focused on the theoretical and computational study of associative neural networks, such as Hopfield Networks. Throughout his academic journey, he developed a strong interest in software practices that ensure efficient, reproducible, and robust scientific simulations. Combined with his passion for statistics and data wrangling, this has led him to pursue a career at the intersection of research and software engineering, where he continues to refine and expand these interests.",
+      "description": "Ramón Heberto Martinez Mayorquin holds a BSc in Physics, an MSc in Complexity Science, and a PhD in Computational Neuroscience. His doctoral research focused on the theoretical and computational study of associative neural networks, such as Hopfield Networks. Throughout his academic journey, he developed a strong interest in software practices that ensure efficient, reproducible, and robust scientific simulations. Combined with his passion for statistics and data wrangling, this has led him to pursue a career at the intersection of research and software engineering, where he continues to refine and expand these interests.",
       "image": "/images/team/heberto_mayorquin.jpg",
       "github": "https://github.com/h-mayorquin",
       "orcid": "https://orcid.org/0000-0002-5937-7537"
@@ -59,10 +59,10 @@
       "orcid": "https://orcid.org/0000-0001-6615-1360"
     },
     {
-      "name": "Alessandra Trapani, Ph.D.",
+      "name": "Alessandra Trapani, PhD",
       "isActive": true,
       "role": "Research Software Engineer",
-      "description": "Dr. Alessandra Trapani holds an MSc in Biomedical Engineering and a Ph.D. in Bioengineering from Politecnico di Milano. Her doctoral research combined computational modeling of nitric oxide diffusion in the cerebellum with calcium imaging experiments. She joined CatalystNeuro in 2023 and helps labs convert optical physiology data to NWB and share it on DANDI, including two-photon and miniscope imaging and fiber photometry. She leads development of the NWB extensions ndx-microscopy and ndx-ophys-devices and contributes to NeuroConv and ROIExtractors. For Alessandra, this work is a practical way to advocate for open science and to engage with the neuroscience community from outside academia, working alongside many labs to make their data easier to find, understand, and reuse. When she is not standardizing data, she is watching movies or building something out of wood.",
+      "description": "Dr. Alessandra Trapani holds an MSc in Biomedical Engineering and a PhD in Bioengineering from Politecnico di Milano. Her doctoral research combined computational modeling of nitric oxide diffusion in the cerebellum with calcium imaging experiments. She joined CatalystNeuro in 2023 and helps labs convert optical physiology data to NWB and share it on DANDI, including two-photon and miniscope imaging and fiber photometry. She leads development of the NWB extensions ndx-microscopy and ndx-ophys-devices and contributes to NeuroConv and ROIExtractors. For Alessandra, this work is a practical way to advocate for open science and to engage with the neuroscience community from outside academia, working alongside many labs to make their data easier to find, understand, and reuse. When she is not standardizing data, she is watching movies or building something out of wood.",
       "image": "/images/team/alessandra_trapani.jpg",
       "github": "https://github.com/alessandratrapani",
       "orcid": "https://orcid.org/0000-0001-5182-0541"
@@ -77,7 +77,7 @@
       "orcid": "https://orcid.org/0000-0002-8297-1753"
     },
     {
-      "name": "Cody Baker, Ph.D.",
+      "name": "Cody Baker, PhD",
       "isActive": false,
       "role": "Former Neurodata Scientist",
       "description": "Cody Baker was the lead developer of NeuroConv and NWB Inspector. He led several lab engagements, building custom conversion pipelines for leading labs using state-of-the-art data acquisition equipment.",
@@ -85,7 +85,7 @@
       "orcid": "https://orcid.org/0000-0002-0829-4790"
     },
     {
-      "name": "Julia Sprenger, Ph.D.",
+      "name": "Julia Sprenger, PhD",
       "isActive": false,
       "role": "Former Research Software Engineer",
       "description": "Julia Sprenger specialized in building efficient, universal API support for diverse electrophysiology data formats using python-neo.",

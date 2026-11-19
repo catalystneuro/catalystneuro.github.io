@@ -66,7 +66,8 @@ const teamLd = {
             </div>
             <h3 class="team-name">{m.name}</h3>
             <p class="team-role">{m.role}</p>
-            <p class="team-bio">{m.description}</p>
+            <p class="team-bio pcard-desc">{m.description}</p>
+            <button type="button" class="pcard-more" hidden>Show more</button>
             <div class="team-socials">
               {socials(m).map((s) => (
                 <a href={s.href} target="_blank" rel="noopener" aria-label={s.label === "Website" ? `${m.name}'s website` : `${m.name} on ${s.label}`}><Icon name={s.icon} size={17} /></a>
@@ -112,8 +113,12 @@ const teamLd = {
   .team-photo img { width: 100%; height: 100%; object-fit: cover; }
   .team-initials { font-family: var(--font-display); font-size: 2rem; color: var(--color-blue); font-weight: 600; }
   .team-name { font-size: 1.2rem; }
-  .team-role { color: var(--color-blue); font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.03em; text-transform: uppercase; margin-top: 0.3rem; }
-  .team-bio { color: var(--color-ink-muted); font-size: 0.9rem; margin: 0.9rem 0 1.1rem; line-height: 1.55; text-align: left; }
+  .team-role { color: var(--color-blue); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.03em; text-transform: uppercase; margin-top: 0.3rem; }
+  /* Bios are clamped to four lines by .pcard-desc, with a "Show more" toggle
+     where the text overflows, so every card in a row ends at the same height. */
+  .team-bio { color: var(--color-ink-muted); font-size: 0.875rem; margin: 0.9rem 0 0; line-height: 1.55; text-align: left; align-self: stretch; }
+  .team-card .pcard-more { margin-bottom: 0; }
+  .team-socials { padding-top: 1.1rem; }
   .team-socials { display: flex; gap: 0.4rem; margin-top: auto; }
   .team-socials a { padding: 0.45rem; border-radius: 0.4rem; color: var(--color-ink-muted); border: 1px solid var(--color-line); transition: all 0.15s; }
   .team-socials a:hover { color: var(--color-blue); border-color: var(--color-blue); }
@@ -125,5 +130,10 @@ const teamLd = {
   @media (min-width: 960px) { .former-grid { grid-template-columns: repeat(3, 1fr); } }
   .former-card { padding: 1.4rem; }
   .former-card h3 { font-size: 1.05rem; }
-  .former-bio { color: var(--color-ink-muted); font-size: 0.87rem; margin: 0.7rem 0 1rem; line-height: 1.5; }
+  .former-bio { color: var(--color-ink-muted); font-size: 0.875rem; margin: 0.7rem 0 1rem; line-height: 1.5; }
 </style>
+
+<script>
+  import { createClampToggles } from "../lib/clamp";
+  createClampToggles(Array.from(document.querySelectorAll<HTMLElement>(".team-card")));
+</script>

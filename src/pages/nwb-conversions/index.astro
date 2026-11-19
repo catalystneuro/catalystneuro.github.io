@@ -91,6 +91,12 @@ const pageLd = [
 
       <div class="cv-status">
         <p class="cv-count" id="cv-count" role="status">{items.length} labs</p>
+        <div class="cv-legend" aria-label="Tag colours">
+          <span class="tag tag--species">Species</span>
+          <span class="tag tag--method">Method</span>
+          <span class="tag tag--area">Research area</span>
+          <span class="tag">Other</span>
+        </div>
         <button id="cv-reset" class="btn btn-ghost btn-sm cv-reset" hidden>Clear filters <Icon name="close" size={14} /></button>
       </div>
 
@@ -123,13 +129,21 @@ const pageLd = [
             </div>
 
             <div class="pcard-links">
-              <a href={`/nwb-conversions/${c.slug}/`} class="btn btn-ghost btn-sm">Details <Icon name="arrow" size={14} /></a>
-              {c.github.map((g, i) => (
-                <a href={g} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> {c.github.length > 1 ? `Repo ${i + 1}` : "GitHub"}</a>
-              ))}
               {c.dandi.map((dd) => (
-                <a href={dd.url} target="_blank" rel="noopener" title={dd.name} class="btn btn-ghost btn-sm cv-dandi"><Icon name="database" size={14} /> DANDI {dd.url.split("/").pop()}</a>
+                <a href={dd.url} target="_blank" rel="noopener" title={dd.name} class="btn btn-sm cv-dandi"><Icon name="database" size={14} /> DANDI {dd.url.split("/").pop()}</a>
               ))}
+              <a href={`/nwb-conversions/${c.slug}/`} class="btn btn-ghost btn-sm">Details</a>
+              {c.github.length === 1 && (
+                <a href={c.github[0]} target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> GitHub</a>
+              )}
+              {c.github.length > 1 && (
+                <details class="cv-repos">
+                  <summary class="btn btn-ghost btn-sm"><Icon name="github" size={14} /> GitHub <span class="cv-repos-n">{c.github.length}</span> <Icon name="chevron" size={13} /></summary>
+                  <div class="cv-repos-menu">
+                    {c.github.map((g) => <a href={g} target="_blank" rel="noopener">{g.replace(/\/$/, "").split("/").slice(-2).join("/")}</a>)}
+                  </div>
+                </details>
+              )}
             </div>
 
             {c.funded && (projectSlug.has(c.funded)
@@ -159,11 +173,26 @@ const pageLd = [
   .cv-status .cv-count { margin-bottom: 0; }
   .cv-search { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background: var(--color-surface); color: var(--color-ink-soft); }
   .cv-search:focus-within { border-color: var(--color-blue); box-shadow: 0 0 0 3px var(--color-blue-50); }
-  .cv-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.92rem; color: var(--color-navy); }
-  .cv-select { padding: 0.55rem 0.8rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background-color: var(--color-surface); font-family: var(--font-sans); font-size: 0.85rem; color: var(--color-navy); cursor: pointer; width: 100%; min-width: 0; }
+  .cv-search input { border: 0; outline: 0; flex: 1; background: transparent; font-family: var(--font-sans); font-size: 0.9375rem; color: var(--color-navy); }
+  .cv-select { padding: 0.55rem 0.8rem; border: 1px solid var(--color-line); border-radius: 0.55rem; background-color: var(--color-surface); font-family: var(--font-sans); font-size: 0.875rem; color: var(--color-navy); cursor: pointer; width: 100%; min-width: 0; }
   .cv-select:focus { outline: none; border-color: var(--color-blue); }
   .cv-select.is-set { border-color: var(--color-blue); background-color: var(--color-blue-50); color: var(--color-blue-600); font-weight: 500; }
-  .cv-dandi { color: var(--color-blue); }
+  .cv-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-left: auto; }
+  /* The dandiset is the outcome of a conversion, so its link leads the row and
+     is the only filled button on the card. */
+  .cv-dandi { background: var(--color-blue-50); color: var(--color-blue-600); border-color: var(--color-blue-100); }
+  .cv-dandi:hover { background: var(--color-blue); border-color: var(--color-blue); color: #fff; }
+  /* Tighter than a standard small button, so a dandiset, the details link, and
+     the repository fit on one row of a three-column card. */
+  .pcard-links .btn { padding-inline: 0.65rem; }
+  .cv-repos { position: relative; }
+  .cv-repos summary { list-style: none; }
+  .cv-repos summary::-webkit-details-marker { display: none; }
+  .cv-repos-n { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-ink-soft); }
+  .cv-repos[open] summary { border-color: var(--color-blue); color: var(--color-blue); }
+  .cv-repos-menu { position: absolute; z-index: 5; bottom: calc(100% + 0.3rem); left: 0; min-width: 13rem; max-width: 20rem; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 0.6rem; padding: 0.4rem; box-shadow: 0 18px 40px -20px rgba(16,22,66,0.35); display: flex; flex-direction: column; }
+  .cv-repos-menu a { padding: 0.45rem 0.6rem; border-radius: 0.4rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-navy); overflow-wrap: anywhere; }
+  .cv-repos-menu a:hover { background: var(--color-blue-50); color: var(--color-blue); }
   .cv-title { color: inherit; }
   .cv-title:hover { color: var(--color-blue); }
 </style>
@@ -221,6 +250,13 @@ const pageLd = [
 
   // Cards revealed by paging were invisible when last measured, so re-check.
   document.getElementById("cv-pager")?.addEventListener("click", () => measure());
+
+  // Only one repository menu is open at a time, and a click elsewhere closes it.
+  const repoMenus = Array.from(document.querySelectorAll<HTMLDetailsElement>(".cv-repos"));
+  document.addEventListener("click", (e) => {
+    repoMenus.forEach((d) => { if (!d.contains(e.target as Node)) d.open = false; });
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") repoMenus.forEach((d) => (d.open = false)); });
 
   search.addEventListener("input", apply);
   selects.forEach((s) => s.addEventListener("change", apply));

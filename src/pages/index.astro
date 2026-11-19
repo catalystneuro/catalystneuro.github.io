@@ -4,11 +4,11 @@ import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
 import SignalField from "../components/SignalField.astro";
 import Newsletter from "../components/Newsletter.astro";
-import { longDate } from "../lib/format";
+import { longDate, slugify, dandiList } from "../lib/format";
 import {
-  HERO, STAT_LABELS, WHY, SERVICES, PARTNERS, INSTITUTIONS, FEATURED, TESTIMONIALS,
+  HERO, STAT_LABELS, WHY, SERVICES, PARTNERS, INSTITUTIONS, FEATURED, TESTIMONIALS, METHODS,
 } from "../data/site-content";
-import { SITE } from "../consts";
+import { SITE, CTA } from "../consts";
 import JsonLd from "../components/JsonLd.astro";
 import { orgRef } from "../lib/schema";
 
@@ -45,6 +45,21 @@ const STATS = [
 // Service features may quote the portfolio size; fill it from the same count.
 const fill = (s: string) => s.replace("{labs}", String(conversions.length));
 
+// Evidence for the approach section: the newest conversions that already have
+// a public dandiset, each with the methods it covers.
+const methodSet = new Set(METHODS.map((m) => m.toLowerCase()));
+const recentPublished = conversions
+  .filter((c) => c.data.dandi)
+  .sort((a, b) => ((a.data.date ?? "") < (b.data.date ?? "") ? 1 : -1))
+  .slice(0, 4)
+  .map((c) => ({
+    lab: c.data.lab,
+    institution: c.data.institution,
+    href: `/nwb-conversions/${slugify(c.data.lab)}/`,
+    methods: (c.data.tags ?? []).filter((t) => methodSet.has(t.toLowerCase())).slice(0, 2),
+    dandi: dandiList(c.data.dandi)[0],
+  }));
+
 const capIcons = ["cloud", "users", "chart", "code"];
 const serviceIcons = ["database", "code", "spark"];
 ---
@@ -52,7 +67,8 @@ const serviceIcons = ["database", "code", "spark"];
   <JsonLd data={{ "@type": "WebSite", "@id": `${SITE.url}/#website`, name: SITE.name, url: SITE.url, publisher: orgRef, inLanguage: "en" }} />
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg" aria-hidden="true"><SignalField channels={9} /></div>
+    <div class="hero-bg hero-bg--wide" aria-hidden="true"><SignalField channels={9} /></div>
+    <div class="hero-bg hero-bg--strip" aria-hidden="true"><SignalField channels={3} live={1} id="sig-fade-strip" /></div>
     <div class="container-x hero-inner">
       <h1 class="hero-title">
         {HERO.titleTop}<br /><span class="hero-accent">{HERO.titleAccent}</span>
@@ -94,20 +110,37 @@ const serviceIcons = ["database", "code", "spark"];
 
   <!-- WHY -->
   <section class="section">
-    <div class="container-x">
+    <div class="container-x why">
       <div class="why-head">
         <span class="eyebrow">{WHY.eyebrow}</span>
         <h2 class="section-title">{WHY.title}</h2>
         <p class="section-lead">{WHY.body}</p>
+        <dl class="why-points">
+          {WHY.cards.map((c) => (
+            <div>
+              <dt>{c.title}</dt>
+              <dd>{c.copy}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
-      <div class="why-grid">
-        {WHY.cards.map((c, i) => (
-          <div class="card why-card">
-            <span class="why-index">0{i + 1}</span>
-            <h3>{c.title}</h3>
-            <p>{c.copy}</p>
-          </div>
-        ))}
+      <div class="why-proof">
+        <h3 class="why-proof-title">{WHY.proofTitle}</h3>
+        <ul class="why-rows">
+          {recentPublished.map((c) => (
+            <li>
+              <div class="why-row-main">
+                <a href={c.href} class="why-lab">{c.lab} lab</a>
+                <span class="why-inst">{c.institution}</span>
+              </div>
+              <div class="why-row-tags">
+                {c.methods.map((m) => <span class="tag tag--method">{m}</span>)}
+              </div>
+              <a href={c.dandi.url} target="_blank" rel="noopener" class="why-dandi" title={c.dandi.name}>DANDI {c.dandi.url.split("/").pop()} <Icon name="arrow-up-right" size={13} /></a>
+            </li>
+          ))}
+        </ul>
+        <a href="/nwb-conversions/" class="svc-link why-all">All {conversions.length} conversions <Icon name="arrow" size={15} /></a>
       </div>
     </div>
   </section>
@@ -175,25 +208,8 @@ const serviceIcons = ["database", "code", "spark"];
     </div>
   </section>
 
-  <!-- FEATURED IN -->
-  <section class="section section--alt">
-    <div class="container-x">
-      <span class="eyebrow">{FEATURED.title}</span>
-      <div class="feat-grid">
-        {FEATURED.articles.map((a) => (
-          <a href={a.url} target="_blank" rel="noopener" class="card card-hover feat-card">
-            <span class="feat-pub">{a.publication}</span>
-            <h3>{a.title}</h3>
-            <p>{a.description}</p>
-            <div class="feat-foot"><span>By {a.author}</span><Icon name="arrow-up-right" size={16} /></div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <!-- TESTIMONIAL -->
-  <section class="section">
+  <section class="quote-band">
     <div class="container-x">
       {TESTIMONIALS.map((t) => (
         <figure class="quote">
@@ -202,6 +218,10 @@ const serviceIcons = ["database", "code", "spark"];
           <figcaption>
             <span class="quote-name">{t.name}</span>
             <span class="quote-role">{t.title}, {t.institution}</span>
+            <span class="quote-links">
+              <a href={t.conversion}>About the conversion <Icon name="arrow" size={14} /></a>
+              <a href={t.dandi} target="_blank" rel="noopener">DANDI {t.dandi.split("/").pop()} <Icon name="arrow-up-right" size={14} /></a>
+            </span>
           </figcaption>
         </figure>
       ))}
@@ -230,6 +250,18 @@ const serviceIcons = ["database", "code", "spark"];
           </a>
         ))}
       </div>
+
+      <div class="press">
+        <h3 class="press-title">{FEATURED.title}</h3>
+        <ul class="press-list">
+          {FEATURED.articles.map((a) => (
+            <li>
+              <a href={a.url} target="_blank" rel="noopener" class="press-link">{a.title} <Icon name="arrow-up-right" size={15} /></a>
+              <span class="press-meta">{a.publication} · {a.author}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -239,7 +271,7 @@ const serviceIcons = ["database", "code", "spark"];
       <div class="cta-copy">
         <h2 class="section-title">A home for your dataset or tool</h2>
         <p class="section-lead">Book a free 30-minute call and we'll map out the fastest path to standardized, shareable, reusable data.</p>
-        <a href="/consultation/" class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="home-closing">Request a consultation <Icon name="arrow" size={16} /></a>
+        <a href="/consultation/" class="btn btn-primary" data-umami-event="consultation-cta" data-umami-event-location="home-closing">{CTA.label} <Icon name="arrow" size={16} /></a>
       </div>
       <div class="card cta-news"><Newsletter /></div>
     </div>
@@ -250,7 +282,17 @@ const serviceIcons = ["database", "code", "spark"];
   /* HERO */
   .hero { position: relative; background: radial-gradient(120% 120% at 80% -10%, #1b2358 0%, var(--color-ink) 55%); color: #fff; overflow: hidden; }
   .hero-bg { position: absolute; inset: 0; opacity: 0.55; -webkit-mask-image: linear-gradient(90deg, transparent, black 40%); mask-image: linear-gradient(90deg, transparent, black 40%); }
-  .hero-inner { position: relative; padding: 5rem 1.5rem 0; }
+  /* On narrow screens the full field would run behind the text, and the live
+     pulse would sweep across the paragraph. There the recording is a short
+     three-channel strip above the headline instead. */
+  .hero-bg--wide { display: none; }
+  .hero-bg--strip { inset: 0 0 auto 0; height: 5.5rem; opacity: 0.7; -webkit-mask-image: linear-gradient(180deg, black 55%, transparent); mask-image: linear-gradient(180deg, black 55%, transparent); }
+  @media (min-width: 780px) {
+    .hero-bg--wide { display: block; }
+    .hero-bg--strip { display: none; }
+  }
+  .hero-inner { position: relative; padding: 6.5rem 1.5rem 0; }
+  @media (min-width: 780px) { .hero-inner { padding-top: 5rem; } }
   .hero-title { color: #fff; font-size: clamp(2.5rem, 6.5vw, 4.6rem); line-height: 1.02; max-width: 16ch; }
   .hero-accent { color: var(--color-signal); }
   .hero-body { margin-top: 1.5rem; max-width: 34rem; font-size: 1.15rem; line-height: 1.6; color: rgba(255,255,255,0.78); }
@@ -258,9 +300,9 @@ const serviceIcons = ["database", "code", "spark"];
 
   .pipeline { margin-top: 4rem; display: flex; align-items: stretch; gap: 0.5rem; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,0.12); padding: 1.6rem 0 2.2rem; }
   .pipe-step { display: flex; gap: 0.9rem; align-items: flex-start; flex: 1 1 12rem; }
-  .pipe-num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-signal); border: 1px solid rgba(34,199,230,0.35); border-radius: 0.35rem; padding: 0.15rem 0.4rem; }
+  .pipe-num { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-signal); border: 1px solid rgba(34,199,230,0.35); border-radius: 0.35rem; padding: 0.15rem 0.4rem; }
   .pipe-title { font-weight: 600; color: #fff; font-family: var(--font-display); }
-  .pipe-copy { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 0.15rem; }
+  .pipe-copy { font-size: 0.875rem; color: rgba(255,255,255,0.6); margin-top: 0.15rem; }
   .pipe-arrow { color: rgba(255,255,255,0.3); align-self: center; display: none; }
   @media (min-width: 780px) { .pipe-arrow { display: block; } }
 
@@ -270,18 +312,31 @@ const serviceIcons = ["database", "code", "spark"];
   .stat { padding: 2.2rem 1rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
   .stat:last-child { border-right: 0; }
   .stat-value { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 600; color: #fff; }
-  .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.3rem; }
+  .stat-label { font-size: 0.875rem; color: rgba(255,255,255,0.6); margin-top: 0.3rem; }
 
   /* Section scaffolding */
   .section { padding: 5rem 0; }
 
-  /* WHY */
-  .why-grid { margin-top: 3rem; display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
-  @media (min-width: 780px) { .why-grid { grid-template-columns: repeat(3, 1fr); } }
-  .why-card { padding: 1.8rem; position: relative; }
-  .why-index { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-blue); }
-  .why-card h3 { font-size: 1.2rem; margin: 0.8rem 0 0.5rem; }
-  .why-card p { color: var(--color-ink-muted); font-size: 0.96rem; }
+  /* WHY: claims on the left, a hairline list of evidence on the right. */
+  .why { display: grid; gap: 3rem; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 900px) { .why { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 4.5rem; } }
+  .why-points { margin-top: 2rem; border-top: 1px solid var(--color-line); }
+  .why-points > div { padding: 1rem 0; border-bottom: 1px solid var(--color-line); display: grid; gap: 0.2rem 1.5rem; }
+  @media (min-width: 560px) { .why-points > div { grid-template-columns: 10.5rem 1fr; } }
+  .why-points dt { font-family: var(--font-display); font-weight: 600; color: var(--color-navy); }
+  .why-points dd { color: var(--color-ink-muted); font-size: 0.9375rem; }
+  .why-proof { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.6rem 1.8rem 1.4rem; }
+  .why-proof-title { font-family: var(--font-sans); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.01em; color: var(--color-ink-muted); }
+  .why-rows { list-style: none; margin-top: 0.8rem; }
+  .why-rows li { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 1rem; align-items: center; padding: 1rem 0; border-top: 1px solid var(--color-line-soft); }
+  .why-row-main { display: flex; flex-direction: column; min-width: 0; }
+  .why-lab { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--color-navy); }
+  .why-lab:hover { color: var(--color-blue); }
+  .why-inst { font-size: 0.8125rem; color: var(--color-ink-muted); }
+  .why-row-tags { grid-column: 1; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .why-dandi { grid-column: 2; grid-row: 1 / span 2; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-blue); display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.6rem; border: 1px solid var(--color-line); border-radius: 0.45rem; white-space: nowrap; transition: border-color 0.15s, background 0.15s; }
+  .why-dandi:hover { border-color: var(--color-blue); background: var(--color-blue-50); }
+  .why-all { margin-top: 1rem; padding-top: 1.1rem; border-top: 1px solid var(--color-line-soft); width: 100%; }
 
   /* SERVICES */
   .svc-grid { margin-top: 2.5rem; display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
@@ -291,18 +346,18 @@ const serviceIcons = ["database", "code", "spark"];
   .svc-card h3 { font-size: 1.3rem; }
   .svc-copy { color: var(--color-ink-muted); margin: 0.6rem 0 1.1rem; }
   .svc-features { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.4rem; }
-  .svc-features li { display: flex; gap: 0.55rem; font-size: 0.92rem; color: #3a445e; }
+  .svc-features li { display: flex; gap: 0.55rem; font-size: 0.9375rem; color: #3a445e; }
   .svc-features svg { color: var(--color-blue); flex-shrink: 0; margin-top: 0.15rem; }
-  .svc-link { margin-top: auto; color: var(--color-blue); font-weight: 500; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+  .svc-link { margin-top: auto; color: var(--color-blue); font-weight: 500; font-size: 0.9375rem; display: inline-flex; align-items: center; gap: 0.35rem; }
   .svc-link:hover { gap: 0.55rem; }
   .caps { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .cap { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.5rem; font-size: 0.88rem; color: var(--color-navy); background: var(--color-paper); }
+  .cap { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 0.9rem; border: 1px solid var(--color-line); border-radius: 0.5rem; font-size: 0.875rem; color: var(--color-navy); background: var(--color-paper); }
   .cap svg { color: var(--color-blue); }
 
   /* LOGOS */
   .logos-head { text-align: center; }
-  .logo-row { margin-top: 2rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem 3.5rem; }
-  .logo-img { width: auto; max-width: 170px; object-fit: contain; opacity: 0.8; }
+  .logo-row { margin-top: 2.2rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2.2rem 4rem; }
+  .logo-img { width: auto; max-width: 230px; object-fit: contain; opacity: 0.9; }
   .inst-head { margin-top: 4.5rem; text-align: center; }
   .inst-head .section-title { margin-inline: auto; }
   /* The hairline grid is drawn by each cell outlining itself into the 1px gap,
@@ -316,23 +371,18 @@ const serviceIcons = ["database", "code", "spark"];
   .inst-cell img:hover { filter: grayscale(0); opacity: 1; }
   .inst-toggle { margin: 1.6rem auto 0; display: flex; }
 
-  /* FEATURED */
-  .feat-grid { margin-top: 2rem; display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
-  @media (min-width: 720px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
-  .feat-card { padding: 1.8rem; display: flex; flex-direction: column; gap: 0.7rem; }
-  .feat-pub { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-blue); }
-  .feat-card h3 { font-size: 1.3rem; }
-  .feat-card p { color: var(--color-ink-muted); }
-  .feat-foot { margin-top: auto; padding-top: 0.8rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--color-ink-soft); }
-  .feat-card:hover .feat-foot svg { color: var(--color-blue); }
-
-  /* QUOTE */
+  /* QUOTE: the one dark band in the middle of the page. It breaks the run of
+     light sections, which paper and white alone do not separate enough. */
+  .quote-band { background: var(--color-navy); padding: 5rem 0; }
   .quote { max-width: 46rem; margin-inline: auto; text-align: center; position: relative; }
-  .quote-mark { font-family: var(--font-display); font-size: 5rem; line-height: 0.5; color: var(--color-blue-100); height: 2.5rem; }
-  .quote blockquote { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.4; color: var(--color-navy); font-weight: 500; letter-spacing: -0.01em; }
+  .quote-mark { font-family: var(--font-display); font-size: 5rem; line-height: 0.5; color: var(--color-navy-600); height: 2.5rem; }
+  .quote blockquote { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.4; color: #fff; font-weight: 500; letter-spacing: -0.01em; }
   .quote figcaption { margin-top: 1.6rem; display: flex; flex-direction: column; gap: 0.15rem; }
-  .quote-name { font-weight: 600; color: var(--color-navy); }
-  .quote-role { font-size: 0.9rem; color: var(--color-ink-muted); }
+  .quote-name { font-weight: 600; color: #fff; }
+  .quote-role { font-size: 0.875rem; color: rgba(255,255,255,0.7); }
+  .quote-links { margin-top: 1.1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem 1.6rem; font-size: 0.875rem; }
+  .quote-links a { color: var(--color-signal-soft); display: inline-flex; align-items: center; gap: 0.35rem; }
+  .quote-links a:hover { color: #fff; }
 
   /* POSTS */
   .posts-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
@@ -343,9 +393,20 @@ const serviceIcons = ["database", "code", "spark"];
   .post-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--ease-out-expo); }
   .post-card:hover .post-img img { transform: scale(1.04); }
   .post-body { padding: 1.3rem; display: flex; flex-direction: column; gap: 0.5rem; }
-  .post-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+  .post-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--color-ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
   .post-body h3 { font-size: 1.15rem; line-height: 1.25; }
-  .post-body p { font-size: 0.92rem; color: var(--color-ink-muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .post-body p { font-size: 0.9375rem; color: var(--color-ink-muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* Outside writing: a hairline list, not a second row of cards. */
+  .press { margin-top: 2.5rem; border-top: 1px solid var(--color-line); padding-top: 1.4rem; display: grid; gap: 0.8rem 2rem; grid-template-columns: 1fr; }
+  @media (min-width: 780px) { .press { grid-template-columns: 9rem 1fr; } }
+  .press-title { font-family: var(--font-sans); font-size: 0.8125rem; font-weight: 600; color: var(--color-ink-muted); padding-top: 0.2rem; }
+  .press-list { list-style: none; display: flex; flex-direction: column; }
+  .press-list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.2rem 1.5rem; padding: 0.7rem 0; border-top: 1px solid var(--color-line-soft); }
+  .press-list li:first-child { border-top: 0; padding-top: 0; }
+  .press-link { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--color-navy); display: inline-flex; align-items: center; gap: 0.4rem; }
+  .press-link:hover { color: var(--color-blue); }
+  .press-meta { font-size: 0.8125rem; color: var(--color-ink-soft); }
 
   /* CTA */
   .cta-band { display: grid; gap: 2.5rem; grid-template-columns: 1fr; align-items: center; }

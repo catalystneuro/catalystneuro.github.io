@@ -13,41 +13,43 @@ const points = [
 ];
 
 const pageLd = [
-  webPage("WebPage", "Request a consultation", "Book a free 30-minute call to scope an NWB conversion or software project with CatalystNeuro.", "/consultation/", {
+  webPage("WebPage", "Book a free consultation", "Book a free 30-minute call to scope an NWB conversion or software project with CatalystNeuro.", "/consultation/", {
     mainEntity: {
       ...service("Free project consultation", "A free 30-minute call to scope an NWB conversion or software project, discuss funder and DANDI publishing requirements, and estimate effort and timeline.", "/consultation/", ["Consultation"]),
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD", url: SITE.calendly },
     },
   }),
-  breadcrumbs([["Home", "/"], ["Request a consultation", "/consultation/"]]),
+  breadcrumbs([["Home", "/"], ["Book a free consultation", "/consultation/"]]),
 ];
 ---
-<Base title="Request a Consultation" description="Book a time to discuss your neurophysiology data project with the CatalystNeuro team, from NWB conversion to custom analysis pipelines.">
+<Base title="Book a Free Consultation" description="Book a time to discuss your neurophysiology data project with the CatalystNeuro team, from NWB conversion to custom analysis pipelines.">
   <JsonLd data={pageLd} />
   <PageHeader
     eyebrow="Let's talk"
-    title="Schedule a consultation"
-    subtitle="Book a time to discuss your project with our team."
+    title="Book a free consultation"
+    subtitle="A 30-minute call to discuss your project with our team."
   />
 
   <section class="section">
     <div class="container-x">
-      <div class="cons-intro">
-        <span class="eyebrow">A free 30-minute call</span>
-        <ul class="cons-points">
-          {points.map((p) => <li><Icon name="check" size={16} /> <span>{p}</span></li>)}
-        </ul>
-      </div>
+      <div class="cons">
+        <div class="cons-side">
+          <span class="eyebrow">A free 30-minute call</span>
+          <ul class="cons-points">
+            {points.map((p) => <li><Icon name="check" size={16} /> <span>{p}</span></li>)}
+          </ul>
+          <p class="cons-how">The call is by video with Ben Dichter, our founder. The link arrives with the confirmation.</p>
+          <p class="cons-how">Want to know what happens after the call? <a href="/work-with-us/">See how a project runs</a>.</p>
 
-      <p class="cons-how">Want to know what happens after the call? <a href="/work-with-us/">See how a project runs</a>.</p>
+          <div class="cons-alt">
+            <p>Prefer email? Reach us anytime at</p>
+            <a href={`mailto:${SITE.email}`} class="cons-mail"><Icon name="mail" size={15} /> {SITE.email}</a>
+          </div>
+        </div>
 
-      <div class="card cons-embed">
-        <div class="calendly-inline-widget" data-url={`${SITE.calendly}?hide_gdpr_banner=1`} style="min-width:320px;"></div>
-      </div>
-
-      <div class="card cons-alt">
-        <p>Prefer email? Reach us anytime at</p>
-        <a href={`mailto:${SITE.email}`} class="cons-mail"><Icon name="mail" size={15} /> {SITE.email}</a>
+        <div class="card cons-embed">
+          <div class="calendly-inline-widget" data-url={`${SITE.calendly}?hide_gdpr_banner=1&hide_event_type_details=1`} style="min-width:320px;"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -69,21 +71,22 @@ const pageLd = [
 </Base>
 
 <style>
-  .cons-intro { margin-bottom: 2rem; }
-  .cons-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.2rem; }
-  @media (min-width: 800px) { .cons-points { flex-direction: row; gap: 2rem; } }
-  .cons-points li { display: flex; gap: 0.6rem; color: #3a445e; }
-  .cons-points svg { color: var(--color-blue); flex-shrink: 0; margin-top: 0.15rem; }
-  .cons-how { margin: -0.8rem 0 1.4rem; color: var(--color-ink-muted); font-size: 0.95rem; }
+  /* The points sit beside the calendar, so the booking card is only as wide as
+     the widget inside it. Calendly's own event panel is hidden: this column
+     says the same things in the site's voice. */
+  .cons { display: grid; gap: 2.5rem; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 940px) { .cons { grid-template-columns: minmax(0, 1fr) minmax(0, 40rem); gap: 4rem; } }
+  .cons-points { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; margin: 1.4rem 0 1.6rem; }
+  .cons-points li { display: flex; gap: 0.6rem; color: #3a445e; font-size: 1.05rem; }
+  .cons-points svg { color: var(--color-blue); flex-shrink: 0; margin-top: 0.3rem; }
+  .cons-how { margin-top: 0.8rem; color: var(--color-ink-muted); font-size: 0.9375rem; max-width: 30rem; }
   .cons-how a { color: var(--color-blue); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
-  .cons-alt { padding: 1.3rem; margin-top: 2rem; }
-  .cons-alt p { color: var(--color-ink-muted); font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .cons-alt { margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--color-line); }
+  .cons-alt p { color: var(--color-ink-muted); font-size: 0.875rem; margin-bottom: 0.4rem; }
   .cons-mail { color: var(--color-blue); font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; }
   .cons-embed { padding: 0.5rem; overflow: hidden; }
-  /* Calendly stacks its booking flow below ~900px, which is much taller than
-     the side-by-side desktop layout. Give the embed the full container width
-     so it stays in the short layout, and size the container to fit the tallest
-     step so Calendly never shows its own scrollbar. */
-  .cons-embed .calendly-inline-widget { height: 1180px; }
-  @media (min-width: 940px) { .cons-embed .calendly-inline-widget { height: 820px; } }
+  /* Tall enough for the calendar step. The list of times is longer and scrolls
+     inside the widget. Calendly's data-resize option was tried and left out:
+     it pushes the calendar to the left edge of the frame. */
+  .cons-embed .calendly-inline-widget { height: 640px; }
 </style>

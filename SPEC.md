@@ -208,7 +208,7 @@ they are not inferable from the markdown/JSON above. Full copy is in §3 and §4
 - **Publications** (4 entries) — title, authors, journal, year, doi, url, abstract.
 - **Institutions banner** (30 logos) — name + `/images/institutions/{name}_logo.png`.
 - **Partners banner** (6 logos) — NIH, Allen Institute, Kavli, MJFF, Simons, MIT.
-- **Featured In** (2 external articles).
+- **Elsewhere** (2 external articles, listed under Latest Posts).
 - **Testimonials** (1 quote — Thomas Clandinin, Stanford).
 - **Homepage hero / WhyUs / Services** marketing copy and stats.
 - **Nav & footer** link structures.
@@ -250,8 +250,9 @@ Routes and their content sources. All inner pages share a header (`h1` + subtitl
 soft top gradient.
 
 ### 3.1 `/` Home
-Section order: **Hero → Approach → Services → Partners → Institutions → Featured In →
-Testimonials → Latest Posts → Newsletter**. All copy in §4.1. Latest Posts pulls the 3
+Section order: **Hero → Approach → Services → Partners → Institutions → Testimonials →
+Latest Posts (with the Elsewhere list) → Newsletter**. Approach pairs the three claims with
+the four newest conversions that have a dandiset. All copy in §4.1. Latest Posts pulls the 3
 newest `blog/` entries.
 
 ### 3.2 `/about`
@@ -325,9 +326,8 @@ Detail: image, title, `{type} • {location}`, description, Responsibilities, Re
 **Hero.** Eyebrow pill (→ `/analysis-software`): `New` + "Open source neurophysiology tools
 for researchers". H1: "Research software engineers" / "for neuroscience" (second line in
 blue), the leading claim from PRODUCT.md. Sub: "We convert lab data to NWB and publish it
-on the DANDI Archive, so that funder data sharing requirements are met with files other
-researchers can reuse. We also maintain the tools the standard depends on: NeuroConv, NWB
-Inspector, and NWB GUIDE." CTAs: "Request Consultation"
+on the DANDI Archive, so your data meets funder sharing requirements and other researchers
+can reuse it." CTAs: "Book a free consultation"
 (→ `/consultation`), "See Conversion Work" (→ `/nwb-conversions`). Visual card badges:
 "Neural data pipeline" / "NWB-ready outputs for sharing and analysis"; "60+" / "research
 labs supported". Three steps: **Standardize** — "Convert complex lab formats to NWB";
@@ -372,7 +372,7 @@ Austin, Emory, Mount Sinai, Cornell, University of Pittsburgh, Karolinska Instit
 International Brain Lab, Case Western Reserve, Vanderbilt, University of Edinburgh, Boston
 University, Janelia Research Campus, Brandeis, UC Santa Barbara, UC San Diego, Allen Institute.
 
-**Featured In** (2, both *The Transmitter*, by Benjamin Dichter):
+**Elsewhere** (2, both *The Transmitter*, by Benjamin Dichter):
 - "Neuroscience's open data revolution is just getting started" — "How open data standards
   are transforming neuroscience research" —
   `https://www.thetransmitter.org/open-neuroscience-and-data-sharing/neurosciences-open-data-revolution-is-just-getting-started/`
@@ -397,14 +397,15 @@ our latest news."
 
 Logo → `/`. Menu:
 - **About** ▾: About `/about`, Team `/team`, Openings `/openings`
-- **Software** ▾: NWB Software `/nwb-software`, Analysis Software `/analysis-software`, Guides `/guides`
+- **Work With Us** `/work-with-us`
+- **Software** ▾: NWB Software `/nwb-software`, Analysis Software `/analysis-software`, Data & AI Tools `/data-and-ai-tools`
 - **Portfolio** ▾: NWB Conversions `/nwb-conversions`, Funded Projects `/funded-projects`, Publications `/publications`
-- **Blog** `/blog`
+- **Resources** ▾: Guides `/guides`, Blog `/blog`, AI in Neuroscience `/ai-in-neuroscience`, LLM Cost Frontier (external)
 - **Contact** `/contact`
 - GitHub icon → `https://github.com/catalystneuro`
-- Button "Request Consultation" → `/consultation`
+- Button "Book a free consultation" → `/consultation` (label from `CTA` in `consts.ts`)
 
-Sticky, translucent/blurred. Mobile: hamburger with flattened items.
+Sticky, translucent/blurred. Mobile (below 1200px): hamburger; the consultation button is pinned at the top and links keep their groups.
 
 ### 4.3 Footer
 
@@ -453,8 +454,8 @@ Bottom bar: "© {year} CatalystNeuro. All rights reserved." + FCOI Policy →
 
 ### 4.5 Contact page method cards
 - **Email Us** — `info@catalystneuro.com` — "We typically respond within 1-2 business days"
-- **Schedule a Consultation** — "Book a free 30-minute call to discuss your project" →
-  "Book a Call" `/consultation`
+- **A free 30-minute call** — "Talk through your data, your funder's requirements, and the timeline." →
+  "Book a free consultation" `/consultation`
 - **Mailing Address** — "CatalystNeuro / 150 E B St Lbby #1810 SMB#45673 / Casper, WY 82601"
 - **Connect With Us** — GitHub + LinkedIn
 

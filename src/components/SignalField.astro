@@ -5,8 +5,10 @@
   is highlighted in the electric accent and carries a slow travelling pulse.
   This grounds the hero in the subject's own visual language instead of stock art.
 */
-interface Props { channels?: number; class?: string }
-const { channels = 7, class: cls = "" } = Astro.props;
+// `live` is the row that carries the pulse. `id` must differ between two
+// fields on one page, because each defines its own gradient.
+interface Props { channels?: number; live?: number; id?: string; class?: string }
+const { channels = 7, live = 2, id = "sig-fade", class: cls = "" } = Astro.props;
 
 const W = 720;
 const rowH = 46;
@@ -38,14 +40,14 @@ function trace(row: number, seed: number, spiky: boolean) {
 }
 
 const rows = Array.from({ length: channels }, (_, i) => ({
-  d: trace(i, i * 97 + 13, i !== 2),
-  highlight: i === 2,
+  d: trace(i, i * 97 + 13, i !== live),
+  highlight: i === live,
 }));
 ---
 <div class={`signal-field ${cls}`} aria-hidden="true">
   <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" width="100%" height="100%">
     <defs>
-      <linearGradient id="sig-fade" x1="0" x2="1">
+      <linearGradient id={id} x1="0" x2="1">
         <stop offset="0" stop-color="var(--color-signal)" stop-opacity="0"></stop>
         <stop offset="0.5" stop-color="var(--color-signal)" stop-opacity="1"></stop>
         <stop offset="1" stop-color="var(--color-signal)" stop-opacity="0"></stop>
@@ -56,7 +58,7 @@ const rows = Array.from({ length: channels }, (_, i) => ({
         <line x1="0" x2={W} y1={i * rowH + rowH / 2} y2={i * rowH + rowH / 2}
               stroke="rgba(255,255,255,0.06)" stroke-width="1" />
         <path d={r.d} fill="none"
-              stroke={r.highlight ? "url(#sig-fade)" : "rgba(127,224,240,0.28)"}
+              stroke={r.highlight ? `url(#${id})` : "rgba(127,224,240,0.28)"}
               stroke-width={r.highlight ? 2 : 1.25}
               class={r.highlight ? "trace trace--live" : "trace"} />
       </>
