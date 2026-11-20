@@ -1,0 +1,600 @@
+[
+  {
+    "doi": "10.1016/j.neuron.2026.08.012",
+    "url": "https://doi.org/10.1016/j.neuron.2026.08.012",
+    "title": "Amygdalostriatal transition zone neurons encode sustained cue responses to guide defensive behaviors",
+    "venue": "Neuron",
+    "year": 2026,
+    "dandisets": [
+      "001203"
+    ],
+    "labs": [
+      "Kay Tye"
+    ]
+  },
+  {
+    "doi": "10.64898/2026.01.27.702062",
+    "url": "https://doi.org/10.64898/2026.01.27.702062",
+    "title": "Working Memory of Multi-Object Scenes in Primate Frontal Cortex",
+    "venue": "bioRxiv",
+    "year": 2026,
+    "dandisets": [
+      "000620"
+    ],
+    "labs": [
+      "Mehrdad Jazayeri"
+    ]
+  },
+  {
+    "doi": "10.1101/2025.01.09.632139",
+    "url": "https://doi.org/10.1101/2025.01.09.632139",
+    "title": "Altered developmental profile of the cortical head-direction signal in a rat model of Fragile X Syndrome",
+    "venue": "bioRxiv",
+    "year": 2025,
+    "dandisets": [
+      "001699"
+    ],
+    "labs": [
+      "Paul Dudchenko"
+    ]
+  },
+  {
+    "doi": "10.1126/sciadv.adv8224",
+    "url": "https://doi.org/10.1126/sciadv.adv8224",
+    "title": "State-dependent modulation of spiny projection neurons controls levodopa-induced dyskinesia in a mouse model of Parkinson’s disease",
+    "venue": "Science Advances",
+    "year": 2025,
+    "dandisets": [
+      "001538"
+    ],
+    "labs": [
+      "Jim Surmeier"
+    ]
+  },
+  {
+    "doi": "10.1101/2024.06.13.598909",
+    "url": "https://doi.org/10.1101/2024.06.13.598909",
+    "title": "Months-long stability of the head-direction system",
+    "venue": "bioRxiv",
+    "year": 2024,
+    "dandisets": [
+      "001676"
+    ],
+    "labs": [
+      "Adrien Peyrache"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2023.12.011",
+    "url": "https://doi.org/10.1016/j.neuron.2023.12.011",
+    "title": "Targeted micro-fiber arrays for measuring and manipulating localized multi-scale neural dynamics over large, deep brain volumes during behavior",
+    "venue": "Neuron",
+    "year": 2024,
+    "dandisets": [
+      "001084"
+    ],
+    "labs": [
+      "Mark Howe"
+    ]
+  },
+  {
+    "doi": "10.1101/2023.07.04.547681",
+    "url": "https://doi.org/10.1101/2023.07.04.547681",
+    "title": "A Brain-Wide Map of Neural Activity during Complex Behaviour",
+    "venue": "bioRxiv",
+    "year": 2023,
+    "dandisets": [
+      "000409"
+    ],
+    "labs": [
+      "International Brain Lab"
+    ]
+  },
+  {
+    "doi": "10.1038/s41592-023-01806-1",
+    "url": "https://doi.org/10.1038/s41592-023-01806-1",
+    "title": "An optical design enabling lightweight and large field-of-view head-mounted microscopes",
+    "venue": "Nature Methods",
+    "year": 2023,
+    "dandisets": [
+      "000691"
+    ],
+    "labs": [
+      "Michale Fee"
+    ]
+  },
+  {
+    "doi": "10.1101/2023.04.24.538157",
+    "url": "https://doi.org/10.1101/2023.04.24.538157",
+    "title": "Conserved neural dynamics and computations across species in olfaction",
+    "venue": "bioRxiv",
+    "year": 2023,
+    "dandisets": [
+      "001170"
+    ],
+    "labs": [
+      "Jacob Reimer"
+    ]
+  },
+  {
+    "doi": "10.1101/2023.09.08.556120",
+    "url": "https://doi.org/10.1101/2023.09.08.556120",
+    "title": "Detecting rhythmic spiking through the power spectra of point process model residuals",
+    "venue": "bioRxiv",
+    "year": 2023,
+    "dandisets": [
+      "000947"
+    ],
+    "labs": [
+      "Robert Turner"
+    ]
+  },
+  {
+    "doi": "10.1038/s41586-023-06683-4",
+    "url": "https://doi.org/10.1038/s41586-023-06683-4",
+    "title": "Neural signal propagation atlas of Caenorhabditis elegans",
+    "venue": "Nature",
+    "year": 2023,
+    "dandisets": [
+      "001075"
+    ],
+    "labs": [
+      "Andrew Leifer"
+    ]
+  },
+  {
+    "doi": "10.1038/s41586-022-05611-2",
+    "url": "https://doi.org/10.1038/s41586-022-05611-2",
+    "title": "Spontaneous behaviour is structured by reinforcement without explicit reward",
+    "venue": "Nature",
+    "year": 2023,
+    "dandisets": [
+      "000559"
+    ],
+    "labs": [
+      "Bob Datta"
+    ]
+  },
+  {
+    "doi": "10.1038/s41593-023-01401-9",
+    "url": "https://doi.org/10.1038/s41593-023-01401-9",
+    "title": "Unique functional responses differentially map onto genetic subtypes of dopamine neurons",
+    "venue": "Nature Neuroscience",
+    "year": 2023,
+    "dandisets": [
+      "001038"
+    ],
+    "labs": [
+      "Daniel Dombeck"
+    ]
+  },
+  {
+    "doi": "10.1038/s41586-022-04478-7",
+    "url": "https://doi.org/10.1038/s41586-022-04478-7",
+    "title": "Cortical processing of flexible and context-dependent sensorimotor sequences",
+    "venue": "Nature",
+    "year": 2022,
+    "dandisets": [
+      "000239"
+    ],
+    "labs": [
+      "Daniel O'Connor"
+    ]
+  },
+  {
+    "doi": "10.1016/j.cub.2022.01.055",
+    "url": "https://doi.org/10.1016/j.cub.2022.01.055",
+    "title": "Dopamine signaling in the dorsomedial striatum promotes compulsive behavior",
+    "venue": "Current Biology",
+    "year": 2022,
+    "dandisets": [
+      "000971"
+    ],
+    "labs": [
+      "Talia Lerner"
+    ]
+  },
+  {
+    "doi": "10.1101/2022.03.20.485047",
+    "url": "https://doi.org/10.1101/2022.03.20.485047",
+    "title": "Mapping the Neural Dynamics of Locomotion across the Drosophila Brain",
+    "venue": "bioRxiv",
+    "year": 2022,
+    "dandisets": [
+      "000727"
+    ],
+    "labs": [
+      "Thomas Clandinin"
+    ]
+  },
+  {
+    "doi": "10.1038/s41593-022-01138-x",
+    "url": "https://doi.org/10.1038/s41593-022-01138-x",
+    "title": "Preconfigured dynamics in the hippocampus are guided by embryonic birthdate and rate of neurogenesis",
+    "venue": "Nature Neuroscience",
+    "year": 2022,
+    "dandisets": [
+      "000552"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1126/science.abm1891",
+    "url": "https://doi.org/10.1126/science.abm1891",
+    "title": "Probing subthreshold dynamics of hippocampal neurons by pulsed optogenetics",
+    "venue": "Science",
+    "year": 2022,
+    "dandisets": [
+      "000568"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1038/s41593-022-01202-6",
+    "url": "https://doi.org/10.1038/s41593-022-01202-6",
+    "title": "Spatiotemporally heterogeneous coordination of cholinergic and neocortical activity",
+    "venue": "Nature Neuroscience",
+    "year": 2022,
+    "dandisets": [
+      "001172"
+    ],
+    "labs": [
+      "Michael Higley"
+    ]
+  },
+  {
+    "doi": "10.1038/s41586-021-03811-w",
+    "url": "https://doi.org/10.1038/s41586-021-03811-w",
+    "title": "A metabolic function of the hippocampal sharp wave-ripple",
+    "venue": "Nature",
+    "year": 2021,
+    "dandisets": [
+      "000233"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1101/2021.07.26.453884",
+    "url": "https://doi.org/10.1101/2021.07.26.453884",
+    "title": "AJILE12: Long-term naturalistic human intracranial neural recordings and pose",
+    "venue": "bioRxiv",
+    "year": 2021,
+    "dandisets": [
+      "000055"
+    ],
+    "labs": [
+      "Bing Brunton"
+    ]
+  },
+  {
+    "doi": "10.1523/eneuro.0007-21.2021",
+    "url": "https://doi.org/10.1523/eneuro.0007-21.2021",
+    "title": "Behavioral and Neural Variability of Naturalistic Arm Movements",
+    "venue": "eNeuro",
+    "year": 2021,
+    "dandisets": [
+      "000055"
+    ],
+    "labs": [
+      "Bing Brunton"
+    ]
+  },
+  {
+    "doi": "10.1038/s41593-021-00816-6",
+    "url": "https://doi.org/10.1038/s41593-021-00816-6",
+    "title": "Experience-dependent contextual codes in the hippocampus",
+    "venue": "Nature Neuroscience",
+    "year": 2021,
+    "dandisets": [
+      "000054"
+    ],
+    "labs": [
+      "Lisa Giocomo"
+    ]
+  },
+  {
+    "doi": "10.1016/j.jneumeth.2021.109199",
+    "url": "https://doi.org/10.1016/j.jneumeth.2021.109199",
+    "title": "Mining naturalistic human behaviors in long-term video and neural recordings",
+    "venue": "Journal of Neuroscience Methods",
+    "year": 2021,
+    "dandisets": [
+      "000055"
+    ],
+    "labs": [
+      "Bing Brunton"
+    ]
+  },
+  {
+    "doi": "10.1038/s41467-021-20936-8",
+    "url": "https://doi.org/10.1038/s41467-021-20936-8",
+    "title": "Mouse entorhinal cortex encodes a diverse repertoire of self-motion signals",
+    "venue": "Nature Communications",
+    "year": 2021,
+    "dandisets": [
+      "000053"
+    ],
+    "labs": [
+      "Lisa Giocomo"
+    ]
+  },
+  {
+    "doi": "10.1038/s41586-021-03814-7",
+    "url": "https://doi.org/10.1038/s41586-021-03814-7",
+    "title": "Oxytocin neurons enable social transmission of maternal behaviour",
+    "venue": "Nature",
+    "year": 2021,
+    "dandisets": [
+      "000114"
+    ],
+    "labs": [
+      "Robert Froemke"
+    ]
+  },
+  {
+    "doi": "10.7554/elife.63711",
+    "url": "https://doi.org/10.7554/elife.63711",
+    "title": "Standardized and reproducible measurement of decision-making in mice",
+    "venue": "eLife",
+    "year": 2021,
+    "dandisets": [
+      "000045"
+    ],
+    "labs": [
+      "International Brain Lab"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2020.05.023",
+    "url": "https://doi.org/10.1016/j.neuron.2020.05.023",
+    "title": "Cooling of Medial Septum Reveals Theta Phase Lag Coordination of Hippocampal Cell Assemblies",
+    "venue": "Neuron",
+    "year": 2020,
+    "dandisets": [
+      "000059"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1038/s41586-020-2807-6",
+    "url": "https://doi.org/10.1038/s41586-020-2807-6",
+    "title": "Innate and plastic mechanisms for maternal behaviour in auditory cortex",
+    "venue": "Nature",
+    "year": 2020,
+    "dandisets": [
+      "000249"
+    ],
+    "labs": [
+      "Robert Froemke"
+    ]
+  },
+  {
+    "doi": "10.1371/journal.pbio.3000829",
+    "url": "https://doi.org/10.1371/journal.pbio.3000829",
+    "title": "Neural activity during a simple reaching task in macaques is counter to gating and rebound in basal ganglia–thalamic communication",
+    "venue": "PLOS Biology",
+    "year": 2020,
+    "dandisets": [
+      "000947"
+    ],
+    "labs": [
+      "Robert Turner"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2019.06.012",
+    "url": "https://doi.org/10.1016/j.neuron.2019.06.012",
+    "title": "Bayesian Computation through Cortical Latent Dynamics",
+    "venue": "Neuron",
+    "year": 2019,
+    "dandisets": [
+      "000130"
+    ],
+    "labs": [
+      "Mehrdad Jazayeri"
+    ]
+  },
+  {
+    "doi": "10.1016/j.cell.2019.05.050",
+    "url": "https://doi.org/10.1016/j.cell.2019.05.050",
+    "title": "Glia Accumulate Evidence that Actions Are Futile and Suppress Unsuccessful Behavior",
+    "venue": "Cell",
+    "year": 2019,
+    "dandisets": [
+      "000350"
+    ],
+    "labs": [
+      "Misha Ahrens"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2018.12.009",
+    "url": "https://doi.org/10.1016/j.neuron.2018.12.009",
+    "title": "Layer-Specific Physiological Features and Interlaminar Interactions in the Primary Visual Cortex of the Mouse",
+    "venue": "Neuron",
+    "year": 2019,
+    "dandisets": [
+      "000166"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1371/journal.pcbi.1006808",
+    "url": "https://doi.org/10.1371/journal.pcbi.1006808",
+    "title": "Structure and variability of delay activity in premotor cortex",
+    "venue": "PLOS Computational Biology",
+    "year": 2019,
+    "dandisets": [
+      "000121"
+    ],
+    "labs": [
+      "Krishna Shenoy"
+    ]
+  },
+  {
+    "doi": "10.1016/j.celrep.2018.05.059",
+    "url": "https://doi.org/10.1016/j.celrep.2018.05.059",
+    "title": "Aberrant Striatal Activity in Parkinsonism and Levodopa-Induced Dyskinesia",
+    "venue": "Cell Reports",
+    "year": 2018,
+    "dandisets": [
+      "001130"
+    ],
+    "labs": [
+      "Alexandra Nelson"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2018.04.028",
+    "url": "https://doi.org/10.1016/j.neuron.2018.04.028",
+    "title": "Transformation of a Spatial Map across the Hippocampal-Lateral Septal Circuit",
+    "venue": "Neuron",
+    "year": 2018,
+    "dandisets": [
+      "000213"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2017.03.045",
+    "url": "https://doi.org/10.1016/j.neuron.2017.03.045",
+    "title": "Active Touch and Self-Motion Encoding by Merkel Cell-Associated Afferents",
+    "venue": "Neuron",
+    "year": 2017,
+    "dandisets": [
+      "000226"
+    ],
+    "labs": [
+      "Daniel O'Connor"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2016.12.011",
+    "url": "https://doi.org/10.1016/j.neuron.2016.12.011",
+    "title": "Physiological Properties and Behavioral Correlates of Hippocampal Granule Cells and Mossy Cells",
+    "venue": "Neuron",
+    "year": 2017,
+    "dandisets": [
+      "000003"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1126/science.aad1935",
+    "url": "https://doi.org/10.1126/science.aad1935",
+    "title": "Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences",
+    "venue": "Science",
+    "year": 2016,
+    "dandisets": [
+      "000044"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1016/j.neuron.2016.03.036",
+    "url": "https://doi.org/10.1016/j.neuron.2016.03.036",
+    "title": "Network Homeostasis and State Dynamics of Neocortical Sleep",
+    "venue": "Neuron",
+    "year": 2016,
+    "dandisets": [
+      "000041"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1093/brain/awv312",
+    "url": "https://doi.org/10.1093/brain/awv312",
+    "title": "Primary motor cortex of the parkinsonian monkey: altered encoding of active movement",
+    "venue": "Brain",
+    "year": 2016,
+    "dandisets": [
+      "001636"
+    ],
+    "labs": [
+      "Robert Turner"
+    ]
+  },
+  {
+    "doi": "10.1038/srep32193",
+    "url": "https://doi.org/10.1038/srep32193",
+    "title": "Uncovering representations of sleep-associated hippocampal ensemble spike activity",
+    "venue": "Scientific Reports",
+    "year": 2016,
+    "dandisets": [
+      "000044"
+    ],
+    "labs": [
+      "György Buzsáki"
+    ]
+  },
+  {
+    "doi": "10.1038/nature11911",
+    "url": "https://doi.org/10.1038/nature11911",
+    "title": "Functional organization of human sensorimotor cortex for speech articulation",
+    "venue": "Nature",
+    "year": 2013,
+    "dandisets": [
+      "000019"
+    ],
+    "labs": [
+      "Eddie Chang"
+    ]
+  },
+  {
+    "doi": "10.3389/fnsys.2013.00098",
+    "url": "https://doi.org/10.3389/fnsys.2013.00098",
+    "title": "Primary motor cortex of the parkinsonian monkey: altered neuronal responses to muscle stretch",
+    "venue": "Frontiers in Systems Neuroscience",
+    "year": 2013,
+    "dandisets": [
+      "001636"
+    ],
+    "labs": [
+      "Robert Turner"
+    ]
+  },
+  {
+    "doi": "10.1038/nature11129",
+    "url": "https://doi.org/10.1038/nature11129",
+    "title": "Neural population dynamics during reaching",
+    "venue": "Nature",
+    "year": 2012,
+    "dandisets": [
+      "000070"
+    ],
+    "labs": [
+      "Krishna Shenoy"
+    ]
+  },
+  {
+    "doi": "10.1093/cercor/bhq217",
+    "url": "https://doi.org/10.1093/cercor/bhq217",
+    "title": "Primary Motor Cortex of the Parkinsonian Monkey: Differential Effects on the Spontaneous Activity of Pyramidal Tract-Type Neurons",
+    "venue": "Cerebral Cortex",
+    "year": 2011,
+    "dandisets": [
+      "001636"
+    ],
+    "labs": [
+      "Robert Turner"
+    ]
+  }
+]
