@@ -8,27 +8,29 @@ readTime: "9 min read"
 keywords: ["NWB", "DANDI", "Claude Code", "AI agents", "agent skills", "data conversion", "NeuroConv", "neurophysiology", "data sharing", "benchmark"]
 ---
 
-Converting data to [NWB](https://nwb.org) remains a challenge for neurophysiology labs without software engineers on staff. We have approached the problem by building layered tools, each one making conversion easier by building on the one below. [PyNWB](https://pynwb.readthedocs.io) made it possible to write NWB from Python. [NeuroConv](https://neuroconv.readthedocs.io) builds on PyNWB to read 64 acquisition formats.
+Converting data to [NWB](https://nwb.org) remains a challenge for neurophysiology labs without software engineers on staff. We have spent years lowering that bar with layered tools, each one building on the one below. [PyNWB](https://pynwb.readthedocs.io) made it possible to write NWB from Python. [NeuroConv](https://neuroconv.readthedocs.io) builds on PyNWB to read 64 acquisition formats, and [NWB Inspector](https://nwbinspector.readthedocs.io) checks the finished files against community best practices.
 
-The next layer is [nwb-convert](https://github.com/catalystneuro/claude-skills/tree/main/nwb-convert), an open-source skill for [Claude Code](https://claude.com/claude-code). It builds on NeuroConv and hands the conversion work to an AI agent, so a lab can convert its data through conversation. The agent inspects your files, asks you the questions only you can answer, writes and tests the conversion code, and uploads the result to the [DANDI Archive](https://dandiarchive.org).
+Today we are announcing the next layer: [nwb-convert](https://github.com/catalystneuro/claude-skills/tree/main/nwb-convert), a free, open-source skill for [Claude Code](https://claude.com/claude-code). It hands the conversion work to an AI agent, so a lab can convert its data through conversation. The agent inspects your files, asks you the questions only you can answer, writes and tests the conversion code, and publishes the result on the [DANDI Archive](https://dandiarchive.org). It carries what we learned from converting data for more than 60 labs.
 
-We presented the skill and its evaluation at SfN 2026. This post explains how to use it, which settings we recommend, and how it did when we asked it to repeat one of our own conversions.
+We presented the skill and its evaluation at SfN 2026. In our benchmark, the agent repeated one of our own published conversions, with 152 mice and 3,986 sessions, nearly perfectly from a single prompt. This post explains how to use the skill, which settings we recommend, and what the benchmark showed.
 
 ## Overview
 
-A skill is a folder of instructions and reference material. The agent loads it when the task calls for it. Ours has two parts. Phases lead the conversation from raw files to a published Dandiset. Knowledge files hold the reference material the agent reads when a phase calls for it.
+A skill is a folder of instructions and reference material. The agent loads it when the task calls for it. Ours has two parts: phases, which lead the conversation from raw files to a published Dandiset, and knowledge files, which hold the reference material the agent reads when a phase calls for it.
 
-![The nwb-convert skill. Eleven phases: discover, inspect data, collect metadata, synchronize, generate code, annotate ontologies, test and validate, local notebook, upload to DANDI, Dandiset metadata, DANDI notebook. Six groups of knowledge files: the NeuroConv interface catalog, past CatalystNeuro conversions, NWB extensions, PyNWB guides, NWB best practices, and ontologies and external resources.](/images/blog/nwb-convert-skill-structure.png)
+![The two parts of the nwb-convert skill. Eleven phases: discover, inspect data, collect metadata, synchronize, generate code, annotate ontologies, test and validate, local notebook, upload to DANDI, Dandiset metadata, DANDI notebook. Six groups of knowledge files: the NeuroConv interface catalog, past CatalystNeuro conversions, NWB extensions, PyNWB guides, NWB best practices, and ontologies and external resources.](/images/blog/nwb-convert-skill-structure.png)
 
-The skill is interactive by design. It tells the agent to ask the lab whenever the files leave something open, such as a quirk in the data or a detail the paper never reports. You do not need to know NWB or NeuroConv to start.
+The skill is interactive by design. It tells the agent to ask the user whenever the files leave something open, such as a quirk in the data or a detail the paper never reports. You do not need to know NWB or NeuroConv to start.
+
+The skill also takes the data all the way to publication. It knows how to upload the files to DANDI and how to fill in the Dandiset with best-practice metadata: contributors with their ORCIDs and affiliations, funding with award numbers, related publications, and ontology terms for species, brain regions and more. This metadata is often left incomplete, and it is the part that makes a dataset easy to find and to credit.
 
 ## Use at CatalystNeuro
 
-We have used nwb-convert for 10 lab conversions so far. Those conversions covered fiber photometry, calcium imaging, Neuropixels, tetrodes, EEG and EMG, optogenetics, behavioral tasks, video with pose estimation, motion capture, IMU and audio.
+nwb-convert is part of our daily work. We have used it for 10 lab conversions so far. Those conversions covered fiber photometry, calcium imaging, Neuropixels, tetrodes, EEG and EMG, optogenetics, behavioral tasks, video with pose estimation, motion capture, IMU and audio.
 
 ## Quick start
 
-1. Install [Claude Code](https://code.claude.com/docs/en/overview). You need a Claude subscription or an Anthropic API key.
+1. Install [Claude Code](https://code.claude.com/docs/en/overview) and sign in. We recommend a Claude subscription, as described under Recommended settings.
 2. Start Claude Code in an empty folder and add our skills:
 
 ```
@@ -46,7 +48,7 @@ We have used nwb-convert for 10 lab conversions so far. Those conversions covere
 
 Three things help the agent do a better job:
 
-- **Give it the raw acquisition files.** It converts from the files your rig wrote, not from processed exports.
+- **Give it all of the data.** That means the raw acquisition files, the results of processing such as spike sorting, segmentation and pose estimation, and any files with tables of metadata about the sessions, subjects and instruments.
 - **Give it the paper or a methods draft.** Many of the details NWB asks for are already written there.
 - **Answer its questions as you would answer a new lab member.** "I don't know" is a useful answer, and the agent records it.
 
@@ -55,6 +57,8 @@ Claude Code also runs in the [Claude desktop app](https://code.claude.com/docs/e
 ## Recommended settings
 
 Use Claude Code with the latest Claude Opus model, which is Opus 5.5 as we write this, and the skill installed. That is the configuration we tested, and the one we use ourselves.
+
+We recommend using the skill with a Claude subscription. The $20 a month plan might work, and the $100 a month plan will almost certainly work for just about any conversion.
 
 The model matters a great deal. A year ago, converting a whole dataset with an AI agent was barely feasible. In our benchmark, the same skill gave very different results on Opus 4.5 and on Opus 5.5:
 
@@ -92,9 +96,9 @@ We wanted to know how close the agent gets to our own work, so we had it repeat 
 | Sessions with restarted photometry converted (of 3) | 0 | 3 |
 | Example notebook written | no | yes |
 
-Claude Code alone converted the data correctly but missed recent additions to the NWB ecosystem. With the skill and its maintained instructions, the agent produced a conversion with ontology identifiers, detailed Dandiset metadata and the preferred neurodata types. An AI agent can now convert a complex dataset nearly perfectly from a single prompt.
+An AI agent can now convert a complex dataset nearly perfectly from a single prompt. Claude Code alone converted the data correctly but missed recent additions to the NWB ecosystem. With the skill and its maintained instructions, the agent produced a conversion close to the one we delivered ourselves, with ontology identifiers, detailed Dandiset metadata and the preferred neurodata types.
 
-The run with the skill took about seven hours from the first message to a validated Dandiset, and much of that time went to uploading 4,205 files. Claude Code reported about $31 of usage at API prices.
+The run with the skill took about seven hours from the first message to a validated Dandiset, and much of that time went to uploading 4,205 files. Claude Code reported about $31 of usage at API prices. A subscription is billed differently from the API, as a flat monthly fee, so you might get a much better deal with a subscription.
 
 The [full results](https://github.com/catalystneuro/nwb-convert-benchmark-results) include every metadata item and edge case we graded.
 
@@ -129,13 +133,13 @@ Review notebooks check each data stream against the lab's source files and again
 - **Review is still your job.** The agent makes decisions on your behalf, and some will be wrong. It converted two sessions with corrupted photometry, which our engineers had excluded, and it gave only one of the two brain regions a correct atlas identifier. Read the review notebooks and the conversion notes before you publish.
 - **This is one dataset.** We ran each configuration once, on one experiment. Results on other modalities and formats will differ.
 - **The scientist was simulated.** A real lab member answers differently from a model with a fact sheet.
-- **It needs a paid Claude plan or API key.** Long conversions use a lot of tokens.
+- **It needs a paid Claude plan.** Long conversions use a lot of tokens, and a very large dataset may reach the usage limits of the smaller plans.
 
 ## Next steps
 
 We are now testing other models and other agent tools with the same skill. Many are much cheaper than Claude Opus, and we will report which configurations reach similar results at the lowest cost.
 
-If you try the skill on your own data, we would like to hear how it went. Please [open an issue](https://github.com/catalystneuro/claude-skills/issues) with what worked and what did not. If you would like our help with a conversion, [get in touch](/contact/).
+The skill is free, open source and ready to use today, so try it on your own data. We would like to hear how it went. Please [open an issue](https://github.com/catalystneuro/claude-skills/issues) with what worked and what did not. If you would like our help with a conversion, [get in touch](/contact/).
 
 The [same repository](https://github.com/catalystneuro/claude-skills) has a second skill from the poster, analyzing-dandi-datasets, which takes a scientific question, finds a Dandiset to answer it, and delivers a notebook. The [example reanalyses](https://github.com/catalystneuro/dandi-reanalysis-examples) show its output.
 
