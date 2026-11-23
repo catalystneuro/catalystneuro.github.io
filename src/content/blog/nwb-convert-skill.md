@@ -8,7 +8,7 @@ readTime: "9 min read"
 keywords: ["NWB", "DANDI", "Claude Code", "AI agents", "agent skills", "data conversion", "NeuroConv", "neurophysiology", "data sharing", "benchmark"]
 ---
 
-Converting data to [NWB](https://nwb.org) remains a challenge for neurophysiology labs without software engineers on staff. We have spent years lowering that bar with layered tools, each one building on the one below. [PyNWB](https://pynwb.readthedocs.io) made it possible to write NWB from Python. [NeuroConv](https://neuroconv.readthedocs.io) builds on PyNWB to read 64 acquisition formats, and [NWB Inspector](https://nwbinspector.readthedocs.io) checks the finished files against community best practices.
+Converting data to [NWB](https://nwb.org) remains a challenge for neurophysiology labs without software engineers on staff. We have spent years lowering that bar with layered tools, each one building on the one below. [PyNWB](https://pynwb.readthedocs.io) made it possible to write NWB from Python. [NeuroConv](https://neuroconv.readthedocs.io) builds on PyNWB to read 64+ acquisition formats, and [NWB Inspector](https://nwbinspector.readthedocs.io) checks the finished files against community best practices.
 
 Today we are announcing the next layer: [nwb-convert](https://github.com/catalystneuro/claude-skills/tree/main/nwb-convert), a free, open-source skill for [Claude Code](https://claude.com/claude-code). It hands the conversion work to an AI agent, so a lab can convert its data through conversation. The agent inspects your files, asks you the questions only you can answer, writes and tests the conversion code, and publishes the result on the [DANDI Archive](https://dandiarchive.org). It carries what we learned from converting data for more than 60 labs.
 
