@@ -50,7 +50,7 @@ Three things help the agent do a better job:
 
 - **Give it all of the data.** That means the raw acquisition files, the results of processing such as spike sorting, segmentation and pose estimation, and any files with tables of metadata about the sessions, subjects and instruments.
 - **Give it the paper or a methods draft.** Many of the details NWB asks for are already written there.
-- **Answer its questions as you would answer a new lab member.** "I don't know" is a useful answer, and the agent records it.
+- **Tell it when you do not know.** The agent will ask about details the files do not contain. If you do not know an answer, say so. It will leave the field out, or mark its best estimate as inferred, and will not make up a value.
 
 Claude Code also runs in the [Claude desktop app](https://code.claude.com/docs/en/desktop), for people who prefer not to use a terminal.
 
@@ -81,20 +81,9 @@ We wanted to know how close the agent gets to our own work, so we had it repeat 
 
 ## Results
 
-![Benchmark results for Claude Opus 5.5 with and without the nwb-convert skill, across six measures](/images/blog/nwb-convert-skill-results.svg)
+![Benchmark results for Claude Opus 5.5, for Claude Code alone and with the nwb-convert skill. Sessions converted, of 3,986: 99% and 99%. Behavior event times matching our conversion: 99.5% and 100%. Metadata items filled, of 49: 92% and 98%. Dandiset metadata items matching ours, of 25: 24% and 92%. Ontology terms with a correct identifier, of 11: 0% and 91%. Optogenetics stored in ndx-optogenetics types: 0% and 100%. Western blot images included, of 16: 0% and 100%. Sessions with restarted photometry converted, of 3: 0% and 100%.](/images/blog/nwb-convert-skill-results.svg)
 
-| Claude Opus 5.5 | Claude Code alone | With the skill |
-|---|---|---|
-| Sessions converted (of 3,986) | 99% | 99% |
-| Behavior event times matching our conversion | 99.5% | 100% |
-| NWB Inspector critical issues and violations | 0 | 0 |
-| Metadata items filled (of 49) | 92% | 98% |
-| Optogenetics stored in ndx-optogenetics types | 0% | 100% |
-| Ontology terms with a correct identifier (of 11) | 0% | 91% |
-| Dandiset metadata items matching ours (of 25) | 24% | 92% |
-| Western blot images included (of 16) | 0% | 100% |
-| Sessions with restarted photometry converted (of 3) | 0 | 3 |
-| Example notebook written | no | yes |
+Both runs passed NWB Inspector with no critical issues and no best-practice violations.
 
 An AI agent can now convert a complex dataset nearly perfectly from a single prompt. Claude Code alone converted the data correctly but missed recent additions to the NWB ecosystem. With the skill and its maintained instructions, the agent produced a conversion close to the one we delivered ourselves, with ontology identifiers, detailed Dandiset metadata and the preferred neurodata types.
 
@@ -140,9 +129,8 @@ Review notebooks check each data stream against the lab's source files and again
 We are now testing other models and other agent tools with the same skill. Many are much cheaper than Claude Opus, and we will report which configurations reach similar results at the lowest cost.
 
 The skill is free, open source and ready to use today, so try it on your own data. We would like to hear how it went. Please [open an issue](https://github.com/catalystneuro/claude-skills/issues) with what worked and what did not. If you would like our help with a conversion, [get in touch](/contact/).
-
-The [same repository](https://github.com/catalystneuro/claude-skills) has a second skill from the poster, analyzing-dandi-datasets, which takes a scientific question, finds a Dandiset to answer it, and delivers a notebook. The [example reanalyses](https://github.com/catalystneuro/dandi-reanalysis-examples) show its output.
-
 ## Credits
 
 Paul Adkisson-Floro built the benchmark and presented this work at SfN 2026 as poster PSTR339.15, with Szonja Weigl, Alessandra Trapani, Luiz Tauffer, Heberto Mayorquin, Eivind Hennestad and Ben Dichter. The figures of the skill and the notebooks come from [the poster](/nwb-convert-sfn2026-poster.pdf).
+
+We thank the Lerner Lab at Northwestern University for collecting, analyzing and publishing the data behind the benchmark ([Seiler et al., 2022](https://doi.org/10.1016/j.cub.2022.01.055)).
