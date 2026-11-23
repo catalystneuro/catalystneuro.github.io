@@ -58,7 +58,7 @@ Claude Code also runs in the [Claude desktop app](https://code.claude.com/docs/e
 
 Use Claude Code with the latest Claude Opus model, which is Opus 5.5 as we write this, and the skill installed. That is the configuration we tested, and the one we use ourselves.
 
-We recommend using the skill with a Claude subscription. The $20 a month plan might work, and the $100 a month plan will almost certainly work for just about any conversion.
+We recommend using the skill with a Claude subscription. Based on our usage analysis, the $20/month plan should include plenty of tokens. If you run into usage limits, the $100/month plan will almost certainly work for just about any conversion.
 
 The model matters a great deal. A year ago, converting a whole dataset with an AI agent was barely feasible. In our benchmark, the same skill gave very different results on Opus 4.5 and on Opus 5.5:
 
