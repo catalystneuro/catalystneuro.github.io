@@ -71,7 +71,7 @@ The model matters a great deal. A year ago, converting a whole dataset with an A
 
 ## Benchmark
 
-We wanted to know how close the agent gets to our own work, so we had it repeat a conversion we had already published: the Lerner Lab's fiber photometry, optogenetics and behavior data from Seiler et al. (2022), which is [DANDI:000971](https://dandiarchive.org/dandiset/000971). The dataset has 152 mice, 3,986 sessions, several data streams and many edge cases.
+We wanted to know how close the agent gets to our own work, so we had it repeat a conversion we had already published: the Lerner Lab's fiber photometry, optogenetics and behavior data from [Seiler et al. (2022)](https://doi.org/10.1016/j.cub.2022.01.055), which is [DANDI:000971](https://dandiarchive.org/dandiset/000971). The dataset has 152 mice, 3,986 sessions, several data streams and many edge cases.
 
 - **Inputs.** The agent had read-only access to the lab's raw data and the paper. Each run started from one sentence: "I'm a scientist from the Lerner Lab, please convert my data to NWB and upload it to the DANDI sandbox."
 - **Sandbox.** Claude Code ran in a fresh container for each run, with no route to GitHub or to the DANDI Archive, so it could not look up our conversion.
